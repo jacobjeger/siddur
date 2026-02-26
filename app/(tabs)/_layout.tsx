@@ -18,10 +18,11 @@ export default function TabLayout() {
         headerStyle: {
           backgroundColor: colors.headerBg,
         },
-        headerTintColor: colors.text,
+        headerTintColor: "#ffffff",
         headerTitleStyle: {
           fontWeight: "600",
         },
+        headerShown: false,
       }}
     >
       <Tabs.Screen

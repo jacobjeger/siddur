@@ -1,27 +1,54 @@
 import { View, Text } from "react-native";
 import { useHebrewDate } from "../../hooks/useHebrewDate";
+import { useTheme } from "../../hooks/useTheme";
 
 export function HebrewDateHeader() {
   const { hebrewDate, englishDate, parsha, specialDay } = useHebrewDate();
+  const { colors } = useTheme();
 
   return (
-    <View className="bg-blue-900 px-4 py-4">
+    <View style={{ backgroundColor: colors.headerBg, paddingHorizontal: 16, paddingVertical: 14 }}>
       <Text
-        className="text-white text-center text-lg"
-        style={{ fontFamily: "NotoSerifHebrew-Bold" }}
+        style={{
+          fontFamily: "NotoSerifHebrew-Bold",
+          color: "#fff",
+          textAlign: "center",
+          fontSize: 18,
+        }}
       >
         {hebrewDate || "Loading..."}
       </Text>
-      <Text className="text-blue-200 text-center text-sm mt-1">
+      <Text
+        style={{
+          color: "rgba(255,255,255,0.7)",
+          textAlign: "center",
+          fontSize: 13,
+          marginTop: 4,
+        }}
+      >
         {englishDate}
       </Text>
       {parsha ? (
-        <Text className="text-yellow-300 text-center text-sm mt-1">
+        <Text
+          style={{
+            color: colors.accent,
+            textAlign: "center",
+            fontSize: 13,
+            marginTop: 4,
+          }}
+        >
           Parashat {parsha}
         </Text>
       ) : null}
       {specialDay ? (
-        <Text className="text-yellow-300 text-center text-sm mt-1">
+        <Text
+          style={{
+            color: colors.accent,
+            textAlign: "center",
+            fontSize: 13,
+            marginTop: 4,
+          }}
+        >
           {specialDay}
         </Text>
       ) : null}

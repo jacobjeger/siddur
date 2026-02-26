@@ -5,6 +5,7 @@ import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { useNextZman } from "../../src/hooks/useNextZman";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
+import { useTheme } from "../../src/hooks/useTheme";
 import { getTefilosForTime } from "../../src/data/prayers";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
@@ -21,6 +22,7 @@ export default function SiddurTab() {
   const { nextZman, countdown } = useNextZman();
   const timeFormat = useSettingsStore((s) => s.timeFormat);
   const router = useRouter();
+  const { colors } = useTheme();
 
   const current = TEFILA_LABELS[tefilaType] ?? TEFILA_LABELS.shacharis;
   const tefilosForTime = getTefilosForTime(
@@ -30,37 +32,61 @@ export default function SiddurTab() {
   const firstTefilaId = tefilosForTime[0]?.id;
 
   return (
-    <View className="flex-1 bg-white">
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <HebrewDateHeader />
 
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 }}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 }}>
         {/* Current tefila card */}
-        <View className="bg-blue-50 rounded-2xl p-5 border border-blue-200 mb-4">
-          <Text className="text-sm text-blue-600 font-medium">
+        <View
+          style={{
+            backgroundColor: colors.primaryLight,
+            borderRadius: 16,
+            padding: 20,
+            borderWidth: 1,
+            borderColor: colors.border,
+            marginBottom: 16,
+          }}
+        >
+          <Text style={{ fontSize: 13, color: colors.textSecondary, fontWeight: "500" }}>
             It's time for
           </Text>
-          <View className="flex-row items-baseline mt-1 mb-3">
-            <Text className="text-3xl font-bold text-blue-800">
+          <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 4, marginBottom: 12 }}>
+            <Text style={{ fontSize: 28, fontWeight: "bold", color: colors.primary }}>
               {current.en}
             </Text>
             <Text
-              className="text-xl text-blue-400 ml-3"
-              style={{ fontFamily: "NotoSerifHebrew-Bold" }}
+              style={{
+                fontSize: 20,
+                color: colors.accent,
+                marginLeft: 12,
+                fontFamily: "NotoSerifHebrew-Bold",
+              }}
             >
               {current.he}
             </Text>
           </View>
 
           {nextZman && (
-            <View className="flex-row justify-between items-center bg-white rounded-lg px-3 py-2 mb-4">
-              <Text className="text-sm text-gray-600">
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                backgroundColor: colors.surface,
+                borderRadius: 10,
+                paddingHorizontal: 12,
+                paddingVertical: 8,
+                marginBottom: 14,
+              }}
+            >
+              <Text style={{ fontSize: 13, color: colors.textSecondary }}>
                 {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
               </Text>
-              <View className="flex-row items-center">
-                <Text className="text-sm font-medium text-gray-700 mr-2">
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ fontSize: 13, fontWeight: "500", color: colors.text, marginRight: 8 }}>
                   {formatZmanTime(nextZman.time, timeFormat)}
                 </Text>
-                <Text className="text-sm font-bold text-blue-600">
+                <Text style={{ fontSize: 13, fontWeight: "bold", color: colors.primary }}>
                   {formatCountdown(countdown)}
                 </Text>
               </View>
@@ -69,11 +95,23 @@ export default function SiddurTab() {
 
           <Pressable
             onPress={() => {
-              if (firstTefilaId) router.push(`/siddur/${firstTefilaId}`);
+              if (tefilosForTime.length > 0) {
+                router.push({
+                  pathname: "/siddur/daven",
+                  params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
+                });
+              } else if (firstTefilaId) {
+                router.push(`/siddur/${firstTefilaId}`);
+              }
             }}
-            className="bg-blue-600 rounded-xl py-4 items-center active:bg-blue-700"
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? colors.primaryDark : colors.primary,
+              borderRadius: 12,
+              paddingVertical: 16,
+              alignItems: "center",
+            })}
           >
-            <Text className="text-white text-lg font-semibold">
+            <Text style={{ color: "#ffffff", fontSize: 18, fontWeight: "600" }}>
               Start Davening
             </Text>
           </Pressable>
@@ -81,11 +119,29 @@ export default function SiddurTab() {
 
         {/* Quick access tefilos for current time */}
         {tefilosForTime.length > 0 && (
-          <View className="mb-4">
-            <Text className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2 px-1">
+          <View style={{ marginBottom: 16 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: "bold",
+                color: colors.textMuted,
+                textTransform: "uppercase",
+                letterSpacing: 1,
+                marginBottom: 8,
+                paddingHorizontal: 4,
+              }}
+            >
               {current.en} Tefilos
             </Text>
-            <View className="bg-gray-50 rounded-xl overflow-hidden">
+            <View
+              style={{
+                backgroundColor: colors.surface,
+                borderRadius: 12,
+                overflow: "hidden",
+                borderWidth: 1,
+                borderColor: colors.border,
+              }}
+            >
               {tefilosForTime.map((tefila, index) => (
                 <Link
                   key={tefila.id}
@@ -93,24 +149,32 @@ export default function SiddurTab() {
                   asChild
                 >
                   <Pressable
-                    className={`flex-row items-center justify-between px-4 py-3 active:bg-gray-100 ${
-                      index < tefilosForTime.length - 1
-                        ? "border-b border-gray-200"
-                        : ""
-                    }`}
+                    style={({ pressed }) => ({
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 16,
+                      paddingVertical: 12,
+                      backgroundColor: pressed ? colors.surfaceSecondary : "transparent",
+                      borderBottomWidth: index < tefilosForTime.length - 1 ? 1 : 0,
+                      borderBottomColor: colors.border,
+                    })}
                   >
-                    <View className="flex-1">
-                      <Text className="text-base font-medium text-gray-800">
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
                         {tefila.name}
                       </Text>
                       <Text
-                        className="text-sm text-gray-500"
-                        style={{ fontFamily: "NotoSerifHebrew-Regular" }}
+                        style={{
+                          fontSize: 14,
+                          color: colors.textMuted,
+                          fontFamily: "NotoSerifHebrew-Regular",
+                        }}
                       >
                         {tefila.nameHe}
                       </Text>
                     </View>
-                    <Ionicons name="chevron-forward" size={18} color="#9ca3af" />
+                    <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
                   </Pressable>
                 </Link>
               ))}
@@ -120,9 +184,21 @@ export default function SiddurTab() {
 
         {/* Browse all */}
         <Link href="/siddur/browse" asChild>
-          <Pressable className="border border-gray-300 rounded-xl px-6 py-4 items-center active:bg-gray-50 flex-row justify-center">
-            <Ionicons name="book-outline" size={20} color="#374151" />
-            <Text className="text-gray-700 text-lg ml-2">
+          <Pressable
+            style={({ pressed }) => ({
+              borderWidth: 1,
+              borderColor: colors.border,
+              borderRadius: 12,
+              paddingHorizontal: 24,
+              paddingVertical: 16,
+              alignItems: "center",
+              backgroundColor: pressed ? colors.surfaceSecondary : colors.surface,
+              flexDirection: "row",
+              justifyContent: "center",
+            })}
+          >
+            <Ionicons name="book-outline" size={20} color={colors.text} />
+            <Text style={{ color: colors.text, fontSize: 17, marginLeft: 8 }}>
               Browse All Tefilos
             </Text>
           </Pressable>

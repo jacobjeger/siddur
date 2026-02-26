@@ -3,34 +3,50 @@ import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
+import { useTheme } from "../../src/hooks/useTheme";
 
 export default function BrowseTefilosScreen() {
+  const { colors } = useTheme();
+
   return (
-    <ScrollView className="flex-1 bg-gray-50">
+    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
       {TEFILA_CATEGORIES.map((category) => {
         const tefilos = getTefilosByCategory(category.id);
         if (tefilos.length === 0) return null;
 
         return (
-          <View key={category.id} className="mt-4">
-            <View className="flex-row items-center px-4 mb-2">
+          <View key={category.id} style={{ marginTop: 16 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 16, marginBottom: 8 }}>
               <Ionicons
                 name={category.icon as any}
                 size={20}
-                color="#1a56db"
+                color={colors.accent}
               />
-              <Text className="text-lg font-bold text-gray-800 ml-2">
+              <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginLeft: 8 }}>
                 {category.name}
               </Text>
               <Text
-                className="text-lg text-gray-400 ml-2"
-                style={{ fontFamily: "NotoSerifHebrew-Bold" }}
+                style={{
+                  fontSize: 17,
+                  color: colors.textMuted,
+                  marginLeft: 8,
+                  fontFamily: "NotoSerifHebrew-Bold",
+                }}
               >
                 {category.nameHe}
               </Text>
             </View>
 
-            <View className="bg-white mx-4 rounded-xl overflow-hidden">
+            <View
+              style={{
+                backgroundColor: colors.surface,
+                marginHorizontal: 16,
+                borderRadius: 12,
+                overflow: "hidden",
+                borderWidth: 1,
+                borderColor: colors.border,
+              }}
+            >
               {tefilos.map((tefila, index) => (
                 <Link
                   key={tefila.id}
@@ -38,28 +54,33 @@ export default function BrowseTefilosScreen() {
                   asChild
                 >
                   <Pressable
-                    className={`flex-row items-center justify-between px-4 py-3 active:bg-gray-50 ${
-                      index < tefilos.length - 1
-                        ? "border-b border-gray-100"
-                        : ""
-                    }`}
+                    style={({ pressed }) => ({
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 16,
+                      paddingVertical: 12,
+                      backgroundColor: pressed ? colors.surfaceSecondary : "transparent",
+                      borderBottomWidth: index < tefilos.length - 1 ? 1 : 0,
+                      borderBottomColor: colors.border,
+                    })}
                   >
-                    <View className="flex-1">
-                      <Text className="text-base font-medium text-gray-800">
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
                         {tefila.name}
                       </Text>
                       <Text
-                        className="text-sm text-gray-500 mt-0.5"
-                        style={{ fontFamily: "NotoSerifHebrew-Regular" }}
+                        style={{
+                          fontSize: 14,
+                          color: colors.textMuted,
+                          marginTop: 2,
+                          fontFamily: "NotoSerifHebrew-Regular",
+                        }}
                       >
                         {tefila.nameHe}
                       </Text>
                     </View>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={18}
-                      color="#9ca3af"
-                    />
+                    <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
                   </Pressable>
                 </Link>
               ))}
@@ -67,7 +88,7 @@ export default function BrowseTefilosScreen() {
           </View>
         );
       })}
-      <View className="h-8" />
+      <View style={{ height: 32 }} />
     </ScrollView>
   );
 }

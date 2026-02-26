@@ -5,8 +5,45 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-system-ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useTheme } from "../src/hooks/useTheme";
 
 const queryClient = new QueryClient();
+
+function AppStack() {
+  const { colors, isDark } = useTheme();
+
+  return (
+    <>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          headerStyle: { backgroundColor: colors.headerBg },
+          headerTintColor: "#ffffff",
+          contentStyle: { backgroundColor: colors.background },
+        }}
+      >
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="siddur/[tefilaId]"
+          options={{ headerShown: true, title: "Tefila" }}
+        />
+        <Stack.Screen
+          name="siddur/browse"
+          options={{ headerShown: true, title: "Browse Tefilos" }}
+        />
+        <Stack.Screen
+          name="siddur/daven"
+          options={{ headerShown: true, title: "Davening" }}
+        />
+        <Stack.Screen
+          name="minyan/[minyanId]"
+          options={{ headerShown: true, title: "Minyan Details" }}
+        />
+      </Stack>
+      <StatusBar style={isDark ? "light" : "light"} />
+    </>
+  );
+}
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -20,22 +57,7 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="siddur/[tefilaId]"
-          options={{ headerShown: true, title: "Tefila" }}
-        />
-        <Stack.Screen
-          name="siddur/browse"
-          options={{ headerShown: true, title: "Browse Tefilos" }}
-        />
-        <Stack.Screen
-          name="minyan/[minyanId]"
-          options={{ headerShown: true, title: "Minyan Details" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
+      <AppStack />
     </QueryClientProvider>
   );
 }

@@ -1,6 +1,7 @@
 import { View, Text, Pressable, ScrollView, Linking } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
+import { useTheme } from "../../src/hooks/useTheme";
 
 const SAMPLE_MINYANIM = [
   {
@@ -38,61 +39,100 @@ const SAMPLE_MINYANIM = [
 ];
 
 export default function MinyanomTab() {
+  const { colors } = useTheme();
+
   return (
-    <View className="flex-1 bg-gray-50">
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <LocationDisplay />
 
-      <ScrollView className="flex-1">
+      <ScrollView style={{ flex: 1 }}>
         {/* Info banner */}
-        <View className="mx-4 mt-4 bg-blue-50 rounded-xl p-4 border border-blue-200">
-          <View className="flex-row items-center mb-2">
-            <Ionicons name="information-circle" size={20} color="#1a56db" />
-            <Text className="text-sm font-bold text-blue-800 ml-2">
+        <View
+          style={{
+            marginHorizontal: 16,
+            marginTop: 16,
+            backgroundColor: colors.primaryLight,
+            borderRadius: 12,
+            padding: 16,
+            borderWidth: 1,
+            borderColor: colors.border,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+            <Ionicons name="information-circle" size={20} color={colors.primary} />
+            <Text style={{ fontSize: 14, fontWeight: "bold", color: colors.primary, marginLeft: 8 }}>
               Minyan Finder Preview
             </Text>
           </View>
-          <Text className="text-sm text-blue-700">
+          <Text style={{ fontSize: 14, color: colors.textSecondary }}>
             Live minyan data from GoDaven integration is coming soon.
             Below is a preview of the experience.
           </Text>
         </View>
 
         {/* Sample minyanim */}
-        <View className="mx-4 mt-4">
-          <Text className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2 px-1">
+        <View style={{ marginHorizontal: 16, marginTop: 16 }}>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: "bold",
+              color: colors.textMuted,
+              textTransform: "uppercase",
+              letterSpacing: 1,
+              marginBottom: 8,
+              paddingHorizontal: 4,
+            }}
+          >
             Nearby Minyanim
           </Text>
-          <View className="bg-white rounded-xl overflow-hidden">
+          <View
+            style={{
+              backgroundColor: colors.surface,
+              borderRadius: 12,
+              overflow: "hidden",
+              borderWidth: 1,
+              borderColor: colors.border,
+            }}
+          >
             {SAMPLE_MINYANIM.map((minyan, index) => (
               <View
                 key={minyan.id}
-                className={`px-4 py-3 ${
-                  index < SAMPLE_MINYANIM.length - 1
-                    ? "border-b border-gray-100"
-                    : ""
-                }`}
+                style={{
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                  borderBottomWidth: index < SAMPLE_MINYANIM.length - 1 ? 1 : 0,
+                  borderBottomColor: colors.border,
+                }}
               >
-                <View className="flex-row justify-between items-start">
-                  <View className="flex-1">
-                    <Text className="text-base font-semibold text-gray-800">
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
                       {minyan.name}
                     </Text>
-                    <View className="flex-row items-center mt-1">
-                      <View className="bg-blue-100 rounded px-2 py-0.5 mr-2">
-                        <Text className="text-xs font-medium text-blue-700">
+                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+                      <View
+                        style={{
+                          backgroundColor: colors.primaryLight,
+                          borderRadius: 4,
+                          paddingHorizontal: 8,
+                          paddingVertical: 2,
+                          marginRight: 8,
+                        }}
+                      >
+                        <Text style={{ fontSize: 12, fontWeight: "500", color: colors.primary }}>
                           {minyan.type}
                         </Text>
                       </View>
-                      <Text className="text-xs text-gray-500">
+                      <Text style={{ fontSize: 12, color: colors.textMuted }}>
                         {minyan.nusach}
                       </Text>
                     </View>
                   </View>
-                  <View className="items-end">
-                    <Text className="text-base font-bold text-gray-700">
+                  <View style={{ alignItems: "flex-end" }}>
+                    <Text style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}>
                       {minyan.time}
                     </Text>
-                    <Text className="text-xs text-gray-400 mt-1">
+                    <Text style={{ fontSize: 12, color: colors.textMuted, marginTop: 4 }}>
                       {minyan.distance}
                     </Text>
                   </View>
@@ -103,13 +143,23 @@ export default function MinyanomTab() {
         </View>
 
         {/* GoDaven link */}
-        <View className="mx-4 mt-4 mb-8">
+        <View style={{ marginHorizontal: 16, marginTop: 16, marginBottom: 32 }}>
           <Pressable
             onPress={() => Linking.openURL("https://www.godaven.com")}
-            className="border border-gray-300 rounded-xl px-6 py-4 items-center active:bg-gray-50 flex-row justify-center"
+            style={({ pressed }) => ({
+              borderWidth: 1,
+              borderColor: colors.border,
+              borderRadius: 12,
+              paddingHorizontal: 24,
+              paddingVertical: 16,
+              alignItems: "center",
+              backgroundColor: pressed ? colors.surfaceSecondary : colors.surface,
+              flexDirection: "row",
+              justifyContent: "center",
+            })}
           >
-            <Ionicons name="globe-outline" size={20} color="#374151" />
-            <Text className="text-gray-700 text-base ml-2">
+            <Ionicons name="globe-outline" size={20} color={colors.text} />
+            <Text style={{ color: colors.text, fontSize: 16, marginLeft: 8 }}>
               Find Minyanim on GoDaven.com
             </Text>
           </Pressable>

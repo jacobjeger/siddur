@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Pressable, Switch } from "react-native";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
+import { useTheme } from "../../src/hooks/useTheme";
 
 type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
 
@@ -29,27 +30,45 @@ export default function SettingsTab() {
     setTimeFormat,
     setCandleLightingOffset,
   } = useSettingsStore();
+  const { colors } = useTheme();
 
   return (
-    <ScrollView className="flex-1 bg-gray-50">
+    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
       {/* Nusach */}
-      <View className="bg-white mt-4 mx-4 rounded-xl p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-3">Nusach</Text>
-        <View className="flex-row flex-wrap gap-2">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
+          Nusach
+        </Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
           {NUSACH_OPTIONS.map((opt) => (
             <Pressable
               key={opt.value}
               onPress={() => setNusach(opt.value)}
-              className={`px-4 py-2 rounded-lg border ${
-                nusach === opt.value
-                  ? "bg-blue-600 border-blue-600"
-                  : "bg-white border-gray-300"
-              }`}
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 8,
+                borderWidth: 1,
+                backgroundColor: nusach === opt.value ? colors.primary : colors.surface,
+                borderColor: nusach === opt.value ? colors.primary : colors.border,
+              }}
             >
               <Text
-                className={`text-sm font-medium ${
-                  nusach === opt.value ? "text-white" : "text-gray-700"
-                }`}
+                style={{
+                  fontSize: 14,
+                  fontWeight: "500",
+                  color: nusach === opt.value ? "#ffffff" : colors.text,
+                }}
               >
                 {opt.label}
               </Text>
@@ -59,64 +78,122 @@ export default function SettingsTab() {
       </View>
 
       {/* Text Size */}
-      <View className="bg-white mt-4 mx-4 rounded-xl p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-3">Text Size</Text>
-        <View className="flex-row items-center justify-between">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
+          Text Size
+        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Pressable
             onPress={() => setTextSize(Math.max(16, textSize - 2))}
-            className="w-10 h-10 items-center justify-center bg-gray-100 rounded-lg active:bg-gray-200"
+            style={({ pressed }) => ({
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
+              borderRadius: 8,
+            })}
           >
-            <Text className="text-lg font-bold text-gray-600">−</Text>
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>−</Text>
           </Pressable>
-          <Text className="text-base font-semibold text-gray-800">
+          <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
             {textSize}pt
           </Text>
           <Pressable
             onPress={() => setTextSize(Math.min(32, textSize + 2))}
-            className="w-10 h-10 items-center justify-center bg-gray-100 rounded-lg active:bg-gray-200"
+            style={({ pressed }) => ({
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
+              borderRadius: 8,
+            })}
           >
-            <Text className="text-lg font-bold text-gray-600">+</Text>
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>+</Text>
           </Pressable>
         </View>
       </View>
 
       {/* Toggles */}
-      <View className="bg-white mt-4 mx-4 rounded-xl p-4">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
         <SettingRow
           label="Show English Translation"
           value={showEnglish}
           onToggle={setShowEnglish}
+          colors={colors}
         />
         <SettingRow
           label="Keep Screen On While Davening"
           value={keepScreenOn}
           onToggle={setKeepScreenOn}
+          colors={colors}
         />
         <SettingRow
           label="24-Hour Time"
           value={timeFormat === "24h"}
           onToggle={(v) => setTimeFormat(v ? "24h" : "12h")}
+          colors={colors}
+          isLast
         />
       </View>
 
       {/* Dark Mode */}
-      <View className="bg-white mt-4 mx-4 rounded-xl p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-3">Dark Mode</Text>
-        <View className="flex-row gap-2">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
+          Dark Mode
+        </Text>
+        <View style={{ flexDirection: "row", gap: 8 }}>
           {(["off", "on", "system"] as const).map((mode) => (
             <Pressable
               key={mode}
               onPress={() => setDarkMode(mode)}
-              className={`px-4 py-2 rounded-lg border ${
-                darkMode === mode
-                  ? "bg-blue-600 border-blue-600"
-                  : "bg-white border-gray-300"
-              }`}
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 8,
+                borderWidth: 1,
+                backgroundColor: darkMode === mode ? colors.primary : colors.surface,
+                borderColor: darkMode === mode ? colors.primary : colors.border,
+              }}
             >
               <Text
-                className={`text-sm font-medium capitalize ${
-                  darkMode === mode ? "text-white" : "text-gray-700"
-                }`}
+                style={{
+                  fontSize: 14,
+                  fontWeight: "500",
+                  textTransform: "capitalize",
+                  color: darkMode === mode ? "#ffffff" : colors.text,
+                }}
               >
                 {mode}
               </Text>
@@ -126,28 +203,43 @@ export default function SettingsTab() {
       </View>
 
       {/* Candle Lighting Offset */}
-      <View className="bg-white mt-4 mx-4 rounded-xl p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-3">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 4 }}>
           Candle Lighting
         </Text>
-        <Text className="text-sm text-gray-500 mb-3">
+        <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>
           Minutes before shkia
         </Text>
-        <View className="flex-row gap-2">
+        <View style={{ flexDirection: "row", gap: 8 }}>
           {CANDLE_LIGHTING_OPTIONS.map((min) => (
             <Pressable
               key={min}
               onPress={() => setCandleLightingOffset(min)}
-              className={`px-4 py-2 rounded-lg border ${
-                candleLightingOffset === min
-                  ? "bg-blue-600 border-blue-600"
-                  : "bg-white border-gray-300"
-              }`}
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 8,
+                borderWidth: 1,
+                backgroundColor: candleLightingOffset === min ? colors.primary : colors.surface,
+                borderColor: candleLightingOffset === min ? colors.primary : colors.border,
+              }}
             >
               <Text
-                className={`text-sm font-medium ${
-                  candleLightingOffset === min ? "text-white" : "text-gray-700"
-                }`}
+                style={{
+                  fontSize: 14,
+                  fontWeight: "500",
+                  color: candleLightingOffset === min ? "#ffffff" : colors.text,
+                }}
               >
                 {min}
                 {min === 40 ? " (Jer.)" : ""}
@@ -158,15 +250,28 @@ export default function SettingsTab() {
       </View>
 
       {/* About */}
-      <View className="bg-white mt-4 mx-4 mb-8 rounded-xl p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-2">About</Text>
-        <Text className="text-sm text-gray-500">
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          marginTop: 16,
+          marginHorizontal: 16,
+          marginBottom: 32,
+          borderRadius: 12,
+          padding: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 8 }}>
+          About
+        </Text>
+        <Text style={{ fontSize: 13, color: colors.textMuted }}>
           Texts provided by Sefaria (sefaria.org)
         </Text>
-        <Text className="text-sm text-gray-500 mt-1">
+        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
           Zmanim powered by KosherJava/KosherZmanim
         </Text>
-        <Text className="text-sm text-gray-500 mt-1">
+        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
           Minyan data from GoDaven.com
         </Text>
       </View>
@@ -178,19 +283,32 @@ function SettingRow({
   label,
   value,
   onToggle,
+  colors,
+  isLast,
 }: {
   label: string;
   value: boolean;
   onToggle: (v: boolean) => void;
+  colors: any;
+  isLast?: boolean;
 }) {
   return (
-    <View className="flex-row justify-between items-center py-3 border-b border-gray-100 last:border-b-0">
-      <Text className="text-base text-gray-700 flex-1">{label}</Text>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingVertical: 12,
+        borderBottomWidth: isLast ? 0 : 1,
+        borderBottomColor: colors.border,
+      }}
+    >
+      <Text style={{ fontSize: 16, color: colors.text, flex: 1 }}>{label}</Text>
       <Switch
         value={value}
         onValueChange={onToggle}
-        trackColor={{ false: "#d1d5db", true: "#93c5fd" }}
-        thumbColor={value ? "#1a56db" : "#f4f3f4"}
+        trackColor={{ false: colors.border, true: colors.accent }}
+        thumbColor={value ? "#ffffff" : colors.surfaceSecondary}
       />
     </View>
   );
