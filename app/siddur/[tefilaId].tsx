@@ -44,7 +44,11 @@ export default function TefilaScreen() {
         </View>
 
         {/* Sections */}
-        {tefila.sections.map((section, index) => (
+        {tefila.sections.map((section, index) => {
+          const showSectionHeader =
+            tefila.sections.length > 1 || section.title !== tefila.name;
+
+          return (
           <View
             key={section.id}
             className={`px-4 py-5 ${
@@ -53,7 +57,8 @@ export default function TefilaScreen() {
                 : ""
             }`}
           >
-            {/* Section title */}
+            {/* Section title - hidden when same as tefila name for single-section tefilos */}
+            {showSectionHeader && (
             <View className="flex-row items-center justify-between mb-3">
               <Text className="text-sm font-bold text-blue-700 uppercase tracking-wide">
                 {section.title}
@@ -65,6 +70,7 @@ export default function TefilaScreen() {
                 {section.titleHe}
               </Text>
             </View>
+            )}
 
             {/* Instruction */}
             {section.instruction && (
@@ -101,7 +107,8 @@ export default function TefilaScreen() {
               </View>
             )}
           </View>
-        ))}
+          );
+        })}
 
         <View className="h-12" />
       </ScrollView>
