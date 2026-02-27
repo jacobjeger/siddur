@@ -38,6 +38,12 @@ import {
   kaddishDRabbanan,
 } from "./kaddish";
 import { fullHallel, halfHallel } from "./hallel";
+import { musafRoshChodesh } from "./roshChodesh";
+import { chanukahCandles, hanerosHalalu, maozTzur } from "./chanukah";
+import { avinuMalkeinu, selichos } from "./fastDays";
+import { sefirasHaOmer } from "./omer";
+import { havdala, vayitenLecha } from "./havdala";
+import { kiddushLevana, hatarasNedarim, eruvTavshilin } from "./special";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -76,6 +82,22 @@ export const ALL_TEFILOS: Tefila[] = [
   // Hallel
   fullHallel,
   halfHallel,
+  // Rosh Chodesh
+  musafRoshChodesh,
+  // Holidays
+  chanukahCandles,
+  hanerosHalalu,
+  maozTzur,
+  sefirasHaOmer,
+  avinuMalkeinu,
+  selichos,
+  eruvTavshilin,
+  // Motzaei Shabbos
+  havdala,
+  vayitenLecha,
+  // Special
+  kiddushLevana,
+  hatarasNedarim,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
