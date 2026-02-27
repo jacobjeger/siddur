@@ -210,3 +210,45 @@ export const shemonehEsrei: Tefila = {
     },
   ],
 };
+
+export const korbanos: Tefila = {
+  id: "korbanos",
+  name: "Korbanos",
+  nameHe: "קרבנות",
+  category: "shacharis",
+  timeContext: "shacharis",
+  sections: [
+    {
+      id: "parshas-hatamid",
+      title: "Parshas HaTamid",
+      titleHe: "פרשת התמיד",
+      instruction: "The passage of the daily offering (Numbers 28:1-8).",
+      text: "וַיְדַבֵּר ה' אֶל מֹשֶׁה לֵּאמֹר. צַו אֶת בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם, אֶת קָרְבָּנִי לַחְמִי לְאִשַּׁי רֵיחַ נִיחוֹחִי, תִּשְׁמְרוּ לְהַקְרִיב לִי בְּמוֹעֲדוֹ. וְאָמַרְתָּ לָהֶם, זֶה הָאִשֶּׁה אֲשֶׁר תַּקְרִיבוּ לַה', כְּבָשִׂים בְּנֵי שָׁנָה תְמִימִם, שְׁנַיִם לַיּוֹם, עוֹלָה תָמִיד. אֶת הַכֶּבֶשׂ אֶחָד תַּעֲשֶׂה בַבֹּקֶר, וְאֵת הַכֶּבֶשׂ הַשֵּׁנִי תַּעֲשֶׂה בֵּין הָעַרְבָּיִם. וַעֲשִׂירִית הָאֵיפָה סֹלֶת לְמִנְחָה, בְּלוּלָה בְּשֶׁמֶן כָּתִית, רְבִיעִת הַהִין. עוֹלַת תָּמִיד, הָעֲשֻׂיָה בְּהַר סִינַי, לְרֵיחַ נִיחוֹחַ אִשֶּׁה לַה'. וְנִסְכּוֹ רְבִיעִת הַהִין לַכֶּבֶשׂ הָאֶחָד, בַּקֹּדֶשׁ הַסֵּךְ נֶסֶךְ שֵׁכָר לַה'. וְאֵת הַכֶּבֶשׂ הַשֵּׁנִי תַּעֲשֶׂה בֵּין הָעַרְבָּיִם, כְּמִנְחַת הַבֹּקֶר וּכְנִסְכּוֹ תַּעֲשֶׂה, אִשֵּׁה רֵיחַ נִיחוֹחַ לַה'.",
+      translation: "The Lord spoke to Moses, saying: Command the children of Israel and say to them: My offering, My food for My fire-offerings, a pleasing aroma to Me, you shall be careful to offer to Me at its appointed time. And you shall say to them: This is the fire-offering which you shall offer to the Lord—two yearling male lambs without blemish, each day, as a continual burnt-offering. The one lamb you shall offer in the morning, and the other lamb you shall offer in the afternoon. And a tenth of an ephah of fine flour as a meal-offering, mixed with a quarter of a hin of crushed oil. It is a continual burnt-offering, as made at Mount Sinai, for a pleasing aroma, a fire-offering to the Lord. And its libation is a quarter of a hin for each lamb; in the holy place you shall pour a libation of strong drink to the Lord. And the second lamb you shall offer in the afternoon; like the meal-offering of the morning and its libation you shall offer it, a fire-offering of pleasing aroma to the Lord.",
+    },
+    {
+      id: "ketores",
+      title: "Ketores",
+      titleHe: "קטורת",
+      instruction: "The incense offering.",
+      text: "אַתָּה הוּא ה' אֱלֹהֵינוּ שֶׁהִקְטִירוּ אֲבוֹתֵינוּ לְפָנֶיךָ אֶת קְטֹרֶת הַסַּמִּים בִּזְמַן שֶׁבֵּית הַמִּקְדָּשׁ הָיָה קַיָּם, כַּאֲשֶׁר צִוִּיתָ אוֹתָם עַל יַד מֹשֶׁה נְבִיאֶךָ, כַּכָּתוּב בְּתוֹרָתֶךָ:\n\nוַיֹּאמֶר ה' אֶל מֹשֶׁה, קַח לְךָ סַמִּים, נָטָף וּשְׁחֵלֶת וְחֶלְבְּנָה, סַמִּים וּלְבוֹנָה זַכָּה, בַּד בְּבַד יִהְיֶה. וְעָשִׂיתָ אוֹתָהּ קְטֹרֶת, רוֹקַח מַעֲשֵׂה רוֹקֵחַ, מְמֻלָּח טָהוֹר קוֹדֶשׁ. וְשָׁחַקְתָּ מִמֶּנָּה הָדֵק, וְנָתַתָּה מִמֶּנָּה לִפְנֵי הָעֵדוּת בְּאֹהֶל מוֹעֵד, אֲשֶׁר אִוָּעֵד לְךָ שָׁמָּה, קֹדֶשׁ קָדָשִׁים תִּהְיֶה לָכֶם.\n\nפִּטּוּם הַקְּטֹרֶת: הַצֳּרִי, וְהַצִּפֹּרֶן, וְהַחֶלְבְּנָה, וְהַלְּבוֹנָה, מִשְׁקַל שִׁבְעִים שִׁבְעִים מָנֶה. מוֹר, וּקְצִיעָה, שִׁבּוֹלֶת נֵרְדְּ, וְכַרְכּוֹם, מִשְׁקַל שִׁשָּׁה עָשָׂר שִׁשָּׁה עָשָׂר מָנֶה. הַקּוֹשְׁטְ שְׁנֵים עָשָׂר, וְקִלּוּפָה שְׁלוֹשָׁה, וְקִנָּמוֹן תִּשְׁעָה.",
+      translation: "You are the Lord our God before Whom our fathers burned the incense offering when the Holy Temple stood, as You commanded them through Moses Your prophet, as it is written in Your Torah:\n\nThe Lord said to Moses: Take for yourself spices—stacte, onycha, and galbanum—spices and pure frankincense, each in equal weight. You shall make it into incense, a compound expertly blended, well-mixed, pure, and holy. You shall grind some of it finely, and place some of it before the Testimony in the Tent of Meeting where I will meet with you; it shall be to you most holy.\n\nThe composition of the incense: balm, onycha, galbanum, and frankincense, each weighing seventy maneh. Myrrh, cassia, spikenard, and saffron, each weighing sixteen maneh. Costus—twelve, aromatic bark—three, cinnamon—nine.",
+    },
+    {
+      id: "eizehu-mekoman",
+      title: "Eizehu Mekoman",
+      titleHe: "איזהו מקומן",
+      instruction: "Mishnah Zevachim, Chapter 5. Which offerings are slaughtered where.",
+      text: "אֵיזֶהוּ מְקוֹמָן שֶׁל זְבָחִים? קָדְשֵׁי קָדָשִׁים שְׁחִיטָתָן בַּצָּפוֹן. פַּר וְשָׂעִיר שֶׁל יוֹם הַכִּפּוּרִים, שְׁחִיטָתָן בַּצָּפוֹן, וְקִבּוּל דָּמָן בִּכְלִי שָׁרֵת בַּצָּפוֹן, וְדָמָן טָעוּן הַזָּיָה עַל בֵּין הַבַּדִּים, וְעַל הַפָּרוֹכֶת, וְעַל מִזְבַּח הַזָּהָב. מַתָּנָה אַחַת מֵהֶן מְעַכֶּבֶת. שְׁיָרֵי הַדָּם הָיָה שׁוֹפֵךְ עַל יְסוֹד מַעֲרָבִי שֶׁל מִזְבֵּחַ הַחִיצוֹן. אִם לֹא נָתַן, לֹא עִכֵּב.\n\nפָּרִים הַנִּשְׂרָפִים, וּשְׂעִירִים הַנִּשְׂרָפִים, שְׁחִיטָתָן בַּצָּפוֹן, וְקִבּוּל דָּמָן בִּכְלִי שָׁרֵת בַּצָּפוֹן, וְדָמָן טָעוּן הַזָּיָה עַל הַפָּרוֹכֶת וְעַל מִזְבַּח הַזָּהָב. מַתָּנָה אַחַת מֵהֶן מְעַכֶּבֶת. שְׁיָרֵי הַדָּם הָיָה שׁוֹפֵךְ עַל יְסוֹד מַעֲרָבִי שֶׁל מִזְבֵּחַ הַחִיצוֹן. אִם לֹא נָתַן, לֹא עִכֵּב. אֵלּוּ וָאֵלּוּ נִשְׂרָפִים בְּבֵית הַדֶּשֶׁן.",
+      translation: "Which are the places of the offerings? The most holy offerings are slaughtered on the north side. The bull and goat of Yom Kippur—their slaughter is on the north, and the receiving of their blood in a service vessel is on the north, and their blood requires sprinkling between the poles, on the curtain, and on the golden altar. One omission of any of these applications invalidates. The remaining blood was poured on the western base of the outer altar; if he did not pour it, it did not invalidate.\n\nBulls that are burned and goats that are burned—their slaughter is on the north, and the receiving of their blood in a service vessel is on the north, and their blood requires sprinkling on the curtain and on the golden altar. One omission of any of these applications invalidates. The remaining blood was poured on the western base of the outer altar; if he did not pour it, it did not invalidate. Both these and those are burned in the place of the ashes.",
+    },
+    {
+      id: "braisa-rabbi-yishmael",
+      title: "Braisa of Rabbi Yishmael",
+      titleHe: "ברייתא דרבי ישמעאל",
+      instruction: "The 13 principles by which the Torah is expounded.",
+      text: "רַבִּי יִשְׁמָעֵאל אוֹמֵר: בִּשְׁלוֹשׁ עֶשְׂרֵה מִדּוֹת הַתּוֹרָה נִדְרֶשֶׁת. מִקַּל וָחוֹמֶר. וּמִגְּזֵרָה שָׁוָה. מִבִּנְיַן אָב מִכָּתוּב אֶחָד, וּמִבִּנְיַן אָב מִשְּׁנֵי כְתוּבִים. מִכְּלָל וּפְרָט. וּמִפְּרָט וּכְלָל. כְּלָל וּפְרָט וּכְלָל, אִי אַתָּה דָן אֶלָּא כְּעֵין הַפְּרָט. מִכְּלָל שֶׁהוּא צָרִיךְ לִפְרָט, וּמִפְּרָט שֶׁהוּא צָרִיךְ לִכְלָל. כָּל דָּבָר שֶׁהָיָה בִּכְלָל וְיָצָא מִן הַכְּלָל לְלַמֵּד, לֹא לְלַמֵּד עַל עַצְמוֹ יָצָא, אֶלָּא לְלַמֵּד עַל הַכְּלָל כֻּלּוֹ יָצָא. כָּל דָּבָר שֶׁהָיָה בִּכְלָל וְיָצָא לִטְעוֹן טוֹעַן אֶחָד שֶׁהוּא כְעִנְיָנוֹ, יָצָא לְהָקֵל וְלֹא לְהַחְמִיר. כָּל דָּבָר שֶׁהָיָה בִּכְלָל וְיָצָא לִטְעוֹן טוֹעַן אַחֵר שֶׁלֹּא כְעִנְיָנוֹ, יָצָא לְהָקֵל וּלְהַחְמִיר. כָּל דָּבָר שֶׁהָיָה בִּכְלָל וְיָצָא לִדּוֹן בְּדָבָר חָדָשׁ, אִי אַתָּה יָכוֹל לְהַחֲזִירוֹ לִכְלָלוֹ עַד שֶׁיַּחֲזִירֶנּוּ הַכָּתוּב לִכְלָלוֹ בְּפֵרוּשׁ. דָּבָר הַלָּמֵד מֵעִנְיָנוֹ, וְדָבָר הַלָּמֵד מִסּוֹפוֹ. וְכֵן שְׁנֵי כְתוּבִים הַמַּכְחִישִׁים זֶה אֶת זֶה, עַד שֶׁיָּבוֹא הַכָּתוּב הַשְּׁלִישִׁי וְיַכְרִיעַ בֵּינֵיהֶם.",
+      translation: "Rabbi Yishmael says: The Torah is expounded through thirteen principles. From a minor premise to a major one. From a similarity of expressions. From a general principle derived from one verse, and from a general principle derived from two verses. From a general statement and a specific statement. From a specific statement and a general statement. A general statement, a specific statement, and then a general statement—you may derive only things similar to the specific statement. From a general statement that requires a specific statement, and from a specific statement that requires a general statement. Anything included in a general statement that was singled out to teach, was not singled out to teach about itself, but to teach about the entire general statement. Anything included in a general statement that was singled out to argue a point similar to its category, was singled out to be lenient and not strict. Anything included in a general statement that was singled out to argue a different point, was singled out to be both lenient and strict. Anything included in a general statement that was singled out with a new stipulation, cannot be returned to its general statement unless Scripture explicitly returns it. A matter derived from its context, and a matter derived from its conclusion. And similarly, two verses that contradict each other, until a third verse comes and resolves between them.",
+    },
+  ],
+};
