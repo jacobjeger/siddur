@@ -53,6 +53,9 @@ import {
 import { torahReadingWeekday, mondayThursdayTachanun } from "./torahReading";
 import { hoshanot, lulav, sukkah } from "./hoshanot";
 import { musafCholHamoedSukkos, musafCholHamoedPesach } from "./musaf";
+import { megillasEsther } from "./megillah";
+import { megillasEichah } from "./eichah";
+import { shirHaShirim, megillasRuth, megillasKoheles } from "./megillas";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -121,6 +124,12 @@ export const ALL_TEFILOS: Tefila[] = [
   sukkah,
   musafCholHamoedSukkos,
   musafCholHamoedPesach,
+  // Megillas
+  megillasEsther,
+  megillasEichah,
+  shirHaShirim,
+  megillasRuth,
+  megillasKoheles,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
