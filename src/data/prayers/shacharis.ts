@@ -30,6 +30,21 @@ export const birchosShachar: Tefila = {
       translation: "My God, the soul which You have placed within me is pure. You created it, You formed it, You breathed it into me, and You preserve it within me. You will eventually take it from me, and restore it within me in the time to come. As long as the soul is within me, I give thanks before You, Lord my God and God of my fathers, Master of all works, Lord of all souls. Blessed are You, Lord, Who restores souls to lifeless bodies.",
     },
     {
+      id: "morning-blessings",
+      title: "Morning Blessings",
+      titleHe: "ברכות השחר",
+      instruction: "Each blessing is recited individually. Women say the alternative noted for the third blessing.",
+      text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשַׂנִי בְּצַלְמוֹ.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשַׂנִי יִשְׂרָאֵל.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשַׂנִי בֶּן חוֹרִין.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, פּוֹקֵחַ עִוְרִים.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַלְבִּישׁ עֲרֻמִּים.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַתִּיר אֲסוּרִים.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹקֵף כְּפוּפִים.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, רוֹקַע הָאָרֶץ עַל הַמָּיִם.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה לִי כָּל צָרְכִּי.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמֵּכִין מִצְעֲדֵי גָבֶר.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אוֹזֵר יִשְׂרָאֵל בִּגְבוּרָה.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹטֵר יִשְׂרָאֵל בְּתִפְאָרָה.\n\nבָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַיָּעֵף כֹּחַ.",
+      translation: "Blessed are You, Lord our God, King of the universe, Who gives the rooster understanding to distinguish between day and night.\n\nBlessed are You... Who made me in His image.\n\nBlessed are You... Who made me a Jew.\n\nBlessed are You... Who made me free.\n\nBlessed are You... Who gives sight to the blind.\n\nBlessed are You... Who clothes the naked.\n\nBlessed are You... Who releases the bound.\n\nBlessed are You... Who straightens the bent.\n\nBlessed are You... Who spreads the earth upon the waters.\n\nBlessed are You... Who has provided me my every need.\n\nBlessed are You... Who firms man's footsteps.\n\nBlessed are You... Who girds Israel with might.\n\nBlessed are You... Who crowns Israel with glory.\n\nBlessed are You... Who gives strength to the weary.",
+    },
+    {
+      id: "hamaavir-sheina",
+      title: "HaMa'avir Sheina",
+      titleHe: "המעביר שנה",
+      text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּעֲבִיר שֵׁנָה מֵעֵינָי וּתְנוּמָה מֵעַפְעַפָּי.\n\nוִיהִי רָצוֹן מִלְּפָנֶיךָ ה' אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁתַּרְגִּילֵנוּ בְּתוֹרָתֶךָ, וְדַבְּקֵנוּ בְּמִצְוֹתֶיךָ, וְאַל תְּבִיאֵנוּ לֹא לִידֵי חֵטְא, וְלֹא לִידֵי עֲבֵרָה וְעָוֹן, וְלֹא לִידֵי נִסָּיוֹן, וְלֹא לִידֵי בִזָּיוֹן. וְאַל תַּשְׁלֶט בָּנוּ יֵצֶר הָרָע, וְהַרְחִיקֵנוּ מֵאָדָם רָע וּמֵחָבֵר רָע. וְדַבְּקֵנוּ בְּיֵצֶר הַטּוֹב וּבְמַעֲשִׂים טוֹבִים, וְכוֹף אֶת יִצְרֵנוּ לְהִשְׁתַּעְבֶּד לָךְ. וּתְנֵנוּ הַיּוֹם וּבְכָל יוֹם לְחֵן וּלְחֶסֶד וּלְרַחֲמִים בְּעֵינֶיךָ וּבְעֵינֵי כָל רוֹאֵינוּ, וְתִגְמְלֵנוּ חֲסָדִים טוֹבִים. בָּרוּךְ אַתָּה ה', הַגּוֹמֵל חֲסָדִים טוֹבִים לְעַמּוֹ יִשְׂרָאֵל.",
+      translation: "Blessed are You, Lord our God, King of the universe, Who removes sleep from my eyes and slumber from my eyelids.\n\nMay it be Your will, Lord our God and God of our fathers, that You accustom us to Your Torah, and attach us to Your commandments. Do not bring us into the grasp of sin, transgression, iniquity, temptation, or disgrace. Do not let the evil inclination dominate us, and keep us far from a bad person and a bad companion. Attach us to the good inclination and to good deeds, and bend our inclination to be subservient to You. Grant us today and every day grace, kindness, and mercy in Your eyes and in the eyes of all who see us, and bestow upon us beneficent kindnesses. Blessed are You, Lord, Who bestows beneficent kindnesses upon His people Israel.",
+    },
+    {
       id: "birchos-hatorah",
       title: "Birchos HaTorah",
       titleHe: "ברכות התורה",
