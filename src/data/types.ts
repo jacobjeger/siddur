@@ -31,6 +31,9 @@ export type TefilaCategory =
   | "maariv"
   | "blessings"
   | "shabbos"
+  | "tehillim"
+  | "holidays"
+  | "lifecycle"
   | "other";
 
 export interface TefilaCategoryInfo {
@@ -38,6 +41,30 @@ export interface TefilaCategoryInfo {
   name: string;
   nameHe: string;
   icon: string;
+}
+
+export interface InsertionContext {
+  season: "winter" | "summer";
+  isRoshChodesh: boolean;
+  isCholHamoed: boolean;
+  holiday?: "chanukah" | "purim" | "tishaBAv" | "fastDay" | "roshHashana" | "yomKippur";
+  isFastDay: boolean;
+  isMotzaeiShabbos: boolean;
+  isAseresYemeiTeshuva: boolean;
+}
+
+export interface ConditionalInsertion {
+  id: string;
+  name: string;
+  nameHe: string;
+  /** Which bracha/section this insertion applies to */
+  targetSectionId: string;
+  /** Where in the target section to insert */
+  position: "before" | "after" | "replace";
+  /** When this insertion is active */
+  condition: (ctx: InsertionContext) => boolean;
+  text: string | NusachVariants;
+  translation?: string | NusachVariants;
 }
 
 export function getTextForNusach(

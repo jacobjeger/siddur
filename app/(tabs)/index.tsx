@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +11,8 @@ import { useTheme } from "../../src/hooks/useTheme";
 import { getTefilosForTime } from "../../src/data/prayers";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
+import { getActiveInsertionNames, shouldSayTachanun, getHallelType } from "../../src/utils/prayerAssembler";
+import { getInsertionContext } from "../../src/utils/jewishCalendar";
 
 const TEFILA_LABELS: Record<string, { en: string; he: string }> = {
   shacharis: { en: "Shacharis", he: "שחרית" },
@@ -29,6 +32,11 @@ export default function SiddurTab() {
   const tefilosForTime = getTefilosForTime(
     tefilaType === "none" ? "shacharis" : tefilaType
   );
+
+  const insertionContext = useMemo(() => getInsertionContext(), []);
+  const activeInsertions = useMemo(() => getActiveInsertionNames(insertionContext), [insertionContext]);
+  const sayTachanun = useMemo(() => shouldSayTachanun(insertionContext), [insertionContext]);
+  const hallelType = useMemo(() => getHallelType(insertionContext), [insertionContext]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -141,6 +149,74 @@ export default function SiddurTab() {
             </View>
           </TouchableOpacity>
         </View>
+
+        {/* Today's davening info */}
+        {(activeInsertions.length > 0 || !sayTachanun || hallelType !== "none") && (
+          <View style={{ marginBottom: 20 }}>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: "600",
+                color: colors.textMuted,
+                textTransform: "uppercase",
+                letterSpacing: 0.5,
+                marginBottom: 10,
+                marginLeft: 4,
+              }}
+            >
+              Today's Davening
+            </Text>
+            <View
+              style={{
+                backgroundColor: colors.surface,
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: colors.border,
+                padding: 14,
+              }}
+            >
+              {activeInsertions.length > 0 && (
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+                  {activeInsertions.map((name) => (
+                    <View
+                      key={name}
+                      style={{
+                        backgroundColor: colors.accent + "22",
+                        borderRadius: 12,
+                        paddingHorizontal: 10,
+                        paddingVertical: 4,
+                      }}
+                    >
+                      <Text style={{ fontSize: 11, color: colors.accent, fontWeight: "600" }}>
+                        {name}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+              <View style={{ flexDirection: "row", gap: 16 }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Ionicons
+                    name={sayTachanun ? "checkmark-circle" : "close-circle"}
+                    size={16}
+                    color={sayTachanun ? colors.accent : colors.textMuted}
+                  />
+                  <Text style={{ fontSize: 13, color: colors.textSecondary, marginLeft: 4 }}>
+                    {sayTachanun ? "Tachanun" : "No Tachanun"}
+                  </Text>
+                </View>
+                {hallelType !== "none" && (
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons name="musical-notes" size={16} color={colors.accent} />
+                    <Text style={{ fontSize: 13, color: colors.textSecondary, marginLeft: 4 }}>
+                      {hallelType === "full" ? "Full Hallel" : "Half Hallel"}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
+          </View>
+        )}
 
         {/* Individual tefilos for current time */}
         {tefilosForTime.length > 0 && (

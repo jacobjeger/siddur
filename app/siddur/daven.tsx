@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -5,6 +6,8 @@ import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
+import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
+import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import type { Tefila } from "../../src/data/types";
 
 export default function DavenScreen() {
@@ -13,10 +16,14 @@ export default function DavenScreen() {
   const { colors } = useTheme();
   const router = useRouter();
 
+  const context = useMemo(() => getInsertionContext(), []);
+  const activeInsertions = useMemo(() => getActiveInsertionNames(context), [context]);
+
   const ids = (tefilaIds ?? "").split(",").filter(Boolean);
   const tefilos: Tefila[] = ids
     .map((id) => getTefilaById(id))
-    .filter((t): t is Tefila => t != null);
+    .filter((t): t is Tefila => t != null)
+    .map((t) => assemblePrayer(t, context));
 
   if (tefilos.length === 0) {
     return (
@@ -59,6 +66,38 @@ export default function DavenScreen() {
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
       >
+        {/* Active insertion badges */}
+        {activeInsertions.length > 0 && (
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              paddingHorizontal: 16,
+              paddingVertical: 10,
+              gap: 6,
+              backgroundColor: colors.surface,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+            }}
+          >
+            {activeInsertions.map((name) => (
+              <View
+                key={name}
+                style={{
+                  backgroundColor: colors.accent + "22",
+                  borderRadius: 12,
+                  paddingHorizontal: 10,
+                  paddingVertical: 4,
+                }}
+              >
+                <Text style={{ fontSize: 11, color: colors.accent, fontWeight: "600" }}>
+                  {name}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+
         {tefilos.map((tefila, tefilaIndex) => (
           <View key={tefila.id}>
             {/* Tefila divider header */}
