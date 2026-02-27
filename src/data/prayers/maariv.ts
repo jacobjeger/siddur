@@ -8,11 +8,26 @@ export const shemaMaariv: Tefila = {
   timeContext: "maariv",
   sections: [
     {
+      id: "maariv-barchu",
+      title: "Barchu",
+      titleHe: "ברכו",
+      instruction: "The call to prayer. Bow when saying Barchu.",
+      text: "בָּרְכוּ אֶת ה' הַמְבוֹרָךְ.\n\nבָּרוּךְ ה' הַמְבוֹרָךְ לְעוֹלָם וָעֶד.",
+      translation: "Bless the Lord, the blessed One.\n\nBlessed is the Lord, the blessed One, forever and ever.",
+    },
+    {
       id: "maariv-birchos-shema-1",
       title: "Maariv Aravim",
       titleHe: "מעריב ערבים",
       text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים, בְּחָכְמָה פּוֹתֵחַ שְׁעָרִים, וּבִתְבוּנָה מְשַׁנֶּה עִתִּים, וּמַחֲלִיף אֶת הַזְּמַנִּים, וּמְסַדֵּר אֶת הַכּוֹכָבִים בְּמִשְׁמְרוֹתֵיהֶם בָּרָקִיעַ כִּרְצוֹנוֹ. בּוֹרֵא יוֹם וָלָיְלָה, גּוֹלֵל אוֹר מִפְּנֵי חֹשֶׁךְ, וְחֹשֶׁךְ מִפְּנֵי אוֹר. וּמַעֲבִיר יוֹם וּמֵבִיא לָיְלָה, וּמַבְדִּיל בֵּין יוֹם וּבֵין לָיְלָה, ה' צְבָאוֹת שְׁמוֹ. אֵל חַי וְקַיָּם, תָּמִיד יִמְלוֹךְ עָלֵינוּ לְעוֹלָם וָעֶד. בָּרוּךְ אַתָּה ה', הַמַּעֲרִיב עֲרָבִים.",
       translation: "Blessed are You, Lord our God, King of the universe, Who by His word brings on evenings, with wisdom opens gates, with understanding changes times and varies seasons, and orders the stars in their watches in the sky according to His will. He creates day and night, rolling away light before darkness and darkness before light. He causes day to pass and brings night, and distinguishes between day and night; the Lord of hosts is His Name. Blessed are You, Lord, Who brings on evenings.",
+    },
+    {
+      id: "maariv-ahavas-olam",
+      title: "Ahavas Olam",
+      titleHe: "אהבת עולם",
+      text: "אַהֲבַת עוֹלָם בֵּית יִשְׂרָאֵל עַמְּךָ אָהָבְתָּ. תּוֹרָה וּמִצְוֹת, חֻקִּים וּמִשְׁפָּטִים, אוֹתָנוּ לִמַּדְתָּ. עַל כֵּן ה' אֱלֹהֵינוּ, בְּשָׁכְבֵנוּ וּבְקוּמֵנוּ נָשִׂיחַ בְּחֻקֶּיךָ, וְנִשְׂמַח בְּדִבְרֵי תוֹרָתֶךָ וּבְמִצְוֹתֶיךָ לְעוֹלָם וָעֶד. כִּי הֵם חַיֵּינוּ וְאוֹרֶךְ יָמֵינוּ, וּבָהֶם נֶהְגֶּה יוֹמָם וָלָיְלָה. וְאַהֲבָתְךָ אַל תָּסִיר מִמֶּנּוּ לְעוֹלָמִים. בָּרוּךְ אַתָּה ה', אוֹהֵב עַמּוֹ יִשְׂרָאֵל.",
+      translation: "With everlasting love You have loved the House of Israel, Your people. Torah and commandments, statutes and laws, You have taught us. Therefore, Lord our God, when we lie down and when we rise, we will speak of Your statutes, and rejoice in the words of Your Torah and in Your commandments forever and ever. For they are our life and the length of our days, and we will meditate on them day and night. And may Your love never be removed from us. Blessed are You, Lord, Who loves His people Israel.",
     },
     {
       id: "maariv-shema",
@@ -28,6 +43,30 @@ export const shemaMaariv: Tefila = {
       titleHe: "ואהבת",
       text: "וְאָהַבְתָּ אֵת ה' אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה, אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם, עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ, וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ, וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטוֹטָפוֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.",
       translation: "And you shall love the Lord your God with all your heart, with all your soul, and with all your might. And these words which I command you today shall be upon your heart. You shall teach them thoroughly to your children, and you shall speak of them when you sit in your house, when you walk on the road, when you lie down and when you rise. You shall bind them as a sign upon your hand, and they shall be for a reminder between your eyes. And you shall write them upon the doorposts of your house and upon your gates.",
+    },
+    {
+      id: "maariv-vehaya-im-shamoa",
+      title: "V'haya Im Shamoa",
+      titleHe: "והיה אם שמוע",
+      instruction: "Second paragraph of Shema (Deuteronomy 11:13-21).",
+      text: "וְהָיָה אִם שָׁמוֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי, אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם, לְאַהֲבָה אֶת ה' אֱלֹהֵיכֶם וּלְעָבְדוֹ, בְּכָל לְבַבְכֶם וּבְכָל נַפְשְׁכֶם. וְנָתַתִּי מְטַר אַרְצְכֶם בְּעִתּוֹ, יוֹרֶה וּמַלְקוֹשׁ, וְאָסַפְתָּ דְגָנֶךָ וְתִירוֹשְׁךָ וְיִצְהָרֶךָ. וְנָתַתִּי עֵשֶׂב בְּשָׂדְךָ לִבְהֶמְתֶּךָ, וְאָכַלְתָּ וְשָׂבָעְתָּ. הִשָּׁמְרוּ לָכֶם פֶּן יִפְתֶּה לְבַבְכֶם, וְסַרְתֶּם וַעֲבַדְתֶּם אֱלֹהִים אֲחֵרִים, וְהִשְׁתַּחֲוִיתֶם לָהֶם. וְחָרָה אַף ה' בָּכֶם, וְעָצַר אֶת הַשָּׁמַיִם וְלֹא יִהְיֶה מָטָר, וְהָאֲדָמָה לֹא תִתֵּן אֶת יְבוּלָהּ, וַאֲבַדְתֶּם מְהֵרָה מֵעַל הָאָרֶץ הַטּוֹבָה אֲשֶׁר ה' נוֹתֵן לָכֶם. וְשַׂמְתֶּם אֶת דְּבָרַי אֵלֶּה עַל לְבַבְכֶם וְעַל נַפְשְׁכֶם, וּקְשַׁרְתֶּם אוֹתָם לְאוֹת עַל יֶדְכֶם, וְהָיוּ לְטוֹטָפוֹת בֵּין עֵינֵיכֶם. וְלִמַּדְתֶּם אוֹתָם אֶת בְּנֵיכֶם, לְדַבֵּר בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ, וּבְקוּמֶךָ. וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ. לְמַעַן יִרְבּוּ יְמֵיכֶם וִימֵי בְנֵיכֶם, עַל הָאֲדָמָה אֲשֶׁר נִשְׁבַּע ה' לַאֲבוֹתֵיכֶם לָתֵת לָהֶם, כִּימֵי הַשָּׁמַיִם עַל הָאָרֶץ.",
+      translation: "And it will be, if you hearken to My commandments that I command you today, to love the Lord your God and to serve Him with all your heart and with all your soul, I will give rain for your land at its proper time, the early rain and the late rain, and you will gather your grain, your wine, and your oil. And I will give grass in your fields for your livestock, and you will eat and be satisfied. Beware lest your heart be misled, and you turn away and worship other gods and bow to them. And the anger of the Lord will burn against you, and He will close the heavens and there will be no rain, and the ground will not yield its produce, and you will perish quickly from the good land that the Lord gives you. Place these words of Mine upon your heart and upon your soul, bind them as a sign on your hand, and they shall be as reminders between your eyes. Teach them to your children, to speak of them when you sit in your house, when you walk on the road, when you lie down and when you rise. Write them upon the doorposts of your house and upon your gates—so that your days and the days of your children may be multiplied on the land that the Lord swore to your fathers to give them, as the days of the heavens above the earth.",
+    },
+    {
+      id: "maariv-vayomer",
+      title: "Vayomer",
+      titleHe: "ויאמר",
+      instruction: "Third paragraph of Shema (Numbers 15:37-41).",
+      text: "וַיֹּאמֶר ה' אֶל מֹשֶׁה לֵּאמֹר. דַּבֵּר אֶל בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם, וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדוֹרוֹתָם, וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת. וְהָיָה לָכֶם לְצִיצִת, וּרְאִיתֶם אוֹתוֹ וּזְכַרְתֶּם אֶת כָּל מִצְוֹת ה', וַעֲשִׂיתֶם אוֹתָם, וְלֹא תָתוּרוּ אַחֲרֵי לְבַבְכֶם וְאַחֲרֵי עֵינֵיכֶם, אֲשֶׁר אַתֶּם זוֹנִים אַחֲרֵיהֶם. לְמַעַן תִּזְכְּרוּ וַעֲשִׂיתֶם אֶת כָּל מִצְוֹתָי, וִהְיִיתֶם קְדוֹשִׁים לֵאלֹהֵיכֶם. אֲנִי ה' אֱלֹהֵיכֶם, אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם, לִהְיוֹת לָכֶם לֵאלֹהִים, אֲנִי ה' אֱלֹהֵיכֶם.",
+      translation: "The Lord said to Moses, saying: Speak to the children of Israel and say to them, they shall make for themselves fringes on the corners of their garments throughout their generations, and they shall place on the fringe of each corner a thread of blue. It shall be for you as fringes, and you shall see it and remember all the commandments of the Lord and do them, and you shall not follow after your heart and after your eyes, which you go astray after. So that you may remember and do all My commandments, and be holy to your God. I am the Lord your God, Who brought you out of the land of Egypt to be your God; I am the Lord your God.",
+    },
+    {
+      id: "maariv-emes-v-emunah",
+      title: "Emes V'Emunah",
+      titleHe: "אמת ואמונה",
+      instruction: "First bracha after Shema at Maariv.",
+      text: "אֱמֶת וֶאֱמוּנָה כָּל זֹאת, וְקַיָּם עָלֵינוּ, כִּי הוּא ה' אֱלֹהֵינוּ וְאֵין זוּלָתוֹ, וַאֲנַחְנוּ יִשְׂרָאֵל עַמּוֹ. הַפּוֹדֵנוּ מִיַּד מְלָכִים, מַלְכֵּנוּ הַגּוֹאֲלֵנוּ מִכַּף כָּל הֶעָרִיצִים. הָאֵל הַנִּפְרָע לָנוּ מִצָּרֵינוּ, וְהַמְשַׁלֵּם גְּמוּל לְכָל אוֹיְבֵי נַפְשֵׁנוּ. הָעוֹשֶׂה גְדוֹלוֹת עַד אֵין חֵקֶר, וְנִפְלָאוֹת עַד אֵין מִסְפָּר. הַשָּׂם נַפְשֵׁנוּ בַּחַיִּים, וְלֹא נָתַן לַמּוֹט רַגְלֵנוּ. הַמַּדְרִיכֵנוּ עַל בָּמוֹת אוֹיְבֵינוּ, וַיָּרֶם קַרְנֵנוּ עַל כָּל שׂוֹנְאֵינוּ. הָעוֹשֶׂה לָּנוּ נִסִּים וּנְקָמָה בְּפַרְעוֹה, אוֹתוֹת וּמוֹפְתִים בְּאַדְמַת בְּנֵי חָם. הַמַּכֶּה בְעֶבְרָתוֹ כָּל בְּכוֹרֵי מִצְרָיִם, וַיּוֹצִיא אֶת עַמּוֹ יִשְׂרָאֵל מִתּוֹכָם לְחֵרוּת עוֹלָם. הַמַּעֲבִיר בָּנָיו בֵּין גִּזְרֵי יַם סוּף, אֶת רוֹדְפֵיהֶם וְאֶת שׂוֹנְאֵיהֶם בִּתְהוֹמוֹת טִבַּע. וְרָאוּ בָנָיו גְּבוּרָתוֹ, שִׁבְּחוּ וְהוֹדוּ לִשְׁמוֹ. וּמַלְכוּתוֹ בְּרָצוֹן קִבְּלוּ עֲלֵיהֶם. מֹשֶׁה וּבְנֵי יִשְׂרָאֵל לְךָ עָנוּ שִׁירָה בְּשִׂמְחָה רַבָּה, וְאָמְרוּ כֻלָּם:\n\nמִי כָמוֹכָה בָּאֵלִם ה', מִי כָּמוֹכָה נֶאְדָּר בַּקֹּדֶשׁ, נוֹרָא תְהִלּוֹת, עוֹשֵׂה פֶלֶא.\n\nמַלְכוּתְךָ רָאוּ בָנֶיךָ, בּוֹקֵעַ יָם לִפְנֵי מֹשֶׁה, זֶה אֵלִי עָנוּ וְאָמְרוּ: ה' יִמְלוֹךְ לְעוֹלָם וָעֶד.\n\nוְנֶאֱמַר: כִּי פָדָה ה' אֶת יַעֲקֹב, וּגְאָלוֹ מִיַּד חָזָק מִמֶּנּוּ. בָּרוּךְ אַתָּה ה', גָּאַל יִשְׂרָאֵל.",
+      translation: "True and faithful is all this, and it is established upon us, that He is the Lord our God and there is none besides Him, and we are Israel His people. He redeems us from the hand of kings; our King, Who delivers us from the grip of all tyrants. The God Who exacts retribution for us from our adversaries, and Who brings just reward to all the enemies of our soul. Who does great things beyond investigation, and wonders beyond number. Who sets our soul among the living, and does not allow our foot to falter. Who leads us upon the heights of our enemies, and raises our pride over all who hate us. Who performs miracles for us and vengeance upon Pharaoh, signs and wonders in the land of the children of Ham. Who smote all the firstborn of Egypt in His fury, and brought out His people Israel from among them to eternal freedom. Who brought His children through the split parts of the Sea of Reeds, and plunged their pursuers and their enemies into the depths. His children beheld His might; they praised and gave thanks to His Name. And His kingdom they willingly accepted upon themselves. Moses and the children of Israel sang a song to You with great joy, and they all said:\n\nWho is like You among the mighty, Lord; who is like You, adorned in holiness, awesome in praises, doing wonders.\n\nYour children beheld Your majesty as You split the sea before Moses; 'This is my God,' they exclaimed, and said: 'The Lord shall reign forever and ever.'\n\nAnd it is said: For the Lord has redeemed Jacob, and delivered him from the hand of one mightier than he. Blessed are You, Lord, Who redeemed Israel.",
     },
     {
       id: "maariv-hashkiveinu",
