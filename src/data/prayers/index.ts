@@ -37,6 +37,7 @@ import {
   kaddishYasom,
   kaddishDRabbanan,
 } from "./kaddish";
+import { fullHallel, halfHallel } from "./hallel";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -72,6 +73,9 @@ export const ALL_TEFILOS: Tefila[] = [
   kaddishShalem,
   kaddishYasom,
   kaddishDRabbanan,
+  // Hallel
+  fullHallel,
+  halfHallel,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
