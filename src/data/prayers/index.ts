@@ -44,6 +44,15 @@ import { avinuMalkeinu, selichos } from "./fastDays";
 import { sefirasHaOmer } from "./omer";
 import { havdala, vayitenLecha } from "./havdala";
 import { kiddushLevana, hatarasNedarim, eruvTavshilin } from "./special";
+import {
+  shevaBrachos,
+  brisMilah,
+  pidyonHaben,
+  marriageBlessings,
+} from "./lifecycle";
+import { torahReadingWeekday, mondayThursdayTachanun } from "./torahReading";
+import { hoshanot, lulav, sukkah } from "./hoshanot";
+import { musafCholHamoedSukkos, musafCholHamoedPesach } from "./musaf";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -98,6 +107,20 @@ export const ALL_TEFILOS: Tefila[] = [
   // Special
   kiddushLevana,
   hatarasNedarim,
+  // Torah Reading
+  torahReadingWeekday,
+  mondayThursdayTachanun,
+  // Lifecycle
+  shevaBrachos,
+  brisMilah,
+  pidyonHaben,
+  marriageBlessings,
+  // Chol HaMoed / Sukkos
+  hoshanot,
+  lulav,
+  sukkah,
+  musafCholHamoedSukkos,
+  musafCholHamoedPesach,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
