@@ -57,7 +57,7 @@ export const bedtimeShema: Tefila = {
   id: "bedtime-shema",
   name: "Bedtime Shema",
   nameHe: "קריאת שמע על המטה",
-  category: "other",
+  category: "blessings",
   timeContext: "anytime",
   sections: [
     {
@@ -73,6 +73,29 @@ export const bedtimeShema: Tefila = {
       titleHe: "שמע",
       text: "שְׁמַע יִשְׂרָאֵל, ה' אֱלֹהֵינוּ, ה' אֶחָד.\n\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.\n\nוְאָהַבְתָּ אֵת ה' אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה, אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם, עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ, וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ, וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטוֹטָפוֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.",
       translation: "Hear, O Israel, the Lord is our God, the Lord is One.\n\nBlessed is the Name of His glorious kingdom forever and ever.\n\nAnd you shall love the Lord your God with all your heart, with all your soul, and with all your might. And these words which I command you today shall be upon your heart. You shall teach them thoroughly to your children, and you shall speak of them when you sit in your house, when you walk on the road, when you lie down and when you rise. You shall bind them as a sign upon your hand, and they shall be for a reminder between your eyes. And you shall write them upon the doorposts of your house and upon your gates.",
+    },
+    {
+      id: "bs-yoshev-bseser",
+      title: "Yoshev B'Seser - Psalm 91",
+      titleHe: "יושב בסתר - תהלים צא",
+      instruction: "The protective psalm recited at bedtime.",
+      text: "יֹשֵׁב בְּסֵתֶר עֶלְיוֹן, בְּצֵל שַׁדַּי יִתְלוֹנָן.\nאֹמַר לַה' מַחְסִי וּמְצוּדָתִי, אֱלֹהַי אֶבְטַח בּוֹ.\nכִּי הוּא יַצִּילְךָ מִפַּח יָקוּשׁ, מִדֶּבֶר הַוּוֹת.\nבְּאֶבְרָתוֹ יָסֶךְ לָךְ, וְתַחַת כְּנָפָיו תֶּחְסֶה, צִנָּה וְסֹחֵרָה אֲמִתּוֹ.\nלֹא תִירָא מִפַּחַד לָיְלָה, מֵחֵץ יָעוּף יוֹמָם.\nמִדֶּבֶר בָּאֹפֶל יַהֲלֹךְ, מִקֶּטֶב יָשׁוּד צָהֳרָיִם.\nיִפֹּל מִצִּדְּךָ אֶלֶף, וּרְבָבָה מִימִינֶךָ, אֵלֶיךָ לֹא יִגָּשׁ.\nרַק בְּעֵינֶיךָ תַבִּיט, וְשִׁלֻּמַת רְשָׁעִים תִּרְאֶה.\nכִּי אַתָּה ה' מַחְסִי, עֶלְיוֹן שַׂמְתָּ מְעוֹנֶךָ.\nלֹא תְאֻנֶּה אֵלֶיךָ רָעָה, וְנֶגַע לֹא יִקְרַב בְּאָהֳלֶךָ.\nכִּי מַלְאָכָיו יְצַוֶּה לָּךְ, לִשְׁמָרְךָ בְּכָל דְּרָכֶיךָ.\nעַל כַּפַּיִם יִשָּׂאוּנְךָ, פֶּן תִּגֹּף בָּאֶבֶן רַגְלֶךָ.\nעַל שַׁחַל וָפֶתֶן תִּדְרֹךְ, תִּרְמֹס כְּפִיר וְתַנִּין.\nכִּי בִי חָשַׁק וַאֲפַלְּטֵהוּ, אֲשַׂגְּבֵהוּ כִּי יָדַע שְׁמִי.\nיִקְרָאֵנִי וְאֶעֱנֵהוּ, עִמּוֹ אָנֹכִי בְצָרָה, אֲחַלְּצֵהוּ וַאֲכַבְּדֵהוּ.\nאֹרֶךְ יָמִים אַשְׂבִּיעֵהוּ, וְאַרְאֵהוּ בִּישׁוּעָתִי.",
+      translation: "He who dwells in the shelter of the Most High, who abides in the shadow of the Almighty—\nI say of the Lord, He is my refuge and my fortress, my God in Whom I trust.\nFor He will save you from the snare of the fowler, from the destructive pestilence.\nWith His pinions He will cover you, and beneath His wings you will find refuge; His truth is a shield and armor.\nYou will not fear the terror of night, nor the arrow that flies by day,\nNor the pestilence that walks in darkness, nor the destruction that ravages at noon.\nA thousand will fall at your side and ten thousand at your right hand, but it shall not come near you.\nOnly with your eyes will you look and see the punishment of the wicked.\nBecause you have made the Lord your refuge, the Most High your dwelling place,\nNo evil will befall you, nor will any plague come near your tent.\nFor He will command His angels concerning you, to guard you in all your ways.\nThey will carry you on their hands, lest you strike your foot against a stone.\nYou will tread upon the lion and the cobra; you will trample the young lion and the serpent.\nBecause he clings to Me with love, I will deliver him; I will protect him because he knows My Name.\nWhen he calls upon Me, I will answer him; I am with him in distress, I will rescue him and honor him.\nWith length of days I will satisfy him, and I will show him My salvation.",
+    },
+    {
+      id: "bs-vhinei-kel",
+      title: "V'Hinei Kel Yeshuasi",
+      titleHe: "והנה אל ישועתי",
+      text: "הִנֵּה אֵל יְשׁוּעָתִי, אֶבְטַח וְלֹא אֶפְחָד, כִּי עָזִּי וְזִמְרָת יָהּ ה', וַיְהִי לִי לִישׁוּעָה.\nוּשְׁאַבְתֶּם מַיִם בְּשָׂשׂוֹן, מִמַּעַיְנֵי הַיְשׁוּעָה.\nלַה' הַיְשׁוּעָה, עַל עַמְּךָ בִרְכָתֶךָ סֶּלָה.\nה' צְבָאוֹת עִמָּנוּ, מִשְׂגָּב לָנוּ אֱלֹהֵי יַעֲקֹב סֶלָה.\nה' צְבָאוֹת, אַשְׁרֵי אָדָם בֹּטֵחַ בָּךְ.\nה' הוֹשִׁיעָה, הַמֶּלֶךְ יַעֲנֵנוּ בְיוֹם קָרְאֵנוּ.",
+      translation: "Behold, God is my salvation; I will trust and not be afraid, for God the Lord is my strength and song, and He has become my salvation.\nYou will draw water with joy from the springs of salvation.\nSalvation is the Lord's; upon Your people is Your blessing, Selah.\nThe Lord of hosts is with us; the God of Jacob is our stronghold, Selah.\nLord of hosts, happy is the man who trusts in You.\nLord, save! May the King answer us on the day we call.",
+    },
+    {
+      id: "bs-adon-olam",
+      title: "Adon Olam",
+      titleHe: "אדון עולם",
+      instruction: "Closing hymn of the Bedtime Shema.",
+      text: "אֲדוֹן עוֹלָם אֲשֶׁר מָלַךְ, בְּטֶרֶם כָּל יְצִיר נִבְרָא.\nלְעֵת נַעֲשָׂה בְחֶפְצוֹ כֹּל, אֲזַי מֶלֶךְ שְׁמוֹ נִקְרָא.\nוְאַחֲרֵי כִּכְלוֹת הַכֹּל, לְבַדּוֹ יִמְלוֹךְ נוֹרָא.\nוְהוּא הָיָה, וְהוּא הֹוֶה, וְהוּא יִהְיֶה בְּתִפְאָרָה.\nוְהוּא אֶחָד וְאֵין שֵׁנִי, לְהַמְשִׁיל לוֹ לְהַחְבִּירָה.\nבְּלִי רֵאשִׁית בְּלִי תַכְלִית, וְלוֹ הָעֹז וְהַמִּשְׂרָה.\nוְהוּא אֵלִי וְחַי גּוֹאֲלִי, וְצוּר חֶבְלִי בְּעֵת צָרָה.\nוְהוּא נִסִּי וּמָנוֹס לִי, מְנָת כּוֹסִי בְּיוֹם אֶקְרָא.\nבְּיָדוֹ אַפְקִיד רוּחִי, בְּעֵת אִישַׁן וְאָעִירָה.\nוְעִם רוּחִי גְּוִיָּתִי, ה' לִי וְלֹא אִירָא.",
+      translation: "Lord of the universe, Who reigned before any creature was created.\nAt the time when all was made by His will, then was His Name proclaimed King.\nAnd after all things shall cease to be, He alone will reign in awesome majesty.\nHe was, He is, and He will be in glory.\nHe is One, and there is no second to compare to Him, to associate with Him.\nWithout beginning, without end, to Him is the power and the dominion.\nHe is my God and my living Redeemer, the Rock of my suffering in time of distress.\nHe is my banner and my refuge, the portion of my cup on the day I call.\nInto His hand I commit my spirit, when I sleep and when I wake.\nAnd with my spirit my body too; the Lord is with me, I shall not fear.",
     },
   ],
 };
