@@ -56,6 +56,12 @@ import { musafCholHamoedSukkos, musafCholHamoedPesach } from "./musaf";
 import { megillasEsther } from "./megillah";
 import { megillasEichah } from "./eichah";
 import { shirHaShirim, megillasRuth, megillasKoheles } from "./megillas";
+import { psalms1to25 } from "./psalms1to25";
+import { psalms26to50 } from "./psalms26to50";
+import { psalms51to75 } from "./psalms51to75";
+import { psalms76to100 } from "./psalms76to100";
+import { psalms101to125 } from "./psalms101to125";
+import { psalms126to150 } from "./psalms126to150";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -130,6 +136,13 @@ export const ALL_TEFILOS: Tefila[] = [
   shirHaShirim,
   megillasRuth,
   megillasKoheles,
+  // Tehillim (150 Psalms)
+  ...psalms1to25,
+  ...psalms26to50,
+  ...psalms51to75,
+  ...psalms76to100,
+  ...psalms101to125,
+  ...psalms126to150,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
