@@ -2,24 +2,50 @@ import type { Tefila, TefilaCategory } from "../types";
 import { modehAni } from "./modehAni";
 import {
   birchosShachar,
+  korbanos,
   pesukeiDezimra,
   shemaShacharis,
   shemonehEsrei,
+  tachanun,
+  uvaLetzion,
+  aleinu,
+  shirShelYom,
 } from "./shacharis";
-import { ashrei, shemonehEsreiMincha } from "./mincha";
-import { shemaMaariv, shemonehEsreiMaariv } from "./maariv";
+import {
+  ashrei,
+  shemonehEsreiMincha,
+  tachanunMincha,
+  aleinuMincha,
+} from "./mincha";
+import {
+  shemaMaariv,
+  shemonehEsreiMaariv,
+  aleinuMaariv,
+} from "./maariv";
 import { birkasHamazon, bedtimeShema, travelersPrayer } from "./blessings";
 
 export const ALL_TEFILOS: Tefila[] = [
+  // Morning
   modehAni,
   birchosShachar,
+  korbanos,
   pesukeiDezimra,
   shemaShacharis,
   shemonehEsrei,
+  tachanun,
+  uvaLetzion,
+  aleinu,
+  shirShelYom,
+  // Afternoon
   ashrei,
   shemonehEsreiMincha,
+  tachanunMincha,
+  aleinuMincha,
+  // Evening
   shemaMaariv,
   shemonehEsreiMaariv,
+  aleinuMaariv,
+  // Blessings & Other
   birkasHamazon,
   bedtimeShema,
   travelersPrayer,

@@ -238,3 +238,27 @@ export const shemonehEsreiMaariv: Tefila = {
     },
   ],
 };
+
+export const aleinuMaariv: Tefila = {
+  id: "aleinu-maariv",
+  name: "Aleinu",
+  nameHe: "עָלֵינוּ",
+  category: "maariv",
+  timeContext: "maariv",
+  sections: [
+    {
+      id: "maariv-aleinu",
+      title: "Aleinu",
+      titleHe: "עָלֵינוּ",
+      text: "עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה, שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגוֹרָלֵנוּ כְּכָל הֲמוֹנָם.\n\nוַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים הַקָּדוֹשׁ בָּרוּךְ הוּא, שֶׁהוּא נוֹטֶה שָׁמַיִם וְיוֹסֵד אָרֶץ, וּמוֹשַׁב יְקָרוֹ בַּשָּׁמַיִם מִמַּעַל, וּשְׁכִינַת עֻזּוֹ בְּגָבְהֵי מְרוֹמִים. הוּא אֱלֹהֵינוּ אֵין עוֹד, אֱמֶת מַלְכֵּנוּ אֶפֶס זוּלָתוֹ, כַּכָּתוּב בְּתוֹרָתוֹ: וְיָדַעְתָּ הַיּוֹם וַהֲשֵׁבֹתָ אֶל לְבָבֶךָ, כִּי ה' הוּא הָאֱלֹהִים בַּשָּׁמַיִם מִמַּעַל וְעַל הָאָרֶץ מִתָּחַת, אֵין עוֹד.",
+      translation: "It is our duty to praise the Master of all, to ascribe greatness to the Creator of the universe, Who has not made us like the nations of the lands, and has not placed us like the families of the earth, Who has not made our portion like theirs, nor our lot like all their multitudes.\n\nWe bend the knee, bow, and offer thanks before the King of kings, the Holy One, blessed be He, Who stretches out the heavens and establishes the earth, Whose throne of glory is in the heavens above, and Whose powerful Presence is in the loftiest heights. He is our God; there is none other. Truly He is our King; there is nothing besides Him, as it is written in His Torah: You shall know this day and take to heart that the Lord is God, in heaven above and on earth below—there is none other.",
+    },
+    {
+      id: "maariv-aleinu-2",
+      title: "V'Ne'emar",
+      titleHe: "וְנֶאֱמַר",
+      text: "עַל כֵּן נְקַוֶּה לְּךָ ה' אֱלֹהֵינוּ, לִרְאוֹת מְהֵרָה בְּתִפְאֶרֶת עֻזֶּךָ, לְהַעֲבִיר גִּלּוּלִים מִן הָאָרֶץ, וְהָאֱלִילִים כָּרוֹת יִכָּרֵתוּן, לְתַקֵּן עוֹלָם בְּמַלְכוּת שַׁדַּי, וְכָל בְּנֵי בָשָׂר יִקְרְאוּ בִשְׁמֶךָ, לְהַפְנוֹת אֵלֶיךָ כָּל רִשְׁעֵי אָרֶץ. יַכִּירוּ וְיֵדְעוּ כָּל יוֹשְׁבֵי תֵבֵל, כִּי לְךָ תִּכְרַע כָּל בֶּרֶךְ, תִּשָּׁבַע כָּל לָשׁוֹן. לְפָנֶיךָ ה' אֱלֹהֵינוּ יִכְרְעוּ וְיִפּוֹלוּ, וְלִכְבוֹד שִׁמְךָ יְקָר יִתֵּנוּ, וִיקַבְּלוּ כֻלָּם אֶת עוֹל מַלְכוּתֶךָ, וְתִמְלוֹךְ עֲלֵיהֶם מְהֵרָה לְעוֹלָם וָעֶד. כִּי הַמַּלְכוּת שֶׁלְּךָ הִיא, וּלְעוֹלְמֵי עַד תִּמְלוֹךְ בְּכָבוֹד, כַּכָּתוּב בְּתוֹרָתֶךָ: ה' יִמְלֹךְ לְעוֹלָם וָעֶד.\n\nוְנֶאֱמַר: וְהָיָה ה' לְמֶלֶךְ עַל כָּל הָאָרֶץ, בַּיּוֹם הַהוּא יִהְיֶה ה' אֶחָד וּשְׁמוֹ אֶחָד.",
+      translation: "Therefore we put our hope in You, Lord our God, that we may soon see the glory of Your power, when You will remove abominations from the earth, and the idols will be utterly destroyed, when the world will be perfected under the sovereignty of the Almighty, and all humanity will call upon Your Name, to turn all the wicked of the earth towards You. All the world's inhabitants will recognize and know that to You every knee should bend, every tongue should swear. Before You, Lord our God, they will bend the knee and fall prostrate, and to the glory of Your Name they will give honor, and they will all accept the yoke of Your kingdom, and You will reign over them soon, forever and ever. For the kingdom is Yours, and to all eternity You will reign in glory, as it is written in Your Torah: The Lord shall reign forever and ever.\n\nAnd it is said: The Lord shall be King over all the earth; on that day the Lord shall be One and His Name One.",
+    },
+  ],
+};
