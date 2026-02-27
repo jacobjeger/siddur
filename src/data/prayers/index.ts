@@ -22,7 +22,15 @@ import {
   shemonehEsreiMaariv,
   aleinuMaariv,
 } from "./maariv";
-import { birkasHamazon, bedtimeShema, travelersPrayer } from "./blessings";
+import {
+  birkasHamazon,
+  bedtimeShema,
+  travelersPrayer,
+  birchosBefore,
+  brachosAfter,
+  birchosMitzvos,
+  birchosMeEin,
+} from "./blessings";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -47,6 +55,10 @@ export const ALL_TEFILOS: Tefila[] = [
   aleinuMaariv,
   // Blessings & Other
   birkasHamazon,
+  birchosBefore,
+  brachosAfter,
+  birchosMitzvos,
+  birchosMeEin,
   bedtimeShema,
   travelersPrayer,
 ];
