@@ -62,6 +62,23 @@ import { psalms51to75 } from "./psalms51to75";
 import { psalms76to100 } from "./psalms76to100";
 import { psalms101to125 } from "./psalms101to125";
 import { psalms126to150 } from "./psalms126to150";
+import {
+  petichatEliyahu,
+  hannasPrayer,
+  thirteenPrinciples,
+  tenRemembrances,
+  kaveh,
+  vidui,
+  beitYaakov,
+} from "./edotHaMizrach";
+import { tikunChatzos } from "./tikunChatzos";
+import {
+  parshasHaMon,
+  igeresHaRamban,
+  tefilasHaShelah,
+  prayerForLivelihood,
+} from "./miscPrayers";
+import { allPirkeiAvos } from "./pirkeiAvos";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -136,6 +153,23 @@ export const ALL_TEFILOS: Tefila[] = [
   shirHaShirim,
   megillasRuth,
   megillasKoheles,
+  // Edot HaMizrach
+  petichatEliyahu,
+  hannasPrayer,
+  thirteenPrinciples,
+  tenRemembrances,
+  kaveh,
+  vidui,
+  beitYaakov,
+  // Tikun Chatzos
+  tikunChatzos,
+  // Miscellaneous Prayers & Segulos
+  parshasHaMon,
+  igeresHaRamban,
+  tefilasHaShelah,
+  prayerForLivelihood,
+  // Pirkei Avos (6 chapters)
+  ...allPirkeiAvos,
   // Tehillim (150 Psalms)
   ...psalms1to25,
   ...psalms26to50,
