@@ -7,7 +7,7 @@ import { useTheme } from "../../src/hooks/useTheme";
 
 export default function TefilaScreen() {
   const { tefilaId } = useLocalSearchParams<{ tefilaId: string }>();
-  const { nusach, textSize, showEnglish } = useSettingsStore();
+  const { nusach, textSize, showEnglish, keepScreenOn } = useSettingsStore();
   const { colors } = useTheme();
 
   const tefila = getTefilaById(tefilaId ?? "");
@@ -15,11 +15,8 @@ export default function TefilaScreen() {
   if (!tefila) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
           Tefila not found
-        </Text>
-        <Text style={{ color: colors.textSecondary, marginTop: 8 }}>
-          Could not find prayer: {tefilaId}
         </Text>
       </View>
     );
@@ -35,33 +32,36 @@ export default function TefilaScreen() {
           headerTintColor: "#ffffff",
         }}
       />
-      <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
-        {/* Title */}
+      <ScrollView
+        style={{ flex: 1, backgroundColor: colors.background }}
+        contentContainerStyle={{ paddingBottom: 60 }}
+      >
+        {/* Title banner */}
         <View
           style={{
             alignItems: "center",
-            paddingTop: 24,
-            paddingBottom: 16,
+            paddingVertical: 24,
+            paddingHorizontal: 20,
+            backgroundColor: colors.surface,
             borderBottomWidth: 1,
             borderBottomColor: colors.border,
-            marginHorizontal: 16,
           }}
         >
           <Text
             style={{
               fontFamily: "NotoSerifHebrew-Bold",
-              fontSize: textSize + 4,
+              fontSize: textSize + 6,
               color: colors.primary,
             }}
           >
             {tefila.nameHe}
           </Text>
-          <Text style={{ fontSize: 16, color: colors.textSecondary, marginTop: 4 }}>
+          <Text style={{ fontSize: 15, color: colors.textSecondary, marginTop: 6 }}>
             {tefila.name}
           </Text>
         </View>
 
-        {/* Sections */}
+        {/* Prayer sections */}
         {tefila.sections.map((section, index) => {
           const showSectionHeader =
             tefila.sections.length > 1 || section.title !== tefila.name;
@@ -70,8 +70,9 @@ export default function TefilaScreen() {
             <View
               key={section.id}
               style={{
-                paddingHorizontal: 16,
-                paddingVertical: 20,
+                paddingHorizontal: 20,
+                paddingTop: 24,
+                paddingBottom: 20,
                 borderBottomWidth: index < tefila.sections.length - 1 ? 1 : 0,
                 borderBottomColor: colors.border,
               }}
@@ -80,25 +81,26 @@ export default function TefilaScreen() {
                 <View
                   style={{
                     flexDirection: "row",
-                    alignItems: "center",
                     justifyContent: "space-between",
-                    marginBottom: 12,
+                    alignItems: "center",
+                    marginBottom: 16,
+                    paddingBottom: 8,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.border,
                   }}
                 >
                   <Text
                     style={{
-                      fontSize: 13,
-                      fontWeight: "bold",
+                      fontSize: 14,
+                      fontWeight: "700",
                       color: colors.accent,
-                      textTransform: "uppercase",
-                      letterSpacing: 1,
                     }}
                   >
                     {section.title}
                   </Text>
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: 14,
                       color: colors.accent,
                       fontFamily: "NotoSerifHebrew-Bold",
                     }}
@@ -111,16 +113,14 @@ export default function TefilaScreen() {
               {section.instruction && (
                 <View
                   style={{
-                    backgroundColor: colors.primaryLight,
-                    borderRadius: 10,
-                    paddingHorizontal: 12,
-                    paddingVertical: 8,
-                    marginBottom: 12,
-                    borderWidth: 1,
-                    borderColor: colors.border,
+                    backgroundColor: colors.surfaceSecondary,
+                    borderRadius: 8,
+                    paddingHorizontal: 14,
+                    paddingVertical: 10,
+                    marginBottom: 16,
                   }}
                 >
-                  <Text style={{ fontSize: 13, color: colors.textSecondary, fontStyle: "italic" }}>
+                  <Text style={{ fontSize: 14, color: colors.textSecondary, fontStyle: "italic" }}>
                     {section.instruction}
                   </Text>
                 </View>
@@ -130,7 +130,7 @@ export default function TefilaScreen() {
                 style={{
                   fontFamily: "NotoSerifHebrew-Regular",
                   fontSize: textSize,
-                  lineHeight: textSize * 1.8,
+                  lineHeight: textSize * 2,
                   color: colors.text,
                   writingDirection: "rtl",
                   textAlign: "right",
@@ -142,8 +142,8 @@ export default function TefilaScreen() {
               {showEnglish && section.translation && (
                 <View
                   style={{
-                    marginTop: 16,
-                    paddingTop: 12,
+                    marginTop: 20,
+                    paddingTop: 16,
                     borderTopWidth: 1,
                     borderTopColor: colors.border,
                   }}
@@ -151,8 +151,8 @@ export default function TefilaScreen() {
                   <Text
                     style={{
                       color: colors.textSecondary,
-                      lineHeight: (textSize - 4) * 1.6,
-                      fontSize: textSize - 4,
+                      lineHeight: (textSize - 2) * 1.7,
+                      fontSize: textSize - 2,
                     }}
                   >
                     {getTextForNusach(section.translation, nusach)}
@@ -162,8 +162,6 @@ export default function TefilaScreen() {
             </View>
           );
         })}
-
-        <View style={{ height: 48 }} />
       </ScrollView>
     </>
   );

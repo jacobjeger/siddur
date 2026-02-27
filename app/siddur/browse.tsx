@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
-import { Link } from "expo-router";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { useRouter, Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
@@ -7,66 +7,91 @@ import { useTheme } from "../../src/hooks/useTheme";
 
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
+  const router = useRouter();
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
-      {TEFILA_CATEGORIES.map((category) => {
-        const tefilos = getTefilosByCategory(category.id);
-        if (tefilos.length === 0) return null;
+    <>
+      <Stack.Screen
+        options={{
+          title: "Browse Tefilos",
+          headerStyle: { backgroundColor: colors.headerBg },
+          headerTintColor: "#ffffff",
+        }}
+      />
+      <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
+        {TEFILA_CATEGORIES.map((category) => {
+          const tefilos = getTefilosByCategory(category.id);
+          if (tefilos.length === 0) return null;
 
-        return (
-          <View key={category.id} style={{ marginTop: 16 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 16, marginBottom: 8 }}>
-              <Ionicons
-                name={category.icon as any}
-                size={20}
-                color={colors.accent}
-              />
-              <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginLeft: 8 }}>
-                {category.name}
-              </Text>
-              <Text
+          return (
+            <View key={category.id} style={{ marginTop: 20 }}>
+              <View
                 style={{
-                  fontSize: 17,
-                  color: colors.textMuted,
-                  marginLeft: 8,
-                  fontFamily: "NotoSerifHebrew-Bold",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 20,
+                  marginBottom: 10,
                 }}
               >
-                {category.nameHe}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                backgroundColor: colors.surface,
-                marginHorizontal: 16,
-                borderRadius: 12,
-                overflow: "hidden",
-                borderWidth: 1,
-                borderColor: colors.border,
-              }}
-            >
-              {tefilos.map((tefila, index) => (
-                <Link
-                  key={tefila.id}
-                  href={`/siddur/${tefila.id}`}
-                  asChild
+                <Ionicons
+                  name={category.icon as any}
+                  size={20}
+                  color={colors.accent}
+                />
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: colors.text,
+                    marginLeft: 8,
+                  }}
                 >
-                  <Pressable
-                    style={({ pressed }) => ({
+                  {category.name}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.textMuted,
+                    marginLeft: 8,
+                    fontFamily: "NotoSerifHebrew-Bold",
+                  }}
+                >
+                  {category.nameHe}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  backgroundColor: colors.surface,
+                  marginHorizontal: 16,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                }}
+              >
+                {tefilos.map((tefila, index) => (
+                  <TouchableOpacity
+                    key={tefila.id}
+                    onPress={() => router.push(`/siddur/${tefila.id}`)}
+                    activeOpacity={0.6}
+                    style={{
                       flexDirection: "row",
                       alignItems: "center",
-                      justifyContent: "space-between",
                       paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      backgroundColor: pressed ? colors.surfaceSecondary : "transparent",
+                      paddingVertical: 14,
                       borderBottomWidth: index < tefilos.length - 1 ? 1 : 0,
                       borderBottomColor: colors.border,
-                    })}
+                    }}
                   >
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "500",
+                          color: colors.text,
+                        }}
+                      >
                         {tefila.name}
                       </Text>
                       <Text
@@ -80,15 +105,19 @@ export default function BrowseTefilosScreen() {
                         {tefila.nameHe}
                       </Text>
                     </View>
-                    <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
-                  </Pressable>
-                </Link>
-              ))}
+                    <Ionicons
+                      name="chevron-forward"
+                      size={20}
+                      color={colors.textMuted}
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
-          </View>
-        );
-      })}
-      <View style={{ height: 32 }} />
-    </ScrollView>
+          );
+        })}
+        <View style={{ height: 32 }} />
+      </ScrollView>
+    </>
   );
 }

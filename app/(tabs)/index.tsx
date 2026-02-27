@@ -1,7 +1,8 @@
-import { View, Text, Pressable, ScrollView } from "react-native";
-import { Link, useRouter } from "expo-router";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
+import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { useNextZman } from "../../src/hooks/useNextZman";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
@@ -29,106 +30,130 @@ export default function SiddurTab() {
     tefilaType === "none" ? "shacharis" : tefilaType
   );
 
-  const firstTefilaId = tefilosForTime[0]?.id;
-
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <HebrewDateHeader />
+      <LocationDisplay />
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 }}>
-        {/* Current tefila card */}
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
+      >
+        {/* Start Davening hero card */}
         <View
           style={{
-            backgroundColor: colors.primaryLight,
+            backgroundColor: colors.surface,
             borderRadius: 16,
-            padding: 20,
+            overflow: "hidden",
             borderWidth: 1,
             borderColor: colors.border,
-            marginBottom: 16,
+            marginBottom: 20,
           }}
         >
-          <Text style={{ fontSize: 13, color: colors.textSecondary, fontWeight: "500" }}>
-            It's time for
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 4, marginBottom: 12 }}>
-            <Text style={{ fontSize: 28, fontWeight: "bold", color: colors.primary }}>
-              {current.en}
+          {/* Card header */}
+          <View
+            style={{
+              backgroundColor: colors.headerBg,
+              paddingHorizontal: 20,
+              paddingVertical: 16,
+            }}
+          >
+            <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
+              It's time for
             </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                color: colors.accent,
-                marginLeft: 12,
-                fontFamily: "NotoSerifHebrew-Bold",
-              }}
-            >
-              {current.he}
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+              <Text style={{ fontSize: 26, fontWeight: "bold", color: "#ffffff" }}>
+                {current.en}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 22,
+                  color: colors.accent,
+                  marginLeft: 12,
+                  fontFamily: "NotoSerifHebrew-Bold",
+                }}
+              >
+                {current.he}
+              </Text>
+            </View>
           </View>
 
+          {/* Next zman info */}
           {nextZman && (
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: colors.surface,
-                borderRadius: 10,
-                paddingHorizontal: 12,
-                paddingVertical: 8,
-                marginBottom: 14,
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.border,
               }}
             >
-              <Text style={{ fontSize: 13, color: colors.textSecondary }}>
-                {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
-              </Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ fontSize: 13, fontWeight: "500", color: colors.text, marginRight: 8 }}>
+              <View>
+                <Text style={{ fontSize: 12, color: colors.textMuted }}>Next Zman</Text>
+                <Text style={{ fontSize: 15, fontWeight: "600", color: colors.text, marginTop: 2 }}>
+                  {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end" }}>
+                <Text style={{ fontSize: 15, color: colors.text }}>
                   {formatZmanTime(nextZman.time, timeFormat)}
                 </Text>
-                <Text style={{ fontSize: 13, fontWeight: "bold", color: colors.primary }}>
-                  {formatCountdown(countdown)}
+                <Text style={{ fontSize: 13, fontWeight: "bold", color: colors.accent, marginTop: 2 }}>
+                  in {formatCountdown(countdown)}
                 </Text>
               </View>
             </View>
           )}
 
-          <Pressable
+          {/* Start Davening button */}
+          <TouchableOpacity
             onPress={() => {
               if (tefilosForTime.length > 0) {
                 router.push({
                   pathname: "/siddur/daven",
                   params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
                 });
-              } else if (firstTefilaId) {
-                router.push(`/siddur/${firstTefilaId}`);
               }
             }}
-            style={({ pressed }) => ({
-              backgroundColor: pressed ? colors.primaryDark : colors.primary,
+            activeOpacity={0.8}
+            style={{
+              backgroundColor: colors.accent,
+              marginHorizontal: 16,
+              marginVertical: 16,
               borderRadius: 12,
               paddingVertical: 16,
               alignItems: "center",
-            })}
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.15,
+              shadowRadius: 4,
+              elevation: 3,
+            }}
           >
-            <Text style={{ color: "#ffffff", fontSize: 18, fontWeight: "600" }}>
-              Start Davening
-            </Text>
-          </Pressable>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="book" size={20} color="#ffffff" />
+              <Text style={{ color: "#ffffff", fontSize: 18, fontWeight: "700", marginLeft: 8 }}>
+                Start Davening
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
-        {/* Quick access tefilos for current time */}
+        {/* Individual tefilos for current time */}
         {tefilosForTime.length > 0 && (
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: 20 }}>
             <Text
               style={{
-                fontSize: 12,
-                fontWeight: "bold",
+                fontSize: 13,
+                fontWeight: "600",
                 color: colors.textMuted,
                 textTransform: "uppercase",
-                letterSpacing: 1,
-                marginBottom: 8,
-                paddingHorizontal: 4,
+                letterSpacing: 0.5,
+                marginBottom: 10,
+                marginLeft: 4,
               }}
             >
               {current.en} Tefilos
@@ -143,66 +168,61 @@ export default function SiddurTab() {
               }}
             >
               {tefilosForTime.map((tefila, index) => (
-                <Link
+                <TouchableOpacity
                   key={tefila.id}
-                  href={`/siddur/${tefila.id}`}
-                  asChild
+                  onPress={() => router.push(`/siddur/${tefila.id}`)}
+                  activeOpacity={0.6}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    borderBottomWidth: index < tefilosForTime.length - 1 ? 1 : 0,
+                    borderBottomColor: colors.border,
+                  }}
                 >
-                  <Pressable
-                    style={({ pressed }) => ({
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      paddingHorizontal: 16,
-                      paddingVertical: 12,
-                      backgroundColor: pressed ? colors.surfaceSecondary : "transparent",
-                      borderBottomWidth: index < tefilosForTime.length - 1 ? 1 : 0,
-                      borderBottomColor: colors.border,
-                    })}
-                  >
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
-                        {tefila.name}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: colors.textMuted,
-                          fontFamily: "NotoSerifHebrew-Regular",
-                        }}
-                      >
-                        {tefila.nameHe}
-                      </Text>
-                    </View>
-                    <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
-                  </Pressable>
-                </Link>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
+                      {tefila.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: colors.textMuted,
+                        marginTop: 2,
+                        fontFamily: "NotoSerifHebrew-Regular",
+                      }}
+                    >
+                      {tefila.nameHe}
+                    </Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+                </TouchableOpacity>
               ))}
             </View>
           </View>
         )}
 
-        {/* Browse all */}
-        <Link href="/siddur/browse" asChild>
-          <Pressable
-            style={({ pressed }) => ({
-              borderWidth: 1,
-              borderColor: colors.border,
-              borderRadius: 12,
-              paddingHorizontal: 24,
-              paddingVertical: 16,
-              alignItems: "center",
-              backgroundColor: pressed ? colors.surfaceSecondary : colors.surface,
-              flexDirection: "row",
-              justifyContent: "center",
-            })}
-          >
-            <Ionicons name="book-outline" size={20} color={colors.text} />
-            <Text style={{ color: colors.text, fontSize: 17, marginLeft: 8 }}>
-              Browse All Tefilos
-            </Text>
-          </Pressable>
-        </Link>
+        {/* Browse all tefilos button */}
+        <TouchableOpacity
+          onPress={() => router.push("/siddur/browse")}
+          activeOpacity={0.7}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colors.surface,
+            borderWidth: 1,
+            borderColor: colors.border,
+            borderRadius: 12,
+            paddingVertical: 16,
+          }}
+        >
+          <Ionicons name="library-outline" size={20} color={colors.primary} />
+          <Text style={{ color: colors.primary, fontSize: 16, fontWeight: "600", marginLeft: 8 }}>
+            Browse All Tefilos
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

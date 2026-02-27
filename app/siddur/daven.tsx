@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { getTefilaById } from "../../src/data/prayers";
@@ -29,21 +29,21 @@ export default function DavenScreen() {
           }}
         />
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
             No tefilos found
           </Text>
-          <Pressable
+          <TouchableOpacity
             onPress={() => router.back()}
             style={{ marginTop: 16 }}
           >
             <Text style={{ fontSize: 16, color: colors.primary }}>Go Back</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </>
     );
   }
 
-  const mainTitle = tefilos.length === 1 ? tefilos[0].name : tefilos[0].name + " +";
+  const mainTitle = tefilos.length === 1 ? tefilos[0].name : "Davening";
 
   return (
     <>
@@ -55,29 +55,32 @@ export default function DavenScreen() {
           headerTintColor: "#ffffff",
         }}
       />
-      <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
+      <ScrollView
+        style={{ flex: 1, backgroundColor: colors.background }}
+        contentContainerStyle={{ paddingBottom: 60 }}
+      >
         {tefilos.map((tefila, tefilaIndex) => (
           <View key={tefila.id}>
-            {/* Tefila divider/header */}
+            {/* Tefila divider header */}
             <View
               style={{
                 backgroundColor: colors.headerBg,
-                paddingVertical: 14,
-                paddingHorizontal: 16,
+                paddingVertical: 16,
+                paddingHorizontal: 20,
                 alignItems: "center",
-                marginTop: tefilaIndex > 0 ? 8 : 0,
+                marginTop: tefilaIndex > 0 ? 4 : 0,
               }}
             >
               <Text
                 style={{
                   fontFamily: "NotoSerifHebrew-Bold",
-                  fontSize: textSize + 2,
+                  fontSize: textSize + 4,
                   color: "#ffffff",
                 }}
               >
                 {tefila.nameHe}
               </Text>
-              <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", marginTop: 2 }}>
+              <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", marginTop: 4 }}>
                 {tefila.name}
               </Text>
             </View>
@@ -91,8 +94,9 @@ export default function DavenScreen() {
                 <View
                   key={section.id}
                   style={{
-                    paddingHorizontal: 16,
-                    paddingVertical: 20,
+                    paddingHorizontal: 20,
+                    paddingTop: 24,
+                    paddingBottom: 20,
                     borderBottomWidth:
                       sectionIndex < tefila.sections.length - 1 ? 1 : 0,
                     borderBottomColor: colors.border,
@@ -102,25 +106,26 @@ export default function DavenScreen() {
                     <View
                       style={{
                         flexDirection: "row",
-                        alignItems: "center",
                         justifyContent: "space-between",
-                        marginBottom: 12,
+                        alignItems: "center",
+                        marginBottom: 16,
+                        paddingBottom: 8,
+                        borderBottomWidth: 1,
+                        borderBottomColor: colors.border,
                       }}
                     >
                       <Text
                         style={{
-                          fontSize: 13,
-                          fontWeight: "bold",
+                          fontSize: 14,
+                          fontWeight: "700",
                           color: colors.accent,
-                          textTransform: "uppercase",
-                          letterSpacing: 1,
                         }}
                       >
                         {section.title}
                       </Text>
                       <Text
                         style={{
-                          fontSize: 13,
+                          fontSize: 14,
                           color: colors.accent,
                           fontFamily: "NotoSerifHebrew-Bold",
                         }}
@@ -133,18 +138,16 @@ export default function DavenScreen() {
                   {section.instruction && (
                     <View
                       style={{
-                        backgroundColor: colors.primaryLight,
-                        borderRadius: 10,
-                        paddingHorizontal: 12,
-                        paddingVertical: 8,
-                        marginBottom: 12,
-                        borderWidth: 1,
-                        borderColor: colors.border,
+                        backgroundColor: colors.surfaceSecondary,
+                        borderRadius: 8,
+                        paddingHorizontal: 14,
+                        paddingVertical: 10,
+                        marginBottom: 16,
                       }}
                     >
                       <Text
                         style={{
-                          fontSize: 13,
+                          fontSize: 14,
                           color: colors.textSecondary,
                           fontStyle: "italic",
                         }}
@@ -158,7 +161,7 @@ export default function DavenScreen() {
                     style={{
                       fontFamily: "NotoSerifHebrew-Regular",
                       fontSize: textSize,
-                      lineHeight: textSize * 1.8,
+                      lineHeight: textSize * 2,
                       color: colors.text,
                       writingDirection: "rtl",
                       textAlign: "right",
@@ -170,8 +173,8 @@ export default function DavenScreen() {
                   {showEnglish && section.translation && (
                     <View
                       style={{
-                        marginTop: 16,
-                        paddingTop: 12,
+                        marginTop: 20,
+                        paddingTop: 16,
                         borderTopWidth: 1,
                         borderTopColor: colors.border,
                       }}
@@ -179,8 +182,8 @@ export default function DavenScreen() {
                       <Text
                         style={{
                           color: colors.textSecondary,
-                          lineHeight: (textSize - 4) * 1.6,
-                          fontSize: textSize - 4,
+                          lineHeight: (textSize - 2) * 1.7,
+                          fontSize: textSize - 2,
                         }}
                       >
                         {getTextForNusach(section.translation, nusach)}
@@ -194,17 +197,11 @@ export default function DavenScreen() {
         ))}
 
         {/* Completion */}
-        <View
-          style={{
-            alignItems: "center",
-            paddingVertical: 32,
-            paddingHorizontal: 16,
-          }}
-        >
-          <Ionicons name="checkmark-circle" size={48} color={colors.accent} />
+        <View style={{ alignItems: "center", paddingVertical: 40, paddingHorizontal: 20 }}>
+          <Ionicons name="checkmark-circle" size={52} color={colors.accent} />
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: "600",
               color: colors.text,
               marginTop: 12,
@@ -212,23 +209,22 @@ export default function DavenScreen() {
           >
             Finished Davening
           </Text>
-          <Pressable
+          <TouchableOpacity
             onPress={() => router.back()}
-            style={({ pressed }) => ({
-              marginTop: 16,
-              backgroundColor: pressed ? colors.primaryDark : colors.primary,
+            activeOpacity={0.8}
+            style={{
+              marginTop: 20,
+              backgroundColor: colors.primary,
               borderRadius: 12,
-              paddingHorizontal: 32,
+              paddingHorizontal: 40,
               paddingVertical: 14,
-            })}
+            }}
           >
             <Text style={{ color: "#ffffff", fontSize: 16, fontWeight: "600" }}>
               Done
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
-
-        <View style={{ height: 48 }} />
       </ScrollView>
     </>
   );
