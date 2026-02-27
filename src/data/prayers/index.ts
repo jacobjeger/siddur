@@ -31,6 +31,12 @@ import {
   birchosMitzvos,
   birchosMeEin,
 } from "./blessings";
+import {
+  chatziKaddish,
+  kaddishShalem,
+  kaddishYasom,
+  kaddishDRabbanan,
+} from "./kaddish";
 
 export const ALL_TEFILOS: Tefila[] = [
   // Morning
@@ -61,6 +67,11 @@ export const ALL_TEFILOS: Tefila[] = [
   birchosMeEin,
   bedtimeShema,
   travelersPrayer,
+  // Kaddish
+  chatziKaddish,
+  kaddishShalem,
+  kaddishYasom,
+  kaddishDRabbanan,
 ];
 
 export function getTefilaById(id: string): Tefila | undefined {
