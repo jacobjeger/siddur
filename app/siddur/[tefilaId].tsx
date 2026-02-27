@@ -4,13 +4,22 @@ import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
+import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
+import { getInsertionContext } from "../../src/utils/jewishCalendar";
+import { useMemo } from "react";
 
 export default function TefilaScreen() {
   const { tefilaId } = useLocalSearchParams<{ tefilaId: string }>();
   const { nusach, textSize, showEnglish, keepScreenOn } = useSettingsStore();
   const { colors } = useTheme();
 
-  const tefila = getTefilaById(tefilaId ?? "");
+  const baseTefila = getTefilaById(tefilaId ?? "");
+  const context = useMemo(() => getInsertionContext(), []);
+  const activeInsertions = useMemo(() => getActiveInsertionNames(context), [context]);
+  const tefila = useMemo(
+    () => (baseTefila ? assemblePrayer(baseTefila, context) : undefined),
+    [baseTefila, context]
+  );
 
   if (!tefila) {
     return (
@@ -59,6 +68,33 @@ export default function TefilaScreen() {
           <Text style={{ fontSize: 15, color: colors.textSecondary, marginTop: 6 }}>
             {tefila.name}
           </Text>
+          {activeInsertions.length > 0 && (
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                marginTop: 10,
+                gap: 6,
+              }}
+            >
+              {activeInsertions.map((name) => (
+                <View
+                  key={name}
+                  style={{
+                    backgroundColor: colors.accent + "22",
+                    borderRadius: 12,
+                    paddingHorizontal: 10,
+                    paddingVertical: 4,
+                  }}
+                >
+                  <Text style={{ fontSize: 11, color: colors.accent, fontWeight: "600" }}>
+                    {name}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
 
         {/* Prayer sections */}
