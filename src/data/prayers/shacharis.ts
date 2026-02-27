@@ -169,6 +169,37 @@ export const shemaShacharis: Tefila = {
   timeContext: "shacharis",
   sections: [
     {
+      id: "barchu-shacharis",
+      title: "Barchu",
+      titleHe: "ברכו",
+      instruction: "The prayer leader calls out and the congregation responds while bowing.",
+      text: "בָּרְכוּ אֶת ה' הַמְבוֹרָךְ.\n\nבָּרוּךְ ה' הַמְבוֹרָךְ לְעוֹלָם וָעֶד.",
+      translation: "Bless the Lord, the blessed One.\n\nBlessed is the Lord, the blessed One, forever and ever.",
+    },
+    {
+      id: "yotzer-ohr",
+      title: "Yotzer Ohr",
+      titleHe: "יוצר אור",
+      instruction: "First blessing before Shema.",
+      text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, יוֹצֵר אוֹר וּבוֹרֵא חוֹשֶׁךְ, עוֹשֶׂה שָׁלוֹם וּבוֹרֵא אֶת הַכֹּל.\n\nהַמֵּאִיר לָאָרֶץ וְלַדָּרִים עָלֶיהָ בְּרַחֲמִים, וּבְטוּבוֹ מְחַדֵּשׁ בְּכָל יוֹם תָּמִיד מַעֲשֵׂה בְרֵאשִׁית. מָה רַבּוּ מַעֲשֶׂיךָ ה', כֻּלָּם בְּחָכְמָה עָשִׂיתָ, מָלְאָה הָאָרֶץ קִנְיָנֶךָ. הַמֶּלֶךְ הַמְרוֹמָם לְבַדּוֹ מֵאָז, הַמְשֻׁבָּח וְהַמְפֹאָר וְהַמִּתְנַשֵּׂא מִימוֹת עוֹלָם. אֱלֹהֵי עוֹלָם, בְּרַחֲמֶיךָ הָרַבִּים רַחֵם עָלֵינוּ, אֲדוֹן עֻזֵּנוּ, צוּר מִשְׂגַּבֵּנוּ, מָגֵן יִשְׁעֵנוּ, מִשְׂגָּב בַּעֲדֵנוּ.",
+      translation: "Blessed are You, Lord our God, King of the universe, Who forms light and creates darkness, Who makes peace and creates all.\n\nHe illuminates the earth and those who dwell upon it with mercy, and in His goodness renews each day continually the work of creation. How manifold are Your works, O Lord! In wisdom You have made them all; the earth is full of Your possessions. The King Who alone is exalted from of old, praised, glorified, and uplifted since the days of the world. Eternal God, in Your abundant mercy have mercy upon us, Master of our strength, Rock of our stronghold, Shield of our salvation, Stronghold on our behalf.",
+    },
+    {
+      id: "kedusha-dyotzer",
+      title: "Kedusha D'Yotzer",
+      titleHe: "קדושת יוצר",
+      text: "הָאֵל הַבָּרוּךְ גְּדוֹל דֵּעָה, הֵכִין וּפָעַל זָהֳרֵי חַמָּה. טוֹב יָצַר כָּבוֹד לִשְׁמוֹ, מְאוֹרוֹת נָתַן סְבִיבוֹת עֻזּוֹ. פִּנּוֹת צְבָאָיו קְדוֹשִׁים, רוֹמְמֵי שַׁדַּי, תָּמִיד מְסַפְּרִים כְּבוֹד אֵל וּקְדֻשָּׁתוֹ.\n\nתִּתְבָּרַךְ ה' אֱלֹהֵינוּ עַל שֶׁבַח מַעֲשֵׂה יָדֶיךָ, וְעַל מְאוֹרֵי אוֹר שֶׁעָשִׂיתָ, יְפָאֲרוּךָ סֶּלָה.\n\nבָּרוּךְ אַתָּה ה', יוֹצֵר הַמְּאוֹרוֹת.",
+      translation: "The blessed God, great in knowledge, prepared and made the rays of the sun. The Good One created glory for His Name, He placed luminaries around His might. The leaders of His hosts are holy beings that exalt the Almighty, constantly declaring the glory of God and His holiness.\n\nBe blessed, Lord our God, for the excellence of Your handiwork, and for the luminaries of light that You have made; they shall glorify You forever.\n\nBlessed are You, Lord, Who forms the luminaries.",
+    },
+    {
+      id: "ahava-rabba",
+      title: "Ahava Rabba",
+      titleHe: "אהבה רבה",
+      instruction: "Second blessing before Shema.",
+      text: "אַהֲבָה רַבָּה אֲהַבְתָּנוּ ה' אֱלֹהֵינוּ, חֶמְלָה גְדוֹלָה וִיתֵרָה חָמַלְתָּ עָלֵינוּ. אָבִינוּ מַלְכֵּנוּ, בַּעֲבוּר אֲבוֹתֵינוּ שֶׁבָּטְחוּ בְךָ, וַתְּלַמְּדֵם חֻקֵּי חַיִּים, כֵּן תְּחָנֵּנוּ וּתְלַמְּדֵנוּ. אָבִינוּ, הָאָב הָרַחֲמָן, הַמְרַחֵם, רַחֵם עָלֵינוּ, וְתֵן בְּלִבֵּנוּ לְהָבִין וּלְהַשְׂכִּיל, לִשְׁמוֹעַ, לִלְמוֹד וּלְלַמֵּד, לִשְׁמוֹר וְלַעֲשׂוֹת וּלְקַיֵּם אֶת כָּל דִּבְרֵי תַלְמוּד תּוֹרָתֶךָ בְּאַהֲבָה. וְהָאֵר עֵינֵינוּ בְּתוֹרָתֶךָ, וְדַבֵּק לִבֵּנוּ בְּמִצְוֹתֶיךָ, וְיַחֵד לְבָבֵנוּ לְאַהֲבָה וּלְיִרְאָה אֶת שְׁמֶךָ, וְלֹא נֵבוֹשׁ לְעוֹלָם וָעֶד. כִּי בְשֵׁם קָדְשְׁךָ הַגָּדוֹל וְהַנּוֹרָא בָּטָחְנוּ, נָגִילָה וְנִשְׂמְחָה בִּישׁוּעָתֶךָ. וַהֲבִיאֵנוּ לְשָׁלוֹם מֵאַרְבַּע כַּנְפוֹת הָאָרֶץ, וְתוֹלִיכֵנוּ קוֹמְמִיּוּת לְאַרְצֵנוּ. כִּי אֵל פּוֹעֵל יְשׁוּעוֹת אָתָּה, וּבָנוּ בָחַרְתָּ מִכָּל עַם וְלָשׁוֹן, וְקֵרַבְתָּנוּ לְשִׁמְךָ הַגָּדוֹל סֶלָה בֶּאֱמֶת, לְהוֹדוֹת לְךָ וּלְיַחֶדְךָ בְּאַהֲבָה. בָּרוּךְ אַתָּה ה', הַבּוֹחֵר בְּעַמּוֹ יִשְׂרָאֵל בְּאַהֲבָה.",
+      translation: "With a great love You have loved us, Lord our God; with great and abundant compassion You have pitied us. Our Father, our King, for the sake of our fathers who trusted in You, and whom You taught the statutes of life, so too be gracious to us and teach us. Our Father, the merciful Father, the compassionate One, have mercy upon us, and place in our hearts to understand and to discern, to hear, to learn and to teach, to observe, to do, and to fulfill all the words of the study of Your Torah with love. Enlighten our eyes in Your Torah, and attach our hearts to Your commandments, and unify our hearts to love and fear Your Name, and may we never be put to shame. For in Your great and awesome holy Name we have trusted; we will exult and rejoice in Your salvation. Bring us in peace from the four corners of the earth, and lead us upright to our land. For You are a God Who performs salvations, and You chose us from every people and tongue, and You brought us close to Your great Name forever in truth, to give thanks to You and to proclaim Your unity with love. Blessed are You, Lord, Who chooses His people Israel with love.",
+    },
+    {
       id: "shema-first",
       title: "Shema",
       titleHe: "שמע",
