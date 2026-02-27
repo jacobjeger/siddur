@@ -60,6 +60,14 @@ export const sefirasHaOmer: Tefila = {
   timeContext: "maariv",
   sections: [
     {
+      id: "omer-lshem-yichud",
+      title: "L'Shem Yichud",
+      titleHe: "לשם יחוד",
+      instruction: "Preparatory declaration before counting, said by many customs.",
+      text: "לְשֵׁם יִחוּד קוּדְשָׁא בְּרִיךְ הוּא וּשְׁכִינְתֵּיהּ, בִּדְחִילוּ וּרְחִימוּ, לְיַחֵד שֵׁם יוֹ\"ד הֵ\"א בְּוָא\"ו הֵ\"א, בְּיִחוּדָא שְׁלִים בְּשֵׁם כָּל יִשְׂרָאֵל, הִנְנִי מוּכָן וּמְזוּמָּן לְקַיֵּם מִצְוַת עֲשֵׂה שֶׁל סְפִירַת הָעוֹמֶר, כְּמוֹ שֶׁכָּתוּב בַּתּוֹרָה: וּסְפַרְתֶּם לָכֶם מִמָּחֳרַת הַשַּׁבָּת, מִיּוֹם הֲבִיאֲכֶם אֶת עוֹמֶר הַתְּנוּפָה, שֶׁבַע שַׁבָּתוֹת תְּמִימוֹת תִּהְיֶינָה. עַד מִמָּחֳרַת הַשַּׁבָּת הַשְּׁבִיעִת, תִּסְפְּרוּ חֲמִשִּׁים יוֹם.",
+      translation: "For the sake of the unity of the Holy One, blessed be He, and His Presence, in awe and love, to unify the Name, in complete unity, in the name of all Israel. I am prepared and ready to fulfill the positive commandment of counting the Omer, as written in the Torah: You shall count for yourselves from the morrow of the Sabbath, from the day you bring the Omer of the wave-offering, seven complete weeks shall there be. Until the morrow of the seventh week, you shall count fifty days.",
+    },
+    {
       id: "omer-bracha",
       title: "Bracha for Counting",
       titleHe: "ברכת הספירה",
@@ -81,6 +89,13 @@ export const sefirasHaOmer: Tefila = {
       titleHe: "הרחמן",
       text: "הָרַחֲמָן הוּא יַחֲזִיר לָנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵינוּ אָמֵן סֶלָה.",
       translation: "May the Merciful One restore for us the service of the Holy Temple to its place, speedily in our days, Amen, Selah.",
+    },
+    {
+      id: "omer-yehi-ratzon",
+      title: "Yehi Ratzon",
+      titleHe: "יהי רצון",
+      text: "יְהִי רָצוֹן מִלְּפָנֶיךָ ה' אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁבִּזְכוּת סְפִירַת הָעוֹמֶר שֶׁסָּפַרְתִּי הַיּוֹם, יְתֻקַּן מַה שֶׁפָּגַמְתִּי בִּסְפִירָה, וְאֶטָּהֵר וְאֶתְקַדֵּשׁ בִּקְדֻשָּׁה שֶׁל מַעְלָה, וְעַל יְדֵי זֶה יֻשְׁפַּע שֶׁפַע רַב בְּכָל הָעוֹלָמוֹת, וּלְתַקֵּן אֶת נַפְשׁוֹתֵינוּ וְרוּחוֹתֵינוּ וְנִשְׁמוֹתֵינוּ מִכָּל סִיג וּפְגַם, וּלְטַהֲרֵנוּ וּלְקַדְּשֵׁנוּ בִּקְדֻשָּׁתְךָ הָעֶלְיוֹנָה, אָמֵן סֶלָה.",
+      translation: "May it be Your will, Lord our God and God of our fathers, that in the merit of the Omer count that I have counted today, may whatever I have damaged in the corresponding sefira be rectified. May I be purified and sanctified with the holiness of Above, and through this may abundant bounty flow in all the worlds. May it rectify our souls, spirits, and higher souls from every impurity and flaw, and may it purify us and sanctify us with Your supernal holiness. Amen, Selah.",
     },
   ],
 };
