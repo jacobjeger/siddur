@@ -450,3 +450,82 @@ export const korbanos: Tefila = {
     },
   ],
 };
+
+export const tachanun: Tefila = {
+  id: "tachanun",
+  name: "Tachanun",
+  nameHe: "תחנון",
+  category: "shacharis",
+  timeContext: "shacharis",
+  sections: [
+    {
+      id: "nefilas-apayim",
+      title: "Nefilas Apayim",
+      titleHe: "נפילת אפים",
+      instruction: "Lean head on arm (right arm during Shacharis, left during Mincha). Not said on Shabbos, Yom Tov, Rosh Chodesh, and other specified days.",
+      text: "רַחוּם וְחַנּוּן חָטָאתִי לְפָנֶיךָ, ה' מָלֵא רַחֲמִים, רַחֵם עָלַי וְקַבֵּל תַּחֲנוּנָי.\n\nה' אַל בְּאַפְּךָ תוֹכִיחֵנִי, וְאַל בַּחֲמָתְךָ תְיַסְּרֵנִי. חָנֵּנִי ה' כִּי אֻמְלַל אָנִי, רְפָאֵנִי ה' כִּי נִבְהֲלוּ עֲצָמָי. וְנַפְשִׁי נִבְהֲלָה מְאֹד, וְאַתָּה ה' עַד מָתָי. שׁוּבָה ה' חַלְּצָה נַפְשִׁי, הוֹשִׁיעֵנִי לְמַעַן חַסְדֶּךָ. כִּי אֵין בַּמָּוֶת זִכְרֶךָ, בִּשְׁאוֹל מִי יוֹדֶה לָּךְ. יָגַעְתִּי בְּאַנְחָתִי, אַשְׂחֶה בְכָל לַיְלָה מִטָּתִי, בְּדִמְעָתִי עַרְשִׂי אַמְסֶה. עָשְׁשָׁה מִכַּעַס עֵינִי, עָתְקָה בְּכָל צוֹרְרָי. סוּרוּ מִמֶּנִּי כָּל פּוֹעֲלֵי אָוֶן, כִּי שָׁמַע ה' קוֹל בִּכְיִי. שָׁמַע ה' תְּחִנָּתִי, ה' תְּפִלָּתִי יִקָּח. יֵבוֹשׁוּ וְיִבָּהֲלוּ מְאֹד כָּל אוֹיְבָי, יָשׁוּבוּ יֵבוֹשׁוּ רָגַע.",
+      translation: "O Compassionate and Gracious One, I have sinned before You. Lord, full of mercy, have mercy on me and accept my supplications.\n\nLord, do not rebuke me in Your anger, and do not chastise me in Your wrath. Be gracious to me, Lord, for I am feeble; heal me, Lord, for my bones are shuddering. My soul is greatly confounded—and You, Lord, how long? Return, Lord, release my soul; save me for the sake of Your kindness. For in death there is no remembrance of You; in the grave who will give You thanks? I am wearied with my sighing; every night I drench my bed, with my tears I soak my couch. My eye is dimmed from anger, aged by all my foes. Depart from me, all you evildoers, for the Lord has heard the sound of my weeping. The Lord has heard my supplication, the Lord will accept my prayer. Let all my enemies be shamed and greatly confounded; they will turn back and be suddenly shamed.",
+    },
+    {
+      id: "v-hu-rachum",
+      title: "V'Hu Rachum",
+      titleHe: "והוא רחום",
+      instruction: "Said on Mondays and Thursdays as part of the extended Tachanun.",
+      text: "וְהוּא רַחוּם יְכַפֵּר עָוֹן וְלֹא יַשְׁחִית, וְהִרְבָּה לְהָשִׁיב אַפּוֹ, וְלֹא יָעִיר כָּל חֲמָתוֹ. אַתָּה ה' אַל תִּכְלָא רַחֲמֶיךָ מִמֶּנִּי, חַסְדְּךָ וַאֲמִתְּךָ תָּמִיד יִצְּרוּנִי. זְכוֹר רַחֲמֶיךָ ה' וַחֲסָדֶיךָ, כִּי מֵעוֹלָם הֵמָּה. תְּנָה עוֹז לֵאלֹהִים, עַל יִשְׂרָאֵל גַּאֲוָתוֹ וְעֻזּוֹ בַּשְּׁחָקִים. נוֹרָא אֱלֹהִים מִמִּקְדָּשֶׁיךָ, אֵל יִשְׂרָאֵל הוּא נוֹתֵן עוֹז וְתַעֲצֻמוֹת לָעָם, בָּרוּךְ אֱלֹהִים.\n\nאֵל נְקָמוֹת ה', אֵל נְקָמוֹת הוֹפִיעַ. הִנָּשֵׂא שׁוֹפֵט הָאָרֶץ, הָשֵׁב גְּמוּל עַל גֵּאִים. לַה' הַיְשׁוּעָה, עַל עַמְּךָ בִרְכָתֶךָ סֶלָה. ה' צְבָאוֹת עִמָּנוּ, מִשְׂגָּב לָנוּ אֱלֹהֵי יַעֲקֹב סֶלָה. ה' צְבָאוֹת, אַשְׁרֵי אָדָם בּוֹטֵחַ בָּךְ. ה' הוֹשִׁיעָה, הַמֶּלֶךְ יַעֲנֵנוּ בְיוֹם קָרְאֵנוּ.",
+      translation: "He, the Merciful One, atones iniquity and does not destroy; He frequently turns away His anger and does not arouse all His wrath. You, Lord, do not withhold Your mercy from me; may Your kindness and Your truth always protect me. Remember Your mercies, Lord, and Your kindnesses, for they are from the beginning of the world. Give might to God; His majesty is upon Israel and His might is in the skies. God, You are awesome from Your sanctuaries; the God of Israel—He gives might and power to the people; blessed is God.\n\nGod of vengeance, Lord; God of vengeance, appear! Arise, Judge of the earth, render recompense to the haughty. Salvation is the Lord's; upon Your people is Your blessing, Selah. The Lord of hosts is with us; a stronghold for us is the God of Jacob, Selah. Lord of hosts, praiseworthy is the man who trusts in You. Lord, save! May the King answer us on the day we call.",
+    },
+  ],
+};
+
+export const uvaLetzion: Tefila = {
+  id: "uva-letzion",
+  name: "Ashrei / Uva L'Tzion",
+  nameHe: "אשרי / ובא לציון",
+  category: "shacharis",
+  timeContext: "shacharis",
+  sections: [
+    {
+      id: "uva-letzion-goel",
+      title: "Uva L'Tzion Goel",
+      titleHe: "ובא לציון גואל",
+      instruction: "Kedusha D'Sidra — the holiness recited in the order of prayer.",
+      text: "וּבָא לְצִיּוֹן גּוֹאֵל, וּלְשָׁבֵי פֶשַׁע בְּיַעֲקֹב, נְאֻם ה'. וַאֲנִי זֹאת בְּרִיתִי אוֹתָם אָמַר ה', רוּחִי אֲשֶׁר עָלֶיךָ וּדְבָרַי אֲשֶׁר שַׂמְתִּי בְּפִיךָ, לֹא יָמוּשׁוּ מִפִּיךָ וּמִפִּי זַרְעֲךָ וּמִפִּי זֶרַע זַרְעֲךָ, אָמַר ה', מֵעַתָּה וְעַד עוֹלָם.\n\nוְאַתָּה קָדוֹשׁ, יוֹשֵׁב תְּהִלּוֹת יִשְׂרָאֵל.\n\nוְקָרָא זֶה אֶל זֶה וְאָמַר: קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ ה' צְבָאוֹת, מְלֹא כָל הָאָרֶץ כְּבוֹדוֹ.\nוּמְקַבְּלִין דֵּין מִן דֵּין וְאָמְרִין: קַדִּישׁ בִּשְׁמֵי מְרוֹמָא עִלָּאָה בֵּית שְׁכִינְתֵּהּ, קַדִּישׁ עַל אַרְעָא עוֹבַד גְּבוּרְתֵּהּ, קַדִּישׁ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא, ה' צְבָאוֹת, מַלְיָא כָל אַרְעָא זִיו יְקָרֵהּ.\n\nוַתִּשָּׂאֵנִי רוּחַ, וָאֶשְׁמַע אַחֲרַי קוֹל רַעַשׁ גָּדוֹל: בָּרוּךְ כְּבוֹד ה' מִמְּקוֹמוֹ.\nוּנְטָלַתְנִי רוּחָא, וְשִׁמְעֵת בַּתְרַי קָל זִיעַ סַגִּיא דִּמְשַׁבְּחִין וְאָמְרִין: בְּרִיךְ יְקָרָא דַה' מֵאֲתַר בֵּית שְׁכִינְתֵּהּ.\n\nה' יִמְלוֹךְ לְעוֹלָם וָעֶד.\nה' מַלְכוּתֵהּ קָאֵם לְעָלַם וּלְעָלְמֵי עָלְמַיָּא.",
+      translation: "And a redeemer shall come to Zion, and to those of Jacob who repent from transgression, says the Lord. And as for Me, this is My covenant with them, says the Lord: My spirit that is upon you and My words that I have placed in your mouth shall not depart from your mouth, nor from the mouth of your children, nor from the mouth of your children's children, says the Lord, from now and forever.\n\nAnd You, the Holy One, are enthroned upon the praises of Israel.\n\nAnd one called to the other and said: Holy, holy, holy is the Lord of hosts; the whole earth is full of His glory.\nAnd they receive one from another and say: Holy in the highest heavens, the abode of His Presence; holy on earth, the work of His might; holy forever and for all eternity is the Lord of hosts—the whole earth is full of the radiance of His glory.\n\nAnd a wind lifted me, and I heard behind me the sound of a great noise: Blessed is the glory of the Lord from His place.\nAnd a wind carried me, and I heard behind me the sound of a great stirring of those who praised and said: Blessed is the glory of the Lord from the place of the abode of His Presence.\n\nThe Lord shall reign forever and ever.\nThe Lord—His kingdom endures forever and for all eternity.",
+    },
+  ],
+};
+
+export const aleinu: Tefila = {
+  id: "aleinu",
+  name: "Aleinu",
+  nameHe: "עלינו",
+  category: "shacharis",
+  timeContext: "shacharis",
+  sections: [
+    {
+      id: "aleinu-text",
+      title: "Aleinu L'Shabeach",
+      titleHe: "עלינו לשבח",
+      text: "עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה. שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגוֹרָלֵנוּ כְּכָל הֲמוֹנָם. וַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים, לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא. שֶׁהוּא נוֹטֶה שָׁמַיִם וְיוֹסֵד אָרֶץ, וּמוֹשַׁב יְקָרוֹ בַּשָּׁמַיִם מִמַּעַל, וּשְׁכִינַת עֻזּוֹ בְּגָבְהֵי מְרוֹמִים. הוּא אֱלֹהֵינוּ, אֵין עוֹד. אֱמֶת מַלְכֵּנוּ, אֶפֶס זוּלָתוֹ, כַּכָּתוּב בְּתוֹרָתוֹ: וְיָדַעְתָּ הַיּוֹם וַהֲשֵׁבוֹתָ אֶל לְבָבֶךָ, כִּי ה' הוּא הָאֱלֹהִים בַּשָּׁמַיִם מִמַּעַל וְעַל הָאָרֶץ מִתָּחַת, אֵין עוֹד.\n\nעַל כֵּן נְקַוֶּה לְּךָ ה' אֱלֹהֵינוּ, לִרְאוֹת מְהֵרָה בְּתִפְאֶרֶת עֻזֶּךָ, לְהַעֲבִיר גִּלּוּלִים מִן הָאָרֶץ, וְהָאֱלִילִים כָּרוֹת יִכָּרֵתוּן, לְתַקֵּן עוֹלָם בְּמַלְכוּת שַׁדַּי. וְכָל בְּנֵי בָשָׂר יִקְרְאוּ בִשְׁמֶךָ, לְהַפְנוֹת אֵלֶיךָ כָּל רִשְׁעֵי אָרֶץ. יַכִּירוּ וְיֵדְעוּ כָּל יוֹשְׁבֵי תֵבֵל, כִּי לְךָ תִּכְרַע כָּל בֶּרֶךְ, תִּשָּׁבַע כָּל לָשׁוֹן. לְפָנֶיךָ ה' אֱלֹהֵינוּ יִכְרְעוּ וְיִפּוֹלוּ, וְלִכְבוֹד שִׁמְךָ יְקָר יִתֵּנוּ, וִיקַבְּלוּ כֻלָּם אֶת עוֹל מַלְכוּתֶךָ, וְתִמְלוֹךְ עֲלֵיהֶם מְהֵרָה לְעוֹלָם וָעֶד. כִּי הַמַּלְכוּת שֶׁלְּךָ הִיא, וּלְעוֹלְמֵי עַד תִּמְלוֹךְ בְּכָבוֹד, כַּכָּתוּב בְּתוֹרָתֶךָ: ה' יִמְלוֹךְ לְעוֹלָם וָעֶד. וְנֶאֱמַר: וְהָיָה ה' לְמֶלֶךְ עַל כָּל הָאָרֶץ, בַּיּוֹם הַהוּא יִהְיֶה ה' אֶחָד וּשְׁמוֹ אֶחָד.",
+      translation: "It is our duty to praise the Master of all, to ascribe greatness to the Author of creation, Who has not made us like the nations of the lands, and has not placed us like the families of the earth; Who has not made our portion like theirs, nor our lot like all their multitudes. And we bend the knee, and bow, and give thanks before the King of kings, the Holy One, blessed be He. For He stretches out the heavens and establishes the earth; the seat of His glory is in the heavens above, and the abode of His might is in the loftiest heights. He is our God; there is none else. True is our King; there is nothing besides Him, as it is written in His Torah: Know this day and take to heart that the Lord is God, in the heavens above and on the earth below—there is none else.\n\nTherefore we place our hope in You, Lord our God, to soon behold the glory of Your might, to remove idols from the earth and false gods will be utterly cut off, to perfect the world under the sovereignty of the Almighty. All mankind will call upon Your Name, to turn all the wicked of the earth to You. All the inhabitants of the world will recognize and know that to You every knee must bend, every tongue must swear. Before You, Lord our God, they will kneel and fall, and give honor to Your glorious Name, and they will all accept the yoke of Your kingdom. May You reign over them soon, forever and ever. For the kingdom is Yours, and to all eternity You will reign in glory, as it is written in Your Torah: The Lord shall reign forever and ever. And it is said: The Lord will be King over the whole earth; on that day the Lord will be One and His Name One.",
+    },
+  ],
+};
+
+export const shirShelYom: Tefila = {
+  id: "shir-shel-yom",
+  name: "Shir Shel Yom",
+  nameHe: "שיר של יום",
+  category: "shacharis",
+  timeContext: "shacharis",
+  sections: [
+    {
+      id: "shir-yom-rishon",
+      title: "Sunday - Psalm 24",
+      titleHe: "יום ראשון - תהלים כד",
+      instruction: "The psalm for Sunday. The Levites would recite this psalm in the Temple.",
+      text: "הַיּוֹם יוֹם רִאשׁוֹן בְּשַׁבָּת, שֶׁבּוֹ הָיוּ הַלְוִיִּם אוֹמְרִים בְּבֵית הַמִּקְדָּשׁ:\n\nלְדָוִד מִזְמוֹר, לַה' הָאָרֶץ וּמְלוֹאָהּ, תֵּבֵל וְיוֹשְׁבֵי בָהּ. כִּי הוּא עַל יַמִּים יְסָדָהּ, וְעַל נְהָרוֹת יְכוֹנְנֶהָ. מִי יַעֲלֶה בְהַר ה', וּמִי יָקוּם בִּמְקוֹם קָדְשׁוֹ. נְקִי כַפַּיִם וּבַר לֵבָב, אֲשֶׁר לֹא נָשָׂא לַשָּׁוְא נַפְשִׁי, וְלֹא נִשְׁבַּע לְמִרְמָה. יִשָּׂא בְרָכָה מֵאֵת ה', וּצְדָקָה מֵאֱלֹהֵי יִשְׁעוֹ. זֶה דּוֹר דּוֹרְשָׁיו, מְבַקְשֵׁי פָנֶיךָ יַעֲקֹב סֶלָה. שְׂאוּ שְׁעָרִים רָאשֵׁיכֶם, וְהִנָּשְׂאוּ פִּתְחֵי עוֹלָם, וְיָבוֹא מֶלֶךְ הַכָּבוֹד. מִי זֶה מֶלֶךְ הַכָּבוֹד, ה' עִזּוּז וְגִבּוֹר, ה' גִּבּוֹר מִלְחָמָה. שְׂאוּ שְׁעָרִים רָאשֵׁיכֶם, וּשְׂאוּ פִּתְחֵי עוֹלָם, וְיָבוֹא מֶלֶךְ הַכָּבוֹד. מִי הוּא זֶה מֶלֶךְ הַכָּבוֹד, ה' צְבָאוֹת הוּא מֶלֶךְ הַכָּבוֹד סֶלָה.",
+      translation: "Today is the first day of the week, on which the Levites would recite in the Temple:\n\nBy David, a psalm. The earth is the Lord's, and all it contains; the world and those who dwell in it. For He founded it upon the seas, and established it upon the rivers. Who may ascend the mountain of the Lord, and who may stand in His holy place? He who has clean hands and a pure heart, who has not taken My Name in vain and has not sworn falsely. He will receive blessing from the Lord, and justice from the God of his salvation. This is the generation of those who seek Him, who seek Your countenance—Jacob, Selah. Lift up your heads, O gates, and be lifted up, O everlasting doors, that the King of glory may enter. Who is this King of glory? The Lord, strong and mighty; the Lord, mighty in battle. Lift up your heads, O gates, and lift up, O everlasting doors, that the King of glory may enter. Who is He, this King of glory? The Lord of hosts—He is the King of glory, Selah.",
+    },
+  ],
+};
