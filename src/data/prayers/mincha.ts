@@ -184,3 +184,38 @@ export const shemonehEsreiMincha: Tefila = {
     },
   ],
 };
+
+export const tachanunMincha: Tefila = {
+  id: "tachanun-mincha",
+  name: "Tachanun",
+  nameHe: "תחנון",
+  category: "mincha",
+  timeContext: "mincha",
+  sections: [
+    {
+      id: "nefilas-apayim-mincha",
+      title: "Nefilas Apayim",
+      titleHe: "נפילת אפים",
+      instruction: "Lean head on left arm during Mincha. Not said on Shabbos, Yom Tov, Rosh Chodesh, and other specified days. No V'Hu Rachum at Mincha.",
+      text: "רַחוּם וְחַנּוּן חָטָאתִי לְפָנֶיךָ, ה' מָלֵא רַחֲמִים, רַחֵם עָלַי וְקַבֵּל תַּחֲנוּנָי.\n\nה' אַל בְּאַפְּךָ תוֹכִיחֵנִי, וְאַל בַּחֲמָתְךָ תְיַסְּרֵנִי. חָנֵּנִי ה' כִּי אֻמְלַל אָנִי, רְפָאֵנִי ה' כִּי נִבְהֲלוּ עֲצָמָי. וְנַפְשִׁי נִבְהֲלָה מְאֹד, וְאַתָּה ה' עַד מָתָי. שׁוּבָה ה' חַלְּצָה נַפְשִׁי, הוֹשִׁיעֵנִי לְמַעַן חַסְדֶּךָ. כִּי אֵין בַּמָּוֶת זִכְרֶךָ, בִּשְׁאוֹל מִי יוֹדֶה לָּךְ. יָגַעְתִּי בְּאַנְחָתִי, אַשְׂחֶה בְכָל לַיְלָה מִטָּתִי, בְּדִמְעָתִי עַרְשִׂי אַמְסֶה. עָשְׁשָׁה מִכַּעַס עֵינִי, עָתְקָה בְּכָל צוֹרְרָי. סוּרוּ מִמֶּנִּי כָּל פּוֹעֲלֵי אָוֶן, כִּי שָׁמַע ה' קוֹל בִּכְיִי. שָׁמַע ה' תְּחִנָּתִי, ה' תְּפִלָּתִי יִקָּח. יֵבוֹשׁוּ וְיִבָּהֲלוּ מְאֹד כָּל אוֹיְבָי, יָשׁוּבוּ יֵבוֹשׁוּ רָגַע.",
+      translation: "O Compassionate and Gracious One, I have sinned before You. Lord, full of mercy, have mercy on me and accept my supplications.\n\nLord, do not rebuke me in Your anger, and do not chastise me in Your wrath. Be gracious to me, Lord, for I am feeble; heal me, Lord, for my bones are shuddering. My soul is greatly confounded—and You, Lord, how long? Return, Lord, release my soul; save me for the sake of Your kindness. For in death there is no remembrance of You; in the grave who will give You thanks? I am wearied with my sighing; every night I drench my bed, with my tears I soak my couch. My eye is dimmed from anger, aged by all my foes. Depart from me, all you evildoers, for the Lord has heard the sound of my weeping. The Lord has heard my supplication, the Lord will accept my prayer. Let all my enemies be shamed and greatly confounded; they will turn back and be suddenly shamed.",
+    },
+  ],
+};
+
+export const aleinuMincha: Tefila = {
+  id: "aleinu-mincha",
+  name: "Aleinu",
+  nameHe: "עלינו",
+  category: "mincha",
+  timeContext: "mincha",
+  sections: [
+    {
+      id: "aleinu-mincha-text",
+      title: "Aleinu L'Shabeach",
+      titleHe: "עלינו לשבח",
+      text: "עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה. שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגוֹרָלֵנוּ כְּכָל הֲמוֹנָם. וַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים, לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא. שֶׁהוּא נוֹטֶה שָׁמַיִם וְיוֹסֵד אָרֶץ, וּמוֹשַׁב יְקָרוֹ בַּשָּׁמַיִם מִמַּעַל, וּשְׁכִינַת עֻזּוֹ בְּגָבְהֵי מְרוֹמִים. הוּא אֱלֹהֵינוּ, אֵין עוֹד. אֱמֶת מַלְכֵּנוּ, אֶפֶס זוּלָתוֹ, כַּכָּתוּב בְּתוֹרָתוֹ: וְיָדַעְתָּ הַיּוֹם וַהֲשֵׁבוֹתָ אֶל לְבָבֶךָ, כִּי ה' הוּא הָאֱלֹהִים בַּשָּׁמַיִם מִמַּעַל וְעַל הָאָרֶץ מִתָּחַת, אֵין עוֹד.\n\nעַל כֵּן נְקַוֶּה לְּךָ ה' אֱלֹהֵינוּ, לִרְאוֹת מְהֵרָה בְּתִפְאֶרֶת עֻזֶּךָ, לְהַעֲבִיר גִּלּוּלִים מִן הָאָרֶץ, וְהָאֱלִילִים כָּרוֹת יִכָּרֵתוּן, לְתַקֵּן עוֹלָם בְּמַלְכוּת שַׁדַּי. וְכָל בְּנֵי בָשָׂר יִקְרְאוּ בִשְׁמֶךָ, לְהַפְנוֹת אֵלֶיךָ כָּל רִשְׁעֵי אָרֶץ. יַכִּירוּ וְיֵדְעוּ כָּל יוֹשְׁבֵי תֵבֵל, כִּי לְךָ תִּכְרַע כָּל בֶּרֶךְ, תִּשָּׁבַע כָּל לָשׁוֹן. לְפָנֶיךָ ה' אֱלֹהֵינוּ יִכְרְעוּ וְיִפּוֹלוּ, וְלִכְבוֹד שִׁמְךָ יְקָר יִתֵּנוּ, וִיקַבְּלוּ כֻלָּם אֶת עוֹל מַלְכוּתֶךָ, וְתִמְלוֹךְ עֲלֵיהֶם מְהֵרָה לְעוֹלָם וָעֶד. כִּי הַמַּלְכוּת שֶׁלְּךָ הִיא, וּלְעוֹלְמֵי עַד תִּמְלוֹךְ בְּכָבוֹד, כַּכָּתוּב בְּתוֹרָתֶךָ: ה' יִמְלוֹךְ לְעוֹלָם וָעֶד. וְנֶאֱמַר: וְהָיָה ה' לְמֶלֶךְ עַל כָּל הָאָרֶץ, בַּיּוֹם הַהוּא יִהְיֶה ה' אֶחָד וּשְׁמוֹ אֶחָד.",
+      translation: "It is our duty to praise the Master of all, to ascribe greatness to the Author of creation, Who has not made us like the nations of the lands, and has not placed us like the families of the earth; Who has not made our portion like theirs, nor our lot like all their multitudes. And we bend the knee, and bow, and give thanks before the King of kings, the Holy One, blessed be He. For He stretches out the heavens and establishes the earth; the seat of His glory is in the heavens above, and the abode of His might is in the loftiest heights. He is our God; there is none else. True is our King; there is nothing besides Him, as it is written in His Torah: Know this day and take to heart that the Lord is God, in the heavens above and on the earth below—there is none else.\n\nTherefore we place our hope in You, Lord our God, to soon behold the glory of Your might, to remove idols from the earth and false gods will be utterly cut off, to perfect the world under the sovereignty of the Almighty. All mankind will call upon Your Name, to turn all the wicked of the earth to You. All the inhabitants of the world will recognize and know that to You every knee must bend, every tongue must swear. Before You, Lord our God, they will kneel and fall, and give honor to Your glorious Name, and they will all accept the yoke of Your kingdom. May You reign over them soon, forever and ever. For the kingdom is Yours, and to all eternity You will reign in glory, as it is written in Your Torah: The Lord shall reign forever and ever. And it is said: The Lord will be King over the whole earth; on that day the Lord will be One and His Name One.",
+    },
+  ],
+};
