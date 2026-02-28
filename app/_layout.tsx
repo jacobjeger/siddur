@@ -70,7 +70,7 @@ function AppStack() {
           options={{ headerShown: true, title: "Minyan Details" }}
         />
       </Stack>
-      <StatusBar style={isDark ? "light" : "light"} />
+      <StatusBar style={isDark ? "light" : "dark"} />
     </>
   );
 }

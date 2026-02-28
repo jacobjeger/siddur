@@ -197,7 +197,7 @@ function parseSefariaHtml(raw: string): {
 
 function inferCategory(path: string): TefilaCategory {
   const lower = path.toLowerCase();
-  if (lower.includes("shacharit") || lower.includes("shacharit") || lower.includes("morning"))
+  if (lower.includes("shacharit") || lower.includes("shacharis") || lower.includes("morning"))
     return "shacharis";
   if (lower.includes("minch") || lower.includes("afternoon"))
     return "mincha";
