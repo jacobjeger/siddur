@@ -268,5 +268,13 @@ export const aleinuMaariv: Tefila = {
       text: "עַל כֵּן נְקַוֶּה לְּךָ ה' אֱלֹהֵינוּ, לִרְאוֹת מְהֵרָה בְּתִפְאֶרֶת עֻזֶּךָ, לְהַעֲבִיר גִּלּוּלִים מִן הָאָרֶץ, וְהָאֱלִילִים כָּרוֹת יִכָּרֵתוּן, לְתַקֵּן עוֹלָם בְּמַלְכוּת שַׁדַּי, וְכָל בְּנֵי בָשָׂר יִקְרְאוּ בִשְׁמֶךָ, לְהַפְנוֹת אֵלֶיךָ כָּל רִשְׁעֵי אָרֶץ. יַכִּירוּ וְיֵדְעוּ כָּל יוֹשְׁבֵי תֵבֵל, כִּי לְךָ תִּכְרַע כָּל בֶּרֶךְ, תִּשָּׁבַע כָּל לָשׁוֹן. לְפָנֶיךָ ה' אֱלֹהֵינוּ יִכְרְעוּ וְיִפּוֹלוּ, וְלִכְבוֹד שִׁמְךָ יְקָר יִתֵּנוּ, וִיקַבְּלוּ כֻלָּם אֶת עוֹל מַלְכוּתֶךָ, וְתִמְלוֹךְ עֲלֵיהֶם מְהֵרָה לְעוֹלָם וָעֶד. כִּי הַמַּלְכוּת שֶׁלְּךָ הִיא, וּלְעוֹלְמֵי עַד תִּמְלוֹךְ בְּכָבוֹד, כַּכָּתוּב בְּתוֹרָתֶךָ: ה' יִמְלֹךְ לְעוֹלָם וָעֶד.\n\nוְנֶאֱמַר: וְהָיָה ה' לְמֶלֶךְ עַל כָּל הָאָרֶץ, בַּיּוֹם הַהוּא יִהְיֶה ה' אֶחָד וּשְׁמוֹ אֶחָד.",
       translation: "Therefore we put our hope in You, Lord our God, that we may soon see the glory of Your power, when You will remove abominations from the earth, and the idols will be utterly destroyed, when the world will be perfected under the sovereignty of the Almighty, and all humanity will call upon Your Name, to turn all the wicked of the earth towards You. All the world's inhabitants will recognize and know that to You every knee should bend, every tongue should swear. Before You, Lord our God, they will bend the knee and fall prostrate, and to the glory of Your Name they will give honor, and they will all accept the yoke of Your kingdom, and You will reign over them soon, forever and ever. For the kingdom is Yours, and to all eternity You will reign in glory, as it is written in Your Torah: The Lord shall reign forever and ever.\n\nAnd it is said: The Lord shall be King over all the earth; on that day the Lord shall be One and His Name One.",
     },
+    {
+      id: "maariv-final-barchu",
+      title: "Final Barchu",
+      titleHe: "ברכו",
+      instruction: "The chazzan repeats Barchu at the end of the service for the benefit of latecomers.",
+      text: "בָּרְכוּ אֶת ה' הַמְבוֹרָךְ.\n\nבָּרוּךְ ה' הַמְבוֹרָךְ לְעוֹלָם וָעֶד.",
+      translation: "Bless the Lord, the blessed One.\n\nBlessed is the Lord, the blessed One, forever and ever.",
+    },
   ],
 };

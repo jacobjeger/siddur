@@ -17,6 +17,24 @@ export const ashrei: Tefila = {
   ],
 };
 
+export const chatziKaddishMincha: Tefila = {
+  id: "chatzi-kaddish-mincha",
+  name: "Chatzi Kaddish",
+  nameHe: "חצי קדיש",
+  category: "mincha",
+  timeContext: "mincha",
+  sections: [
+    {
+      id: "chatzi-kaddish-mincha-text",
+      title: "Chatzi Kaddish",
+      titleHe: "חצי קדיש",
+      instruction: "Half Kaddish recited after Ashrei and before the Amidah.",
+      text: "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא, בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ, וְיַמְלִיךְ מַלְכוּתֵהּ, בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל, בַּעֲגָלָא וּבִזְמַן קָרִיב, וְאִמְרוּ אָמֵן.\n\nיְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא.\n\nיִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְקֻדְשָׁא בְּרִיךְ הוּא, לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא, תֻּשְׁבְּחָתָא וְנֶחֱמָתָא, דַּאֲמִירָן בְּעָלְמָא, וְאִמְרוּ אָמֵן.",
+      translation: "Exalted and sanctified be His great Name, in the world He created by His will. May He establish His kingdom in your lifetime and in your days, and in the lifetime of the entire House of Israel, swiftly and soon, and say Amen.\n\nMay His great Name be blessed forever and for all eternity.\n\nBlessed, praised, glorified, exalted, extolled, honored, elevated, and lauded be the Name of the Holy One, blessed be He, above all the blessings, songs, praises, and consolations that are uttered in the world, and say Amen.",
+    },
+  ],
+};
+
 export const shemonehEsreiMincha: Tefila = {
   id: "shemoneh-esrei-mincha",
   name: "Shemoneh Esrei - Mincha",

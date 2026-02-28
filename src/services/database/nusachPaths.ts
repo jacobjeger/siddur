@@ -104,6 +104,12 @@ const ASHKENAZ: Record<string, ServicePathMapping> = {
     category: "blessings",
     paths: ["Berachot.Tefillat HaDerech"],
   },
+  bedtimeShema: {
+    name: "Bedtime Shema",
+    nameHe: "קריאת שמע על המיטה",
+    category: "other",
+    paths: ["Weekday.Maariv.Keri'at Shema al Hamita"],
+  },
   // Kaddish
   kaddish: {
     name: "Kaddish",

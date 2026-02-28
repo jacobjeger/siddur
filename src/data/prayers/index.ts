@@ -13,6 +13,7 @@ import {
 } from "./shacharis";
 import {
   ashrei,
+  chatziKaddishMincha,
   shemonehEsreiMincha,
   tachanunMincha,
   aleinuMincha,
@@ -94,6 +95,7 @@ export const ALL_TEFILOS: Tefila[] = [
   shirShelYom,
   // Afternoon
   ashrei,
+  chatziKaddishMincha,
   shemonehEsreiMincha,
   tachanunMincha,
   aleinuMincha,
