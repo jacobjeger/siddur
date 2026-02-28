@@ -8,6 +8,5 @@ export const TEFILA_CATEGORIES: TefilaCategoryInfo[] = [
   { id: "tehillim", name: "Tehillim", nameHe: "תהלים", icon: "book" },
   { id: "holidays", name: "Holidays", nameHe: "חגים", icon: "calendar" },
   { id: "lifecycle", name: "Lifecycle", nameHe: "מעגל החיים", icon: "people" },
-  { id: "shabbos", name: "Shabbos", nameHe: "שבת", icon: "flame" },
   { id: "other", name: "Other", nameHe: "שונות", icon: "ellipsis-horizontal" },
 ];

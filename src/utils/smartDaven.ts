@@ -18,10 +18,6 @@ export interface DayDaveningInfo {
   specialDayLabelHe: string;
   /** Active insertions the user should be aware of */
   activeInsertions: ActiveInsertion[];
-  /** Whether today is Shabbat */
-  isShabbat: boolean;
-  /** Whether today is Yom Tov (assur bemelacha) */
-  isYomTov: boolean;
   /** Whether today is Rosh Chodesh */
   isRoshChodesh: boolean;
   /** Whether Hallel is said, and which type */
@@ -49,10 +45,6 @@ export function getDayDaveningInfo(
   date: Date = new Date()
 ): DayDaveningInfo {
   const calendar = new JewishCalendar(date);
-  const dayOfWeek = calendar.getDayOfWeek(); // 7 = Shabbat
-
-  const isShabbat = dayOfWeek === 7;
-  const isYomTov = calendar.isYomTovAssurBemelacha();
   const isRoshChodesh = context.isRoshChodesh;
 
   // Build active insertions list
@@ -104,13 +96,7 @@ export function getDayDaveningInfo(
   // Special day label
   let specialDayLabel = "";
   let specialDayLabelHe = "";
-  if (isShabbat && isRoshChodesh) {
-    specialDayLabel = "Shabbat Rosh Chodesh";
-    specialDayLabelHe = "שבת ראש חודש";
-  } else if (isShabbat) {
-    specialDayLabel = "Shabbat";
-    specialDayLabelHe = "שבת";
-  } else if (context.holiday === "chanukah") {
+  if (context.holiday === "chanukah") {
     const day = calendar.getDayOfChanukah();
     specialDayLabel = `Chanukah — Day ${day}`;
     specialDayLabelHe = `חנוכה — יום ${day}`;
@@ -147,15 +133,11 @@ export function getDayDaveningInfo(
   if (context.isCholHamoed) sayTachanun = false;
   if (context.holiday === "chanukah") sayTachanun = false;
   if (context.holiday === "purim") sayTachanun = false;
-  if (isShabbat) sayTachanun = false;
-  if (isYomTov) sayTachanun = false;
 
   return {
     specialDayLabel,
     specialDayLabelHe,
     activeInsertions,
-    isShabbat,
-    isYomTov,
     isRoshChodesh,
     hallelType,
     sayTachanun,
@@ -171,8 +153,9 @@ export function getDayDaveningInfo(
  * compose the right list of DB services to load for davening.
  *
  * E.g., on Rosh Chodesh Shacharis → [shacharis, roshChodesh]
- * On Shabbat morning → [shabbosShacharit, shabbosMusaf]
  * On Chanukah Shacharis → [shacharis, chanukah]
+ *
+ * Note: No Shabbos/Yom Tov services — no phones on Shabbos/YT.
  */
 export function getSmartDavenFlow(
   nusach: Nusach,
@@ -181,36 +164,13 @@ export function getSmartDavenFlow(
 ): SmartDavenFlow {
   const keys: string[] = [];
 
-  // --- Base service (Shabbat vs weekday) ---
-  if (dayInfo.isShabbat) {
-    switch (timeService) {
-      case "shacharis":
-        keys.push("shabbosShacharit");
-        // Add Musaf
-        if (hasService(nusach, "shabbosMusaf")) {
-          keys.push("shabbosMusaf");
-        }
-        break;
-      case "mincha":
-        keys.push("shabbosMincha");
-        break;
-      case "maariv":
-        // Friday night
-        if (hasService(nusach, "kabbalasShabbos")) {
-          keys.push("kabbalasShabbos");
-        }
-        keys.push("shabbosMaariv");
-        break;
-    }
-  } else {
-    // Weekday
-    keys.push(timeService);
-  }
+  // Base weekday service
+  keys.push(timeService);
 
   // --- Additions based on the day ---
 
   // Rosh Chodesh additions (Hallel + Musaf) — only for Shacharis
-  if (dayInfo.isRoshChodesh && timeService === "shacharis" && !dayInfo.isShabbat) {
+  if (dayInfo.isRoshChodesh && timeService === "shacharis") {
     if (hasService(nusach, "roshChodesh")) {
       keys.push("roshChodesh");
     }

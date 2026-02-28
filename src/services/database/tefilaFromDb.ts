@@ -204,7 +204,7 @@ function inferCategory(path: string): TefilaCategory {
   if (lower.includes("maariv") || lower.includes("arvit") || lower.includes("evening"))
     return "maariv";
   if (lower.includes("shabbat") || lower.includes("shabbos") || lower.includes("kabbalat"))
-    return "shabbos";
+    return "other";
   if (
     lower.includes("festival") ||
     lower.includes("holiday") ||
@@ -231,8 +231,8 @@ function inferCategoryFromService(service: string): TefilaCategory {
   if (service === "shacharis") return "shacharis";
   if (service === "mincha") return "mincha";
   if (service === "maariv") return "maariv";
-  if (service.startsWith("shabbos")) return "shabbos";
-  if (service === "havdalah") return "shabbos";
+  if (service.startsWith("shabbos")) return "other";
+  if (service === "havdalah") return "other";
   if (service === "birkasHamazon") return "blessings";
   if (service === "kaddish") return "other";
   return "other";

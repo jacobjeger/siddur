@@ -9,7 +9,7 @@ export interface ServicePathMapping {
   name: string;
   nameHe: string;
   paths: string[];
-  category: "shacharis" | "mincha" | "maariv" | "shabbos" | "holidays" | "blessings" | "other" | "tehillim" | "lifecycle";
+  category: "shacharis" | "mincha" | "maariv" | "holidays" | "blessings" | "other" | "tehillim" | "lifecycle";
   timeContext?: "shacharis" | "mincha" | "maariv" | "anytime";
 }
 
@@ -47,52 +47,6 @@ const ASHKENAZ: Record<string, ServicePathMapping> = {
     category: "maariv",
     timeContext: "maariv",
     paths: ["Weekday.Maariv"],
-  },
-  // Shabbat
-  kabbalasShabbos: {
-    name: "Kabbalat Shabbat",
-    nameHe: "קבלת שבת",
-    category: "shabbos",
-    paths: ["Shabbat.Kabbalat Shabbat"],
-  },
-  shabbosMaariv: {
-    name: "Shabbat Maariv",
-    nameHe: "מעריב לשבת",
-    category: "shabbos",
-    timeContext: "maariv",
-    paths: ["Shabbat.Maariv"],
-  },
-  shabbosEvening: {
-    name: "Shabbat Evening",
-    nameHe: "ליל שבת",
-    category: "shabbos",
-    paths: ["Shabbat.Shabbat Evening"],
-  },
-  shabbosShacharit: {
-    name: "Shabbat Shacharit",
-    nameHe: "שחרית לשבת",
-    category: "shabbos",
-    timeContext: "shacharis",
-    paths: ["Shabbat.Shacharit"],
-  },
-  shabbosMusaf: {
-    name: "Musaf for Shabbat",
-    nameHe: "מוסף לשבת",
-    category: "shabbos",
-    paths: ["Shabbat.Musaf LeShabbat"],
-  },
-  shabbosMincha: {
-    name: "Shabbat Mincha",
-    nameHe: "מנחה לשבת",
-    category: "shabbos",
-    timeContext: "mincha",
-    paths: ["Shabbat.Minchah"],
-  },
-  havdalah: {
-    name: "Havdalah",
-    nameHe: "הבדלה",
-    category: "shabbos",
-    paths: ["Shabbat.Havdalah"],
   },
   // Holidays / Festivals
   roshChodesh: {
@@ -190,51 +144,6 @@ const SEFARD: Record<string, ServicePathMapping> = {
     nameHe: "קריאת שמע על המיטה",
     category: "other",
     paths: ["Bedtime Shema"],
-  },
-  kabbalasShabbos: {
-    name: "Kabbalat Shabbat",
-    nameHe: "קבלת שבת",
-    category: "shabbos",
-    paths: ["Shabbat Eve Mincha", "Kabbalat Shabbat"],
-  },
-  shabbosMaariv: {
-    name: "Shabbat Maariv",
-    nameHe: "מעריב לשבת",
-    category: "shabbos",
-    timeContext: "maariv",
-    paths: ["Shabbat Eve Maariv"],
-  },
-  shabbosEvening: {
-    name: "Shabbat Evening Meal",
-    nameHe: "סעודת ליל שבת",
-    category: "shabbos",
-    paths: ["Shabbat Evening Meal"],
-  },
-  shabbosShacharit: {
-    name: "Shabbat Shacharit",
-    nameHe: "שחרית לשבת",
-    category: "shabbos",
-    timeContext: "shacharis",
-    paths: ["Shabbat Morning Services"],
-  },
-  shabbosMusaf: {
-    name: "Musaf",
-    nameHe: "מוסף",
-    category: "shabbos",
-    paths: ["Musaf"],
-  },
-  shabbosMincha: {
-    name: "Shabbat Mincha",
-    nameHe: "מנחה לשבת",
-    category: "shabbos",
-    timeContext: "mincha",
-    paths: ["Shabbat Mincha"],
-  },
-  havdalah: {
-    name: "Havdalah",
-    nameHe: "הבדלה",
-    category: "shabbos",
-    paths: ["Motzaei Shabbat "],
   },
   // Holidays
   roshChodesh: {
@@ -375,51 +284,6 @@ const EDOT_HAMIZRACH: Record<string, ServicePathMapping> = {
     nameHe: "קריאת שמע על המיטה",
     category: "other",
     paths: ["Bedtime Shema"],
-  },
-  kabbalasShabbos: {
-    name: "Kabbalat Shabbat",
-    nameHe: "קבלת שבת",
-    category: "shabbos",
-    paths: ["Song of Songs", "Kabbalat Shabbat"],
-  },
-  shabbosMaariv: {
-    name: "Shabbat Arvit",
-    nameHe: "ערבית לשבת",
-    category: "shabbos",
-    timeContext: "maariv",
-    paths: ["Shabbat Arvit"],
-  },
-  shabbosEvening: {
-    name: "Shabbat Evening",
-    nameHe: "ליל שבת",
-    category: "shabbos",
-    paths: ["Shabbat Evening"],
-  },
-  shabbosShacharit: {
-    name: "Shabbat Shacharit",
-    nameHe: "שחרית לשבת",
-    category: "shabbos",
-    timeContext: "shacharis",
-    paths: ["Shabbat Shacharit"],
-  },
-  shabbosMusaf: {
-    name: "Shabbat Musaf",
-    nameHe: "מוסף לשבת",
-    category: "shabbos",
-    paths: ["Shabbat Mussaf"],
-  },
-  shabbosMincha: {
-    name: "Shabbat Mincha",
-    nameHe: "מנחה לשבת",
-    category: "shabbos",
-    timeContext: "mincha",
-    paths: ["Shabbat Mincha"],
-  },
-  havdalah: {
-    name: "Havdalah",
-    nameHe: "הבדלה",
-    category: "shabbos",
-    paths: ["Havdalah"],
   },
   roshChodesh: {
     name: "Rosh Chodesh",

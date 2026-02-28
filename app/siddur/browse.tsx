@@ -107,7 +107,6 @@ function ServicesView() {
     { id: "shacharis", label: "Shacharis", labelHe: "שחרית", icon: "sunny" },
     { id: "mincha", label: "Mincha", labelHe: "מנחה", icon: "partly-sunny" },
     { id: "maariv", label: "Maariv", labelHe: "מעריב", icon: "moon" },
-    { id: "shabbos", label: "Shabbat", labelHe: "שבת", icon: "flame" },
     { id: "holidays", label: "Holidays", labelHe: "חגים", icon: "calendar" },
     { id: "blessings", label: "Blessings", labelHe: "ברכות", icon: "heart" },
     { id: "lifecycle", label: "Lifecycle", labelHe: "מעגל החיים", icon: "people" },
