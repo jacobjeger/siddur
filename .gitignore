@@ -39,3 +39,9 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Sefaria export data (large, re-downloadable)
+data/sefaria-export/
+
+# Temporary text dumps
+sefaria_texts.txt

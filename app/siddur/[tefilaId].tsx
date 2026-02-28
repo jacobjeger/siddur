@@ -7,19 +7,38 @@ import { useTheme } from "../../src/hooks/useTheme";
 import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import { useMemo } from "react";
+import { buildTefilaFromPath, buildTefilaForService } from "../../src/services/database";
+import type { Tefila } from "../../src/data/types";
 
 export default function TefilaScreen() {
   const { tefilaId } = useLocalSearchParams<{ tefilaId: string }>();
   const { nusach, textSize, showEnglish, keepScreenOn } = useSettingsStore();
   const { colors } = useTheme();
 
-  const baseTefila = getTefilaById(tefilaId ?? "");
   const context = useMemo(() => getInsertionContext(), []);
   const activeInsertions = useMemo(() => getActiveInsertionNames(context), [context]);
-  const tefila = useMemo(
-    () => (baseTefila ? assemblePrayer(baseTefila, context) : undefined),
-    [baseTefila, context]
-  );
+
+  const tefila = useMemo(() => {
+    const id = tefilaId ?? "";
+
+    // New DB-backed path format: "dbpath:<nusach>:<path>"
+    if (id.startsWith("dbpath:")) {
+      const parts = id.split(":");
+      const dbNusach = parts[1] || nusach;
+      const dbPath = parts.slice(2).join(":");
+      return buildTefilaFromPath(dbNusach as any, dbPath);
+    }
+
+    // New DB-backed service format: "dbservice:<service>"
+    if (id.startsWith("dbservice:")) {
+      const service = id.substring("dbservice:".length);
+      return buildTefilaForService(nusach, service);
+    }
+
+    // Legacy static lookup with insertion assembly
+    const baseTefila = getTefilaById(id);
+    return baseTefila ? assemblePrayer(baseTefila, context) : undefined;
+  }, [tefilaId, nusach, context]);
 
   if (!tefila) {
     return (
@@ -102,6 +121,16 @@ export default function TefilaScreen() {
           const showSectionHeader =
             tefila.sections.length > 1 || section.title !== tefila.name;
 
+          const hebrewText =
+            typeof section.text === "string"
+              ? section.text
+              : getTextForNusach(section.text, nusach);
+          const englishText = section.translation
+            ? typeof section.translation === "string"
+              ? section.translation
+              : getTextForNusach(section.translation, nusach)
+            : null;
+
           return (
             <View
               key={section.id}
@@ -172,10 +201,10 @@ export default function TefilaScreen() {
                   textAlign: "right",
                 }}
               >
-                {getTextForNusach(section.text, nusach)}
+                {hebrewText}
               </Text>
 
-              {showEnglish && section.translation && (
+              {showEnglish && englishText && (
                 <View
                   style={{
                     marginTop: 20,
@@ -191,7 +220,7 @@ export default function TefilaScreen() {
                       fontSize: textSize - 2,
                     }}
                   >
-                    {getTextForNusach(section.translation, nusach)}
+                    {englishText}
                   </Text>
                 </View>
               )}

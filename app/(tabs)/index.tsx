@@ -9,6 +9,7 @@ import { useNextZman } from "../../src/hooks/useNextZman";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { getTefilosForTime } from "../../src/data/prayers";
+import { useSiddurDb } from "../../src/services/database";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
 import { getActiveInsertionNames, shouldSayTachanun, getHallelType } from "../../src/utils/prayerAssembler";
@@ -29,9 +30,11 @@ export default function SiddurTab() {
   const { colors } = useTheme();
 
   const current = TEFILA_LABELS[tefilaType] ?? TEFILA_LABELS.shacharis;
+  const { isReady: dbReady } = useSiddurDb();
   const tefilosForTime = getTefilosForTime(
     tefilaType === "none" ? "shacharis" : tefilaType
   );
+  const currentService = tefilaType === "none" ? "shacharis" : tefilaType;
 
   const insertionContext = useMemo(() => getInsertionContext(), []);
   const activeInsertions = useMemo(() => getActiveInsertionNames(insertionContext), [insertionContext]);
@@ -119,7 +122,14 @@ export default function SiddurTab() {
           {/* Start Davening button */}
           <TouchableOpacity
             onPress={() => {
-              if (tefilosForTime.length > 0) {
+              if (dbReady) {
+                // Use DB-backed service (full siddur text from Sefaria)
+                router.push({
+                  pathname: "/siddur/[tefilaId]",
+                  params: { tefilaId: `dbservice:${currentService}` },
+                });
+              } else if (tefilosForTime.length > 0) {
+                // Fallback to legacy static data
                 router.push({
                   pathname: "/siddur/daven",
                   params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
