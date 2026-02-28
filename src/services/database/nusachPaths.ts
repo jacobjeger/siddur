@@ -3,27 +3,26 @@ import type { Nusach } from "../../stores/useSettingsStore";
 /**
  * Maps logical prayer service names to their actual paths in the
  * Sefaria siddur JSON structure for each nusach.
- *
- * Each nusach organizes its siddur differently, so we need per-nusach mappings.
- * These paths correspond to the hierarchical structure in the merged.json files.
  */
 
 export interface ServicePathMapping {
-  /** Human-readable name */
   name: string;
   nameHe: string;
-  /** Path patterns to include (in order). Each is a path prefix. */
   paths: string[];
+  category: "shacharis" | "mincha" | "maariv" | "shabbos" | "holidays" | "blessings" | "other" | "tehillim" | "lifecycle";
+  timeContext?: "shacharis" | "mincha" | "maariv" | "anytime";
 }
 
 // ---------------------------------------------------------------------------
-// Ashkenaz paths
+// Ashkenaz
 // ---------------------------------------------------------------------------
 
-const ASHKENAZ_SERVICES: Record<string, ServicePathMapping> = {
+const ASHKENAZ: Record<string, ServicePathMapping> = {
   shacharis: {
     name: "Shacharis",
     nameHe: "שחרית",
+    category: "shacharis",
+    timeContext: "shacharis",
     paths: [
       "Weekday.Shacharit.Preparatory Prayers",
       "Weekday.Shacharit.Pesukei Dezimra",
@@ -32,225 +31,561 @@ const ASHKENAZ_SERVICES: Record<string, ServicePathMapping> = {
       "Weekday.Shacharit.Post Amidah",
       "Weekday.Shacharit.Torah Reading",
       "Weekday.Shacharit.Concluding Prayers",
+      "Weekday.Shacharit.Post Service",
     ],
   },
   mincha: {
     name: "Mincha",
     nameHe: "מנחה",
-    paths: [
-      "Weekday.Minchah",
-    ],
+    category: "mincha",
+    timeContext: "mincha",
+    paths: ["Weekday.Minchah"],
   },
   maariv: {
     name: "Maariv",
     nameHe: "מעריב",
-    paths: [
-      "Weekday.Maariv",
-    ],
+    category: "maariv",
+    timeContext: "maariv",
+    paths: ["Weekday.Maariv"],
   },
-  shabbosKabbalasShabbos: {
+  // Shabbat
+  kabbalasShabbos: {
     name: "Kabbalat Shabbat",
     nameHe: "קבלת שבת",
+    category: "shabbos",
     paths: ["Shabbat.Kabbalat Shabbat"],
   },
   shabbosMaariv: {
     name: "Shabbat Maariv",
     nameHe: "מעריב לשבת",
+    category: "shabbos",
+    timeContext: "maariv",
     paths: ["Shabbat.Maariv"],
+  },
+  shabbosEvening: {
+    name: "Shabbat Evening",
+    nameHe: "ליל שבת",
+    category: "shabbos",
+    paths: ["Shabbat.Shabbat Evening"],
   },
   shabbosShacharit: {
     name: "Shabbat Shacharit",
     nameHe: "שחרית לשבת",
+    category: "shabbos",
+    timeContext: "shacharis",
     paths: ["Shabbat.Shacharit"],
   },
   shabbosMusaf: {
     name: "Musaf for Shabbat",
     nameHe: "מוסף לשבת",
+    category: "shabbos",
     paths: ["Shabbat.Musaf LeShabbat"],
   },
   shabbosMincha: {
     name: "Shabbat Mincha",
     nameHe: "מנחה לשבת",
+    category: "shabbos",
+    timeContext: "mincha",
     paths: ["Shabbat.Minchah"],
   },
   havdalah: {
     name: "Havdalah",
     nameHe: "הבדלה",
+    category: "shabbos",
     paths: ["Shabbat.Havdalah"],
   },
+  // Holidays / Festivals
+  roshChodesh: {
+    name: "Rosh Chodesh",
+    nameHe: "ראש חודש",
+    category: "holidays",
+    paths: ["Festivals.Rosh Chodesh"],
+  },
+  shaloshRegalim: {
+    name: "Shalosh Regalim",
+    nameHe: "שלוש רגלים",
+    category: "holidays",
+    paths: ["Festivals.Shalosh Regalim"],
+  },
+  sukkos: {
+    name: "Sukkot",
+    nameHe: "סוכות",
+    category: "holidays",
+    paths: ["Festivals.Sukkot"],
+  },
+  chanukah: {
+    name: "Chanukah",
+    nameHe: "חנוכה",
+    category: "holidays",
+    paths: ["Festivals.Chanukah"],
+  },
+  selichos: {
+    name: "Selichot",
+    nameHe: "סליחות",
+    category: "holidays",
+    paths: ["Festivals.Selichot"],
+  },
+  // Blessings
   birkasHamazon: {
     name: "Birkat HaMazon",
     nameHe: "ברכת המזון",
+    category: "blessings",
     paths: ["Berachot.Birkat HaMazon"],
   },
+  birkasHanehenin: {
+    name: "Birkat Hanehenin",
+    nameHe: "ברכות הנהנין",
+    category: "blessings",
+    paths: ["Berachot.Birkat Hanehenin"],
+  },
+  birchosMitzvos: {
+    name: "Birkhot HaMitzvot",
+    nameHe: "ברכות המצוות",
+    category: "blessings",
+    paths: ["Berachot.Birkhot Hamitzvot"],
+  },
+  tefilasHaderech: {
+    name: "Tefillat HaDerech",
+    nameHe: "תפילת הדרך",
+    category: "blessings",
+    paths: ["Berachot.Tefillat HaDerech"],
+  },
+  // Kaddish
   kaddish: {
     name: "Kaddish",
     nameHe: "קדיש",
+    category: "other",
     paths: ["Kaddish"],
   },
 };
 
 // ---------------------------------------------------------------------------
-// Sefard paths
+// Sefard
 // ---------------------------------------------------------------------------
 
-const SEFARD_SERVICES: Record<string, ServicePathMapping> = {
+const SEFARD: Record<string, ServicePathMapping> = {
   shacharis: {
     name: "Shacharis",
     nameHe: "שחרית",
-    paths: [
-      "Upon Arising",
-      "Weekday Shacharit",
-    ],
+    category: "shacharis",
+    timeContext: "shacharis",
+    paths: ["Upon Arising", "Weekday Shacharit"],
   },
   mincha: {
     name: "Mincha",
     nameHe: "מנחה",
+    category: "mincha",
+    timeContext: "mincha",
     paths: ["Weekday Mincha"],
   },
   maariv: {
     name: "Maariv",
     nameHe: "מעריב",
+    category: "maariv",
+    timeContext: "maariv",
     paths: ["Weekday Maariv"],
   },
-  shabbosKabbalasShabbos: {
+  bedtimeShema: {
+    name: "Bedtime Shema",
+    nameHe: "קריאת שמע על המיטה",
+    category: "other",
+    paths: ["Bedtime Shema"],
+  },
+  kabbalasShabbos: {
     name: "Kabbalat Shabbat",
     nameHe: "קבלת שבת",
-    paths: ["Kabbalat Shabbat"],
+    category: "shabbos",
+    paths: ["Shabbat Eve Mincha", "Kabbalat Shabbat"],
   },
   shabbosMaariv: {
     name: "Shabbat Maariv",
     nameHe: "מעריב לשבת",
+    category: "shabbos",
+    timeContext: "maariv",
     paths: ["Shabbat Eve Maariv"],
+  },
+  shabbosEvening: {
+    name: "Shabbat Evening Meal",
+    nameHe: "סעודת ליל שבת",
+    category: "shabbos",
+    paths: ["Shabbat Evening Meal"],
   },
   shabbosShacharit: {
     name: "Shabbat Shacharit",
     nameHe: "שחרית לשבת",
+    category: "shabbos",
+    timeContext: "shacharis",
     paths: ["Shabbat Morning Services"],
   },
   shabbosMusaf: {
     name: "Musaf",
     nameHe: "מוסף",
+    category: "shabbos",
     paths: ["Musaf"],
   },
   shabbosMincha: {
     name: "Shabbat Mincha",
     nameHe: "מנחה לשבת",
+    category: "shabbos",
+    timeContext: "mincha",
     paths: ["Shabbat Mincha"],
   },
   havdalah: {
     name: "Havdalah",
     nameHe: "הבדלה",
+    category: "shabbos",
     paths: ["Motzaei Shabbat "],
   },
+  // Holidays
+  roshChodesh: {
+    name: "Rosh Chodesh",
+    nameHe: "ראש חודש",
+    category: "holidays",
+    paths: ["Rosh Chodesh"],
+  },
+  holidays: {
+    name: "Holidays",
+    nameHe: "חגים",
+    category: "holidays",
+    paths: ["Holidays"],
+  },
+  sukkos: {
+    name: "Sukkot",
+    nameHe: "סוכות",
+    category: "holidays",
+    paths: ["Sukkot"],
+  },
+  chanukah: {
+    name: "Chanukah",
+    nameHe: "חנוכה",
+    category: "holidays",
+    paths: ["Chanukah"],
+  },
+  purim: {
+    name: "Purim",
+    nameHe: "פורים",
+    category: "holidays",
+    paths: ["Purim"],
+  },
+  pesachHaggadah: {
+    name: "Pesach Haggadah",
+    nameHe: "הגדה של פסח",
+    category: "holidays",
+    paths: ["Pesach Haggadah"],
+  },
+  fastDays: {
+    name: "Fast Days",
+    nameHe: "תעניות",
+    category: "holidays",
+    paths: ["Fast Days"],
+  },
+  // Blessings
   birkasHamazon: {
     name: "Birkat HaMazon",
     nameHe: "ברכת המזון",
+    category: "blessings",
     paths: ["Birchat HaMazon"],
+  },
+  blessings: {
+    name: "Blessings",
+    nameHe: "ברכות",
+    category: "blessings",
+    paths: ["Blessings"],
+  },
+  mealtimeBlessings: {
+    name: "Mealtime Blessings",
+    nameHe: "ברכות הסעודה",
+    category: "blessings",
+    paths: ["Mealtime Blessings"],
+  },
+  tefilasHaderech: {
+    name: "Traveler's Prayer",
+    nameHe: "תפילת הדרך",
+    category: "blessings",
+    paths: ["Blessings.Traveler's Prayer"],
+  },
+  // Lifecycle
+  shevaBrachos: {
+    name: "Sheva Berachot",
+    nameHe: "שבע ברכות",
+    category: "lifecycle",
+    paths: ["Various Blessings.Sheva Berachot"],
+  },
+  brisMilah: {
+    name: "Bris Milah",
+    nameHe: "ברית מילה",
+    category: "lifecycle",
+    paths: ["Various Blessings.Circumcision"],
+  },
+  pidyonHaben: {
+    name: "Pidyon HaBen",
+    nameHe: "פדיון הבן",
+    category: "lifecycle",
+    paths: ["Various Blessings.Redeeming Firstborn"],
+  },
+  // Other
+  sefirasHaOmer: {
+    name: "Sefirat HaOmer",
+    nameHe: "ספירת העומר",
+    category: "holidays",
+    paths: ["Weekday Maariv.Sefirat HaOmer"],
+  },
+  kiddushLevana: {
+    name: "Kiddush Levana",
+    nameHe: "קידוש לבנה",
+    category: "other",
+    paths: ["Kiddush Levanah"],
   },
 };
 
 // ---------------------------------------------------------------------------
-// Edot HaMizrach paths
+// Edot HaMizrach
 // ---------------------------------------------------------------------------
 
-const EDOT_HAMIZRACH_SERVICES: Record<string, ServicePathMapping> = {
+const EDOT_HAMIZRACH: Record<string, ServicePathMapping> = {
   shacharis: {
     name: "Shacharit",
     nameHe: "שחרית",
-    paths: [
-      "Preparatory Prayers",
-      "Weekday Shacharit",
-    ],
+    category: "shacharis",
+    timeContext: "shacharis",
+    paths: ["Preparatory Prayers", "Weekday Shacharit", "Additions for Shacharit"],
   },
   mincha: {
     name: "Mincha",
     nameHe: "מנחה",
+    category: "mincha",
+    timeContext: "mincha",
     paths: ["Weekday Mincha"],
   },
   maariv: {
     name: "Arvit",
     nameHe: "ערבית",
+    category: "maariv",
+    timeContext: "maariv",
     paths: ["Weekday Arvit"],
   },
-  shabbosKabbalasShabbos: {
+  tikunChatzos: {
+    name: "Tikun Chatzot",
+    nameHe: "תיקון חצות",
+    category: "other",
+    paths: ["The Midnight Rite"],
+  },
+  bedtimeShema: {
+    name: "Bedtime Shema",
+    nameHe: "קריאת שמע על המיטה",
+    category: "other",
+    paths: ["Bedtime Shema"],
+  },
+  kabbalasShabbos: {
     name: "Kabbalat Shabbat",
     nameHe: "קבלת שבת",
-    paths: ["Kabbalat Shabbat"],
+    category: "shabbos",
+    paths: ["Song of Songs", "Kabbalat Shabbat"],
   },
   shabbosMaariv: {
     name: "Shabbat Arvit",
     nameHe: "ערבית לשבת",
+    category: "shabbos",
+    timeContext: "maariv",
     paths: ["Shabbat Arvit"],
+  },
+  shabbosEvening: {
+    name: "Shabbat Evening",
+    nameHe: "ליל שבת",
+    category: "shabbos",
+    paths: ["Shabbat Evening"],
   },
   shabbosShacharit: {
     name: "Shabbat Shacharit",
     nameHe: "שחרית לשבת",
+    category: "shabbos",
+    timeContext: "shacharis",
     paths: ["Shabbat Shacharit"],
   },
   shabbosMusaf: {
-    name: "Musaf",
-    nameHe: "מוסף",
+    name: "Shabbat Musaf",
+    nameHe: "מוסף לשבת",
+    category: "shabbos",
     paths: ["Shabbat Mussaf"],
   },
   shabbosMincha: {
     name: "Shabbat Mincha",
     nameHe: "מנחה לשבת",
+    category: "shabbos",
+    timeContext: "mincha",
     paths: ["Shabbat Mincha"],
   },
   havdalah: {
     name: "Havdalah",
     nameHe: "הבדלה",
+    category: "shabbos",
     paths: ["Havdalah"],
+  },
+  roshChodesh: {
+    name: "Rosh Chodesh",
+    nameHe: "ראש חודש",
+    category: "holidays",
+    paths: ["Rosh Hodesh"],
+  },
+  holidays: {
+    name: "Three Festivals",
+    nameHe: "שלוש רגלים",
+    category: "holidays",
+    paths: ["Prayers for Three Festivals"],
+  },
+  chanukah: {
+    name: "Chanukah",
+    nameHe: "חנוכה",
+    category: "holidays",
+    paths: ["Hanukkah"],
+  },
+  purim: {
+    name: "Purim",
+    nameHe: "פורים",
+    category: "holidays",
+    paths: ["Purim"],
+  },
+  fastDays: {
+    name: "Fast Days",
+    nameHe: "תעניות",
+    category: "holidays",
+    paths: ["Fast Days and Mourning"],
   },
   birkasHamazon: {
     name: "Birkat HaMazon",
     nameHe: "ברכת המזון",
+    category: "blessings",
     paths: ["Post Meal Blessing"],
+  },
+  blessings: {
+    name: "Blessings",
+    nameHe: "ברכות",
+    category: "blessings",
+    paths: ["Blessings on Enjoyments", "Al Hamihya"],
+  },
+  lifecycle: {
+    name: "Lifecycle",
+    nameHe: "מעגל החיים",
+    category: "lifecycle",
+    paths: ["Assorted Blessings and Prayers"],
+  },
+  sefirasHaOmer: {
+    name: "Sefirat HaOmer",
+    nameHe: "ספירת העומר",
+    category: "holidays",
+    paths: ["Counting of the Omer"],
+  },
+  pirkeiAvos: {
+    name: "Pirkei Avot",
+    nameHe: "פרקי אבות",
+    category: "other",
+    paths: ["Mishna Study for Shabbat.Pirkei Avot"],
   },
 };
 
 // ---------------------------------------------------------------------------
-// Ari (Chabad) paths — based on Weekday Siddur Chabad structure
+// Ari (Chabad) — Weekday Siddur Chabad structure
 // ---------------------------------------------------------------------------
 
-const ARI_SERVICES: Record<string, ServicePathMapping> = {
+const ARI: Record<string, ServicePathMapping> = {
   shacharis: {
     name: "Shacharis",
     nameHe: "שחרית",
+    category: "shacharis",
+    timeContext: "shacharis",
     paths: ["Shacharit"],
   },
   mincha: {
     name: "Mincha",
     nameHe: "מנחה",
+    category: "mincha",
+    timeContext: "mincha",
     paths: ["Mincha"],
   },
   maariv: {
     name: "Maariv",
     nameHe: "מעריב",
+    category: "maariv",
+    timeContext: "maariv",
     paths: ["Maariv"],
   },
   birkasHamazon: {
     name: "Birkat HaMazon",
     nameHe: "ברכת המזון",
+    category: "blessings",
     paths: ["Blessings.Birkat HaMazon"],
+  },
+  blessings: {
+    name: "Blessings",
+    nameHe: "ברכות",
+    category: "blessings",
+    paths: ["Blessings"],
+  },
+  bedtimeShema: {
+    name: "Bedtime Shema",
+    nameHe: "קריאת שמע על המיטה",
+    category: "other",
+    paths: ["Bedtime Shema"],
+  },
+  hallel: {
+    name: "Hallel",
+    nameHe: "הלל",
+    category: "holidays",
+    paths: ["Hallel"],
+  },
+  roshChodesh: {
+    name: "Rosh Chodesh",
+    nameHe: "ראש חודש",
+    category: "holidays",
+    paths: ["Rosh Chodesh"],
+  },
+  chanukah: {
+    name: "Chanukah",
+    nameHe: "חנוכה",
+    category: "holidays",
+    paths: ["Chanukah"],
+  },
+  sefirasHaOmer: {
+    name: "Sefirat HaOmer",
+    nameHe: "ספירת העומר",
+    category: "holidays",
+    paths: ["Sefirat HaOmer"],
+  },
+  kiddushLevana: {
+    name: "Kiddush Levana",
+    nameHe: "קידוש לבנה",
+    category: "other",
+    paths: ["Kiddush Levanah"],
+  },
+  hatarasNedarim: {
+    name: "Annulment of Vows",
+    nameHe: "התרת נדרים",
+    category: "holidays",
+    paths: ["Annulment of Vows"],
+  },
+  lifecycle: {
+    name: "Lifecycle",
+    nameHe: "מעגל החיים",
+    category: "lifecycle",
+    paths: [
+      "Blessings of Marriage Ceremony",
+      "Order of a Circumcision",
+      "Pidyon HaBen",
+    ],
   },
 };
 
 // ---------------------------------------------------------------------------
-// Nusach → services map
+// Master map
 // ---------------------------------------------------------------------------
 
 const NUSACH_SERVICES: Record<Nusach, Record<string, ServicePathMapping>> = {
-  ashkenaz: ASHKENAZ_SERVICES,
-  sefard: SEFARD_SERVICES,
-  edot_hamizrach: EDOT_HAMIZRACH_SERVICES,
-  ari: ARI_SERVICES,
+  ashkenaz: ASHKENAZ,
+  sefard: SEFARD,
+  edot_hamizrach: EDOT_HAMIZRACH,
+  ari: ARI,
 };
 
-/**
- * Get the service path mapping for a given nusach and service name.
- */
 export function getServicePaths(
   nusach: Nusach,
   service: string
@@ -258,9 +593,6 @@ export function getServicePaths(
   return NUSACH_SERVICES[nusach]?.[service];
 }
 
-/**
- * Get all available services for a nusach.
- */
 export function getAvailableServices(
   nusach: Nusach
 ): Array<{ key: string } & ServicePathMapping> {
@@ -272,8 +604,17 @@ export function getAvailableServices(
 }
 
 /**
- * Map the nusach setting to the database nusach string.
+ * Get services relevant to a specific time of day.
  */
+export function getServicesForTime(
+  nusach: Nusach,
+  time: "shacharis" | "mincha" | "maariv"
+): Array<{ key: string } & ServicePathMapping> {
+  return getAvailableServices(nusach).filter(
+    (s) => s.timeContext === time
+  );
+}
+
 export function nusachToDbNusach(nusach: Nusach): string {
   return nusach;
 }

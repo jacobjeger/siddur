@@ -8,6 +8,7 @@ import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
+import { buildTefilaFromPath, buildTefilaForService, buildTefilaFromSupplementary } from "../../src/services/database";
 import type { Tefila } from "../../src/data/types";
 
 export default function DavenScreen() {
@@ -20,10 +21,34 @@ export default function DavenScreen() {
   const activeInsertions = useMemo(() => getActiveInsertionNames(context), [context]);
 
   const ids = (tefilaIds ?? "").split(",").filter(Boolean);
-  const tefilos: Tefila[] = ids
-    .map((id) => getTefilaById(id))
-    .filter((t): t is Tefila => t != null)
-    .map((t) => assemblePrayer(t, context));
+  const tefilos: Tefila[] = useMemo(() => {
+    return ids
+      .map((id) => {
+        // DB-backed path format: "dbpath:<nusach>:<path>"
+        if (id.startsWith("dbpath:")) {
+          const parts = id.split(":");
+          const dbNusach = parts[1] || nusach;
+          const dbPath = parts.slice(2).join(":");
+          return buildTefilaFromPath(dbNusach as any, dbPath);
+        }
+        // DB-backed service format: "dbservice:<service>"
+        if (id.startsWith("dbservice:")) {
+          const service = id.substring("dbservice:".length);
+          return buildTefilaForService(nusach, service);
+        }
+        // Supplementary text format: "dbsupplementary:<source>:<path>"
+        if (id.startsWith("dbsupplementary:")) {
+          const parts = id.split(":");
+          const source = parts[1];
+          const path = parts.slice(2).join(":") || undefined;
+          return buildTefilaFromSupplementary(source, path);
+        }
+        // Legacy static lookup with insertion assembly
+        const baseTefila = getTefilaById(id);
+        return baseTefila ? assemblePrayer(baseTefila, context) : null;
+      })
+      .filter((t): t is Tefila => t != null);
+  }, [tefilaIds, nusach, context]);
 
   if (tefilos.length === 0) {
     return (

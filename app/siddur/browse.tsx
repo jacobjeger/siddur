@@ -2,19 +2,30 @@ import { useState, useMemo, useCallback } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { TEFILA_CATEGORIES } from "../../src/data/categories";
-import { getTefilosByCategory } from "../../src/data/prayers";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
-import { useSiddurDb, getChildNodes, nusachToDbNusach } from "../../src/services/database";
-import type { SiddurNode } from "../../src/services/database";
+import {
+  getChildNodes,
+  getAvailableServices,
+  nusachToDbNusach,
+} from "../../src/services/database";
+import type { SiddurNode, ServicePathMapping } from "../../src/services/database";
+
+type ViewMode = "services" | "siddur" | "extras";
+
+const SUPPLEMENTARY_ITEMS = [
+  { source: "tehillim", name: "Tehillim", nameHe: "תהלים", icon: "book" as const, chapters: 150 },
+  { source: "pirkei_avot", name: "Pirkei Avos", nameHe: "פרקי אבות", icon: "school" as const, chapters: 6 },
+  { source: "shir_hashirim", name: "Shir HaShirim", nameHe: "שיר השירים", icon: "heart" as const, chapters: 8 },
+  { source: "esther", name: "Megillas Esther", nameHe: "מגילת אסתר", icon: "scroll" as const, chapters: 10 },
+  { source: "ruth", name: "Megillas Ruth", nameHe: "מגילת רות", icon: "scroll" as const, chapters: 4 },
+  { source: "koheles", name: "Koheles", nameHe: "קהלת", icon: "scroll" as const, chapters: 12 },
+  { source: "eichah", name: "Eichah", nameHe: "איכה", icon: "scroll" as const, chapters: 5 },
+];
 
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
-  const router = useRouter();
-  const { nusach } = useSettingsStore();
-  const { isReady } = useSiddurDb();
-  const [viewMode, setViewMode] = useState<"siddur" | "categories">("siddur");
+  const [viewMode, setViewMode] = useState<ViewMode>("services");
 
   return (
     <>
@@ -26,65 +37,46 @@ export default function BrowseTefilosScreen() {
         }}
       />
       <View style={{ flex: 1, backgroundColor: colors.background }}>
-        {/* View mode toggle */}
+        {/* View mode tabs */}
         <View
           style={{
             flexDirection: "row",
-            padding: 12,
-            gap: 8,
+            padding: 10,
+            gap: 6,
             backgroundColor: colors.surface,
             borderBottomWidth: 1,
             borderBottomColor: colors.border,
           }}
         >
-          <TouchableOpacity
-            onPress={() => setViewMode("siddur")}
-            style={{
-              flex: 1,
-              paddingVertical: 8,
-              borderRadius: 8,
-              backgroundColor: viewMode === "siddur" ? colors.primary : "transparent",
-              alignItems: "center",
-            }}
-          >
-            <Text
+          {(["services", "siddur", "extras"] as ViewMode[]).map((mode) => (
+            <TouchableOpacity
+              key={mode}
+              onPress={() => setViewMode(mode)}
               style={{
-                fontSize: 14,
-                fontWeight: "600",
-                color: viewMode === "siddur" ? "#ffffff" : colors.textSecondary,
+                flex: 1,
+                paddingVertical: 8,
+                borderRadius: 8,
+                backgroundColor: viewMode === mode ? colors.primary : "transparent",
+                alignItems: "center",
               }}
             >
-              Siddur
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setViewMode("categories")}
-            style={{
-              flex: 1,
-              paddingVertical: 8,
-              borderRadius: 8,
-              backgroundColor: viewMode === "categories" ? colors.primary : "transparent",
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "600",
-                color: viewMode === "categories" ? "#ffffff" : colors.textSecondary,
-              }}
-            >
-              Categories
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: "600",
+                  color: viewMode === mode ? "#ffffff" : colors.textSecondary,
+                }}
+              >
+                {mode === "services" ? "Services" : mode === "siddur" ? "Full Siddur" : "Extras"}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
         <ScrollView style={{ flex: 1 }}>
-          {viewMode === "siddur" && isReady ? (
-            <SiddurHierarchyView nusach={nusach} />
-          ) : (
-            <CategoriesView />
-          )}
+          {viewMode === "services" && <ServicesView />}
+          {viewMode === "siddur" && <SiddurHierarchyView />}
+          {viewMode === "extras" && <ExtrasView />}
           <View style={{ height: 32 }} />
         </ScrollView>
       </View>
@@ -92,11 +84,134 @@ export default function BrowseTefilosScreen() {
   );
 }
 
-/** Browse the siddur by its natural hierarchy from the database. */
-function SiddurHierarchyView({ nusach }: { nusach: string }) {
+/** Browse by prayer services (Shacharis, Mincha, Maariv, Shabbat, etc.) */
+function ServicesView() {
   const { colors } = useTheme();
   const router = useRouter();
-  const dbNusach = nusachToDbNusach(nusach as any);
+  const { nusach } = useSettingsStore();
+
+  const services = useMemo(() => getAvailableServices(nusach), [nusach]);
+
+  // Group services by category
+  const groups = useMemo(() => {
+    const map: Record<string, Array<{ key: string } & ServicePathMapping>> = {};
+    for (const s of services) {
+      const cat = s.category;
+      if (!map[cat]) map[cat] = [];
+      map[cat].push(s);
+    }
+    return map;
+  }, [services]);
+
+  const categoryOrder: Array<{ id: string; label: string; labelHe: string; icon: string }> = [
+    { id: "shacharis", label: "Shacharis", labelHe: "שחרית", icon: "sunny" },
+    { id: "mincha", label: "Mincha", labelHe: "מנחה", icon: "partly-sunny" },
+    { id: "maariv", label: "Maariv", labelHe: "מעריב", icon: "moon" },
+    { id: "shabbos", label: "Shabbat", labelHe: "שבת", icon: "flame" },
+    { id: "holidays", label: "Holidays", labelHe: "חגים", icon: "calendar" },
+    { id: "blessings", label: "Blessings", labelHe: "ברכות", icon: "heart" },
+    { id: "lifecycle", label: "Lifecycle", labelHe: "מעגל החיים", icon: "people" },
+    { id: "other", label: "Other", labelHe: "שונות", icon: "ellipsis-horizontal" },
+  ];
+
+  return (
+    <View style={{ paddingTop: 8 }}>
+      {categoryOrder.map((cat) => {
+        const items = groups[cat.id];
+        if (!items || items.length === 0) return null;
+
+        return (
+          <View key={cat.id} style={{ marginBottom: 16 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingHorizontal: 20,
+                marginBottom: 8,
+              }}
+            >
+              <Ionicons name={cat.icon as any} size={18} color={colors.accent} />
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: colors.text,
+                  marginLeft: 8,
+                }}
+              >
+                {cat.label}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colors.textMuted,
+                  marginLeft: 8,
+                  fontFamily: "NotoSerifHebrew-Bold",
+                }}
+              >
+                {cat.labelHe}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: colors.surface,
+                marginHorizontal: 16,
+                borderRadius: 12,
+                overflow: "hidden",
+                borderWidth: 1,
+                borderColor: colors.border,
+              }}
+            >
+              {items.map((service, index) => (
+                <TouchableOpacity
+                  key={service.key}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/siddur/[tefilaId]",
+                      params: { tefilaId: `dbservice:${service.key}` },
+                    })
+                  }
+                  activeOpacity={0.6}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    borderBottomWidth: index < items.length - 1 ? 1 : 0,
+                    borderBottomColor: colors.border,
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
+                      {service.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: colors.textMuted,
+                        marginTop: 2,
+                        fontFamily: "NotoSerifHebrew-Regular",
+                      }}
+                    >
+                      {service.nameHe}
+                    </Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+/** Browse the siddur by its natural hierarchy from the database. */
+function SiddurHierarchyView() {
+  const { nusach } = useSettingsStore();
+  const dbNusach = nusachToDbNusach(nusach);
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
   const rootNodes = useMemo(
@@ -107,11 +222,8 @@ function SiddurHierarchyView({ nusach }: { nusach: string }) {
   const toggleExpand = useCallback((path: string) => {
     setExpandedPaths((prev) => {
       const next = new Set(prev);
-      if (next.has(path)) {
-        next.delete(path);
-      } else {
-        next.add(path);
-      }
+      if (next.has(path)) next.delete(path);
+      else next.add(path);
       return next;
     });
   }, []);
@@ -159,7 +271,6 @@ function HierarchyNode({
 
   const handlePress = () => {
     if (node.isLeaf) {
-      // Navigate to view this section
       router.push({
         pathname: "/siddur/[tefilaId]",
         params: { tefilaId: `dbpath:${nusach}:${node.path}` },
@@ -184,15 +295,14 @@ function HierarchyNode({
           backgroundColor: depth === 0 ? colors.surface : colors.background,
         }}
       >
-        {!node.isLeaf && (
+        {!node.isLeaf ? (
           <Ionicons
             name={isExpanded ? "chevron-down" : "chevron-forward"}
             size={18}
             color={colors.textMuted}
             style={{ marginRight: 8 }}
           />
-        )}
-        {node.isLeaf && (
+        ) : (
           <Ionicons
             name="document-text-outline"
             size={16}
@@ -246,110 +356,104 @@ function HierarchyNode({
   );
 }
 
-/** Original categories-based browse view (fallback). */
-function CategoriesView() {
+/** Browse supplementary texts: Tehillim, Megillas, Pirkei Avos */
+function ExtrasView() {
   const { colors } = useTheme();
   const router = useRouter();
+  const [expandedSource, setExpandedSource] = useState<string | null>(null);
 
   return (
-    <>
-      {TEFILA_CATEGORIES.map((category) => {
-        const tefilos = getTefilosByCategory(category.id);
-        if (tefilos.length === 0) return null;
-
-        return (
-          <View key={category.id} style={{ marginTop: 20 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                paddingHorizontal: 20,
-                marginBottom: 10,
-              }}
-            >
-              <Ionicons
-                name={category.icon as any}
-                size={20}
-                color={colors.accent}
-              />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: colors.text,
-                  marginLeft: 8,
-                }}
-              >
-                {category.name}
+    <View style={{ paddingTop: 12 }}>
+      {SUPPLEMENTARY_ITEMS.map((item) => (
+        <View key={item.source}>
+          <TouchableOpacity
+            onPress={() =>
+              setExpandedSource(expandedSource === item.source ? null : item.source)
+            }
+            activeOpacity={0.6}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingVertical: 14,
+              backgroundColor: colors.surface,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+            }}
+          >
+            <Ionicons
+              name={expandedSource === item.source ? "chevron-down" : "chevron-forward"}
+              size={18}
+              color={colors.textMuted}
+              style={{ marginRight: 8 }}
+            />
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
+                {item.name}
               </Text>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 13,
                   color: colors.textMuted,
-                  marginLeft: 8,
-                  fontFamily: "NotoSerifHebrew-Bold",
+                  fontFamily: "NotoSerifHebrew-Regular",
                 }}
               >
-                {category.nameHe}
+                {item.nameHe}
               </Text>
             </View>
+            <Text style={{ fontSize: 12, color: colors.textMuted }}>
+              {item.chapters} chapters
+            </Text>
+          </TouchableOpacity>
 
-            <View
-              style={{
-                backgroundColor: colors.surface,
-                marginHorizontal: 16,
-                borderRadius: 12,
-                overflow: "hidden",
-                borderWidth: 1,
-                borderColor: colors.border,
-              }}
-            >
-              {tefilos.map((tefila, index) => (
-                <TouchableOpacity
-                  key={tefila.id}
-                  onPress={() => router.push(`/siddur/${tefila.id}`)}
-                  activeOpacity={0.6}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    paddingHorizontal: 16,
-                    paddingVertical: 14,
-                    borderBottomWidth: index < tefilos.length - 1 ? 1 : 0,
-                    borderBottomColor: colors.border,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: colors.text,
-                      }}
-                    >
-                      {tefila.name}
+          {expandedSource === item.source && (
+            <View style={{ backgroundColor: colors.background }}>
+              {Array.from({ length: item.chapters }, (_, i) => i + 1).map(
+                (ch) => (
+                  <TouchableOpacity
+                    key={ch}
+                    onPress={() =>
+                      router.push({
+                        pathname: "/siddur/[tefilaId]",
+                        params: {
+                          tefilaId: `dbsupplementary:${item.source}:${
+                            item.source === "tehillim"
+                              ? `Tehillim.Chapter ${ch}`
+                              : item.source === "pirkei_avot"
+                              ? `Pirkei Avot.Chapter ${ch}`
+                              : `${item.name.replace("Megillas ", "")}.Chapter ${ch}`
+                          }`,
+                        },
+                      })
+                    }
+                    activeOpacity={0.6}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      paddingHorizontal: 48,
+                      paddingVertical: 10,
+                      borderBottomWidth: 1,
+                      borderBottomColor: colors.border,
+                    }}
+                  >
+                    <Text style={{ fontSize: 14, color: colors.text }}>
+                      {item.source === "tehillim"
+                        ? `Psalm ${ch}`
+                        : `Chapter ${ch}`}
                     </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.textMuted,
-                        marginTop: 2,
-                        fontFamily: "NotoSerifHebrew-Regular",
-                      }}
-                    >
-                      {tefila.nameHe}
-                    </Text>
-                  </View>
-                  <Ionicons
-                    name="chevron-forward"
-                    size={20}
-                    color={colors.textMuted}
-                  />
-                </TouchableOpacity>
-              ))}
+                    <Ionicons
+                      name="chevron-forward"
+                      size={16}
+                      color={colors.textMuted}
+                      style={{ marginLeft: "auto" }}
+                    />
+                  </TouchableOpacity>
+                )
+              )}
             </View>
-          </View>
-        );
-      })}
-    </>
+          )}
+        </View>
+      ))}
+    </View>
   );
 }

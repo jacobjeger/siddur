@@ -7,7 +7,7 @@ import { useTheme } from "../../src/hooks/useTheme";
 import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import { useMemo } from "react";
-import { buildTefilaFromPath, buildTefilaForService } from "../../src/services/database";
+import { buildTefilaFromPath, buildTefilaForService, buildTefilaFromSupplementary } from "../../src/services/database";
 import type { Tefila } from "../../src/data/types";
 
 export default function TefilaScreen() {
@@ -33,6 +33,14 @@ export default function TefilaScreen() {
     if (id.startsWith("dbservice:")) {
       const service = id.substring("dbservice:".length);
       return buildTefilaForService(nusach, service);
+    }
+
+    // Supplementary text format: "dbsupplementary:<source>:<path>"
+    if (id.startsWith("dbsupplementary:")) {
+      const parts = id.split(":");
+      const source = parts[1];
+      const path = parts.slice(2).join(":") || undefined;
+      return buildTefilaFromSupplementary(source, path);
     }
 
     // Legacy static lookup with insertion assembly

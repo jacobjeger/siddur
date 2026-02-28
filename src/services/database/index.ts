@@ -1,4 +1,4 @@
-export { initSiddurDb, getDb, stripHtml, parseTextAndInstructions } from "./siddurDb";
+export { initSiddurDb, getDb, stripHtml } from "./siddurDb";
 export {
   getSections,
   getSection,
@@ -14,10 +14,13 @@ export {
   buildTefilaFromPath,
   buildTefilaForService,
   buildTefilaFromSupplementary,
+  getDbTefilaList,
 } from "./tefilaFromDb";
 export {
   getServicePaths,
   getAvailableServices,
+  getServicesForTime,
   nusachToDbNusach,
 } from "./nusachPaths";
 export type { SiddurSectionRow, SiddurNode } from "./types";
+export type { ServicePathMapping } from "./nusachPaths";

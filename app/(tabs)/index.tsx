@@ -8,11 +8,15 @@ import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { useNextZman } from "../../src/hooks/useNextZman";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
-import { getTefilosForTime } from "../../src/data/prayers";
-import { useSiddurDb } from "../../src/services/database";
+import {
+  useSiddurDb,
+  getAvailableServices,
+  getServicesForTime,
+} from "../../src/services/database";
+import type { ServicePathMapping } from "../../src/services/database";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
-import { getActiveInsertionNames, shouldSayTachanun, getHallelType } from "../../src/utils/prayerAssembler";
+import { shouldSayTachanun, getHallelType } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 
 const TEFILA_LABELS: Record<string, { en: string; he: string }> = {
@@ -25,21 +29,36 @@ const TEFILA_LABELS: Record<string, { en: string; he: string }> = {
 export default function SiddurTab() {
   const { tefilaType } = useHebrewDate();
   const { nextZman, countdown } = useNextZman();
-  const timeFormat = useSettingsStore((s) => s.timeFormat);
+  const { timeFormat, nusach } = useSettingsStore();
   const router = useRouter();
   const { colors } = useTheme();
+  const { isReady: dbReady } = useSiddurDb();
 
   const current = TEFILA_LABELS[tefilaType] ?? TEFILA_LABELS.shacharis;
-  const { isReady: dbReady } = useSiddurDb();
-  const tefilosForTime = getTefilosForTime(
-    tefilaType === "none" ? "shacharis" : tefilaType
-  );
   const currentService = tefilaType === "none" ? "shacharis" : tefilaType;
 
   const insertionContext = useMemo(() => getInsertionContext(), []);
-  const activeInsertions = useMemo(() => getActiveInsertionNames(insertionContext), [insertionContext]);
   const sayTachanun = useMemo(() => shouldSayTachanun(insertionContext), [insertionContext]);
   const hallelType = useMemo(() => getHallelType(insertionContext), [insertionContext]);
+
+  // Get DB-backed services for current time
+  const servicesForTime = useMemo(
+    () => (dbReady ? getServicesForTime(nusach, currentService as any) : []),
+    [dbReady, nusach, currentService]
+  );
+
+  // Quick-access services (non-time-specific popular items)
+  const quickAccess = useMemo(() => {
+    if (!dbReady) return [];
+    const all = getAvailableServices(nusach);
+    return all.filter(
+      (s) =>
+        s.key === "birkasHamazon" ||
+        s.key === "kaddish" ||
+        s.key === "bedtimeShema" ||
+        s.key === "tefilasHaderech"
+    );
+  }, [dbReady, nusach]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -61,7 +80,6 @@ export default function SiddurTab() {
             marginBottom: 20,
           }}
         >
-          {/* Card header */}
           <View
             style={{
               backgroundColor: colors.headerBg,
@@ -89,7 +107,6 @@ export default function SiddurTab() {
             </View>
           </View>
 
-          {/* Next zman info */}
           {nextZman && (
             <View
               style={{
@@ -119,22 +136,12 @@ export default function SiddurTab() {
             </View>
           )}
 
-          {/* Start Davening button */}
           <TouchableOpacity
             onPress={() => {
-              if (dbReady) {
-                // Use DB-backed service (full siddur text from Sefaria)
-                router.push({
-                  pathname: "/siddur/[tefilaId]",
-                  params: { tefilaId: `dbservice:${currentService}` },
-                });
-              } else if (tefilosForTime.length > 0) {
-                // Fallback to legacy static data
-                router.push({
-                  pathname: "/siddur/daven",
-                  params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
-                });
-              }
+              router.push({
+                pathname: "/siddur/[tefilaId]",
+                params: { tefilaId: `dbservice:${currentService}` },
+              });
             }}
             activeOpacity={0.8}
             style={{
@@ -161,7 +168,7 @@ export default function SiddurTab() {
         </View>
 
         {/* Today's davening info */}
-        {(activeInsertions.length > 0 || !sayTachanun || hallelType !== "none") && (
+        {(!sayTachanun || hallelType !== "none") && (
           <View style={{ marginBottom: 20 }}>
             <Text
               style={{
@@ -185,25 +192,6 @@ export default function SiddurTab() {
                 padding: 14,
               }}
             >
-              {activeInsertions.length > 0 && (
-                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
-                  {activeInsertions.map((name) => (
-                    <View
-                      key={name}
-                      style={{
-                        backgroundColor: colors.accent + "22",
-                        borderRadius: 12,
-                        paddingHorizontal: 10,
-                        paddingVertical: 4,
-                      }}
-                    >
-                      <Text style={{ fontSize: 11, color: colors.accent, fontWeight: "600" }}>
-                        {name}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
               <View style={{ flexDirection: "row", gap: 16 }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Ionicons
@@ -228,8 +216,8 @@ export default function SiddurTab() {
           </View>
         )}
 
-        {/* Individual tefilos for current time */}
-        {tefilosForTime.length > 0 && (
+        {/* Shabbat services (when available) */}
+        {dbReady && (
           <View style={{ marginBottom: 20 }}>
             <Text
               style={{
@@ -242,7 +230,7 @@ export default function SiddurTab() {
                 marginLeft: 4,
               }}
             >
-              {current.en} Tefilos
+              Quick Access
             </Text>
             <View
               style={{
@@ -253,23 +241,28 @@ export default function SiddurTab() {
                 borderColor: colors.border,
               }}
             >
-              {tefilosForTime.map((tefila, index) => (
+              {quickAccess.map((service, index) => (
                 <TouchableOpacity
-                  key={tefila.id}
-                  onPress={() => router.push(`/siddur/${tefila.id}`)}
+                  key={service.key}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/siddur/[tefilaId]",
+                      params: { tefilaId: `dbservice:${service.key}` },
+                    })
+                  }
                   activeOpacity={0.6}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
                     paddingHorizontal: 16,
                     paddingVertical: 14,
-                    borderBottomWidth: index < tefilosForTime.length - 1 ? 1 : 0,
+                    borderBottomWidth: index < quickAccess.length - 1 ? 1 : 0,
                     borderBottomColor: colors.border,
                   }}
                 >
                   <View style={{ flex: 1 }}>
                     <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
-                      {tefila.name}
+                      {service.name}
                     </Text>
                     <Text
                       style={{
@@ -279,7 +272,7 @@ export default function SiddurTab() {
                         fontFamily: "NotoSerifHebrew-Regular",
                       }}
                     >
-                      {tefila.nameHe}
+                      {service.nameHe}
                     </Text>
                   </View>
                   <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
