@@ -11,20 +11,11 @@ import { useTheme } from "../../src/hooks/useTheme";
 import {
   useSiddurDb,
   getAvailableServices,
-  getServicesForTime,
 } from "../../src/services/database";
-import type { ServicePathMapping } from "../../src/services/database";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
-import { shouldSayTachanun, getHallelType } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
-
-const TEFILA_LABELS: Record<string, { en: string; he: string }> = {
-  shacharis: { en: "Shacharis", he: "שחרית" },
-  mincha: { en: "Mincha", he: "מנחה" },
-  maariv: { en: "Maariv", he: "מעריב" },
-  none: { en: "Shacharis", he: "שחרית" },
-};
+import { getDayDaveningInfo, getSmartDavenFlow } from "../../src/utils/smartDaven";
 
 export default function SiddurTab() {
   const { tefilaType } = useHebrewDate();
@@ -34,20 +25,22 @@ export default function SiddurTab() {
   const { colors } = useTheme();
   const { isReady: dbReady } = useSiddurDb();
 
-  const current = TEFILA_LABELS[tefilaType] ?? TEFILA_LABELS.shacharis;
   const currentService = tefilaType === "none" ? "shacharis" : tefilaType;
 
+  // Calendar-aware day info
   const insertionContext = useMemo(() => getInsertionContext(), []);
-  const sayTachanun = useMemo(() => shouldSayTachanun(insertionContext), [insertionContext]);
-  const hallelType = useMemo(() => getHallelType(insertionContext), [insertionContext]);
-
-  // Get DB-backed services for current time
-  const servicesForTime = useMemo(
-    () => (dbReady ? getServicesForTime(nusach, currentService as any) : []),
-    [dbReady, nusach, currentService]
+  const dayInfo = useMemo(
+    () => getDayDaveningInfo(insertionContext),
+    [insertionContext]
   );
 
-  // Quick-access services (non-time-specific popular items)
+  // Smart davening flow
+  const davenFlow = useMemo(
+    () => getSmartDavenFlow(nusach, currentService as any, dayInfo),
+    [nusach, currentService, dayInfo]
+  );
+
+  // Quick-access services
   const quickAccess = useMemo(() => {
     if (!dbReady) return [];
     const all = getAvailableServices(nusach);
@@ -59,6 +52,25 @@ export default function SiddurTab() {
         s.key === "tefilasHaderech"
     );
   }, [dbReady, nusach]);
+
+  const handleStartDavening = () => {
+    if (davenFlow.useMultiMode) {
+      // Multi-service: use daven screen
+      const ids = davenFlow.serviceKeys
+        .map((k) => `dbservice:${k}`)
+        .join(",");
+      router.push({
+        pathname: "/siddur/daven",
+        params: { tefilaIds: ids },
+      });
+    } else {
+      // Single service
+      router.push({
+        pathname: "/siddur/[tefilaId]",
+        params: { tefilaId: `dbservice:${davenFlow.serviceKeys[0]}` },
+      });
+    }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -92,7 +104,7 @@ export default function SiddurTab() {
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
               <Text style={{ fontSize: 26, fontWeight: "bold", color: "#ffffff" }}>
-                {current.en}
+                {davenFlow.title}
               </Text>
               <Text
                 style={{
@@ -102,9 +114,38 @@ export default function SiddurTab() {
                   fontFamily: "NotoSerifHebrew-Bold",
                 }}
               >
-                {current.he}
+                {davenFlow.titleHe}
               </Text>
             </View>
+            {dayInfo.specialDayLabel !== "" && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 8,
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  alignSelf: "flex-start",
+                  borderRadius: 8,
+                  paddingHorizontal: 10,
+                  paddingVertical: 4,
+                }}
+              >
+                <Ionicons name="calendar" size={14} color={colors.accent} />
+                <Text style={{ fontSize: 13, color: "#ffffff", fontWeight: "600", marginLeft: 6 }}>
+                  {dayInfo.specialDayLabel}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color: colors.accent,
+                    fontFamily: "NotoSerifHebrew-Bold",
+                    marginLeft: 8,
+                  }}
+                >
+                  {dayInfo.specialDayLabelHe}
+                </Text>
+              </View>
+            )}
           </View>
 
           {nextZman && (
@@ -137,12 +178,7 @@ export default function SiddurTab() {
           )}
 
           <TouchableOpacity
-            onPress={() => {
-              router.push({
-                pathname: "/siddur/[tefilaId]",
-                params: { tefilaId: `dbservice:${currentService}` },
-              });
-            }}
+            onPress={handleStartDavening}
             activeOpacity={0.8}
             style={{
               backgroundColor: colors.accent,
@@ -167,57 +203,96 @@ export default function SiddurTab() {
           </TouchableOpacity>
         </View>
 
-        {/* Today's davening info */}
-        {(!sayTachanun || hallelType !== "none") && (
-          <View style={{ marginBottom: 20 }}>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: "600",
-                color: colors.textMuted,
-                textTransform: "uppercase",
-                letterSpacing: 0.5,
-                marginBottom: 10,
-                marginLeft: 4,
-              }}
-            >
-              Today's Davening
-            </Text>
-            <View
-              style={{
-                backgroundColor: colors.surface,
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: colors.border,
-                padding: 14,
-              }}
-            >
-              <View style={{ flexDirection: "row", gap: 16 }}>
+        {/* Today's davening info — insertions, tachanun, hallel */}
+        <View style={{ marginBottom: 20 }}>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: "600",
+              color: colors.textMuted,
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+              marginBottom: 10,
+              marginLeft: 4,
+            }}
+          >
+            Today's Davening
+          </Text>
+          <View
+            style={{
+              backgroundColor: colors.surface,
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: colors.border,
+              padding: 14,
+            }}
+          >
+            {/* Tachanun & Hallel row */}
+            <View style={{ flexDirection: "row", gap: 16, marginBottom: dayInfo.activeInsertions.length > 0 ? 12 : 0 }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons
+                  name={dayInfo.sayTachanun ? "checkmark-circle" : "close-circle"}
+                  size={16}
+                  color={dayInfo.sayTachanun ? colors.accent : colors.textMuted}
+                />
+                <Text style={{ fontSize: 13, color: colors.textSecondary, marginLeft: 4 }}>
+                  {dayInfo.sayTachanun ? "Tachanun" : "No Tachanun"}
+                </Text>
+              </View>
+              {dayInfo.hallelType !== "none" && (
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Ionicons
-                    name={sayTachanun ? "checkmark-circle" : "close-circle"}
-                    size={16}
-                    color={sayTachanun ? colors.accent : colors.textMuted}
-                  />
+                  <Ionicons name="musical-notes" size={16} color={colors.accent} />
                   <Text style={{ fontSize: 13, color: colors.textSecondary, marginLeft: 4 }}>
-                    {sayTachanun ? "Tachanun" : "No Tachanun"}
+                    {dayInfo.hallelType === "full" ? "Full Hallel" : "Half Hallel"}
                   </Text>
                 </View>
-                {hallelType !== "none" && (
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Ionicons name="musical-notes" size={16} color={colors.accent} />
-                    <Text style={{ fontSize: 13, color: colors.textSecondary, marginLeft: 4 }}>
-                      {hallelType === "full" ? "Full Hallel" : "Half Hallel"}
+              )}
+            </View>
+
+            {/* Active insertions badges */}
+            {dayInfo.activeInsertions.length > 0 && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  gap: 6,
+                }}
+              >
+                {dayInfo.activeInsertions.map((ins) => (
+                  <View
+                    key={ins.name}
+                    style={{
+                      backgroundColor: colors.accent + "18",
+                      borderRadius: 8,
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={{ fontSize: 12, color: colors.accent, fontWeight: "600" }}>
+                      {ins.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: colors.accent,
+                        fontFamily: "NotoSerifHebrew-Bold",
+                        marginLeft: 6,
+                        opacity: 0.8,
+                      }}
+                    >
+                      {ins.nameHe}
                     </Text>
                   </View>
-                )}
+                ))}
               </View>
-            </View>
+            )}
           </View>
-        )}
+        </View>
 
-        {/* Shabbat services (when available) */}
-        {dbReady && (
+        {/* Quick Access */}
+        {dbReady && quickAccess.length > 0 && (
           <View style={{ marginBottom: 20 }}>
             <Text
               style={{
