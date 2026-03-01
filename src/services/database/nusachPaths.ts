@@ -117,6 +117,31 @@ const ASHKENAZ: Record<string, ServicePathMapping> = {
     category: "other",
     paths: ["Kaddish"],
   },
+  // Additional services
+  sefirasHaOmer: {
+    name: "Sefirat HaOmer",
+    nameHe: "ספירת העומר",
+    category: "holidays",
+    paths: ["Weekday.Maariv.Sefirat HaOmer"],
+  },
+  havinenu: {
+    name: "Havinenu",
+    nameHe: "הבינינו",
+    category: "blessings",
+    paths: ["Berachot.Havinenu"],
+  },
+  prayerForDew: {
+    name: "Prayer for Dew",
+    nameHe: "תפילת טל",
+    category: "holidays",
+    paths: ["Festivals.Prayer for Dew"],
+  },
+  prayerForRain: {
+    name: "Prayer for Rain",
+    nameHe: "תפילת גשם",
+    category: "holidays",
+    paths: ["Festivals.Prayer for Rain"],
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -251,6 +276,79 @@ const SEFARD: Record<string, ServicePathMapping> = {
     category: "other",
     paths: ["Kiddush Levanah"],
   },
+  // Additional services
+  motzaeiShabbos: {
+    name: "Motzaei Shabbat",
+    nameHe: "מוצאי שבת",
+    category: "other",
+    paths: ["Motzaei Shabbat "],
+  },
+  torahReadings: {
+    name: "Torah Readings",
+    nameHe: "קריאת התורה",
+    category: "other",
+    paths: ["Torah Readings"],
+  },
+  variousPrayers: {
+    name: "Various Prayers & Segulot",
+    nameHe: "תפילות וסגולות שונות",
+    category: "other",
+    paths: ["Various Prayers & Segulot"],
+  },
+  additionalPrayers: {
+    name: "Additional Prayers",
+    nameHe: "תפילות נוספות",
+    category: "other",
+    paths: ["Additional Prayers "],
+  },
+  lagBaOmer: {
+    name: "Lag BaOmer Songs",
+    nameHe: "שירי ל\"ג בעומר",
+    category: "holidays",
+    paths: ["Lag BaOmer Songs"],
+  },
+  nissan: {
+    name: "Nissan",
+    nameHe: "ניסן",
+    category: "holidays",
+    paths: ["Nissan"],
+  },
+  simchasTorah: {
+    name: "Simchat Torah",
+    nameHe: "שמחת תורה",
+    category: "holidays",
+    paths: ["Simchat Torah"],
+  },
+  shavuos: {
+    name: "Shavuot",
+    nameHe: "שבועות",
+    category: "holidays",
+    paths: ["Shavuot"],
+  },
+  eruvTavshilin: {
+    name: "Eruv Tavshilin",
+    nameHe: "עירוב תבשילין",
+    category: "holidays",
+    paths: ["Eruv Tavshilin"],
+  },
+  shakingLulav: {
+    name: "Shaking Lulav",
+    nameHe: "נטילת לולב",
+    category: "holidays",
+    paths: ["Shaking Lulav"],
+  },
+  priestly: {
+    name: "Priestly Blessing",
+    nameHe: "ברכת כהנים",
+    category: "other",
+    paths: ["Priestly Blessing"],
+  },
+  variousBlessings: {
+    name: "Various Blessings",
+    nameHe: "ברכות שונות",
+    category: "lifecycle",
+    paths: ["Various Blessings"],
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -351,6 +449,31 @@ const EDOT_HAMIZRACH: Record<string, ServicePathMapping> = {
     category: "other",
     paths: ["Mishna Study for Shabbat.Pirkei Avot"],
   },
+  // Additional services
+  havdalah: {
+    name: "Havdalah",
+    nameHe: "הבדלה",
+    category: "other",
+    paths: ["Havdalah"],
+  },
+  kiddushLevana: {
+    name: "Blessing of the Moon",
+    nameHe: "ברכת הלבנה",
+    category: "other",
+    paths: ["Blessing of the Moon"],
+  },
+  nissan: {
+    name: "Nissan",
+    nameHe: "ניסן",
+    category: "holidays",
+    paths: ["Nissan"],
+  },
+  songOfSongs: {
+    name: "Song of Songs",
+    nameHe: "שיר השירים",
+    category: "other",
+    paths: ["Song of Songs"],
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -442,6 +565,43 @@ const ARI: Record<string, ServicePathMapping> = {
       "Order of a Circumcision",
       "Pidyon HaBen",
     ],
+  },
+  // Additional services
+  purim: {
+    name: "Purim",
+    nameHe: "פורים",
+    category: "holidays",
+    paths: ["Purim"],
+  },
+  musafFestivals: {
+    name: "Musaf for Festivals",
+    nameHe: "מוסף לחג",
+    category: "holidays",
+    paths: ["Musaf for Festivals"],
+  },
+  lulav: {
+    name: "Lulav",
+    nameHe: "לולב",
+    category: "holidays",
+    paths: ["Lulav"],
+  },
+  kapparot: {
+    name: "Kapparot",
+    nameHe: "כפרות",
+    category: "holidays",
+    paths: ["Kapparot"],
+  },
+  readingOfNassi: {
+    name: "Reading of the Nassi",
+    nameHe: "קריאת הנשיא",
+    category: "holidays",
+    paths: ["Reading of the Nassi"],
+  },
+  mishnayosForMourner: {
+    name: "Mishnayot for a Mourner",
+    nameHe: "משניות לעילוי נשמת",
+    category: "lifecycle",
+    paths: ["Mishnayot for a Mourner"],
   },
 };
 
