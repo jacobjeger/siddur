@@ -250,8 +250,8 @@ export const shemaShacharis: Tefila = {
 
 export const shemonehEsrei: Tefila = {
   id: "shemoneh-esrei-shacharis",
-  name: "Shemoneh Esrei",
-  nameHe: "שמונה עשרה",
+  name: "Shemoneh Esrei - Shacharis",
+  nameHe: "שמונה עשרה - שחרית",
   category: "shacharis",
   timeContext: "shacharis",
   sections: [
@@ -281,9 +281,9 @@ export const shemonehEsrei: Tefila = {
       id: "se-kedusha",
       title: "Kedusha",
       titleHe: "קדושה",
-      instruction: "Recited only with a minyan. Stand with feet together.",
-      text: "נְקַדֵּשׁ אֶת שִׁמְךָ בָּעוֹלָם, כְּשֵׁם שֶׁמַּקְדִּישִׁים אוֹתוֹ בִּשְׁמֵי מָרוֹם, כַּכָּתוּב עַל יַד נְבִיאֶךָ, וְקָרָא זֶה אֶל זֶה וְאָמַר:\n\nקָדוֹשׁ קָדוֹשׁ קָדוֹשׁ ה' צְבָאוֹת, מְלֹא כָל הָאָרֶץ כְּבוֹדוֹ.\n\nלְעֻמָּתָם בָּרוּךְ יֹאמֵרוּ:\n\nבָּרוּךְ כְּבוֹד ה' מִמְּקוֹמוֹ.\n\nוּבְדִבְרֵי קָדְשְׁךָ כָּתוּב לֵאמֹר:\n\nיִמְלֹךְ ה' לְעוֹלָם, אֱלֹהַיִךְ צִיּוֹן, לְדֹר וָדֹר, הַלְלוּיָהּ.",
-      translation: "We will sanctify Your Name in the world, as they sanctify it in the highest heavens, as it is written by Your prophet, and one called to the other and said:\n\nHoly, holy, holy is the Lord of hosts; the whole earth is full of His glory.\n\nThose facing them say blessed:\n\nBlessed is the glory of the Lord from His place.\n\nAnd in Your holy Scriptures it is written saying:\n\nThe Lord shall reign forever, your God, O Zion, from generation to generation. Hallelujah.",
+      instruction: "Kedusha is said during the chazzan's repetition with a minyan.",
+      text: "נַעֲרִיצְךָ וְנַקְדִּישָׁךְ כְּסוֹד שִׂיחַ שַׂרְפֵי קֹדֶשׁ, הַמַּקְדִּישִׁים שִׁמְךָ בַּקֹּדֶשׁ, כַּכָּתוּב עַל יַד נְבִיאֶךָ, וְקָרָא זֶה אֶל זֶה וְאָמַר:\n\nקָדוֹשׁ קָדוֹשׁ קָדוֹשׁ ה' צְבָאוֹת, מְלֹא כָל הָאָרֶץ כְּבוֹדוֹ.\n\nכְּבוֹדוֹ מָלֵא עוֹלָם, מְשָׁרְתָיו שׁוֹאֲלִים זֶה לָזֶה אַיֵּה מְקוֹם כְּבוֹדוֹ. לְעֻמָּתָם בָּרוּךְ יֹאמֵרוּ:\n\nבָּרוּךְ כְּבוֹד ה' מִמְּקוֹמוֹ.\n\nמִמְּקוֹמוֹ הוּא יִפֶן בְּרַחֲמִים וְיָחוֹן עַם הַמְיַחֲדִים שְׁמוֹ, עֶרֶב וָבֹקֶר בְּכָל יוֹם תָּמִיד, פַּעֲמַיִם בְּאַהֲבָה שְׁמַע אוֹמְרִים:\n\nשְׁמַע יִשְׂרָאֵל, ה' אֱלֹהֵינוּ, ה' אֶחָד.\n\nהוּא אֱלֹהֵינוּ, הוּא אָבִינוּ, הוּא מַלְכֵּנוּ, הוּא מוֹשִׁיעֵנוּ, וְהוּא יַשְׁמִיעֵנוּ בְּרַחֲמָיו שֵׁנִית לְעֵינֵי כָּל חָי, לִהְיוֹת לָכֶם לֵאלֹהִים.\n\nאֲנִי ה' אֱלֹהֵיכֶם.\n\nוּבְדִבְרֵי קָדְשְׁךָ כָּתוּב לֵאמֹר:\n\nיִמְלֹךְ ה' לְעוֹלָם, אֱלֹהַיִךְ צִיּוֹן, לְדֹר וָדֹר, הַלְלוּיָהּ.\n\nלְדוֹר וָדוֹר נַגִּיד גָּדְלֶךָ, וּלְנֵצַח נְצָחִים קְדֻשָּׁתְךָ נַקְדִּישׁ, וְשִׁבְחֲךָ אֱלֹהֵינוּ מִפִּינוּ לֹא יָמוּשׁ לְעוֹלָם וָעֶד, כִּי אֵל מֶלֶךְ גָּדוֹל וְקָדוֹשׁ אָתָּה.",
+      translation: "We will revere You and sanctify You according to the mystic utterance of the holy seraphim, who sanctify Your Name in holiness, as it is written by Your prophet, and one called to the other and said:\n\nHoly, holy, holy is the Lord of hosts; the whole earth is full of His glory.\n\nHis glory fills the world; His ministering angels ask one another: Where is the place of His glory? Those facing them say blessed:\n\nBlessed is the glory of the Lord from His place.\n\nFrom His place may He turn in mercy and be gracious to the people who proclaim the unity of His Name, evening and morning, every day constantly, twice with love declaring Shema:\n\nHear, O Israel, the Lord is our God, the Lord is One.\n\nHe is our God, He is our Father, He is our King, He is our Savior, and He will let us hear in His mercy a second time, in the sight of all the living, to be your God.\n\nI am the Lord your God.\n\nAnd in Your holy Scriptures it is written saying:\n\nThe Lord shall reign forever, your God, O Zion, from generation to generation. Hallelujah.\n\nFrom generation to generation we will declare Your greatness, and to all eternity we will proclaim Your holiness, and Your praise, our God, shall not depart from our mouth forever and ever, for You are God, a great and holy King.",
     },
     {
       id: "se-ata-kadosh",
