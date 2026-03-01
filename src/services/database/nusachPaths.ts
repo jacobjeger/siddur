@@ -281,7 +281,7 @@ const SEFARD: Record<string, ServicePathMapping> = {
     name: "Motzaei Shabbat",
     nameHe: "מוצאי שבת",
     category: "other",
-    paths: ["Motzaei Shabbat "],
+    paths: ["Motzaei Shabbat"],
   },
   torahReadings: {
     name: "Torah Readings",
@@ -299,7 +299,7 @@ const SEFARD: Record<string, ServicePathMapping> = {
     name: "Additional Prayers",
     nameHe: "תפילות נוספות",
     category: "other",
-    paths: ["Additional Prayers "],
+    paths: ["Additional Prayers"],
   },
   lagBaOmer: {
     name: "Lag BaOmer Songs",
