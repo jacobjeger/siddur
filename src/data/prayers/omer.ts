@@ -63,7 +63,7 @@ export const sefirasHaOmer: Tefila = {
       id: "omer-bracha",
       title: "Bracha for Counting",
       titleHe: "ברכת הספירה",
-      instruction: "Counted each night from the 2nd night of Pesach through Erev Shavuos (49 nights). Count after nightfall while standing.",
+      instruction: "Counted each night from the second night of Pesach through Erev Shavuos (49 nights). Count after nightfall while standing.",
       text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל סְפִירַת הָעוֹמֶר.",
       translation: "Blessed are You, Lord our God, King of the universe, Who has sanctified us with His commandments, and commanded us concerning the counting of the Omer.",
     },
@@ -73,7 +73,7 @@ export const sefirasHaOmer: Tefila = {
       titleHe: "הספירה",
       instruction: "Say the appropriate day's count after the bracha. The full list of all 49 days follows.",
       text: OMER_DAYS.join("\n"),
-      translation: "Today is 1 day of the Omer.\nToday is 2 days of the Omer.\nToday is 3 days of the Omer.\nToday is 4 days of the Omer.\nToday is 5 days of the Omer.\nToday is 6 days of the Omer.\nToday is 7 days, which are 1 week of the Omer.\n[...continues through day 49, which are 7 weeks of the Omer.]",
+      translation: "Today is 1 day of the Omer.\nToday is 2 days of the Omer.\nToday is 3 days of the Omer.\nToday is 4 days of the Omer.\nToday is 5 days of the Omer.\nToday is 6 days of the Omer.\nToday is 7 days, which are 1 week of the Omer.\nToday is 8 days, which are 1 week and 1 day of the Omer.\nToday is 9 days, which are 1 week and 2 days of the Omer.\nToday is 10 days, which are 1 week and 3 days of the Omer.\nToday is 11 days, which are 1 week and 4 days of the Omer.\nToday is 12 days, which are 1 week and 5 days of the Omer.\nToday is 13 days, which are 1 week and 6 days of the Omer.\nToday is 14 days, which are 2 weeks of the Omer.\nToday is 15 days, which are 2 weeks and 1 day of the Omer.\nToday is 16 days, which are 2 weeks and 2 days of the Omer.\nToday is 17 days, which are 2 weeks and 3 days of the Omer.\nToday is 18 days, which are 2 weeks and 4 days of the Omer.\nToday is 19 days, which are 2 weeks and 5 days of the Omer.\nToday is 20 days, which are 2 weeks and 6 days of the Omer.\nToday is 21 days, which are 3 weeks of the Omer.\nToday is 22 days, which are 3 weeks and 1 day of the Omer.\nToday is 23 days, which are 3 weeks and 2 days of the Omer.\nToday is 24 days, which are 3 weeks and 3 days of the Omer.\nToday is 25 days, which are 3 weeks and 4 days of the Omer.\nToday is 26 days, which are 3 weeks and 5 days of the Omer.\nToday is 27 days, which are 3 weeks and 6 days of the Omer.\nToday is 28 days, which are 4 weeks of the Omer.\nToday is 29 days, which are 4 weeks and 1 day of the Omer.\nToday is 30 days, which are 4 weeks and 2 days of the Omer.\nToday is 31 days, which are 4 weeks and 3 days of the Omer.\nToday is 32 days, which are 4 weeks and 4 days of the Omer.\nToday is 33 days, which are 4 weeks and 5 days of the Omer.\nToday is 34 days, which are 4 weeks and 6 days of the Omer.\nToday is 35 days, which are 5 weeks of the Omer.\nToday is 36 days, which are 5 weeks and 1 day of the Omer.\nToday is 37 days, which are 5 weeks and 2 days of the Omer.\nToday is 38 days, which are 5 weeks and 3 days of the Omer.\nToday is 39 days, which are 5 weeks and 4 days of the Omer.\nToday is 40 days, which are 5 weeks and 5 days of the Omer.\nToday is 41 days, which are 5 weeks and 6 days of the Omer.\nToday is 42 days, which are 6 weeks of the Omer.\nToday is 43 days, which are 6 weeks and 1 day of the Omer.\nToday is 44 days, which are 6 weeks and 2 days of the Omer.\nToday is 45 days, which are 6 weeks and 3 days of the Omer.\nToday is 46 days, which are 6 weeks and 4 days of the Omer.\nToday is 47 days, which are 6 weeks and 5 days of the Omer.\nToday is 48 days, which are 6 weeks and 6 days of the Omer.\nToday is 49 days, which are 7 weeks of the Omer.",
     },
     {
       id: "omer-harachaman",
@@ -81,6 +81,14 @@ export const sefirasHaOmer: Tefila = {
       titleHe: "הרחמן",
       text: "הָרַחֲמָן הוּא יַחֲזִיר לָנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵינוּ אָמֵן סֶלָה.",
       translation: "May the Merciful One restore for us the service of the Holy Temple to its place, speedily in our days, Amen, Selah.",
+    },
+    {
+      id: "omer-lamnatzeach",
+      title: "Psalm 67 - LaMnatze'ach",
+      titleHe: "למנצח בנגינות",
+      instruction: "This psalm contains seven verses (corresponding to the seven weeks of the Omer) and forty-nine words (corresponding to the forty-nine days).",
+      text: "לַמְנַצֵּחַ בִּנְגִינוֹת מִזְמוֹר שִׁיר.\nאֱלֹהִים יְחָנֵּנוּ וִיבָרְכֵנוּ, יָאֵר פָּנָיו אִתָּנוּ סֶלָה.\nלָדַעַת בָּאָרֶץ דַּרְכֶּךָ, בְּכָל גּוֹיִם יְשׁוּעָתֶךָ.\nיוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\nיִשְׂמְחוּ וִירַנְּנוּ לְאֻמִּים, כִּי תִשְׁפּוֹט עַמִּים מִישׁוֹר, וּלְאֻמִּים בָּאָרֶץ תַּנְחֵם סֶלָה.\nיוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\nאֶרֶץ נָתְנָה יְבוּלָהּ, יְבָרְכֵנוּ אֱלֹהִים אֱלֹהֵינוּ.\nיְבָרְכֵנוּ אֱלֹהִים, וְיִירְאוּ אוֹתוֹ כָּל אַפְסֵי אָרֶץ.",
+      translation: "For the conductor, with melodies, a psalm, a song.\nMay God be gracious to us and bless us, may He cause His countenance to shine upon us, Selah.\nTo make known Your way on earth, among all nations Your salvation.\nThe peoples will thank You, O God; the peoples will thank You, all of them.\nNations will be glad and sing for joy, for You will judge the peoples fairly, and guide the nations on earth, Selah.\nThe peoples will thank You, O God; the peoples will thank You, all of them.\nThe earth has yielded its produce; may God, our God, bless us.\nMay God bless us, and may all the ends of the earth fear Him.",
     },
   ],
 };
