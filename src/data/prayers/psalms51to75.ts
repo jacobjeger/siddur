@@ -29,7 +29,7 @@ export const psalm52: Tefila = {
     {
       id: "psalm-52-text",
       title: "Psalm 52",
-      titleHe: "תהלים 52",
+      titleHe: "תהילים נב",
       text: `לַמְנַצֵּ֗חַ מַשְׂכִּ֥יל לְדָוִֽד׃\\nבְּב֤וֹא׀ דּוֹאֵ֣ג הָאֲדֹמִי֮ וַיַּגֵּ֢ד לְשָׁ֫א֥וּל וַיֹּ֥אמֶר ל֑וֹ בָּ֥א דָ֝וִ֗ד אֶל־בֵּ֥ית אֲחִימֶֽלֶךְ׃\\nמַה־תִּתְהַלֵּ֣ל בְּ֭רָעָה הַגִּבּ֑וֹר חֶ֥סֶד אֵ֝֗ל כׇּל־הַיּֽוֹם׃\\nהַ֭וּוֹת תַּחְשֹׁ֣ב לְשׁוֹנֶ֑ךָ כְּתַ֥עַר מְ֝לֻטָּ֗שׁ עֹשֵׂ֥ה רְמִיָּֽה׃\\nאָהַ֣בְתָּ רָּ֣ע מִטּ֑וֹב שֶׁ֓קֶר׀ מִדַּבֵּ֖ר צֶ֣דֶק סֶֽלָה׃\\nאָהַ֥בְתָּ כׇֽל־דִּבְרֵי־בָ֗לַע לְשׁ֣וֹן מִרְמָֽה׃\\nגַּם־אֵל֮ יִתׇּצְךָ֢ לָ֫נֶ֥צַח יַחְתְּךָ֣ וְיִסָּחֲךָ֣ מֵאֹ֑הֶל וְשֵׁרֶשְׁךָ֨ מֵאֶ֖רֶץ חַיִּ֣ים סֶֽלָה׃\\nוְיִרְא֖וּ צַדִּיקִ֥ים וְיִירָ֗אוּ וְעָלָ֥יו יִשְׂחָֽקוּ׃\\nהִנֵּ֤ה הַגֶּ֗בֶר לֹ֤א יָשִׂ֥ים אֱלֹהִ֗ים מָ֫עוּזּ֥וֹ וַ֭יִּבְטַח בְּרֹ֣ב עׇשְׁר֑וֹ יָ֝עֹ֗ז בְּהַוָּתֽוֹ׃\\nוַאֲנִ֤י׀ כְּזַ֣יִת רַ֭עֲנָן בְּבֵ֣ית אֱלֹהִ֑ים בָּטַ֥חְתִּי בְחֶסֶד־אֱ֝לֹהִ֗ים עוֹלָ֥ם וָעֶֽד׃\\nאוֹדְךָ֣ לְ֭עוֹלָם כִּ֣י עָשִׂ֑יתָ וַאֲקַוֶּ֥ה שִׁמְךָ֥ כִי־ט֝֗וֹב נֶ֣גֶד חֲסִידֶֽיךָ׃{פ}`,
       translation: `For the leader. A maskil of David, \\nwhen Doeg the Edomite came and informed Saul, telling him, “David came to Ahimelech’s house.”aCf. 1 Sam. 22.9ff. \\nWhy do you boast of your evil, brave fellow?God’s faithfulness never ceases.bnever ceases Lit. “is all the day.” \\nYour tongue devises mischief,like a sharpened razor that works treacherously.\\nYou prefer evil to good,the lie, to speaking truthfully.    Selah. \\nYou love all pernicious words,treacherous speech.\\nSo God will tear you down for good,will break you and pluck you from your tent,and root you out of the land of the living.    Selah. \\nThe righteous, seeing it, will be awestruck;they will jibe at you,cyou Heb. “him.” saying,\\n“Here was a fellow who did not make God his refuge,but trusted in his great wealth,relied upon his mischief.”\\nBut I am like a thriving olive tree in God’s house;I trust in the faithfulness of God forever and ever.\\nI praise You forever, for You have acted;I declare that Your name is gooddI declare that Your name is good Meaning of Heb. uncertain; in contrast to others “I will wait for Your name for it is good.” in the presence of Your faithful ones.`,
     },
@@ -39,13 +39,13 @@ export const psalm52: Tefila = {
 export const psalm53: Tefila = {
   id: "psalm-53",
   name: "Psalm 53",
-  nameHe: "תהלים 53",
+  nameHe: "תהילים נג",
   category: "tehillim",
   sections: [
     {
       id: "psalm-53-text",
       title: "Psalm 53",
-      titleHe: "תהלים 53",
+      titleHe: "תהילים נג",
       text: `לַמְנַצֵּ֥חַ עַֽל־מָחֲלַ֗ת מַשְׂכִּ֥יל לְדָוִֽד׃\\nאָ֘מַ֤ר נָבָ֣ל בְּ֭לִבּוֹ אֵ֣ין אֱלֹהִ֑ים הִֽ֝שְׁחִ֗יתוּ וְהִֽתְעִ֥יבוּ עָ֝֗וֶל אֵ֣ין עֹֽשֵׂה־טֽוֹב׃\\nאֱֽלֹהִ֗ים מִשָּׁמַיִם֮ הִשְׁקִ֢יף עַֽל־בְּנֵי־אָ֫דָ֥ם לִ֭רְאוֹת הֲיֵ֣שׁ מַשְׂכִּ֑יל דֹּ֝רֵ֗שׁ אֶת־אֱלֹהִֽים׃\\nכֻּלּ֥וֹ סָג֮ יַחְדָּ֢ו נֶ֫אֱלָ֥חוּ אֵ֤ין עֹֽשֵׂה־ט֑וֹב אֵ֝֗ין גַּם־אֶחָֽד׃\\nהֲלֹ֥א יָדְעוּ֮ פֹּ֤עֲלֵ֫י אָ֥וֶן אֹכְלֵ֣י עַ֭מִּי אָ֣כְלוּ לֶ֑חֶם אֱ֝לֹהִ֗ים לֹ֣א קָרָֽאוּ׃\\nשָׁ֤ם׀ פָּ֥חֲדוּ פַחַד֮ לֹא־הָ֢יָ֫ה פָ֥חַד כִּֽי־אֱלֹהִ֗ים פִּ֭זַּר עַצְמ֣וֹת חֹנָ֑ךְ הֱ֝בִשֹׁ֗תָה כִּֽי־אֱלֹהִ֥ים מְאָסָֽם׃\\nמִ֥י־יִתֵּ֣ן מִצִּיּוֹן֮ יְשֻׁע֢וֹת יִשְׂרָ֫אֵ֥ל בְּשׁ֣וּב אֱ֭לֹהִים שְׁב֣וּת עַמּ֑וֹ יָגֵ֥ל יַ֝עֲקֹ֗ב יִשְׂמַ֥ח יִשְׂרָאֵֽל׃{פ}`,
       translation: `aCf. Psalm 14. For the leader; on mahalath.bmahalath Meaning of Heb. unknown. A maskil of David.\\nThe scoundrel thinks,“God does not care.”cGod does not care Lit. “There is no God”; cf. 10.4. Mortals’dMortals’ Heb. “Their.” wrongdoing is corrupt and loathsome;no one does good.\\nGod looks down from heaven on humankindto find someone with understanding,someone mindful of God.\\nEveryone is dross,altogether foul;there is no one who does good,not even one.\\nAre they so witless, those evildoers,who devour my people as they devour food,and do not invoke God?\\nThere they will be seized with fright—never was there such a fright—for God has scattered the bones of your besiegers;you have put them to shame,enever was there … put them to shame Meaning of Heb. uncertain. for God has rejected them.\\nO that the deliverance of Israel might come from Zion!When God restores the fortunes of this covenanted people,Jacob will exult, Israel will rejoice.`,
     },
@@ -55,7 +55,7 @@ export const psalm53: Tefila = {
 export const psalm54: Tefila = {
   id: "psalm-54",
   name: "Psalm 54",
-  nameHe: "תהלים 54",
+  nameHe: "תהילים נד",
   category: "tehillim",
   sections: [
     {

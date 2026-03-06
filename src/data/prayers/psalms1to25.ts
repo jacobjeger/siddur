@@ -173,7 +173,7 @@ export const psalm11: Tefila = {
     {
       id: "psalm-11-text",
       title: "Psalm 11",
-      titleHe: "תהילים 11",
+      titleHe: "תהילים יא",
       text: `לַמְנַצֵּ֗חַ לְדָ֫וִ֥ד בַּֽיהֹוָ֨ה׀ חָסִ֗יתִי אֵ֭יךְ תֹּאמְר֣וּ לְנַפְשִׁ֑י (נודו) [נ֝֗וּדִי] הַרְכֶ֥ם צִפּֽוֹר׃\nכִּ֤י הִנֵּ֪ה הָרְשָׁעִ֡ים יִדְרְכ֬וּן קֶ֗שֶׁת כּוֹנְנ֣וּ חִצָּ֣ם עַל־יֶ֑תֶר לִיר֥וֹת בְּמוֹ־אֹ֝֗פֶל לְיִשְׁרֵי־לֵֽב׃\nכִּ֣י הַ֭שָּׁתוֹת יֵהָרֵס֑וּן צַ֝דִּ֗יק מַה־פָּעָֽל׃\nיְהֹוָ֤ה׀ בְּֽהֵ֘יכַ֤ל קׇדְשׁ֗וֹ יְהֹוָה֮ בַּשָּׁמַ֢יִם כִּ֫סְא֥וֹ עֵינָ֥יו יֶחֱז֑וּ עַפְעַפָּ֥יו יִ֝בְחֲנ֗וּ בְּנֵ֣י אָדָֽם׃\nיְהֹוָה֮ צַדִּ֢יק יִ֫בְחָ֥ן וְ֭רָשָׁע וְאֹהֵ֣ב חָמָ֑ס שָֽׂנְאָ֥ה נַפְשֽׁוֹ׃\nיַמְטֵ֥ר עַל־רְשָׁעִ֗ים פַּ֫חִ֥ים אֵ֣שׁ וְ֭גׇפְרִית וְר֥וּחַ זִלְעָפ֗וֹת מְנָ֣ת כּוֹסָֽם׃\nכִּֽי־צַדִּ֣יק יְ֭הֹוָה צְדָק֣וֹת אָהֵ֑ב יָ֝שָׁ֗ר יֶחֱז֥וּ פָנֵֽימוֹ׃ {פ}`,
       translation: `To the chief Musician, of David. In the Lord I put my trust: how can you say to my soul, Flee like a bird to your mountain?\nFor, lo, the wicked bend the bow, they make ready their arrow upon the string, that they may shoot in darkness at the upright in heart.\nFor when the foundations are destroyed, what can the righteous do?\nThe Lord in his holy temple, the Lord whose throne is in heaven, whose eyes behold, whose eyelids try, the children of men:\nthe Lord tries the righteous: but the wicked and him who loves violence his soul hates.\nUpon the wicked he shall rain coals, fire and brimstone, and a scorching wind shall be the portion of their cup.\nFor the Lord is righteous, he loves righteousness; the upright shall behold his face.`,
     },
@@ -183,13 +183,13 @@ export const psalm11: Tefila = {
 export const psalm12: Tefila = {
   id: "psalm-12",
   name: "Psalm 12",
-  nameHe: "תהילים 12",
+  nameHe: "תהילים יב",
   category: "tehillim",
   sections: [
     {
       id: "psalm-12-text",
       title: "Psalm 12",
-      titleHe: "תהילים 12",
+      titleHe: "תהילים יב",
       text: `לַמְנַצֵּ֥חַ עַֽל־הַשְּׁמִינִ֗ית מִזְמ֥וֹר לְדָוִֽד׃\nהוֹשִׁ֣יעָה יְ֭הֹוָה כִּֽי־גָמַ֣ר חָסִ֑יד כִּי־פַ֥סּוּ אֱ֝מוּנִ֗ים מִבְּנֵ֥י אָדָֽם׃\nשָׁ֤וְא׀ יְֽדַבְּרוּ֮ אִ֤ישׁ אֶת־רֵ֫עֵ֥הוּ שְׂפַ֥ת חֲלָק֑וֹת בְּלֵ֖ב וָלֵ֣ב יְדַבֵּֽרוּ׃\nיַכְרֵ֣ת יְ֭הֹוָה כׇּל־שִׂפְתֵ֣י חֲלָק֑וֹת לָ֝שׁ֗וֹן מְדַבֶּ֥רֶת גְּדֹלֽוֹת׃\nאֲשֶׁ֤ר אָמְר֨וּ׀ לִלְשֹׁנֵ֣נוּ נַ֭גְבִּיר שְׂפָתֵ֣ינוּ אִתָּ֑נוּ מִ֖י אָד֣וֹן לָֽנוּ׃\nמִשֹּׁ֥ד עֲנִיִּים֮ מֵאֶנְקַ֢ת אֶבְי֫וֹנִ֥ים עַתָּ֣ה אָ֭קוּם יֹאמַ֣ר יְהֹוָ֑ה אָשִׁ֥ית בְּ֝יֵ֗שַׁע יָפִ֥יחַֽ־לֽוֹ׃\nאִ֥מְר֣וֹת יְהֹוָה֮ אֲמָר֢וֹת טְהֹ֫ר֥וֹת כֶּ֣סֶף צָ֭רוּף בַּעֲלִ֣יל לָאָ֑רֶץ מְ֝זֻקָּ֗ק שִׁבְעָתָֽיִם׃\nאַתָּֽה־יְהֹוָ֥ה תִּשְׁמְרֵ֑ם תִּצְּרֶ֓נּוּ׀ מִן־הַדּ֖וֹר ז֣וּ לְעוֹלָֽם׃\nסָבִ֗יב רְשָׁעִ֥ים יִתְהַלָּכ֑וּן כְּרֻ֥ם זֻ֝לּ֗וּת לִבְנֵ֥י אָדָֽם׃ {פ}`,
       translation: `To the chief Musician upon the Sheminit, A Psalm of David.\nHelp, Lord; for the godly man ceases; for the faithful fail from among the children of men.\nThey speak vanity every one with his fellow: with flattering lips and with a double heart they speak.\nMay the Lord cut off all flattering lips, the tongue that speaks proud things:\nwho have said, With our tongue we will prevail; our lips are our own: who is lord over us?\nFor the violence done to the poor, for the sighing of the needy, now will I arise, says the Lord; I will set him in safety at whom they hiss.\nThe words of the Lord are pure words: silver refined in a furnace upon the ground, purified seven times.\nThou shalt keep them, O Lord, Thou shalt preserve them from this generation forever.\nThe wicked walk on every side, when vileness is exalted among the children of men.`,
     },
@@ -199,13 +199,13 @@ export const psalm12: Tefila = {
 export const psalm13: Tefila = {
   id: "psalm-13",
   name: "Psalm 13",
-  nameHe: "תהילים 13",
+  nameHe: "תהילים יג",
   category: "tehillim",
   sections: [
     {
       id: "psalm-13-text",
       title: "Psalm 13",
-      titleHe: "תהילים 13",
+      titleHe: "תהילים יג",
       text: `לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃\nעַד־אָ֣נָה יְ֭הֹוָה תִּשְׁכָּחֵ֣נִי נֶ֑צַח עַד־אָ֓נָה׀ תַּסְתִּ֖יר אֶת־פָּנֶ֣יךָ מִמֶּֽנִּי׃\nעַד־אָ֨נָה אָשִׁ֪ית עֵצ֡וֹת בְּנַפְשִׁ֗י יָג֣וֹן בִּלְבָבִ֣י יוֹמָ֑ם עַד־אָ֓נָה׀ יָר֖וּם אֹיְבִ֣י עָלָֽי׃\nהַבִּ֣יטָֽה עֲ֭נֵנִי יְהֹוָ֣ה אֱלֹהָ֑י הָאִ֥ירָה עֵ֝ינַ֗י פֶּן־אִישַׁ֥ן הַמָּֽוֶת׃\nפֶּן־יֹאמַ֣ר אֹיְבִ֣י יְכׇלְתִּ֑יו צָרַ֥י יָ֝גִ֗ילוּ כִּ֣י אֶמּֽוֹט׃\nוַאֲנִ֤י׀ בְּחַסְדְּךָ֣ בָטַחְתִּי֮ יָ֤גֵ֥ל לִבִּ֗י בִּישׁוּעָ֫תֶ֥ךָ אָשִׁ֥ירָה לַֽיהֹוָ֑ה כִּ֖י גָמַ֣ל עָלָֽי׃ {פ}`,
       translation: `To the chief Musician, A Psalm of David.\nHow long wilt Thou forget me O Lord? forever? how long wilt Thou hide Thy face from me?\nHow long shall I take counsel in my soul, having sorrow in my heart daily? how long shall my enemy be exalted over me?\nLook, and hear me, O Lord my God: lighten my eyes, lest I sleep the sleep of death;\nlest my enemy say, I have prevailed against him; and those who trouble me rejoice when I am moved.\nBut I have trusted in Thy mercy; my heart shall rejoice in Thy salvation. I will sing to the Lord, because he has dealt bountifully with me.`,
     },
@@ -215,13 +215,13 @@ export const psalm13: Tefila = {
 export const psalm14: Tefila = {
   id: "psalm-14",
   name: "Psalm 14",
-  nameHe: "תהילים 14",
+  nameHe: "תהילים יד",
   category: "tehillim",
   sections: [
     {
       id: "psalm-14-text",
       title: "Psalm 14",
-      titleHe: "תהילים 14",
+      titleHe: "תהילים יד",
       text: `לַמְנַצֵּ֗חַ לְדָ֫וִ֥ד אָ֘מַ֤ר נָבָ֣ל בְּ֭לִבּוֹ אֵ֣ין אֱלֹהִ֑ים הִֽשְׁחִ֗יתוּ הִֽתְעִ֥יבוּ עֲלִילָ֗ה אֵ֣ין עֹֽשֵׂה־טֽוֹב׃\nיְֽהֹוָ֗ה מִשָּׁמַיִם֮ הִשְׁקִ֢יף עַֽל־בְּנֵי־אָ֫דָ֥ם לִ֭רְאוֹת הֲיֵ֣שׁ מַשְׂכִּ֑יל דֹּ֝רֵ֗שׁ אֶת־אֱלֹהִֽים׃\nהַכֹּ֥ל סָר֮ יַחְדָּ֢ו נֶ֫אֱלָ֥חוּ אֵ֤ין עֹֽשֵׂה־ט֑וֹב אֵ֝֗ין גַּם־אֶחָֽד׃\nהֲלֹ֥א יָדְעוּ֮ כׇּל־פֹּ֢עֲלֵ֫י אָ֥וֶן אֹכְלֵ֣י עַ֭מִּי אָ֣כְלוּ לֶ֑חֶם יְ֝הֹוָ֗ה לֹ֣א קָרָֽאוּ׃\nשָׁ֤ם׀ פָּ֣חֲדוּ פָ֑חַד כִּֽי־אֱ֝לֹהִ֗ים בְּד֣וֹר צַדִּֽיק׃\nעֲצַת־עָנִ֥י תָבִ֑ישׁוּ כִּ֖י יְהֹוָ֣ה מַחְסֵֽהוּ׃\nמִ֥י־יִתֵּ֣ן מִצִּיּוֹן֮ יְשׁוּעַ֢ת יִשְׂרָ֫אֵ֥ל בְּשׁ֣וּב יְ֭הֹוָה שְׁב֣וּת עַמּ֑וֹ יָגֵ֥ל יַ֝עֲקֹ֗ב יִשְׂמַ֥ח יִשְׂרָאֵֽל׃ {פ}`,
       translation: `To the chief Musician, of David. The fool has said in his heart, There is no God. They are corrupt, they have done abominable works, there is none that does good.\nThe Lord looked down from heaven upon the children of men, to see if there were any that understood, and sought God.\nThey are all gone aside, they are all together become filthy: there is none that does good, no, not one.\nHave all the workers of iniquity no knowledge? who eat up my people as they eat bread, and call not upon the Lord.\nThere were they in great fear: for God is in the generation of the righteous.\nYou shame the counsel of the poor, because the Lord is his refuge.\nOh that the salvation of Yisra᾽el were come out of Żiyyon! when the Lord brings back the captivity of his people, Ya῾aqov shall rejoice, and Yisra᾽el shall be glad.`,
     },
@@ -231,13 +231,13 @@ export const psalm14: Tefila = {
 export const psalm15: Tefila = {
   id: "psalm-15",
   name: "Psalm 15",
-  nameHe: "תהילים 15",
+  nameHe: "תהילים טו",
   category: "tehillim",
   sections: [
     {
       id: "psalm-15-text",
       title: "Psalm 15",
-      titleHe: "תהילים 15",
+      titleHe: "תהילים טו",
       text: `מִזְמ֗וֹר לְדָ֫וִ֥ד יְ֭הֹוָה מִי־יָג֣וּר בְּאׇהֳלֶ֑ךָ מִֽי־יִ֝שְׁכֹּ֗ן בְּהַ֣ר קׇדְשֶֽׁךָ׃\nהוֹלֵ֣ךְ תָּ֭מִים וּפֹעֵ֥ל צֶ֑דֶק וְדֹבֵ֥ר אֱ֝מֶ֗ת בִּלְבָבֽוֹ׃\nלֹֽא־רָגַ֨ל׀ עַל־לְשֹׁנ֗וֹ לֹא־עָשָׂ֣ה לְרֵעֵ֣הוּ רָעָ֑ה וְ֝חֶרְפָּ֗ה לֹא־נָשָׂ֥א עַל־קְרֹבֽוֹ׃\nנִבְזֶ֤ה׀ בְּֽעֵ֘ינָ֤יו נִמְאָ֗ס וְאֶת־יִרְאֵ֣י יְהֹוָ֣ה יְכַבֵּ֑ד נִשְׁבַּ֥ע לְ֝הָרַ֗ע וְלֹ֣א יָמִֽר׃\nכַּסְפּ֤וֹ׀ לֹא־נָתַ֣ן בְּנֶשֶׁךְ֮ וְשֹׁ֥חַד עַל־נָקִ֗י לֹ֥א־לָ֫קָ֥ח עֹֽשֵׂה־אֵ֑לֶּה לֹ֖א יִמּ֣וֹט לְעוֹלָֽם׃ {פ}`,
       translation: `A Psalm of David. Lord, who shall abide in Thy tent? who shall dwell in Thy holy hill?\nHe that walks uprightly, and acts justly, and speaks the truth in his heart.\nHe that does not slander with his tongue, nor does evil to his fellow, nor takes up a reproach against his neighbour.\nIn whose eyes a vile person is despised; but he honours them that fear the Lord. He that swears to his own hurt, and changes not.\nHe that does not put out his money on interest, nor takes a bribe against the innocent. He that does these things shall never be moved.`,
     },
@@ -247,13 +247,13 @@ export const psalm15: Tefila = {
 export const psalm16: Tefila = {
   id: "psalm-16",
   name: "Psalm 16",
-  nameHe: "תהילים 16",
+  nameHe: "תהילים טז",
   category: "tehillim",
   sections: [
     {
       id: "psalm-16-text",
       title: "Psalm 16",
-      titleHe: "תהילים 16",
+      titleHe: "תהילים טז",
       text: `מִכְתָּ֥ם לְדָוִ֑ד שׇֽׁמְרֵ֥נִי אֵ֝֗ל כִּֽי־חָסִ֥יתִי בָֽךְ׃\nאָמַ֣רְתְּ לַֽ֭יהֹוָה אֲדֹנָ֣י אָ֑תָּה ט֝וֹבָתִ֗י בַּל־עָלֶֽיךָ׃\nלִ֭קְדוֹשִׁים אֲשֶׁר־בָּאָ֣רֶץ הֵ֑מָּה וְ֝אַדִּירֵ֗י כׇּל־חֶפְצִי־בָֽם׃\nיִרְבּ֥וּ עַצְּבוֹתָם֮ אַחֵ֢ר מָ֫הָ֥רוּ בַּל־אַסִּ֣יךְ נִסְכֵּיהֶ֣ם מִדָּ֑ם וּֽבַל־אֶשָּׂ֥א אֶת־שְׁ֝מוֹתָ֗ם עַל־שְׂפָתָֽי׃\nיְֽהֹוָ֗ה מְנָת־חֶלְקִ֥י וְכוֹסִ֑י אַ֝תָּ֗ה תּוֹמִ֥יךְ גּוֹרָלִֽי׃\nחֲבָלִ֣ים נָֽפְלוּ־לִ֭י בַּנְּעִמִ֑ים אַף־נַ֝חֲלָ֗ת שָֽׁפְרָ֥ה עָלָֽי׃\nאֲבָרֵ֗ךְ אֶת־יְ֭הֹוָה אֲשֶׁ֣ר יְעָצָ֑נִי אַף־לֵ֝יל֗וֹת יִסְּר֥וּנִי כִלְיוֹתָֽי׃\nשִׁוִּ֬יתִי יְהֹוָ֣ה לְנֶגְדִּ֣י תָמִ֑יד כִּ֥י מִֽ֝ימִינִ֗י בַּל־אֶמּֽוֹט׃\nלָכֵ֤ן׀ שָׂמַ֣ח לִ֭בִּי וַיָּ֣גֶל כְּבוֹדִ֑י אַף־בְּ֝שָׂרִ֗י יִשְׁכֹּ֥ן לָבֶֽטַח׃\nכִּ֤י׀ לֹא־תַעֲזֹ֣ב נַפְשִׁ֣י לִשְׁא֑וֹל לֹֽא־תִתֵּ֥ן חֲ֝סִידְךָ֗ לִרְא֥וֹת שָֽׁחַת׃\nתּֽוֹדִיעֵנִי֮ אֹ֤רַח חַ֫יִּ֥ים שֹׂ֣בַע שְׂ֭מָחוֹת אֶת־פָּנֶ֑יךָ נְעִמ֖וֹת בִּימִינְךָ֣ נֶֽצַח׃ {פ}`,
       translation: `A Mikhtam of David. Preserve me, O God: for in Thee do I put my trust.\nI have said to the Lord, Thou art my Lord: I have no good apart from Thee;\nand to the saints that are on the earth, They are the excellent, in whom is all my delight.\nTheir sorrows shall be multiplied that hasten after another god: their drink offerings of blood will I not offer, nor take up their names upon my lips.\nThe Lord is the portion of my inheritance and of my cup: Thou maintainest my lot.\nThe lines are fallen to me in pleasant places; yea, I have a goodly heritage.\nI bless the Lord, who gives me counsel: my reins also admonish me in the night seasons.\nI have set the Lord always before me: surely he is at my right hand, I shall not be moved.\nTherefore my heart is glad, and my glory rejoices: my flesh also dwells secure.\nFor Thou wilt not abandon my soul to She᾽ol; nor wilt Thou suffer thy holy one to see the pit.\nThou wilt make known to me the path of life: in Thy presence is fulness of joy; at Thy right hand are pleasures for evermore.`,
     },
@@ -263,13 +263,13 @@ export const psalm16: Tefila = {
 export const psalm17: Tefila = {
   id: "psalm-17",
   name: "Psalm 17",
-  nameHe: "תהילים 17",
+  nameHe: "תהילים יז",
   category: "tehillim",
   sections: [
     {
       id: "psalm-17-text",
       title: "Psalm 17",
-      titleHe: "תהילים 17",
+      titleHe: "תהילים יז",
       text: `תְּפִלָּ֗ה לְדָ֫וִ֥ד שִׁמְעָ֤ה יְהֹוָ֨ה׀ צֶ֗דֶק הַקְשִׁ֥יבָה רִנָּתִ֗י הַאֲזִ֥ינָה תְפִלָּתִ֑י בְּ֝לֹ֗א שִׂפְתֵ֥י מִרְמָֽה׃\nמִ֭לְּפָנֶיךָ מִשְׁפָּטִ֣י יֵצֵ֑א עֵ֝ינֶ֗יךָ תֶּחֱזֶ֥ינָה מֵישָׁרִֽים׃\nבָּ֘חַ֤נְתָּ לִבִּ֨י׀ פָּ֘קַ֤דְתָּ לַּ֗יְלָה צְרַפְתַּ֥נִי בַל־תִּמְצָ֑א זַ֝מֹּתִ֗י בַּל־יַעֲבׇר־פִּֽי׃\nלִפְעֻלּ֣וֹת אָ֭דָם בִּדְבַ֣ר שְׂפָתֶ֑יךָ אֲנִ֥י שָׁ֝מַ֗רְתִּי אׇרְח֥וֹת פָּרִֽיץ׃\nתָּמֹ֣ךְ אֲ֭שֻׁרַי בְּמַעְגְּלוֹתֶ֑יךָ בַּל־נָמ֥וֹטּוּ פְעָמָֽי׃\nאֲנִֽי־קְרָאתִ֣יךָ כִֽי־תַעֲנֵ֣נִי אֵ֑ל הַֽט־אׇזְנְךָ֥ לִ֝֗י שְׁמַ֣ע אִמְרָתִֽי׃\nהַפְלֵ֣ה חֲ֭סָדֶיךָ מוֹשִׁ֣יעַ חוֹסִ֑ים מִ֝מִּתְקוֹמְמִ֗ים בִּֽימִינֶֽךָ׃\nשׇׁ֭מְרֵנִי כְּאִישׁ֣וֹן בַּת־עָ֑יִן בְּצֵ֥ל כְּ֝נָפֶ֗יךָ תַּסְתִּירֵֽנִי׃\nמִפְּנֵ֣י רְ֭שָׁעִים ז֣וּ שַׁדּ֑וּנִי אֹיְבַ֥י בְּ֝נֶ֗פֶשׁ יַקִּ֥יפוּ עָלָֽי׃\nחֶלְבָּ֥מוֹ סָּגְר֑וּ פִּ֝֗ימוֹ דִּבְּר֥וּ בְגֵאֽוּת׃\nאַ֭שֻּׁרֵינוּ עַתָּ֣ה (סבבוני) [סְבָב֑וּנוּ] עֵינֵיהֶ֥ם יָ֝שִׁ֗יתוּ לִנְט֥וֹת בָּאָֽרֶץ׃\nדִּמְיֹנ֗וֹ כְּ֭אַרְיֵה יִכְס֣וֹף לִטְרֹ֑ף וְ֝כִכְפִ֗יר יֹשֵׁ֥ב בְּמִסְתָּרִֽים׃\nקוּמָ֤ה יְהֹוָ֗ה קַדְּמָ֣ה פָ֭נָיו הַכְרִיעֵ֑הוּ פַּלְּטָ֥ה נַ֝פְשִׁ֗י מֵרָשָׁ֥ע חַרְבֶּֽךָ׃\nמִ֥מְתִֽים־יָדְךָ֨׀ יְהֹוָ֡ה מִֽמְתִ֬ים מֵחֶ֗לֶד חֶלְקָ֥ם בַּֽחַיִּים֮ (וצפינך) [וּֽצְפוּנְךָ֮] תְּמַלֵּ֢א בִ֫טְנָ֥ם יִשְׂבְּע֥וּ בָנִ֑ים וְהִנִּ֥יחוּ יִ֝תְרָ֗ם לְעוֹלְלֵיהֶֽם׃\nאֲנִ֗י בְּ֭צֶדֶק אֶחֱזֶ֣ה פָנֶ֑יךָ אֶשְׂבְּעָ֥ה בְ֝הָקִ֗יץ תְּמוּנָתֶֽךָ׃ {פ}`,
       translation: `A Prayer of David. Hear the right, O Lord, attend to my cry, give ear to my prayer, from lips without deceit.\nLet my sentence come forth from Thy presence; let Thy eyes behold the right.\nThou hast proved my heart; Thou hast visited it in the night: Thou hast tried me, but Thou findest nothing; let no presumptuous thought pass my lips.\nConcerning the works of men, by the word of Thy lips I have kept me from the paths of the violent.\nMy steps have held fast to Thy paths; my feet have not slipped.\nI have called upon Thee, for Thou wilt hear me, O God: incline Thy ear to me, and hear my speech.\nShow marvellously Thy steadfast love, saving with Thy right hand from their enemies those who seek refuge.\nKeep me as the apple of the eye, hide me under the shadow of Thy wings,\nfrom the wicked that oppress me, from my deadly enemies, who compass me about.\nThey are inclosed in their own fat: with their mouth they speak proudly.\nThey dog our footsteps; they surround us: they set their eyes to tread us down to the earth;\nhe is like a lion greedy for its prey, and as it were a young lion lurking in secret places.\nArise, O Lord, confront him, cast him down: deliver my soul from the wicked, by Thy sword:\nfrom men, by Thy hand, O Lord, from men whose portion in life is of the world, and whose belly Thou fillest with Thy treasure: who have children in plenty, and who leave their abundance to their babes.\nAs for me, I will behold Thy face in righteousness: I shall be satisfied, when I awake, with beholding Thy likeness.`,
     },
@@ -279,13 +279,13 @@ export const psalm17: Tefila = {
 export const psalm18: Tefila = {
   id: "psalm-18",
   name: "Psalm 18",
-  nameHe: "תהילים 18",
+  nameHe: "תהילים יח",
   category: "tehillim",
   sections: [
     {
       id: "psalm-18-text",
       title: "Psalm 18",
-      titleHe: "תהילים 18",
+      titleHe: "תהילים יח",
       text: `לַמְנַצֵּ֤חַ׀ לְעֶ֥בֶד יְהֹוָ֗ה לְדָ֫וִ֥ד אֲשֶׁ֤ר דִּבֶּ֨ר׀ לַיהֹוָ֗ה אֶת־דִּ֭בְרֵי הַשִּׁירָ֣ה הַזֹּ֑את בְּי֤וֹם הִֽצִּיל־יְהֹוָ֘ה־אוֹת֥וֹ מִכַּ֥ף כׇּל־אֹ֝יְבָ֗יו וּמִיַּ֥ד שָׁאֽוּל׃\nוַיֹּאמַ֡ר אֶרְחׇמְךָ֖ יְהֹוָ֣ה חִזְקִֽי׃\nיְהֹוָ֤ה׀ סַ֥לְעִ֥י וּמְצוּדָתִ֗י וּמְפַ֫לְטִ֥י אֵלִ֣י צ֭וּרִי אֶֽחֱסֶה־בּ֑וֹ מָֽגִנִּ֥י וְקֶֽרֶן־יִ֝שְׁעִ֗י מִשְׂגַּבִּֽי׃\nמְ֭הֻלָּל אֶקְרָ֣א יְהֹוָ֑ה וּמִן־אֹ֝יְבַ֗י אִוָּשֵֽׁעַ׃\nאֲפָפ֥וּנִי חֶבְלֵי־מָ֑וֶת וְֽנַחֲלֵ֖י בְלִיַּ֣עַל יְבַֽעֲתֽוּנִי׃\nחֶבְלֵ֣י שְׁא֣וֹל סְבָב֑וּנִי קִ֝דְּמ֗וּנִי מ֣וֹקְשֵׁי מָֽוֶת׃\nבַּצַּר־לִ֤י׀ אֶ֥קְרָ֣א יְהֹוָה֮ וְאֶל־אֱלֹהַ֢י אֲשַׁ֫וֵּ֥עַ יִשְׁמַ֣ע מֵהֵיכָל֣וֹ קוֹלִ֑י וְ֝שַׁוְעָתִ֗י לְפָנָ֤יו׀ תָּב֬וֹא בְאׇזְנָֽיו׃\nוַתִּגְעַ֬שׁ וַתִּרְעַ֨שׁ׀ הָאָ֗רֶץ וּמוֹסְדֵ֣י הָרִ֣ים יִרְגָּ֑זוּ וַ֝יִּתְגָּֽעֲשׁ֗וּ כִּי־חָ֥רָה לֽוֹ׃\nעָ֘לָ֤ה עָשָׁ֨ן׀ בְּאַפּ֗וֹ וְאֵשׁ־מִפִּ֥יו תֹּאכֵ֑ל גֶּ֝חָלִ֗ים בָּעֲר֥וּ מִמֶּֽנּוּ׃\nוַיֵּ֣ט שָׁ֭מַיִם וַיֵּרַ֑ד וַ֝עֲרָפֶ֗ל תַּ֣חַת רַגְלָֽיו׃\nוַיִּרְכַּ֣ב עַל־כְּ֭רוּב וַיָּעֹ֑ף וַ֝יֵּ֗דֶא עַל־כַּנְפֵי־רֽוּחַ׃\nיָ֤שֶׁת־חֹ֨שֶׁךְ׀ סִתְר֗וֹ סְבִֽיבוֹתָ֥יו סֻכָּת֑וֹ חֶשְׁכַת־מַ֝֗יִם עָבֵ֥י שְׁחָקִֽים׃\nמִנֹּ֗גַהּ נֶ֫גְדּ֥וֹ עָבָ֥יו עָבְר֑וּ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃\nוַיַּרְעֵ֬ם בַּשָּׁמַ֨יִם׀ יְֽהֹוָ֗ה וְ֭עֶלְיוֹן יִתֵּ֣ן קֹל֑וֹ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃\nוַיִּשְׁלַ֣ח חִ֭צָּיו וַיְפִיצֵ֑ם וּבְרָקִ֥ים רָ֝֗ב וַיְהֻמֵּֽם׃\nוַיֵּ֤רָא֨וּ׀ אֲפִ֥יקֵי מַ֗יִם וַֽיִּגָּלוּ֮ מוֹסְד֢וֹת תֵּ֫בֵ֥ל מִגַּעֲרָ֣תְךָ֣ יְהֹוָ֑ה מִ֝נִּשְׁמַ֗ת ר֣וּחַ אַפֶּֽךָ׃\nיִשְׁלַ֣ח מִ֭מָּרוֹם יִקָּחֵ֑נִי יַֽ֝מְשֵׁ֗נִי מִמַּ֥יִם רַבִּֽים׃\nיַצִּילֵ֗נִי מֵאֹיְבִ֥י עָ֑ז וּ֝מִשֹּׂנְאַ֗י כִּֽי־אָמְצ֥וּ מִמֶּֽנִּי׃\nיְקַדְּמ֥וּנִי בְיוֹם־אֵידִ֑י וַֽיְהִי־יְהֹוָ֖ה לְמִשְׁעָ֣ן לִֽי׃\nוַיּוֹצִיאֵ֥נִי לַמֶּרְחָ֑ב יְ֝חַלְּצֵ֗נִי כִּ֘י־חָ֥פֵֽץ־בִּֽי׃\nיִגְמְלֵ֣נִי יְהֹוָ֣ה כְּצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י יָשִׁ֥יב לִֽי׃\nכִּֽי־שָׁ֭מַרְתִּי דַּרְכֵ֣י יְהֹוָ֑ה וְלֹֽא־רָ֝שַׁ֗עְתִּי מֵאֱלֹהָֽי׃\nכִּ֣י כׇל־מִשְׁפָּטָ֣יו לְנֶגְדִּ֑י וְ֝חֻקֹּתָ֗יו לֹא־אָסִ֥יר מֶֽנִּי׃\nוָאֱהִ֣י תָמִ֣ים עִמּ֑וֹ וָ֝אֶשְׁתַּמֵּ֗ר מֵעֲוֺנִֽי׃\nוַיָּֽשֶׁב־יְהֹוָ֣ה לִ֣י כְצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י לְנֶ֣גֶד עֵינָֽיו׃\nעִם־חָסִ֥יד תִּתְחַסָּ֑ד עִם־גְּבַ֥ר תָּ֝מִ֗ים תִּתַּמָּֽם׃\nעִם־נָבָ֥ר תִּתְבָּרָ֑ר וְעִם־עִ֝קֵּ֗שׁ תִּתְפַּתָּֽל׃\nכִּֽי־אַ֭תָּה עַם־עָנִ֣י תוֹשִׁ֑יעַ וְעֵינַ֖יִם רָמ֣וֹת תַּשְׁפִּֽיל׃\nכִּֽי־אַ֭תָּה תָּאִ֣יר נֵרִ֑י יְהֹוָ֥ה אֱ֝לֹהַ֗י יַגִּ֥יהַּ חׇשְׁכִּֽי׃\nכִּֽי־בְ֭ךָ אָרֻ֣ץ גְּד֑וּד וּ֝בֵֽאלֹהַ֗י אֲדַלֶּג־שֽׁוּר׃\nהָאֵל֮ תָּמִ֢ים דַּ֫רְכּ֥וֹ אִמְרַֽת־יְהֹוָ֥ה צְרוּפָ֑ה מָגֵ֥ן ה֝֗וּא לְכֹ֤ל׀ הַחֹסִ֬ים בּֽוֹ׃\nכִּ֤י מִ֣י אֱ֭לוֹהַּ מִבַּלְעֲדֵ֣י יְהֹוָ֑ה וּמִ֥י צ֝֗וּר זוּלָתִ֥י אֱלֹהֵֽינוּ׃\nהָ֭אֵל הַמְאַזְּרֵ֣נִי חָ֑יִל וַיִּתֵּ֖ן תָּמִ֣ים דַּרְכִּֽי׃\nמְשַׁוֶּ֣ה רַ֭גְלַי כָּאַיָּל֑וֹת וְעַ֥ל בָּ֝מֹתַ֗י יַעֲמִידֵֽנִי׃\nמְלַמֵּ֣ד יָ֭דַי לַמִּלְחָמָ֑ה וְֽנִחֲתָ֥ה קֶֽשֶׁת־נְ֝חוּשָׁ֗ה זְרוֹעֹתָֽי׃\nוַתִּתֶּן־לִי֮ מָגֵ֢ן יִ֫שְׁעֶ֥ךָ וִֽימִינְךָ֥ תִסְעָדֵ֑נִי וְֽעַנְוַתְךָ֥ תַרְבֵּֽנִי׃\nתַּרְחִ֣יב צַעֲדִ֣י תַחְתָּ֑י וְלֹ֥א מָ֝עֲד֗וּ קַרְסֻלָּֽי׃\nאֶרְדּ֣וֹף א֭וֹיְבַי וְאַשִּׂיגֵ֑ם וְלֹֽא־אָ֝שׁ֗וּב עַד־כַּלּוֹתָֽם׃\nאֶ֭מְחָצֵם וְלֹא־יֻ֣כְלוּ ק֑וּם יִ֝פְּל֗וּ תַּ֣חַת רַגְלָֽי׃\nוַתְּאַזְּרֵ֣נִי חַ֭יִל לַמִּלְחָמָ֑ה תַּכְרִ֖יעַ קָמַ֣י תַּחְתָּֽי׃\nוְֽאֹיְבַ֗י נָתַ֣תָּה לִּ֣י עֹ֑רֶף וּ֝מְשַׂנְאַ֗י אַצְמִיתֵֽם׃\nיְשַׁוְּע֥וּ וְאֵין־מוֹשִׁ֑יעַ עַל־יְ֝הֹוָ֗ה וְלֹ֣א עָנָֽם׃\nוְֽאֶשְׁחָקֵ֗ם כְּעָפָ֥ר עַל־פְּנֵי־ר֑וּחַ כְּטִ֖יט חוּצ֣וֹת אֲרִיקֵֽם׃\nתְּפַלְּטֵנִי֮ מֵרִ֢יבֵ֫י עָ֥ם תְּ֭שִׂימֵנִי לְרֹ֣אשׁ גּוֹיִ֑ם עַ֖ם לֹא־יָדַ֣עְתִּי יַֽעַבְדֽוּנִי׃\nלְשֵׁ֣מַֽע אֹ֭זֶן יִשָּׁ֣מְעוּ לִ֑י בְּנֵֽי־נֵ֝כָ֗ר יְכַחֲשׁוּ־לִֽי׃\nבְּנֵי־נֵכָ֥ר יִבֹּ֑לוּ וְ֝יַחְרְג֗וּ מִֽמִּסְגְּרֽוֹתֵיהֶֽם׃\nחַי־יְ֭הֹוָה וּבָר֣וּךְ צוּרִ֑י וְ֝יָר֗וּם אֱלוֹהֵ֥י יִשְׁעִֽי׃\nהָאֵ֗ל הַנּוֹתֵ֣ן נְקָמ֣וֹת לִ֑י וַיַּדְבֵּ֖ר עַמִּ֣ים תַּחְתָּֽי׃\nמְפַלְּטִ֗י מֵאֹ֫יְבָ֥י אַ֣ף מִן־קָ֭מַי תְּרוֹמְמֵ֑נִי מֵאִ֥ישׁ חָ֝מָ֗ס תַּצִּילֵֽנִי׃\nעַל־כֵּ֤ן׀ אוֹדְךָ֖ בַגּוֹיִ֥ם׀יְהֹוָ֑ה וּלְשִׁמְךָ֥ אֲזַמֵּֽרָה׃\nמַגְדִּל֮ יְשׁוּע֢וֹת מַ֫לְכּ֥וֹ וְעֹ֤שֶׂה חֶ֨סֶד׀ לִמְשִׁיח֗וֹ לְדָוִ֥ד וּלְזַרְע֗וֹ עַד־עוֹלָֽם׃ {פ}`,
       translation: `To the chief Musician, of David, the servant of the Lord, who spoke to the Lord the words of this song in the day that the Lord delivered him from the hand of all his enemies, and from the hand of Sha᾽ul:\nand he said, I will love Thee, O Lord, my strength.\nThe Lord is my rock, and my fortress, and my deliverer; my God, my rock, in whom I will trust; my shield, and the horn of my salvation, and my high tower.\nHe is worthy to be praised: I will call upon the Lord: so shall I be saved from my enemies.\nThe bonds of death encircled me, and the floods of ungodly men made me afraid.\nThe cords of She᾽ol compassed me about: the snares of death took me by surprise.\nIn my distress I called upon the Lord, and cried to my God: he heard my voice out of his temple, and my cry came before him, into his ears.\nThen the earth shook and trembled; and the foundations of the hills moved and were shaken, because of his anger.\nThere went up a smoke out of his nostrils, and fire out of his mouth devoured: coals were kindled by it.\nHe bowed the heavens also, and came down: and darkness was under his feet.\nAnd he rode upon a keruv, and did fly: he soared on the wings of the wind.\nHe made darkness his secret place; his pavilion round about him was dark water and thick clouds of the skies.\nAt the brightness that was before him his thick clouds passed, hail and coals of fire.\nThe Lord also thundered in the heavens, and the Highest gave his voice; hail and coals of fire.\nAnd he sent out his arrows, and scattered them; and he shot out lightnings, and confounded them.\nThen the channels of waters were seen, and the foundations of the world were laid bare, at Thy rebuke, O Lord, at the blast of the breath of Thy nostrils.\nHe sent from above, he took me, he drew me out of many waters.\nHe delivered me from my strong enemy, and from those who hated me: for they were too strong for me.\nThey surprised me in the day of my calamity: but the Lord was my stay.\nHe brought me forth also into a large place; he delivered me, because he delighted in me.\nThe Lord rewards me according to my righteousness; according to the cleanness of my hands he recompenses me.\nFor I have kept the ways of the Lord, and have not wickedly departed from my God.\nFor all his judgments were before me, and I did not put away his statutes from me.\nI was also upright before him, and I kept myself from my iniquity.\nTherefore the Lord recompenses me according to my righteousness, according to the cleanness of my hands in his eyesight.\nWith the merciful Thou wilt show Thyself merciful; with an upright man Thou wilt show Thyself upright;\nwith the pure Thou wilt show Thyself pure; and with the perverse Thou wilt show Thyself subtle.\nFor Thou wilt save the afflicted people; but wilt bring down high looks.\nFor Thou wilt light my candle: the Lord my God will enlighten my darkness.\nFor by Thee I run through a troop; and by my God I leap over a wall.\nAs for God, his way is perfect: the word of the Lord is tried: he is a shield to all those who trust in him.\nFor who is God save the Lord? or who is a rock save our God?\nIt is God that girds me with strength, and makes my way perfect.\nHe makes my feet like hinds’ feet, and sets me upon my heights.\nHe teaches my hands to war, so that a bow of brass is bent in my arms.\nThou hast also given me the shield of Thy salvation: and Thy right hand has supported me and Thy condescension has made me great.\nThou hast enlarged my steps under me, that my feet did not slip.\nI have pursued my enemies, and overtaken them: neither did I turn back till they were consumed.\nI have crushed them so that they were not able to rise: they are fallen under my feet.\nFor Thou hast girded me with strength to the battle: Thou hast subdued under me those who rose up against me.\nThou hast also made my enemies turn their backs on me; that I might destroy those who hate me.\nThey cried, but there was none to save them: to the Lord, but he answered them not.\nThen did I beat them small like the dust before the wind: I did cast them out like the dirt in the streets.\nThou deliverest me from the strivings of the people; Thou makest me the head of nations: a people whom I have not known shall serve me.\nAs soon as they hear of me, they shall obey me: the strangers shall submit themselves to me.\nThe strangers shall fade away, and come trembling out of their close places.\nThe Lord lives; and blessed is my rock; and let the God of my salvation be exalted.\nIt is God who avenges me, and has subdued peoples under me.\nHe delivers me from my enemies: indeed, thou liftest me up above those who rise up against me: Thou deliverest me from the violent man.\nTherefore will I give thanks to Thee, O Lord, among the nations, and sing praises to Thy name.\nGreat deliverance he gives to his king; and shows steadfast love to his anointed, to David, and to his seed for evermore.`,
     },
@@ -295,13 +295,13 @@ export const psalm18: Tefila = {
 export const psalm19: Tefila = {
   id: "psalm-19",
   name: "Psalm 19",
-  nameHe: "תהילים 19",
+  nameHe: "תהילים יט",
   category: "tehillim",
   sections: [
     {
       id: "psalm-19-text",
       title: "Psalm 19",
-      titleHe: "תהילים 19",
+      titleHe: "תהילים יט",
       text: `לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃\nהַשָּׁמַ֗יִם מְֽסַפְּרִ֥ים כְּבֽוֹד־אֵ֑ל וּֽמַעֲשֵׂ֥ה יָ֝דָ֗יו מַגִּ֥יד הָרָקִֽיעַ׃\nי֣וֹם לְ֭יוֹם יַבִּ֣יעַֽ אֹ֑מֶר וְלַ֥יְלָה לְּ֝לַ֗יְלָה יְחַוֶּה־דָּֽעַת׃\nאֵֽין־אֹ֭מֶר וְאֵ֣ין דְּבָרִ֑ים בְּ֝לִ֗י נִשְׁמָ֥ע קוֹלָֽם׃\nבְּכׇל־הָאָ֨רֶץ׀ יָ֘צָ֤א קַוָּ֗ם וּבִקְצֵ֣ה תֵ֭בֵל מִלֵּיהֶ֑ם לַ֝שֶּׁ֗מֶשׁ שָֽׂם־אֹ֥הֶל בָּהֶֽם׃\nוְה֗וּא כְּ֭חָתָן יֹצֵ֣א מֵחֻפָּת֑וֹ יָשִׂ֥ישׂ כְּ֝גִבּ֗וֹר לָר֥וּץ אֹֽרַח׃\nמִקְצֵ֤ה הַשָּׁמַ֨יִם׀ מֽוֹצָא֗וֹ וּתְקוּפָת֥וֹ עַל־קְצוֹתָ֑ם וְאֵ֥ין נִ֝סְתָּ֗ר מֵחַמָּתֽוֹ׃\nתּ֘וֹרַ֤ת יְהֹוָ֣ה תְּ֭מִימָה מְשִׁ֣יבַת נָ֑פֶשׁ עֵד֥וּת יְהֹוָ֥ה נֶ֝אֱמָנָ֗ה מַחְכִּ֥ימַת פֶּֽתִי׃\nפִּקּ֘וּדֵ֤י יְהֹוָ֣ה יְ֭שָׁרִים מְשַׂמְּחֵי־לֵ֑ב מִצְוַ֥ת יְהֹוָ֥ה בָּ֝רָ֗ה מְאִירַ֥ת עֵינָֽיִם׃\nיִרְאַ֤ת יְהֹוָ֨ה׀ טְהוֹרָה֮ עוֹמֶ֢דֶת לָ֫עַ֥ד מִֽשְׁפְּטֵי־יְהֹוָ֥ה אֱמֶ֑ת צָֽדְק֥וּ יַחְדָּֽו׃\nהַֽנֶּחֱמָדִ֗ים מִ֭זָּהָב וּמִפַּ֣ז רָ֑ב וּמְתוּקִ֥ים מִ֝דְּבַ֗שׁ וְנֹ֣פֶת צוּפִֽים׃\nגַּֽם־עַ֭בְדְּךָ נִזְהָ֣ר בָּהֶ֑ם בְּ֝שׇׁמְרָ֗ם עֵ֣קֶב רָֽב׃\nשְׁגִיא֥וֹת מִֽי־יָבִ֑ין מִֽנִּסְתָּר֥וֹת נַקֵּֽנִי׃\nגַּ֤ם מִזֵּדִ֨ים׀ חֲשֹׂ֬ךְ עַבְדֶּ֗ךָ אַֽל־יִמְשְׁלוּ־בִ֣י אָ֣ז אֵיתָ֑ם וְ֝נִקֵּ֗יתִי מִפֶּ֥שַֽׁע רָֽב׃\nיִ֥הְיֽוּ־לְרָצ֨וֹן׀ אִמְרֵי־פִ֡י וְהֶגְי֣וֹן לִבִּ֣י לְפָנֶ֑יךָ יְ֝הֹוָ֗ה צוּרִ֥י וְגֹאֲלִֽי׃ {פ}`,
       translation: `To the chief Musician, A Psalm of David.\nThe heavens declare the glory of God; and the firmament proclaims his handiwork.\nDay to day utters speech, and night to night expresses knowledge.\nThere is no speech nor are there words; their voice is not heard.\nTheir line is gone out through all the earth, and their words to the end of the world. In them he has set a tent for the sun,\nwhich is like a bridegroom coming out of his chamber, and rejoices like a strong man to run a race.\nHis going forth is from the end of the heaven, and his circuit to the ends of it: and there is nothing hid from his heat.\nThe Tora of the Lord is perfect, restoring the soul: the testimony of the Lord is sure, making wise the simple.\nThe statutes of the Lord are right, rejoicing the heart: the commandment of the Lord is pure, enlightening the eyes.\nThe fear of the Lord is clean, enduring forever: the judgments of the Lord are true and are righteous altogether.\nMore to be desired are they than gold, even much fine gold: sweeter also than honey and the honeycomb.\nMoreover by them is Thy servant enlightened: and in keeping of them there is great reward.\nWho can discern errors? cleanse Thou me from secret faults.\nKeep back Thy servant also from presumptuous sins; let them not have dominion over me: then shall I be upright, and I shall be clear of much transgression.\nLet the words of my mouth, and the meditation of my heart, be acceptable in Thy sight, O Lord, my rock, and my redeemer.`,
     },
@@ -311,13 +311,13 @@ export const psalm19: Tefila = {
 export const psalm20: Tefila = {
   id: "psalm-20",
   name: "Psalm 20",
-  nameHe: "תהילים 20",
+  nameHe: "תהילים כ",
   category: "tehillim",
   sections: [
     {
       id: "psalm-20-text",
       title: "Psalm 20",
-      titleHe: "תהילים 20",
+      titleHe: "תהילים כ",
       text: `לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃\nיַֽעַנְךָ֣ יְ֭הֹוָה בְּי֣וֹם צָרָ֑ה יְ֝שַׂגֶּבְךָ֗ שֵׁ֤ם׀ אֱלֹהֵ֬י יַעֲקֹֽב׃\nיִשְׁלַֽח־עֶזְרְךָ֥ מִקֹּ֑דֶשׁ וּ֝מִצִּיּ֗וֹן יִסְעָדֶֽךָּ׃\nיִזְכֹּ֥ר כׇּל־מִנְחֹתֶ֑ךָ וְעוֹלָתְךָ֖ יְדַשְּׁנֶ֣ה סֶֽלָה׃\nיִֽתֶּן־לְךָ֥ כִלְבָבֶ֑ךָ וְֽכׇל־עֲצָתְךָ֥ יְמַלֵּֽא׃\nנְרַנְּנָ֤ה׀ בִּ֘ישׁ֤וּעָתֶ֗ךָ וּבְשֵֽׁם־אֱלֹהֵ֥ינוּ נִדְגֹּ֑ל יְמַלֵּ֥א יְ֝הֹוָ֗ה כׇּל־מִשְׁאֲלוֹתֶֽיךָ׃\nעַתָּ֤ה יָדַ֗עְתִּי כִּ֤י הוֹשִׁ֥יעַ׀יְהֹוָ֗ה מְשִׁ֫יח֥וֹ יַ֭עֲנֵהוּ מִשְּׁמֵ֣י קׇדְשׁ֑וֹ בִּ֝גְבֻר֗וֹת יֵ֣שַׁע יְמִינֽוֹ׃\nאֵ֣לֶּה בָ֭רֶכֶב וְאֵ֣לֶּה בַסּוּסִ֑ים וַאֲנַ֓חְנוּ׀ בְּשֵׁם־יְהֹוָ֖ה אֱלֹהֵ֣ינוּ נַזְכִּֽיר׃\nהֵ֭מָּה כָּרְע֣וּ וְנָפָ֑לוּ וַאֲנַ֥חְנוּ קַּ֝֗מְנוּ וַנִּתְעוֹדָֽד׃\nיְהֹוָ֥ה הוֹשִׁ֑יעָה הַ֝מֶּ֗לֶךְ יַעֲנֵ֥נוּ בְיוֹם־קׇרְאֵֽנוּ׃ {פ}`,
       translation: `To the chief Musician, A Psalm for David.\nMay the Lord hear thee in the day of trouble; may the name of the God of Ya῾aqov defend thee!\nMay he send thee help from the sanctuary, and strengthen thee out of Żiyyon!\nMay he remember all thy offerings, and accept with favour thy burnt offering! (Sela.)\nMay he grant thee thy heart’s desire, and fulfil all thy counsel!\nMay we rejoice in Thy salvation, and in the name of our God set up our banner! Let the Lord fulfil all thy petitions!\nNow I know that the Lord saves his anointed; that he answers him from his holy heaven with the saving strength of his right hand.\nSome trust in chariots, and some in horses: but we will make mention of the name of the Lord our God.\nThey are bowed down and fallen: but we are risen, and stand upright.\nSave, Lord; O King, who hears us on the day when we call.`,
     },
@@ -327,13 +327,13 @@ export const psalm20: Tefila = {
 export const psalm21: Tefila = {
   id: "psalm-21",
   name: "Psalm 21",
-  nameHe: "תהילים 21",
+  nameHe: "תהילים כא",
   category: "tehillim",
   sections: [
     {
       id: "psalm-21-text",
       title: "Psalm 21",
-      titleHe: "תהילים 21",
+      titleHe: "תהילים כא",
       text: `לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃\nיְֽהֹוָ֗ה בְּעׇזְּךָ֥ יִשְׂמַח־מֶ֑לֶךְ וּ֝בִישׁ֥וּעָתְךָ֗ מַה־[יָּ֥גֶל] (יגיל) מְאֹֽד׃\nתַּאֲוַ֣ת לִ֭בּוֹ נָתַ֣תָּה לּ֑וֹ וַאֲרֶ֥שֶׁת שְׂ֝פָתָ֗יו בַּל־מָנַ֥עְתָּ סֶּֽלָה׃\nכִּֽי־תְ֭קַדְּמֶנּוּ בִּרְכ֣וֹת ט֑וֹב תָּשִׁ֥ית לְ֝רֹאשׁ֗וֹ עֲטֶ֣רֶת פָּֽז׃\nחַיִּ֤ים׀ שָׁאַ֣ל מִ֭מְּךָ נָתַ֣תָּה לּ֑וֹ אֹ֥רֶךְ יָ֝מִ֗ים עוֹלָ֥ם וָעֶֽד׃\nגָּד֣וֹל כְּ֭בוֹדוֹ בִּישׁוּעָתֶ֑ךָ ה֥וֹד וְ֝הָדָ֗ר תְּשַׁוֶּ֥ה עָלָֽיו׃\nכִּֽי־תְשִׁיתֵ֣הוּ בְרָכ֣וֹת לָעַ֑ד תְּחַדֵּ֥הוּ בְ֝שִׂמְחָ֗ה אֶת־פָּנֶֽיךָ׃\nכִּֽי־הַ֭מֶּלֶךְ בֹּטֵ֣חַ בַּיהֹוָ֑ה וּבְחֶ֥סֶד עֶ֝לְי֗וֹן בַּל־יִמּֽוֹט׃\nתִּמְצָ֣א יָ֭דְךָ לְכׇל־אֹיְבֶ֑יךָ יְ֝מִֽינְךָ֗ תִּמְצָ֥א שֹׂנְאֶֽיךָ׃\nתְּשִׁיתֵ֤מוֹ׀ כְּתַנּ֥וּר אֵשׁ֮ לְעֵ֢ת פָּ֫נֶ֥יךָ יְ֭הֹוָה בְּאַפּ֣וֹ יְבַלְּעֵ֑ם וְֽתֹאכְלֵ֥ם אֵֽשׁ׃\nפִּ֭רְיָמוֹ מֵאֶ֣רֶץ תְּאַבֵּ֑ד וְ֝זַרְעָ֗ם מִבְּנֵ֥י אָדָֽם׃\nכִּי־נָט֣וּ עָלֶ֣יךָ רָעָ֑ה חָֽשְׁב֥וּ מְ֝זִמָּ֗ה בַּל־יוּכָֽלוּ׃\nכִּ֭י תְּשִׁיתֵ֣מוֹ שֶׁ֑כֶם בְּ֝מֵֽיתָרֶ֗יךָ תְּכוֹנֵ֥ן עַל־פְּנֵיהֶֽם׃\nר֣וּמָה יְהֹוָ֣ה בְּעֻזֶּ֑ךָ נָשִׁ֥ירָה וּֽ֝נְזַמְּרָ֗ה גְּבוּרָתֶֽךָ׃ {פ}`,
       translation: `To the chief Musicians, A Psalm of David.\nThe king joys in Thy strength, O Lord; and in Thy salvation how greatly he rejoices!\nThou hast given him his heart’s desire, and hast not withheld the request of his lips. (Sela.)\nFor Thou dost meet him with the blessings of goodness: Thou settest a crown of pure gold on his head.\nHe asked life of Thee, and Thou didst give it him; length of days for ever and ever.\nHis glory is great in Thy salvation: honour and majesty Thou dost lay upon him.\nFor Thou dost make him most blessed forever: Thou makest him exceeding glad with Thy countenance.\nFor the king trusts in the Lord, and through the steadfast love of the most High he shall not be moved.\nThy hand shall find out all Thy enemies: Thy right hand shall seize those that hate Thee.\nThou shalt make them like a fiery oven in the time of Thy anger: the Lord shall swallow them up in his wrath, and the fire shall devour them.\nTheir fruit shalt Thou destroy from the earth, and their seed from among the children of men.\nFor they intended evil against Thee: they imagined a mischievous device, but they will not succeed.\nFor Thou shalt make them turn their back; Thou shalt aim Thy bowstrings against the face of them.\nBe Thou exalted, Lord, in Thy own strength: we will sing and praise Thy power.`,
     },
