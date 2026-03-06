@@ -7,13 +7,13 @@ import type { Tefila } from "../types";
 export const psalm51: Tefila = {
   id: "psalm-51",
   name: "Psalm 51",
-  nameHe: "תהלים 51",
+  nameHe: "תהילים נא",
   category: "tehillim",
   sections: [
     {
       id: "psalm-51-text",
       title: "Psalm 51",
-      titleHe: "תהלים 51",
+      titleHe: "תהילים נא",
       text: `לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃\\nבְּֽבוֹא־אֵ֭לָיו נָתָ֣ן הַנָּבִ֑יא כַּאֲשֶׁר־בָּ֝֗א אֶל־בַּת־שָֽׁבַע׃\\nחׇנֵּ֣נִי אֱלֹהִ֣ים כְּחַסְדֶּ֑ךָ כְּרֹ֥ב רַ֝חֲמֶ֗יךָ מְחֵ֣ה פְשָׁעָֽי׃\\n(הרבה) [הֶ֭רֶב] כַּבְּסֵ֣נִי מֵעֲוֺנִ֑י וּֽמֵחַטָּאתִ֥י טַהֲרֵֽנִי׃\\nכִּֽי־פְ֭שָׁעַי אֲנִ֣י אֵדָ֑ע וְחַטָּאתִ֖י נֶגְדִּ֣י תָמִֽיד׃\\nלְךָ֤ לְבַדְּךָ֨׀ חָטָאתִי֮ וְהָרַ֥ע בְּעֵינֶ֗יךָ עָ֫שִׂ֥יתִי לְ֭מַעַן תִּצְדַּ֥ק בְּדׇבְרֶ֗ךָ תִּזְכֶּ֥ה בְשׇׁפְטֶֽךָ׃\\nהֵן־בְּעָו֥וֹן חוֹלָ֑לְתִּי וּ֝בְחֵ֗טְא יֶחֱמַ֥תְנִי אִמִּֽי׃\\nהֵן־אֱ֭מֶת חָפַ֣צְתָּ בַטֻּח֑וֹת וּ֝בְסָתֻ֗ם חׇכְמָ֥ה תוֹדִיעֵֽנִי׃\\nתְּחַטְּאֵ֣נִי בְאֵז֣וֹב וְאֶטְהָ֑ר תְּ֝כַבְּסֵ֗נִי וּמִשֶּׁ֥לֶג אַלְבִּֽין׃\\nתַּ֭שְׁמִיעֵנִי שָׂשׂ֣וֹן וְשִׂמְחָ֑ה תָּ֝גֵ֗לְנָה עֲצָמ֥וֹת דִּכִּֽיתָ׃\\nהַסְתֵּ֣ר פָּ֭נֶיךָ מֵחֲטָאָ֑י וְֽכׇל־עֲוֺ֖נֹתַ֣י מְחֵֽה׃\\nלֵ֣ב טָ֭הוֹר בְּרָא־לִ֣י אֱלֹהִ֑ים וְר֥וּחַ נָ֝כ֗וֹן חַדֵּ֥שׁ בְּקִרְבִּֽי׃\\nאַל־תַּשְׁלִיכֵ֥נִי מִלְּפָנֶ֑יךָ וְר֥וּחַ קׇ֝דְשְׁךָ֗ אַל־תִּקַּ֥ח מִמֶּֽנִּי׃\\nהָשִׁ֣יבָה לִּ֭י שְׂשׂ֣וֹן יִשְׁעֶ֑ךָ וְר֖וּחַ נְדִיבָ֣ה תִסְמְכֵֽנִי׃\\nאֲלַמְּדָ֣ה פֹשְׁעִ֣ים דְּרָכֶ֑יךָ וְ֝חַטָּאִ֗ים אֵלֶ֥יךָ יָשֽׁוּבוּ׃\\nהַצִּ֘ילֵ֤נִי מִדָּמִ֨ים׀ אֱֽלֹהִ֗ים אֱלֹהֵ֥י תְשׁוּעָתִ֑י תְּרַנֵּ֥ן לְ֝שׁוֹנִ֗י צִדְקָתֶֽךָ׃\\nאֲ֭דֹנָי שְׂפָתַ֣י תִּפְתָּ֑ח וּ֝פִ֗י יַגִּ֥יד תְּהִלָּתֶֽךָ׃\\nכִּ֤י׀ לֹא־תַחְפֹּ֣ץ זֶ֣בַח וְאֶתֵּ֑נָה ע֝וֹלָ֗ה לֹ֣א תִרְצֶֽה׃\\nזִ֥בְחֵ֣י אֱלֹהִים֮ ר֤וּחַ נִשְׁבָּ֫רָ֥ה לֵב־נִשְׁבָּ֥ר וְנִדְכֶּ֑ה אֱ֝לֹהִ֗ים לֹ֣א תִבְזֶֽה׃\\nהֵיטִ֣יבָה בִ֭רְצוֹנְךָ אֶת־צִיּ֑וֹן תִּ֝בְנֶ֗ה חוֹמ֥וֹת יְרוּשָׁלָֽ͏ִם׃\\nאָ֤ז תַּחְפֹּ֣ץ זִבְחֵי־צֶ֭דֶק עוֹלָ֣ה וְכָלִ֑יל אָ֤ז יַעֲל֖וּ עַל־מִזְבַּחֲךָ֣ פָרִֽים׃{פ}`,
       translation: `For the leader. A psalm of David, \\nwhen Nathan the prophet came to him after he had come to Bathsheba.awhen Nathan … Bathsheba Cf. 2 Sam. 12. \\nHave mercy upon me, O God,as befits Your faithfulness;in keeping with Your abundant compassion,blot out my transgressions.\\nWash me thoroughly of my iniquity,and purify me of my sin;\\nfor I recognize my transgressions,and am ever conscious of my sin.\\nAgainst You alone have I sinned,and done what is evil in Your sight;so You are just in Your sentence,and right in Your judgment.\\nIndeed I was born with iniquity;with sin my mother conceived me.\\nbMeaning of verse uncertain. Indeed You desire truth about that which is hidden;teach me wisdom about secret things.\\nPurge me with hyssop till I am pure;wash me till I am whiter than snow.\\nLet me hear tidings of joy and gladness;let the bones You have crushed exult.\\nHide Your face from my sins;blot out all my iniquities.\\nFashion a pure heart for me, O God;create in me a steadfast spirit.\\nDo not cast me out of Your presence,or take Your holy spirit away from me.\\nLet me again rejoice in Your help;let a vigorous spirit sustain me.\\nI will teach transgressors Your ways,that sinners may return to You.\\nSave me from bloodguilt,O God, God, my deliverer,that I may sing forth Your beneficence.\\nO my Sovereign, open my lips,and let my mouth declare Your praise.\\nYou do not want me to bring sacrifices;You do not desire burnt offerings;\\nTrue sacrifice to God is a contrite spirit;God, You will not despisea contrite and crushed heart.\\nMay it please You to make Zion prosper;rebuild the walls of Jerusalem.\\nThen You will want sacrifices offered in righteousness,burnt and whole offerings;then bulls will be offered on Your altar.`,
     },
@@ -23,7 +23,7 @@ export const psalm51: Tefila = {
 export const psalm52: Tefila = {
   id: "psalm-52",
   name: "Psalm 52",
-  nameHe: "תהלים 52",
+  nameHe: "תהילים נב",
   category: "tehillim",
   sections: [
     {
