@@ -5,7 +5,7 @@ export const hoshanot: Tefila = {
   name: "Hoshanot",
   nameHe: "הושענות",
   category: "holidays",
-  timeContext: "anytime",
+  timeContext: "shacharis",
   sections: [
     {
       id: "hosh-intro",
@@ -77,7 +77,7 @@ export const hoshanot: Tefila = {
 };
 
 export const lulav: Tefila = {
-  id: "lulav-shaking",
+  id: "lulav-brachos",
   name: "Netilas Lulav",
   nameHe: "נטילת לולב",
   category: "holidays",

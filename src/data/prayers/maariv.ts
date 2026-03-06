@@ -2,8 +2,8 @@ import type { Tefila } from "../types";
 
 export const shemaMaariv: Tefila = {
   id: "shema-maariv",
-  name: "Shema",
-  nameHe: "קריאת שמע",
+  name: "Shema - Maariv",
+  nameHe: "שמע - מעריב",
   category: "maariv",
   timeContext: "maariv",
   sections: [
@@ -241,8 +241,8 @@ export const shemonehEsreiMaariv: Tefila = {
 
 export const aleinuMaariv: Tefila = {
   id: "aleinu-maariv",
-  name: "Aleinu",
-  nameHe: "עָלֵינוּ",
+  name: "Aleinu - Maariv",
+  nameHe: "עלינו - מעריב",
   category: "maariv",
   timeContext: "maariv",
   sections: [

@@ -56,9 +56,9 @@ export const birkasHamazon: Tefila = {
 export const bedtimeShema: Tefila = {
   id: "bedtime-shema",
   name: "Bedtime Shema",
-  nameHe: "קריאת שמע על המטה",
-  category: "other",
-  timeContext: "anytime",
+  nameHe: "קריאת שמע על המיטה",
+  category: "blessings",
+  timeContext: "maariv",
   sections: [
     {
       id: "bs-hamapil",
@@ -71,8 +71,8 @@ export const bedtimeShema: Tefila = {
       id: "bs-shema",
       title: "Shema",
       titleHe: "שמע",
-      text: "שְׁמַע יִשְׂרָאֵל, ה' אֱלֹהֵינוּ, ה' אֶחָד.\n\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.\n\nוְאָהַבְתָּ אֵת ה' אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה, אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם, עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ, וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ, וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטוֹטָפוֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.",
-      translation: "Hear, O Israel, the Lord is our God, the Lord is One.\n\nBlessed is the Name of His glorious kingdom forever and ever.\n\nAnd you shall love the Lord your God with all your heart, with all your soul, and with all your might. And these words which I command you today shall be upon your heart. You shall teach them thoroughly to your children, and you shall speak of them when you sit in your house, when you walk on the road, when you lie down and when you rise. You shall bind them as a sign upon your hand, and they shall be for a reminder between your eyes. And you shall write them upon the doorposts of your house and upon your gates.",
+      text: "שְׁמַע יִשְׂרָאֵל, ה' אֱלֹהֵינוּ, ה' אֶחָד.\n\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.\n\nוְאָהַבְתָּ אֵת ה' אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה, אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם, עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ, וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ, וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטוֹטָפוֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.\n\nה' צְבָאוֹת עִמָּנוּ, מִשְׂגָּב לָנוּ אֱלֹהֵי יַעֲקֹב סֶלָה.\nה' צְבָאוֹת, אַשְׁרֵי אָדָם בֹּטֵחַ בָּךְ.\nה' הוֹשִׁיעָה, הַמֶּלֶךְ יַעֲנֵנוּ בְיוֹם קָרְאֵנוּ.\n\nהִנֵּה לֹא יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל.\n\nלִישׁוּעָתְךָ קִוִּיתִי ה', קִוִּיתִי ה' לִישׁוּעָתְךָ, ה' לִישׁוּעָתְךָ קִוִּיתִי.\n\nבְּשֵׁם ה' אֱלֹהֵי יִשְׂרָאֵל, מִימִינִי מִיכָאֵל, וּמִשְּׂמֹאלִי גַּבְרִיאֵל, וּמִלְּפָנַי אוּרִיאֵל, וּמֵאֲחוֹרַי רְפָאֵל, וְעַל רֹאשִׁי שְׁכִינַת אֵל.",
+      translation: "Hear, O Israel, the Lord is our God, the Lord is One.\n\nBlessed is the Name of His glorious kingdom forever and ever.\n\nAnd you shall love the Lord your God with all your heart, with all your soul, and with all your might. And these words which I command you today shall be upon your heart. You shall teach them thoroughly to your children, and you shall speak of them when you sit in your house, when you walk on the road, when you lie down and when you rise. You shall bind them as a sign upon your hand, and they shall be for a reminder between your eyes. And you shall write them upon the doorposts of your house and upon your gates.\n\nThe Lord of hosts is with us; the God of Jacob is a stronghold for us, Selah.\nLord of hosts, happy is the man who trusts in You.\nLord, deliver us; may the King answer us on the day we call.\n\nBehold, the Guardian of Israel neither slumbers nor sleeps.\n\nFor Your salvation I hope, Lord; I hope, Lord, for Your salvation; Lord, for Your salvation I hope.\n\nIn the name of the Lord, God of Israel: may Michael be at my right, Gabriel at my left, Uriel before me, Raphael behind me, and above my head the Divine Presence of God.",
     },
   ],
 };
@@ -81,7 +81,7 @@ export const travelersPrayer: Tefila = {
   id: "tefilas-haderech",
   name: "Tefilas HaDerech",
   nameHe: "תפילת הדרך",
-  category: "other",
+  category: "blessings",
   timeContext: "anytime",
   sections: [
     {
@@ -98,7 +98,7 @@ export const travelersPrayer: Tefila = {
 export const birchosBefore: Tefila = {
   id: "brachos-before",
   name: "Brachos Before Eating",
-  nameHe: "ברכות לפני אכילה",
+  nameHe: "ברכות ראשונות",
   category: "blessings",
   timeContext: "anytime",
   sections: [
@@ -197,7 +197,7 @@ export const brachosAfter: Tefila = {
 
 export const birchosMitzvos: Tefila = {
   id: "brachos-mitzvos",
-  name: "Brachos for Mitzvos",
+  name: "Birchos Mitzvos",
   nameHe: "ברכות המצוות",
   category: "blessings",
   timeContext: "anytime",
@@ -312,7 +312,7 @@ export const birchosMitzvos: Tefila = {
 export const birchosMeEin: Tefila = {
   id: "brachos-experiences",
   name: "Brachos on Experiences",
-  nameHe: "ברכות שונות",
+  nameHe: "ברכות הנהנין",
   category: "blessings",
   timeContext: "anytime",
   sections: [
