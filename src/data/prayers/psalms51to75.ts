@@ -61,7 +61,7 @@ export const psalm54: Tefila = {
     {
       id: "psalm-54-text",
       title: "Psalm 54",
-      titleHe: "תהלים 54",
+      titleHe: "תהילים נד",
       text: `לַמְנַצֵּ֥חַ בִּנְגִינֹ֗ת מַשְׂכִּ֥יל לְדָוִֽד׃\\nבְּבֹ֣א הַ֭זִּיפִים וַיֹּאמְר֣וּ לְשָׁא֑וּל הֲלֹ֥א דָ֝וִ֗ד מִסְתַּתֵּ֥ר עִמָּֽנוּ׃\\nאֱ֭לֹהִים בְּשִׁמְךָ֣ הוֹשִׁיעֵ֑נִי וּבִגְבוּרָתְךָ֥ תְדִינֵֽנִי׃\\nאֱ֭לֹהִים שְׁמַ֣ע תְּפִלָּתִ֑י הַ֝אֲזִ֗ינָה לְאִמְרֵי־פִֽי׃\\nכִּ֤י זָרִ֨ים׀ קָ֤מוּ עָלַ֗י וְֽ֭עָרִיצִים בִּקְשׁ֣וּ נַפְשִׁ֑י לֹ֤א שָׂ֨מוּ אֱלֹהִ֖ים לְנֶגְדָּ֣ם סֶֽלָה׃\\nהִנֵּ֣ה אֱ֭לֹהִים עֹזֵ֣ר לִ֑י אֲ֝דֹנָ֗י בְּֽסֹמְכֵ֥י נַפְשִֽׁי׃\\n(ישוב) [יָשִׁ֣יב] הָ֭רַע לְשֹׁרְרָ֑י בַּ֝אֲמִתְּךָ֗ הַצְמִיתֵֽם׃\\nבִּנְדָבָ֥ה אֶזְבְּחָה־לָּ֑ךְ א֤וֹדֶה־שִּׁמְךָ֖ יְהֹוָ֣ה כִּי־טֽוֹב׃\\nכִּ֣י מִכׇּל־צָ֭רָה הִצִּילָ֑נִי וּ֝בְאֹיְבַ֗י רָאֲתָ֥ה עֵינִֽי׃{פ}`,
       translation: `For the leader; with instrumental music. A maskil of David, \\nwhen the Ziphites came and told Saul, “Know, David is in hiding among us.”aCf. 1 Sam. 23.19. \\nO God, deliver me by Your name;by Your power vindicate me.\\nO God, hear my prayer;give ear to the words of my mouth.\\nFor strangers have risen against me,and those who are ruthless seek my life;they are unmindful of God.    Selah. \\nSee, God is my helper;my Sovereign is my support.\\n[God] will repay the evil of my watchful foes;by Your faithfulness, destroy them!\\nThen I will offer You a freewill sacrifice;I will praise Your name, ETERNAL One, for it is good,\\nfor it has saved me from my foes,and let me gaze triumphant upon my enemies.`,
     },
@@ -71,13 +71,13 @@ export const psalm54: Tefila = {
 export const psalm55: Tefila = {
   id: "psalm-55",
   name: "Psalm 55",
-  nameHe: "תהלים 55",
+  nameHe: "תהילים נה",
   category: "tehillim",
   sections: [
     {
       id: "psalm-55-text",
       title: "Psalm 55",
-      titleHe: "תהלים 55",
+      titleHe: "תהילים נה",
       text: `לַמְנַצֵּ֥חַ בִּנְגִינֹ֗ת מַשְׂכִּ֥יל לְדָוִֽד׃\\nהַאֲזִ֣ינָה אֱ֭לֹהִים תְּפִלָּתִ֑י וְאַל־תִּ֝תְעַלַּ֗ם מִתְּחִנָּתִֽי׃\\nהַקְשִׁ֣יבָה לִּ֣י וַעֲנֵ֑נִי אָרִ֖יד בְּשִׂיחִ֣י וְאָהִֽימָה׃\\nמִקּ֤וֹל אוֹיֵ֗ב מִ֭פְּנֵי עָקַ֣ת רָשָׁ֑ע כִּֽי־יָמִ֥יטוּ עָלַ֥י אָ֝֗וֶן וּבְאַ֥ף יִשְׂטְמֽוּנִי׃\\nלִ֭בִּי יָחִ֣יל בְּקִרְבִּ֑י וְאֵימ֥וֹת מָ֝֗וֶת נָפְל֥וּ עָלָֽי׃\\nיִרְאָ֣ה וָ֭רַעַד יָ֣בֹא בִ֑י וַ֝תְּכַסֵּ֗נִי פַּלָּצֽוּת׃\\nוָאֹמַ֗ר מִֽי־יִתֶּן־לִ֣י אֵ֭בֶר כַּיּוֹנָ֗ה אָע֥וּפָה וְאֶשְׁכֹּֽנָה׃\\nהִ֭נֵּה אַרְחִ֣יק נְדֹ֑ד אָלִ֖ין בַּמִּדְבָּ֣ר סֶֽלָה׃\\nאָחִ֣ישָׁה מִפְלָ֣ט לִ֑י מֵר֖וּחַ סֹעָ֣ה מִסָּֽעַר׃\\nבַּלַּ֣ע אֲ֭דֹנָי פַּלַּ֣ג לְשׁוֹנָ֑ם כִּֽי־רָאִ֨יתִי חָמָ֖ס וְרִ֣יב בָּעִֽיר׃\\nיוֹמָ֤ם וָלַ֗יְלָה יְסוֹבְבֻ֥הָ עַל־חוֹמֹתֶ֑יהָ וְאָ֖וֶן וְעָמָ֣ל בְּקִרְבָּֽהּ׃\\nהַוּ֥וֹת בְּקִרְבָּ֑הּ וְֽלֹא־יָמִ֥ישׁ מֵ֝רְחֹבָ֗הּ תֹּ֣ךְ וּמִרְמָֽה׃\\nכִּ֤י לֹֽא־אוֹיֵ֥ב יְחָֽרְפֵ֗נִי וְאֶ֫שָּׂ֥א לֹא־מְ֭שַׂנְאִי עָלַ֣י הִגְדִּ֑יל וְאֶסָּתֵ֥ר מִמֶּֽנּוּ׃\\nוְאַתָּ֣ה אֱנ֣וֹשׁ כְּעֶרְכִּ֑י אַ֝לּוּפִ֗י וּמְיֻדָּעִֽי׃\\nאֲשֶׁ֣ר יַ֭חְדָּו נַמְתִּ֣יק ס֑וֹד בְּבֵ֥ית אֱ֝לֹהִ֗ים נְהַלֵּ֥ךְ בְּרָֽגֶשׁ׃\\n(ישימות) [יַשִּׁ֤י מָ֨וֶת׀] עָלֵ֗ימוֹ יֵרְד֣וּ שְׁא֣וֹל חַיִּ֑ים כִּֽי־רָע֖וֹת בִּמְגוּרָ֣ם בְּקִרְבָּֽם׃\\nאֲ֭נִי אֶל־אֱלֹהִ֣ים אֶקְרָ֑א וַ֝יהֹוָ֗ה יוֹשִׁיעֵֽנִי׃\\nעֶ֤רֶב וָבֹ֣קֶר וְ֭צׇהֳרַיִם אָשִׂ֣יחָה וְאֶהֱמֶ֑ה וַיִּשְׁמַ֥ע קוֹלִֽי׃\\nפָּ֘דָ֤ה בְשָׁל֣וֹם נַ֭פְשִׁי מִקְּרׇב־לִ֑י כִּֽי־בְ֝רַבִּ֗ים הָי֥וּ עִמָּדִֽי׃\\nיִשְׁמַ֤ע׀ אֵ֨ל׀ וְֽיַעֲנֵם֮ וְיֹ֤שֵׁ֥ב קֶ֗דֶם סֶ֥֫לָה אֲשֶׁ֤ר אֵ֣ין חֲלִיפ֣וֹת לָ֑מוֹ וְלֹ֖א יָרְא֣וּ אֱלֹהִֽים׃\\nשָׁלַ֣ח יָ֭דָיו בִּשְׁלֹמָ֗יו חִלֵּ֥ל בְּרִיתֽוֹ׃\\nחָלְק֤וּ׀ מַחְמָאֹ֣ת פִּיו֮ וּֽקְרָב־לִ֫בּ֥וֹ רַכּ֖וּ דְבָרָ֥יו מִשֶּׁ֗מֶן וְהֵ֣מָּה פְתִחֽוֹת׃\\nהַשְׁלֵ֤ךְ עַל־יְהֹוָ֨ה׀ יְהָבְךָ֮ וְה֢וּא יְכַ֫לְכְּלֶ֥ךָ לֹא־יִתֵּ֖ן לְעוֹלָ֥ם מ֗וֹט לַצַּדִּֽיק׃\\nוְאַתָּ֤ה אֱלֹהִ֨ים׀ תּוֹרִדֵ֬ם׀לִבְאֵ֬ר שַׁ֗חַת אַנְשֵׁ֤י דָמִ֣ים וּ֭מִרְמָה לֹא־יֶחֱצ֣וּ יְמֵיהֶ֑ם וַ֝אֲנִ֗י אֶבְטַח־בָּֽךְ׃{פ}`,
       translation: `For the leader; with instrumental music. A maskil of David.\\nGive ear, O God, to my prayer;do not ignore my plea;\\npay heed to me and answer me.I am tossed about, complaining and moaning\\nat the clamor of the enemy,because of the oppression of the wicked;for they bring evil upon meand furiously harass me.\\nMy heart is convulsed within me;terrors of death assail me.\\nFear and trembling invade me;I am clothed with horror.\\nI said,“O that I had the wings of a dove!I would fly away and find rest;\\nsurely, I would flee far off;I would lodge in the wilderness;    selah \\nI would soon find me a refugefrom the sweeping wind,from the tempest.”\\nO my Sovereign, confound their speech, confuse it!For I see lawlessness and strife in the city;\\nday and night they make their rounds on its walls;evil and mischief are inside it.\\nMalice is within it;fraud and deceit never leave its square.\\nIt is not an enemy who reviles me—I could bear that;it is not my foe who boasts against me—for then I could hide;\\nbut it is you, my equal,my companion, my friend;\\nsweet was our fellowship;we walked together in God’s house.\\nLet [God] incite death against them;may they go down alive into Sheol!For where they dwell,there evil is.\\nAs for me, I call to God; GOD will deliver me.\\nEvening, morning, and noon,I complain and moan,and my voice is heard.\\n[God] redeems me unharmedfrom the battle against me;it is as though many are on my side.ait is as though many are on my side Meaning of Heb. uncertain. \\nGod who has reigned from the first,who will have no successor,hears and humbles those who show no reverence.    Selah. \\nMy companionbMy companion Heb. “He,” i.e., the friend of v. 14. caused harm to alliesand broke a pact—\\nwith talk smoother than butter,yet with a mind set on war;with words that were softer than oil,yet in fact were drawn swords.\\nCast your burden on GOD and you will be sustained;the righteous will never be allowed to collapse.\\nFor You, O God, will bring them down to the nethermost Pit—those treacherous murderers;they shall not live out half their days—but I trust in You.`,
     },
@@ -87,7 +87,7 @@ export const psalm55: Tefila = {
 export const psalm56: Tefila = {
   id: "psalm-56",
   name: "Psalm 56",
-  nameHe: "תהלים 56",
+  nameHe: "תהילים נו",
   category: "tehillim",
   sections: [
     {
