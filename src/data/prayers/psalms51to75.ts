@@ -173,7 +173,7 @@ export const psalm61: Tefila = {
     {
       id: "psalm-61-text",
       title: "Psalm 61",
-      titleHe: "תהלים 61",
+      titleHe: "תהילים סא",
       text: `לַמְנַצֵּ֬חַ׀עַֽל־נְגִינַ֬ת לְדָוִֽד׃\\nשִׁמְעָ֣ה אֱ֭לֹהִים רִנָּתִ֑י הַ֝קְשִׁ֗יבָה תְּפִלָּתִֽי׃\\nמִקְצֵ֤ה הָאָ֨רֶץ׀ אֵלֶ֣יךָ אֶ֭קְרָא בַּעֲטֹ֣ף לִבִּ֑י בְּצוּר־יָר֖וּם מִמֶּ֣נִּי תַנְחֵֽנִי׃\\nכִּֽי־הָיִ֣יתָ מַחְסֶ֣ה לִ֑י מִגְדַּל־עֹ֝֗ז מִפְּנֵ֥י אוֹיֵֽב׃\\nאָג֣וּרָה בְ֭אׇהׇלְךָ עוֹלָמִ֑ים אֶ֥חֱסֶ֨ה בְסֵ֖תֶר כְּנָפֶ֣יךָ סֶּֽלָה׃\\nכִּֽי־אַתָּ֣ה אֱ֭לֹהִים שָׁמַ֣עְתָּ לִנְדָרָ֑י נָתַ֥תָּ יְ֝רֻשַּׁ֗ת יִרְאֵ֥י שְׁמֶֽךָ׃\\nיָמִ֣ים עַל־יְמֵי־מֶ֣לֶךְ תּוֹסִ֑יף שְׁ֝נוֹתָ֗יו כְּמוֹ־דֹ֥ר וָדֹֽר׃\\nיֵשֵׁ֣ב ע֭וֹלָם לִפְנֵ֣י אֱלֹהִ֑ים חֶ֥סֶד וֶ֝אֱמֶ֗ת מַ֣ן יִנְצְרֻֽהוּ׃\\nכֵּ֤ן אֲזַמְּרָ֣ה שִׁמְךָ֣ לָעַ֑ד לְֽשַׁלְּמִ֥י נְ֝דָרַ֗י י֣וֹם׀יֽוֹם׃{פ}`,
       translation: `For the leader; with instrumental music. Of David.\\nHear my cry, O God,heed my prayer.\\nFrom the end of the earth I call to You;when my heart is faint,You lead me to a rock that is high above me.\\nFor You have been my refuge,a tower of strength against the enemy.\\nO that I might dwell in Your tent forever,take refuge under Your protecting wings.    Selah. \\nO God, You have heard my vows;grant the requestarequest Taking the noun yrsht as an alternate form of ʼrsht; cf. Ps. 21.3. of those who fear Your name.\\nAdd days to the days of the king;may his years extend through generations;\\nmay he dwell in God’s presence forever;appointbappoint Meaning of Heb. uncertain. steadfast love to guard him.\\nSo I will sing hymns to Your name forever,as I fulfill my vows day after day.`,
     },
@@ -183,13 +183,13 @@ export const psalm61: Tefila = {
 export const psalm62: Tefila = {
   id: "psalm-62",
   name: "Psalm 62",
-  nameHe: "תהלים 62",
+  nameHe: "תהילים סב",
   category: "tehillim",
   sections: [
     {
       id: "psalm-62-text",
       title: "Psalm 62",
-      titleHe: "תהלים 62",
+      titleHe: "תהילים סב",
       text: `לַמְנַצֵּ֥חַ עַֽל־יְדוּת֗וּן מִזְמ֥וֹר לְדָוִֽד׃\\nאַ֣ךְ אֶל־אֱ֭לֹהִים דּֽוּמִיָּ֣ה נַפְשִׁ֑י מִ֝מֶּ֗נּוּ יְשׁוּעָתִֽי׃\\nאַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹא־אֶמּ֥וֹט רַבָּֽה׃\\nעַד־אָ֤נָה׀ תְּה֥וֹתְת֣וּ עַל־אִישׁ֮ תְּרָצְּח֢וּ כֻ֫לְּכֶ֥ם כְּקִ֥יר נָט֑וּי גָּ֝דֵ֗ר הַדְּחוּיָֽה׃\\nאַ֤ךְ מִשְּׂאֵת֨וֹ׀ יָ֥עֲצ֣וּ לְהַדִּיחַ֮ יִרְצ֢וּ כָ֫זָ֥ב בְּפִ֥יו יְבָרֵ֑כוּ וּ֝בְקִרְבָּ֗ם יְקַֽלְלוּ־סֶֽלָה׃\\nאַ֣ךְ לֵ֭אלֹהִים דּ֣וֹמִּי נַפְשִׁ֑י כִּֽי־מִ֝מֶּ֗נּוּ תִּקְוָתִֽי׃\\nאַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹ֣א אֶמּֽוֹט׃\\nעַל־אֱ֭לֹהִים יִשְׁעִ֣י וּכְבוֹדִ֑י צוּר־עֻזִּ֥י מַ֝חְסִ֗י בֵּאלֹהִֽים׃\\nבִּטְח֘וּ־ב֤וֹ בְכׇל־עֵ֨ת׀ עָ֗ם שִׁפְכֽוּ־לְפָנָ֥יו לְבַבְכֶ֑ם אֱלֹהִ֖ים מַחֲסֶה־לָּ֣נוּ סֶֽלָה׃\\nאַ֤ךְ׀ הֶ֥בֶל בְּנֵֽי־אָדָם֮ כָּזָ֢ב בְּנֵ֫י־אִ֥ישׁ בְּמֹאזְנַ֥יִם לַעֲל֑וֹת הֵ֝֗מָּה מֵהֶ֥בֶל יָֽחַד׃\\nאַל־תִּבְטְח֣וּ בְעֹשֶׁק֮ וּבְגָזֵ֢ל אַל־תֶּ֫הְבָּ֥לוּ חַ֤יִל׀ כִּֽי־יָנ֑וּב אַל־תָּשִׁ֥יתוּ לֵֽב׃\\nאַחַ֤ת׀ דִּבֶּ֬ר אֱלֹהִ֗ים שְׁתַּֽיִם־ז֥וּ שָׁמָ֑עְתִּי כִּ֥י עֹ֝֗ז לֵֽאלֹהִֽים׃\\nוּלְךָֽ־אֲדֹנָ֥י חָ֑סֶד כִּֽי־אַתָּ֨ה תְשַׁלֵּ֖ם לְאִ֣ישׁ כְּֽמַעֲשֵֽׂהוּ׃{פ}`,
       translation: `For the leader; on Jeduthun. A psalm of David.\\nTruly my soul waits quietly for God,from whom my deliverance comes.\\nTruly [God] is my rock and deliverance,my haven; I shall never be shaken.\\nHow long will all of you attackaattack Meaning of Heb. uncertain. someone,to crushbcrush Meaning of Heb. uncertain. them, as though they werea leaning wall, a tottering fence?\\nYou lay plans to topple them from their status;you delight in falsehood;you bless with your mouths,while inwardly you curse.cYou…your…you Heb. “They…their…they.”    Selah. \\nTruly, wait quietly for God, O my soul,from whom comes my hope.\\n[God] is my rock and deliverance,my haven; I shall not be shaken.\\nI rely on God, my deliverance and glory,my rock of strength;in God is my refuge.\\nTrust in [God] at all times, O people;pour out your hearts before the Holy One;God is our refuge.    Selah. \\nHumans are mere breath;mortals, an illusiondHumans are mere breath; / mortals, an illusion Or “The common people are mere breath; / even the notables, an illusion—”; or “Mortals are mere breath; / partisans, an illusion—.”—placed on a scale all together,they weigh even less than a breath.\\nDo not trust in violence,or put false hopes in robbery;if force bears fruit pay it no mind.\\nOne thing God has spoken;two things have I heard:that might belongs to God,\\nand faithfulness is Yours, O my Sovereign,to reward everyone according to their deeds.`,
     },
@@ -199,7 +199,7 @@ export const psalm62: Tefila = {
 export const psalm63: Tefila = {
   id: "psalm-63",
   name: "Psalm 63",
-  nameHe: "תהלים 63",
+  nameHe: "תהילים סג",
   category: "tehillim",
   sections: [
     {
