@@ -55,7 +55,7 @@ export const shemonehEsreiMincha: Tefila = {
       translation: "You graciously bestow knowledge upon man, and teach understanding to mortals. Grant us from You knowledge, understanding, and discernment. Blessed are You, Lord, Who graciously bestows knowledge.",
     },
     {
-      id: "se-mincha-hashiva",
+      id: "se-mincha-hashiveinu",
       title: "Hashiveinu",
       titleHe: "השיבנו",
       text: "הֲשִׁיבֵנוּ אָבִינוּ לְתוֹרָתֶךָ, וְקָרְבֵנוּ מַלְכֵּנוּ לַעֲבוֹדָתֶךָ, וְהַחֲזִירֵנוּ בִּתְשׁוּבָה שְׁלֵמָה לְפָנֶיךָ. בָּרוּךְ אַתָּה ה', הָרוֹצֶה בִּתְשׁוּבָה.",
@@ -97,7 +97,7 @@ export const shemonehEsreiMincha: Tefila = {
       translation: "Sound the great shofar for our freedom, and raise a banner to gather our exiles, and gather us together from the four corners of the earth. Blessed are You, Lord, Who gathers the dispersed of His people Israel.",
     },
     {
-      id: "se-mincha-hashiva-shofteinu",
+      id: "se-mincha-hashiva",
       title: "Hashiva Shofteinu",
       titleHe: "השיבה שופטינו",
       text: "הָשִׁיבָה שׁוֹפְטֵינוּ כְּבָרִאשׁוֹנָה, וְיוֹעֲצֵינוּ כְּבַתְּחִלָּה, וְהָסֵר מִמֶּנּוּ יָגוֹן וַאֲנָחָה, וּמְלוֹךְ עָלֵינוּ אַתָּה ה' לְבַדְּךָ, בְּחֶסֶד וּבְרַחֲמִים, וְצַדְּקֵנוּ בַּמִּשְׁפָּט. בָּרוּךְ אַתָּה ה', מֶלֶךְ אוֹהֵב צְדָקָה וּמִשְׁפָּט.",

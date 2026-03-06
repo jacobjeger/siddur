@@ -249,9 +249,9 @@ export const shemaShacharis: Tefila = {
 };
 
 export const shemonehEsrei: Tefila = {
-  id: "shemoneh-esrei-shacharis",
-  name: "Shemoneh Esrei - Shacharis",
-  nameHe: "שמונה עשרה - שחרית",
+  id: "shemoneh-esrei",
+  name: "Shemoneh Esrei",
+  nameHe: "שמונה עשרה",
   category: "shacharis",
   timeContext: "shacharis",
   sections: [
@@ -307,7 +307,7 @@ export const shemonehEsrei: Tefila = {
       translation: "Return us, our Father, to Your Torah, and bring us close, our King, to Your service, and bring us back in complete repentance before You. Blessed are You, Lord, Who desires repentance.",
     },
     {
-      id: "se-selach-lanu",
+      id: "se-selach",
       title: "Selach Lanu",
       titleHe: "סלח לנו",
       text: "סְלַח לָנוּ אָבִינוּ כִּי חָטָאנוּ, מְחַל לָנוּ מַלְכֵּנוּ כִּי פָשָׁעְנוּ, כִּי מוֹחֵל וְסוֹלֵחַ אָתָּה. בָּרוּךְ אַתָּה ה', חַנּוּן הַמַּרְבֶּה לִסְלוֹחַ.",
@@ -335,7 +335,7 @@ export const shemonehEsrei: Tefila = {
       translation: "Bless for us, Lord our God, this year and all its kinds of produce for good; and bestow blessing upon the face of the earth, and satisfy us from Your bounty, and bless our year like the good years. Blessed are You, Lord, Who blesses the years.",
     },
     {
-      id: "se-teka-beshofar",
+      id: "se-teka",
       title: "Teka B'Shofar",
       titleHe: "תקע בשופר",
       text: "תְּקַע בְּשׁוֹפָר גָּדוֹל לְחֵרוּתֵנוּ, וְשָׂא נֵס לְקַבֵּץ גָּלֻיּוֹתֵינוּ, וְקַבְּצֵנוּ יַחַד מֵאַרְבַּע כַּנְפוֹת הָאָרֶץ. בָּרוּךְ אַתָּה ה', מְקַבֵּץ נִדְחֵי עַמּוֹ יִשְׂרָאֵל.",
@@ -349,7 +349,7 @@ export const shemonehEsrei: Tefila = {
       translation: "Restore our judges as of old, and our counselors as at first; remove from us sorrow and sighing, and reign over us, You alone, O Lord, with kindness and compassion, and vindicate us in judgment. Blessed are You, Lord, the King Who loves righteousness and justice.",
     },
     {
-      id: "se-v-lamalshinim",
+      id: "se-vlamalshinim",
       title: "V'Lamalshinim",
       titleHe: "ולמלשינים",
       text: "וְלַמַּלְשִׁינִים אַל תְּהִי תִקְוָה, וְכָל הָרִשְׁעָה כְּרֶגַע תֹּאבֵד, וְכָל אוֹיְבֶיךָ מְהֵרָה יִכָּרֵתוּ, וְהַזֵּדִים מְהֵרָה תְעַקֵּר וּתְשַׁבֵּר וּתְמַגֵּר וְתַכְנִיעַ בִּמְהֵרָה בְיָמֵינוּ. בָּרוּךְ אַתָּה ה', שׁוֹבֵר אוֹיְבִים וּמַכְנִיעַ זֵדִים.",
@@ -363,7 +363,7 @@ export const shemonehEsrei: Tefila = {
       translation: "Upon the righteous, upon the pious, upon the elders of Your people the House of Israel, upon the remnant of their scholars, upon the righteous converts, and upon us, may Your mercy be aroused, Lord our God. Grant a good reward to all who truly trust in Your Name, and place our lot among them forever, and may we never be put to shame, for in You we have trusted. Blessed are You, Lord, the support and trust of the righteous.",
     },
     {
-      id: "se-v-lirushalayim",
+      id: "se-vliyrushalayim",
       title: "V'Lirushalayim",
       titleHe: "ולירושלים",
       text: "וְלִירוּשָׁלַיִם עִירְךָ בְּרַחֲמִים תָּשׁוּב, וְתִשְׁכּוֹן בְּתוֹכָהּ כַּאֲשֶׁר דִּבַּרְתָּ, וּבְנֵה אוֹתָהּ בְּקָרוֹב בְּיָמֵינוּ בִּנְיַן עוֹלָם, וְכִסֵּא דָוִד מְהֵרָה לְתוֹכָהּ תָּכִין. בָּרוּךְ אַתָּה ה', בּוֹנֵה יְרוּשָׁלָיִם.",

@@ -44,7 +44,7 @@ export const shemonehEsrei: Tefila = {
         "You grace man with knowledge, and teach understanding to mortals. Grace us from You with knowledge, understanding, and intellect. Blessed are You, Lord, Who graciously grants knowledge.",
     },
     {
-      id: "se-hashiva",
+      id: "se-hashiveinu",
       title: "Hashiveinu",
       titleHe: "השיבנו",
       text: "הֲשִׁיבֵנוּ אָבִינוּ לְתוֹרָתֶךָ, וְקָרְבֵנוּ מַלְכֵּנוּ לַעֲבוֹדָתֶךָ, וְהַחֲזִירֵנוּ בִּתְשׁוּבָה שְׁלֵמָה לְפָנֶיךָ. בָּרוּךְ אַתָּה ה', הָרוֹצֶה בִּתְשׁוּבָה.",
@@ -93,7 +93,7 @@ export const shemonehEsrei: Tefila = {
         "Sound the great shofar for our freedom, and raise a banner to gather our exiles, and gather us together from the four corners of the earth. Blessed are You, Lord, Who gathers the dispersed of His people Israel.",
     },
     {
-      id: "se-hashiva-shofteinu",
+      id: "se-hashiva",
       title: "Hashiva Shofteinu",
       titleHe: "השיבה שופטינו",
       text: "הָשִׁיבָה שׁוֹפְטֵינוּ כְּבָרִאשׁוֹנָה, וְיוֹעֲצֵינוּ כְּבַתְּחִלָּה, וְהָסֵר מִמֶּנוּ יָגוֹן וַאֲנָחָה, וּמְלוֹךְ עָלֵינוּ אַתָּה ה' לְבַדְּךָ בְּחֶסֶד וּבְרַחֲמִים, וְצַדְּקֵנוּ בַּמִּשְׁפָּט. בָּרוּךְ אַתָּה ה', מֶלֶךְ אוֹהֵב צְדָקָה וּמִשְׁפָּט.",
