@@ -93,7 +93,7 @@ export const psalm56: Tefila = {
     {
       id: "psalm-56-text",
       title: "Psalm 56",
-      titleHe: "תהלים 56",
+      titleHe: "תהילים נו",
       text: `לַמְנַצֵּ֤חַ׀ עַל־י֬וֹנַת אֵ֣לֶם רְ֭חֹקִים לְדָוִ֣ד מִכְתָּ֑ם בֶּאֱחֹ֨ז אוֹת֖וֹ פְלִשְׁתִּ֣ים בְּגַֽת׃\\nחׇנֵּ֣נִי אֱ֭לֹהִים כִּֽי־שְׁאָפַ֣נִי אֱנ֑וֹשׁ כׇּל־הַ֝יּ֗וֹם לֹחֵ֥ם יִלְחָצֵֽנִי׃\\nשָׁאֲפ֣וּ שׁ֭וֹרְרַי כׇּל־הַיּ֑וֹם כִּֽי־רַבִּ֨ים לֹחֲמִ֖ים לִ֣י מָרֽוֹם׃\\nי֥וֹם אִירָ֑א אֲ֝נִ֗י אֵלֶ֥יךָ אֶבְטָֽח׃\\nבֵּאלֹהִים֮ אֲהַלֵּ֢ל דְּבָ֫ר֥וֹ בֵּאלֹהִ֣ים בָּ֭טַחְתִּי לֹ֣א אִירָ֑א מַה־יַּעֲשֶׂ֖ה בָשָׂ֣ר לִֽי׃\\nכׇּל־הַ֭יּוֹם דְּבָרַ֣י יְעַצֵּ֑בוּ עָלַ֖י כׇּל־מַחְשְׁבֹתָ֣ם לָרָֽע׃\\nיָג֤וּרוּ׀ (יצפינו) [יִצְפּ֗וֹנוּ] הֵ֭מָּה עֲקֵבַ֣י יִשְׁמֹ֑רוּ כַּ֝אֲשֶׁ֗ר קִוּ֥וּ נַפְשִֽׁי׃\\nעַל־אָ֥וֶן פַּלֶּט־לָ֑מוֹ בְּ֝אַ֗ף עַמִּ֤ים׀ הוֹרֵ֬ד אֱלֹהִֽים׃\\nנֹדִי֮ סָפַ֢רְתָּ֫ה אָ֥תָּה שִׂ֣ימָה דִמְעָתִ֣י בְנֹאדֶ֑ךָ הֲ֝לֹ֗א בְּסִפְרָתֶֽךָ׃\\nאָ֨ז יָ֘שׁ֤וּבוּ אוֹיְבַ֣י אָ֭חוֹר בְּי֣וֹם אֶקְרָ֑א זֶֽה־יָ֝דַ֗עְתִּי כִּֽי־אֱלֹהִ֥ים לִֽי׃\\nבֵּ֭אלֹהִים אֲהַלֵּ֣ל דָּבָ֑ר בַּ֝יהֹוָ֗ה אֲהַלֵּ֥ל דָּבָֽר׃\\nבֵּאלֹהִ֣ים בָּ֭טַחְתִּי לֹּ֣א אִירָ֑א מַה־יַּעֲשֶׂ֖ה אָדָ֣ם לִֽי׃\\nעָלַ֣י אֱלֹהִ֣ים נְדָרֶ֑יךָ אֲשַׁלֵּ֖ם תּוֹדֹ֣ת לָֽךְ׃\\nכִּ֤י הִצַּ֪לְתָּ נַפְשִׁ֡י מִמָּוֶת֮ הֲלֹ֥א רַגְלַ֗י מִ֫דֶּ֥חִי לְ֭הִֽתְהַלֵּךְ לִפְנֵ֣י אֱלֹהִ֑ים בְּ֝א֗וֹר הַחַיִּֽים׃{פ}`,
       translation: `For the leader; on yonath elem reḥokim.ayonath elem reḥokim Meaning of Heb. uncertain. Of David. A michtam; when the Philistines seized him in Gath.\\nHave mercy on me, O God,for people persecute me;all day long my adversary oppresses me.\\nMy watchful foes persecute me all day long;many are my adversaries, O Exalted One.\\nWhen I am afraid, I trust in You,\\nin God, whose word I praise,in God I trust;I am not afraid;what can mortalsbmortals Lit. “flesh.” do to me?\\nAll day long they cause me grief in my affairs,cthey cause me grief in my affairs Meaning of Heb. uncertain. they plan only evil against me.\\nThey plot, they lie in ambush;they watch my every move, hoping for my death.\\nCast them out for their evil;subdue peoples in Your anger, O God.\\ndMeaning of verse uncertain. You keep count of my wanderings;put my tears into Your flask,into Your record.\\nThen my enemies will retreat when I call on You;this I know, that God is for me.\\nIn God, whose word I praise,in GOD, whose word I praise,\\nin God I trust;I am not afraid;what can mere humans do to me?\\nI must pay my vows to You, O God;I will render thank offerings to You.\\nFor You have saved me from death,my foot from stumbling,that I may walk before God in the light of life.`,
     },
@@ -103,13 +103,13 @@ export const psalm56: Tefila = {
 export const psalm57: Tefila = {
   id: "psalm-57",
   name: "Psalm 57",
-  nameHe: "תהלים 57",
+  nameHe: "תהילים נז",
   category: "tehillim",
   sections: [
     {
       id: "psalm-57-text",
       title: "Psalm 57",
-      titleHe: "תהלים 57",
+      titleHe: "תהילים נז",
       text: `לַמְנַצֵּ֣חַ אַל־תַּ֭שְׁחֵת לְדָוִ֣ד מִכְתָּ֑ם בְּבׇרְח֥וֹ מִפְּנֵי־שָׁ֝א֗וּל בַּמְּעָרָֽה׃\\nחׇנֵּ֤נִי אֱלֹהִ֨ים׀ חׇנֵּ֗נִי כִּ֥י בְךָ֮ חָסָ֢יָה נַ֫פְשִׁ֥י וּבְצֵֽל־כְּנָפֶ֥יךָ אֶחְסֶ֑ה עַ֝֗ד יַעֲבֹ֥ר הַוּֽוֹת׃\\nאֶ֭קְרָא לֵאלֹהִ֣ים עֶלְי֑וֹן לָ֝אֵ֗ל גֹּמֵ֥ר עָלָֽי׃\\nיִשְׁלַ֤ח מִשָּׁמַ֨יִם׀ וְֽיוֹשִׁיעֵ֗נִי חֵרֵ֣ף שֹׁאֲפִ֣י סֶ֑לָה יִשְׁלַ֥ח אֱ֝לֹהִ֗ים חַסְדּ֥וֹ וַאֲמִתּֽוֹ׃\\nנַפְשִׁ֤י׀ בְּת֥וֹךְ לְבָאִם֮ אֶשְׁכְּבָ֢ה לֹ֫הֲטִ֥ים בְּֽנֵי־אָדָ֗ם שִׁ֭נֵּיהֶם חֲנִ֣ית וְחִצִּ֑ים וּ֝לְשׁוֹנָ֗ם חֶ֣רֶב חַדָּֽה׃\\nר֣וּמָה עַל־הַשָּׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃\\nרֶ֤שֶׁת׀ הֵכִ֣ינוּ לִפְעָמַי֮ כָּפַ֢ף נַ֫פְשִׁ֥י כָּר֣וּ לְפָנַ֣י שִׁיחָ֑ה נָפְל֖וּ בְתוֹכָ֣הּ סֶֽלָה׃\\nנָ֘כ֤וֹן לִבִּ֣י אֱ֭לֹהִים נָכ֣וֹן לִבִּ֑י אָ֝שִׁ֗ירָה וַאֲזַמֵּֽרָה׃\\nע֤וּרָה כְבוֹדִ֗י ע֭וּרָֽה הַנֵּ֥בֶל וְכִנּ֗וֹר אָעִ֥ירָה שָּֽׁחַר׃\\nאוֹדְךָ֖ בָעַמִּ֥ים׀אֲדֹנָ֑י אֲ֝זַמֶּרְךָ֗ בַּלְאֻמִּֽים׃\\nכִּֽי־גָדֹ֣ל עַד־שָׁמַ֣יִם חַסְדֶּ֑ךָ וְֽעַד־שְׁחָקִ֥ים אֲמִתֶּֽךָ׃\\nר֣וּמָה עַל־שָׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃{פ}`,
       translation: `For the leader; al tashḥeth.aal tashḥeth Meaning of Heb. uncertain. Of David. A michtam; when he fled from Saul into a cave.\\nHave mercy on me, O God, have mercy on me,for I seek refuge in You,I seek refuge in the shadow of Your wings,until danger passes.\\nI call to God Most High,to God who is good to me,\\nwho will reach down from heaven and deliver me—sending down steadfast love;my persecutor reviles.    Selah. \\nAs for me, I lie down among lions who devour humans—whose teeth are spears and arrows,whose tongue is a sharp sword.\\nExalt Yourself over the heavens, O God,let Your glory be over all the earth!\\nThey prepared a net for my feet to ensnare me;bto ensnare me Cf. Mishnaic Heb. kefifah, a wicker basket used in fishing. they dug a pit for me,but they fell into it.    Selah. \\ncCf. 108.2–6. My heart is firm, O God;my heart is firm;I will sing, I will chant a hymn.\\nAwake, O my soul!Awake, O harp and lyre!I will wake the dawn.\\nI will praise You among the peoples, O my Sovereign;I will sing a hymn to You among the nations—\\nfor Your faithfulness is as high as heaven;Your steadfastness reaches to the sky.\\nExalt Yourself over the heavens, O God,let Your glory be over all the earth!`,
     },
@@ -119,13 +119,13 @@ export const psalm57: Tefila = {
 export const psalm58: Tefila = {
   id: "psalm-58",
   name: "Psalm 58",
-  nameHe: "תהלים 58",
+  nameHe: "תהילים נח",
   category: "tehillim",
   sections: [
     {
       id: "psalm-58-text",
       title: "Psalm 58",
-      titleHe: "תהלים 58",
+      titleHe: "תהילים נח",
       text: `לַמְנַצֵּ֥חַ אַל־תַּשְׁחֵ֗ת לְדָוִ֥ד מִכְתָּֽם׃\\nהַאֻמְנָ֗ם אֵ֣לֶם צֶ֭דֶק תְּדַבֵּר֑וּן מֵישָׁרִ֥ים תִּ֝שְׁפְּט֗וּ בְּנֵ֣י אָדָֽם׃\\nאַף־בְּלֵב֮ עוֹלֹ֢ת תִּפְעָ֫ל֥וּן בָּאָ֡רֶץ חֲמַ֥ס יְ֝דֵיכֶ֗ם תְּפַלֵּסֽוּן׃\\nזֹ֣רוּ רְשָׁעִ֣ים מֵרָ֑חֶם תָּע֥וּ מִ֝בֶּ֗טֶן דֹּבְרֵ֥י כָזָֽב׃\\nחֲמַת־לָ֗מוֹ כִּדְמ֥וּת חֲמַת־נָחָ֑שׁ כְּמוֹ־פֶ֥תֶן חֵ֝רֵ֗שׁ יַאְטֵ֥ם אׇזְנֽוֹ׃\\nאֲשֶׁ֣ר לֹֽא־יִ֭שְׁמַע לְק֣וֹל מְלַחֲשִׁ֑ים חוֹבֵ֖ר חֲבָרִ֣ים מְחֻכָּֽם׃\\nאֱֽלֹהִ֗ים הֲרׇס־שִׁנֵּ֥ימֽוֹ בְּפִ֑ימוֹ מַלְתְּע֥וֹת כְּ֝פִירִ֗ים נְתֹ֣ץ׀יְהֹוָֽה׃\\nיִמָּאֲס֣וּ כְמוֹ־מַ֭יִם יִתְהַלְּכוּ־לָ֑מוֹ יִדְרֹ֥ךְ חִ֝צָּ֗ו כְּמ֣וֹ יִתְמֹלָֽלוּ׃\\nכְּמ֣וֹ שַׁ֭בְּלוּל תֶּ֣מֶס יַהֲלֹ֑ךְ נֵ֥פֶל אֵ֝֗שֶׁת בַּל־חָ֥זוּ שָֽׁמֶשׁ׃\\nבְּטֶ֤רֶם׀ יָבִ֣ינוּ סִּירֹתֵכֶ֣ם אָטָ֑ד כְּמוֹ־חַ֥י כְּמוֹ־חָ֝ר֗וֹן יִשְׂעָרֶֽנּוּ׃\\nיִשְׂמַ֣ח צַ֭דִּיק כִּי־חָזָ֣ה נָקָ֑ם פְּעָמָ֥יו יִ֝רְחַ֗ץ בְּדַ֣ם הָרָשָֽׁע׃\\nוְיֹאמַ֣ר אָ֭דָם אַךְ־פְּרִ֣י לַצַּדִּ֑יק אַ֥ךְ יֵשׁ־אֱ֝לֹהִ֗ים שֹׁפְטִ֥ים בָּאָֽרֶץ׃{פ}`,
       translation: `For the leader; al tashḥeth. Of David. A michtam.\\nO mighty ones,aO mighty ones Meaning of Heb. uncertain. do you really decree what is just?Do you judge humankind with equity?\\nIn your minds you devise wrongdoing in the land;with your hands you deal out lawlessness.bwith your hands you deal out lawlessness Meaning of Heb. uncertain. \\nThe wicked are defiant from birth;the liars go astray from the womb.\\nTheir venom is like that of a snake,a deaf viper that stops its ears\\nso as not to hear the voice of charmersor the expert mutterer of spells.\\nO God, smash their teeth in their mouth;shatter the fangs of lions, O ETERNAL One;\\nlet them melt, let them vanish like water—aim Your arrows that they be cut down—\\nlike a snail that melts away as it moves;clike a snail that melts away as it moves Meaning of Heb. uncertain. like a woman’s stillbirth—may they never see the sun!\\nBefore the thorns grow into a bramble,whirl them away alive in fury.dthe thorns grow … in fury Meaning of Heb. uncertain. \\nThe righteous will rejoice when they see revenge;they will bathe their feet in the blood of the wicked.\\nPeople will say,“There is, then, a reward for the righteous;there is, indeed, divine justice on earth.”`,
     },
@@ -135,7 +135,7 @@ export const psalm58: Tefila = {
 export const psalm59: Tefila = {
   id: "psalm-59",
   name: "Psalm 59",
-  nameHe: "תהלים 59",
+  nameHe: "תהילים נט",
   category: "tehillim",
   sections: [
     {
