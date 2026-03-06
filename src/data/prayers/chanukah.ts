@@ -8,22 +8,22 @@ export const chanukahCandles: Tefila = {
   timeContext: "anytime",
   sections: [
     {
-      id: "ch-bracha-1",
+      id: "chanukah-bracha-1",
       title: "Lehadlik Ner",
       titleHe: "להדליק נר",
-      instruction: "Light the Chanukah menorah after nightfall. On the first night, add Shehecheyanu.",
+      instruction: "Light the Chanukah menorah after nightfall. On the first night, light one candle on the far right; each subsequent night add one candle to the left and light from left to right.",
       text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל חֲנֻכָּה.",
       translation: "Blessed are You, Lord our God, King of the universe, Who has sanctified us with His commandments, and commanded us to kindle the Chanukah light.",
     },
     {
-      id: "ch-bracha-2",
+      id: "chanukah-bracha-2",
       title: "She'asa Nissim",
       titleHe: "שעשה נסים",
       text: "בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה נִסִּים לַאֲבוֹתֵינוּ, בַּיָּמִים הָהֵם בַּזְּמַן הַזֶּה.",
       translation: "Blessed are You, Lord our God, King of the universe, Who performed miracles for our fathers, in those days at this time.",
     },
     {
-      id: "ch-bracha-3",
+      id: "chanukah-bracha-3",
       title: "Shehecheyanu",
       titleHe: "שהחיינו",
       instruction: "Said on the first night only.",
@@ -41,10 +41,10 @@ export const hanerosHalalu: Tefila = {
   timeContext: "anytime",
   sections: [
     {
-      id: "hnh-text",
+      id: "haneros-text",
       title: "HaNerot Halalu",
       titleHe: "הנרות הללו",
-      instruction: "Recited after kindling the Chanukah lights.",
+      instruction: "Recited after kindling the Chanukah lights, while the shamash is still in hand.",
       text: "הַנֵּרוֹת הַלָּלוּ אָנוּ מַדְלִיקִין עַל הַנִּסִּים וְעַל הַנִּפְלָאוֹת וְעַל הַתְּשׁוּעוֹת וְעַל הַמִּלְחָמוֹת, שֶׁעָשִׂיתָ לַאֲבוֹתֵינוּ בַּיָּמִים הָהֵם בַּזְּמַן הַזֶּה, עַל יְדֵי כֹּהֲנֶיךָ הַקְּדוֹשִׁים. וְכָל שְׁמוֹנַת יְמֵי חֲנֻכָּה, הַנֵּרוֹת הַלָּלוּ קוֹדֶשׁ הֵם, וְאֵין לָנוּ רְשׁוּת לְהִשְׁתַּמֵּשׁ בָּהֶם, אֶלָּא לִרְאוֹתָם בִּלְבָד, כְּדֵי לְהוֹדוֹת וּלְהַלֵּל לְשִׁמְךָ הַגָּדוֹל, עַל נִסֶּיךָ וְעַל נִפְלְאוֹתֶיךָ וְעַל יְשׁוּעוֹתֶיךָ.",
       translation: "These lights we kindle for the miracles, the wonders, the salvations, and the battles which You performed for our fathers in those days at this time, through Your holy priests. During all eight days of Chanukah, these lights are sacred, and we are not permitted to make use of them, but only to look at them, in order to give thanks and praise to Your great Name for Your miracles, Your wonders, and Your salvations.",
     },
@@ -59,7 +59,7 @@ export const maozTzur: Tefila = {
   timeContext: "anytime",
   sections: [
     {
-      id: "mt-text",
+      id: "maoz-tzur-text",
       title: "Maoz Tzur",
       titleHe: "מעוז צור",
       instruction: "Sung after lighting the Chanukah candles.",
