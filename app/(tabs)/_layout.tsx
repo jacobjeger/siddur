@@ -28,7 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "סידור",
+          title: "Siddur",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="book" size={size} color={color} />
           ),
@@ -37,7 +37,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="zmanim"
         options={{
-          title: "זמנים",
+          title: "Zmanim",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time" size={size} color={color} />
           ),
@@ -46,7 +46,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="minyanim"
         options={{
-          title: "מניינים",
+          title: "Minyanim",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people" size={size} color={color} />
           ),
@@ -55,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "הגדרות",
+          title: "Settings",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings" size={size} color={color} />
           ),

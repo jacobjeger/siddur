@@ -61,7 +61,7 @@ export default function SiddurTab() {
                 {formatZmanTime(nextZman.time, timeFormat)}
               </Text>
               <Text style={{ fontSize: 13, fontWeight: "600", color: colors.accent }}>
-                עוד {formatCountdown(countdown)}
+                in {formatCountdown(countdown)}
               </Text>
             </View>
           </View>

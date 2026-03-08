@@ -242,7 +242,7 @@ export default function SettingsTab() {
                 }}
               >
                 {min}
-                {min === 40 ? " (ירושלים)" : ""}
+                {min === 40 ? " (Jer.)" : ""}
               </Text>
             </Pressable>
           ))}
