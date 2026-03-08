@@ -1,21 +1,22 @@
-import { View, Text, ScrollView } from "react-native";
+import { useRef, useMemo } from "react";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
-import { assemblePrayer, getActiveInsertionNames } from "../../src/utils/prayerAssembler";
+import { assemblePrayer } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
-import { useMemo } from "react";
 
 export default function TefilaScreen() {
   const { tefilaId } = useLocalSearchParams<{ tefilaId: string }>();
-  const { nusach, textSize, showEnglish, keepScreenOn } = useSettingsStore();
+  const { nusach, textSize, showEnglish } = useSettingsStore();
   const { colors } = useTheme();
+  const scrollRef = useRef<ScrollView>(null);
+  const sectionYPositions = useRef<Record<string, number>>({});
 
   const baseTefila = getTefilaById(tefilaId ?? "");
   const context = useMemo(() => getInsertionContext(), []);
-  const activeInsertions = useMemo(() => getActiveInsertionNames(context), [context]);
   const tefila = useMemo(
     () => (baseTefila ? assemblePrayer(baseTefila, context) : undefined),
     [baseTefila, context]
@@ -25,11 +26,18 @@ export default function TefilaScreen() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
         <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
-          Tefila not found
+          לא נמצאה תפילה
         </Text>
       </View>
     );
   }
+
+  const scrollToSection = (sectionId: string) => {
+    const y = sectionYPositions.current[sectionId];
+    if (y != null && scrollRef.current) {
+      scrollRef.current.scrollTo({ y, animated: true });
+    }
+  };
 
   return (
     <>
@@ -42,162 +50,131 @@ export default function TefilaScreen() {
         }}
       />
       <ScrollView
+        ref={scrollRef}
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
       >
-        {/* Title banner */}
-        <View
-          style={{
-            alignItems: "center",
-            paddingVertical: 24,
-            paddingHorizontal: 20,
-            backgroundColor: colors.surface,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.border,
-          }}
-        >
-          <Text
+        {/* Hebrew TOC */}
+        {tefila.sections.length > 1 && (
+          <View
             style={{
-              fontFamily: "NotoSerifHebrew-Bold",
-              fontSize: textSize + 6,
-              color: colors.primary,
+              alignItems: "center",
+              paddingVertical: 24,
+              paddingHorizontal: 20,
+              backgroundColor: colors.surface,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
             }}
           >
-            {tefila.nameHe}
-          </Text>
-          <Text style={{ fontSize: 15, color: colors.textSecondary, marginTop: 6 }}>
-            {tefila.name}
-          </Text>
-          {activeInsertions.length > 0 && (
-            <View
+            <Text
               style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                marginTop: 10,
-                gap: 6,
+                fontFamily: "NotoSerifHebrew-Bold",
+                fontSize: textSize + 2,
+                color: colors.text,
+                marginBottom: 10,
               }}
             >
-              {activeInsertions.map((name) => (
-                <View
-                  key={name}
+              {tefila.nameHe}
+            </Text>
+            {tefila.sections.map((section) => (
+              <TouchableOpacity
+                key={section.id}
+                onPress={() => scrollToSection(section.id)}
+                activeOpacity={0.6}
+              >
+                <Text
                   style={{
-                    backgroundColor: colors.accent + "22",
-                    borderRadius: 12,
-                    paddingHorizontal: 10,
-                    paddingVertical: 4,
+                    fontFamily: "NotoSerifHebrew-Regular",
+                    fontSize: 15,
+                    color: colors.textMuted,
+                    marginVertical: 2,
                   }}
                 >
-                  <Text style={{ fontSize: 11, color: colors.accent, fontWeight: "600" }}>
-                    {name}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
+                  {section.titleHe}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
 
         {/* Prayer sections */}
-        {tefila.sections.map((section, index) => {
-          const showSectionHeader =
-            tefila.sections.length > 1 || section.title !== tefila.name;
-
-          return (
-            <View
-              key={section.id}
-              style={{
-                paddingHorizontal: 20,
-                paddingTop: 24,
-                paddingBottom: 20,
-                borderBottomWidth: index < tefila.sections.length - 1 ? 1 : 0,
-                borderBottomColor: colors.border,
-              }}
-            >
-              {showSectionHeader && (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: 16,
-                    paddingBottom: 8,
-                    borderBottomWidth: 1,
-                    borderBottomColor: colors.border,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "700",
-                      color: colors.accent,
-                    }}
-                  >
-                    {section.title}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.accent,
-                      fontFamily: "NotoSerifHebrew-Bold",
-                    }}
-                  >
-                    {section.titleHe}
-                  </Text>
-                </View>
-              )}
-
-              {section.instruction && (
-                <View
-                  style={{
-                    backgroundColor: colors.surfaceSecondary,
-                    borderRadius: 8,
-                    paddingHorizontal: 14,
-                    paddingVertical: 10,
-                    marginBottom: 16,
-                  }}
-                >
-                  <Text style={{ fontSize: 14, color: colors.textSecondary, fontStyle: "italic" }}>
-                    {section.instruction}
-                  </Text>
-                </View>
-              )}
-
+        {tefila.sections.map((section, index) => (
+          <View
+            key={section.id}
+            onLayout={(e) => {
+              sectionYPositions.current[section.id] = e.nativeEvent.layout.y;
+            }}
+            style={{
+              paddingHorizontal: 20,
+              paddingTop: 28,
+              paddingBottom: 20,
+            }}
+          >
+            {/* Hebrew section divider */}
+            {(tefila.sections.length > 1 || section.titleHe !== tefila.nameHe) && (
               <Text
                 style={{
-                  fontFamily: "NotoSerifHebrew-Regular",
-                  fontSize: textSize,
-                  lineHeight: textSize * 2,
-                  color: colors.text,
-                  writingDirection: "rtl",
-                  textAlign: "right",
+                  fontFamily: "NotoSerifHebrew-Bold",
+                  fontSize: textSize - 2,
+                  color: colors.textSecondary,
+                  textAlign: "center",
+                  marginBottom: 20,
                 }}
               >
-                {getTextForNusach(section.text, nusach)}
+                {section.titleHe}
               </Text>
+            )}
 
-              {showEnglish && section.translation && (
-                <View
+            {/* Instruction — inline, not boxed */}
+            {section.instruction && (
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colors.textMuted,
+                  textAlign: "right",
+                  writingDirection: "rtl",
+                  marginBottom: 12,
+                }}
+              >
+                {section.instruction}
+              </Text>
+            )}
+
+            <Text
+              style={{
+                fontFamily: "NotoSerifHebrew-Regular",
+                fontSize: textSize,
+                lineHeight: textSize * 2,
+                color: colors.text,
+                writingDirection: "rtl",
+                textAlign: "right",
+              }}
+            >
+              {getTextForNusach(section.text, nusach)}
+            </Text>
+
+            {showEnglish && section.translation && (
+              <View
+                style={{
+                  marginTop: 20,
+                  paddingTop: 16,
+                  borderTopWidth: 1,
+                  borderTopColor: colors.border,
+                }}
+              >
+                <Text
                   style={{
-                    marginTop: 20,
-                    paddingTop: 16,
-                    borderTopWidth: 1,
-                    borderTopColor: colors.border,
+                    color: colors.textSecondary,
+                    lineHeight: (textSize - 2) * 1.7,
+                    fontSize: textSize - 2,
                   }}
                 >
-                  <Text
-                    style={{
-                      color: colors.textSecondary,
-                      lineHeight: (textSize - 2) * 1.7,
-                      fontSize: textSize - 2,
-                    }}
-                  >
-                    {getTextForNusach(section.translation, nusach)}
-                  </Text>
-                </View>
-              )}
-            </View>
-          );
-        })}
+                  {getTextForNusach(section.translation, nusach)}
+                </Text>
+              </View>
+            )}
+          </View>
+        ))}
       </ScrollView>
     </>
   );

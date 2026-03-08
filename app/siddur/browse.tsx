@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { useRouter, Stack } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { useRouter, Stack, useLocalSearchParams } from "expo-router";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 import { useTheme } from "../../src/hooks/useTheme";
@@ -8,65 +7,61 @@ import { useTheme } from "../../src/hooks/useTheme";
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const { category } = useLocalSearchParams<{ category?: string }>();
+
+  const categoriesToShow = category
+    ? TEFILA_CATEGORIES.filter((c) => c.id === category)
+    : TEFILA_CATEGORIES;
+
+  const headerTitle = category
+    ? (TEFILA_CATEGORIES.find((c) => c.id === category)?.name ?? "Tefilos")
+    : "סידור";
 
   return (
     <>
       <Stack.Screen
         options={{
-          title: "Browse Tefilos",
+          title: headerTitle,
           headerStyle: { backgroundColor: colors.headerBg },
           headerTintColor: "#ffffff",
         }}
       />
       <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
-        {TEFILA_CATEGORIES.map((category) => {
-          const tefilos = getTefilosByCategory(category.id);
+        {categoriesToShow.map((cat) => {
+          const tefilos = getTefilosByCategory(cat.id);
           if (tefilos.length === 0) return null;
 
           return (
-            <View key={category.id} style={{ marginTop: 20 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingHorizontal: 20,
-                  marginBottom: 10,
-                }}
-              >
-                <Ionicons
-                  name={category.icon as any}
-                  size={20}
-                  color={colors.accent}
-                />
-                <Text
+            <View key={cat.id}>
+              {/* Category header — only show when browsing all */}
+              {!category && (
+                <View
                   style={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    color: colors.text,
-                    marginLeft: 8,
+                    paddingHorizontal: 20,
+                    paddingTop: 24,
+                    paddingBottom: 8,
                   }}
                 >
-                  {category.name}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: colors.textMuted,
-                    marginLeft: 8,
-                    fontFamily: "NotoSerifHebrew-Bold",
-                  }}
-                >
-                  {category.nameHe}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: "600",
+                      color: colors.textMuted,
+                      textTransform: "uppercase",
+                      letterSpacing: 0.5,
+                    }}
+                  >
+                    {cat.name}
+                  </Text>
+                </View>
+              )}
 
+              {/* Tefila list */}
               <View
                 style={{
                   backgroundColor: colors.surface,
-                  marginHorizontal: 16,
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  borderWidth: 1,
+                  borderTopWidth: 1,
+                  borderBottomWidth: 1,
                   borderColor: colors.border,
                 }}
               >
@@ -76,40 +71,15 @@ export default function BrowseTefilosScreen() {
                     onPress={() => router.push(`/siddur/${tefila.id}`)}
                     activeOpacity={0.6}
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      paddingHorizontal: 16,
-                      paddingVertical: 14,
+                      paddingHorizontal: 20,
+                      paddingVertical: 15,
                       borderBottomWidth: index < tefilos.length - 1 ? 1 : 0,
                       borderBottomColor: colors.border,
                     }}
                   >
-                    <View style={{ flex: 1 }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "500",
-                          color: colors.text,
-                        }}
-                      >
-                        {tefila.name}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: colors.textMuted,
-                          marginTop: 2,
-                          fontFamily: "NotoSerifHebrew-Regular",
-                        }}
-                      >
-                        {tefila.nameHe}
-                      </Text>
-                    </View>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={20}
-                      color={colors.textMuted}
-                    />
+                    <Text style={{ fontSize: 17, color: colors.text }}>
+                      {tefila.name} - {tefila.nameHe}
+                    </Text>
                   </TouchableOpacity>
                 ))}
               </View>
