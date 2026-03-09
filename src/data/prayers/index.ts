@@ -33,6 +33,7 @@ import { ALL_LIFECYCLE_MOURNING } from "./lifecycle-mourning";
 import { ALL_OTHER_MISC_1 } from "./other-misc-1";
 import { ALL_OTHER_MISC_2 } from "./other-misc-2";
 import { ALL_OTHER_MISC_3 } from "./other-misc-3";
+import { ALL_OTHER_MISC_4 } from "./other-misc-4";
 
 export { ALL_INSERTIONS } from "./insertions";
 
@@ -69,6 +70,7 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_OTHER_MISC_1,
   ...ALL_OTHER_MISC_2,
   ...ALL_OTHER_MISC_3,
+  ...ALL_OTHER_MISC_4,
 ];
 
 /**
