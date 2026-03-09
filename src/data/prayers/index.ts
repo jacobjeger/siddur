@@ -27,6 +27,7 @@ import { ALL_ASHER_YATZAR_ETCHEM_BADIN } from "./asher-yatzar-etchem-badin";
 import { ALL_TEFILLAT_HADERECH } from "./tefillat-haderech";
 import { ALL_HAVINENU } from "./havinenu";
 import { ALL_KADDISH } from "./kaddish";
+import { ALL_BLESSINGS_ADDITIONAL } from "./blessings-additional";
 
 export { ALL_INSERTIONS } from "./insertions";
 
@@ -57,6 +58,7 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_TEFILLAT_HADERECH,
   ...ALL_HAVINENU,
   ...ALL_KADDISH,
+  ...ALL_BLESSINGS_ADDITIONAL,
 ];
 
 /**
