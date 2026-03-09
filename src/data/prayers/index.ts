@@ -28,6 +28,7 @@ import { ALL_TEFILLAT_HADERECH } from "./tefillat-haderech";
 import { ALL_HAVINENU } from "./havinenu";
 import { ALL_KADDISH } from "./kaddish";
 import { ALL_BLESSINGS_ADDITIONAL } from "./blessings-additional";
+import { ALL_LIFECYCLE_BRIS_PIDYON } from "./lifecycle-bris-pidyon";
 
 export { ALL_INSERTIONS } from "./insertions";
 
@@ -59,6 +60,7 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_HAVINENU,
   ...ALL_KADDISH,
   ...ALL_BLESSINGS_ADDITIONAL,
+  ...ALL_LIFECYCLE_BRIS_PIDYON,
 ];
 
 /**
