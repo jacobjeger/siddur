@@ -29,7 +29,7 @@ function AppStack() {
         />
         <Stack.Screen
           name="siddur/browse"
-          options={{ headerShown: true, title: "Browse Tefilos" }}
+          options={{ headerShown: true, title: "סידור" }}
         />
         <Stack.Screen
           name="siddur/daven"

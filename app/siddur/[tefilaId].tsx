@@ -76,9 +76,9 @@ export default function TefilaScreen() {
             >
               {tefila.nameHe}
             </Text>
-            {tefila.sections.map((section) => (
+            {tefila.sections.map((section, idx) => (
               <TouchableOpacity
-                key={section.id}
+                key={`${section.id}-${idx}`}
                 onPress={() => scrollToSection(section.id)}
                 activeOpacity={0.6}
               >
@@ -100,7 +100,7 @@ export default function TefilaScreen() {
         {/* Prayer sections */}
         {tefila.sections.map((section, index) => (
           <View
-            key={section.id}
+            key={`${section.id}-${index}`}
             onLayout={(e) => {
               sectionYPositions.current[section.id] = e.nativeEvent.layout.y;
             }}

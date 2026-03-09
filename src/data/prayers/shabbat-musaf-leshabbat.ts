@@ -55,7 +55,7 @@ export const shabbosAmidah: Tefila = {
     translation: ``,
   },
   {
-    id: "se-shabbos-ata-kadosh",
+    id: "se-shabbos-ata-kadosh-silent",
     title: "Holiness of God",
     titleHe: "קדושת השם",
     text: `אַתָּה קָדושׁ וְשִׁמְךָ קָדושׁ. וּקְדושִׁים בְּכָל יום יְהַלְלוּךָ סֶּלָה:

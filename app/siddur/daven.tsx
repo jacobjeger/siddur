@@ -99,9 +99,9 @@ export default function DavenScreen() {
                 {tefila.nameHe}
               </Text>
               {tefila.sections.length > 1 &&
-                tefila.sections.map((section) => (
+                tefila.sections.map((section, idx) => (
                   <TouchableOpacity
-                    key={section.id}
+                    key={`${section.id}-${idx}`}
                     onPress={() => scrollToSection(section.id)}
                     activeOpacity={0.6}
                   >
@@ -120,9 +120,9 @@ export default function DavenScreen() {
             </View>
 
             {/* Sections */}
-            {tefila.sections.map((section) => (
+            {tefila.sections.map((section, idx) => (
               <View
-                key={section.id}
+                key={`${section.id}-${idx}`}
                 onLayout={(e) => {
                   sectionYPositions.current[section.id] = e.nativeEvent.layout.y;
                 }}
