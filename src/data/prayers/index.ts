@@ -31,6 +31,7 @@ import { ALL_BLESSINGS_ADDITIONAL } from "./blessings-additional";
 import { ALL_LIFECYCLE_BRIS_PIDYON } from "./lifecycle-bris-pidyon";
 import { ALL_LIFECYCLE_MOURNING } from "./lifecycle-mourning";
 import { ALL_OTHER_MISC_1 } from "./other-misc-1";
+import { ALL_OTHER_MISC_2 } from "./other-misc-2";
 
 export { ALL_INSERTIONS } from "./insertions";
 
@@ -65,6 +66,7 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_LIFECYCLE_BRIS_PIDYON,
   ...ALL_LIFECYCLE_MOURNING,
   ...ALL_OTHER_MISC_1,
+  ...ALL_OTHER_MISC_2,
 ];
 
 /**
