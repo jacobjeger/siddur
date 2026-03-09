@@ -29,6 +29,7 @@ import { ALL_HAVINENU } from "./havinenu";
 import { ALL_KADDISH } from "./kaddish";
 import { ALL_BLESSINGS_ADDITIONAL } from "./blessings-additional";
 import { ALL_LIFECYCLE_BRIS_PIDYON } from "./lifecycle-bris-pidyon";
+import { ALL_LIFECYCLE_MOURNING } from "./lifecycle-mourning";
 
 export { ALL_INSERTIONS } from "./insertions";
 
@@ -61,6 +62,7 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_KADDISH,
   ...ALL_BLESSINGS_ADDITIONAL,
   ...ALL_LIFECYCLE_BRIS_PIDYON,
+  ...ALL_LIFECYCLE_MOURNING,
 ];
 
 /**
