@@ -13,7 +13,7 @@ import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting"
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 
-const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings", "shabbos"];
+const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
 export default function SiddurTab() {
   const { tefilaType } = useHebrewDate();
@@ -39,30 +39,34 @@ export default function SiddurTab() {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: 40 }}
       >
-        {/* Next zman info bar */}
+        {/* Next zman card */}
         {nextZman && (
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingHorizontal: 20,
-              paddingVertical: 10,
+              marginHorizontal: 16,
+              marginTop: 16,
+              padding: 16,
               backgroundColor: colors.surface,
-              borderBottomWidth: 1,
-              borderBottomColor: colors.border,
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: colors.border,
             }}
           >
-            <Text style={{ fontSize: 14, color: colors.textSecondary }}>
-              {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
+            <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 4 }}>
+              הזמן הבא - Next Zman
             </Text>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-              <Text style={{ fontSize: 14, color: colors.text }}>
-                {formatZmanTime(nextZman.time, timeFormat)}
+            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+              <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
+                {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
               </Text>
-              <Text style={{ fontSize: 13, fontWeight: "600", color: colors.accent }}>
-                in {formatCountdown(countdown)}
-              </Text>
+              <View style={{ alignItems: "flex-end" }}>
+                <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
+                  {formatZmanTime(nextZman.time, timeFormat)}
+                </Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: colors.accent, marginTop: 2 }}>
+                  in {formatCountdown(countdown)}
+                </Text>
+              </View>
             </View>
           </View>
         )}

@@ -1,5 +1,5 @@
-import { useRef, useMemo } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { useRef, useMemo, useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Modal, FlatList } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
@@ -7,6 +7,20 @@ import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { assemblePrayer } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
+import type { PrayerSection } from "../../src/data/types";
+
+/** Build a deduplicated TOC: unique titles mapped to first section with that title */
+function buildTocEntries(sections: PrayerSection[]) {
+  const seen = new Set<string>();
+  const entries: { title: string; sectionId: string }[] = [];
+  for (const s of sections) {
+    if (!seen.has(s.titleHe)) {
+      seen.add(s.titleHe);
+      entries.push({ title: s.titleHe, sectionId: s.id });
+    }
+  }
+  return entries;
+}
 
 export default function TefilaScreen() {
   const { tefilaId } = useLocalSearchParams<{ tefilaId: string }>();
@@ -14,6 +28,7 @@ export default function TefilaScreen() {
   const { colors } = useTheme();
   const scrollRef = useRef<ScrollView>(null);
   const sectionYPositions = useRef<Record<string, number>>({});
+  const [tocVisible, setTocVisible] = useState(false);
 
   const baseTefila = getTefilaById(tefilaId ?? "");
   const context = useMemo(() => getInsertionContext(), []);
@@ -32,11 +47,17 @@ export default function TefilaScreen() {
     );
   }
 
+  const tocEntries = buildTocEntries(tefila.sections);
+  const showToc = tocEntries.length >= 3;
+
   const scrollToSection = (sectionId: string) => {
-    const y = sectionYPositions.current[sectionId];
-    if (y != null && scrollRef.current) {
-      scrollRef.current.scrollTo({ y, animated: true });
-    }
+    setTocVisible(false);
+    setTimeout(() => {
+      const y = sectionYPositions.current[sectionId];
+      if (y != null && scrollRef.current) {
+        scrollRef.current.scrollTo({ y, animated: true });
+      }
+    }, 100);
   };
 
   return (
@@ -54,48 +75,46 @@ export default function TefilaScreen() {
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
       >
-        {/* Hebrew TOC */}
-        {tefila.sections.length > 1 && (
-          <View
+        {/* Header with tefila name and jump-to button */}
+        <View
+          style={{
+            alignItems: "center",
+            paddingVertical: 24,
+            paddingHorizontal: 20,
+            backgroundColor: colors.surface,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.border,
+          }}
+        >
+          <Text
             style={{
-              alignItems: "center",
-              paddingVertical: 24,
-              paddingHorizontal: 20,
-              backgroundColor: colors.surface,
-              borderBottomWidth: 1,
-              borderBottomColor: colors.border,
+              fontFamily: "NotoSerifHebrew-Bold",
+              fontSize: textSize + 2,
+              color: colors.text,
             }}
           >
-            <Text
+            {tefila.nameHe}
+          </Text>
+          {showToc && (
+            <TouchableOpacity
+              onPress={() => setTocVisible(true)}
+              activeOpacity={0.6}
               style={{
-                fontFamily: "NotoSerifHebrew-Bold",
-                fontSize: textSize + 2,
-                color: colors.text,
-                marginBottom: 10,
+                marginTop: 12,
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: colors.border,
+                backgroundColor: colors.background,
               }}
             >
-              {tefila.nameHe}
-            </Text>
-            {tefila.sections.map((section, idx) => (
-              <TouchableOpacity
-                key={`${section.id}-${idx}`}
-                onPress={() => scrollToSection(section.id)}
-                activeOpacity={0.6}
-              >
-                <Text
-                  style={{
-                    fontFamily: "NotoSerifHebrew-Regular",
-                    fontSize: 15,
-                    color: colors.textMuted,
-                    marginVertical: 2,
-                  }}
-                >
-                  {section.titleHe}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
+              <Text style={{ fontSize: 14, color: colors.primary }}>
+                דלג לקטע ▾
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
 
         {/* Prayer sections */}
         {tefila.sections.map((section, index) => (
@@ -176,6 +195,79 @@ export default function TefilaScreen() {
           </View>
         ))}
       </ScrollView>
+
+      {/* Section jump dropdown modal */}
+      {showToc && (
+        <Modal
+          visible={tocVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setTocVisible(false)}
+        >
+          <TouchableOpacity
+            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center" }}
+            activeOpacity={1}
+            onPress={() => setTocVisible(false)}
+          >
+            <View
+              style={{
+                marginHorizontal: 32,
+                maxHeight: "70%",
+                backgroundColor: colors.surface,
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              <View
+                style={{
+                  paddingHorizontal: 20,
+                  paddingVertical: 14,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.border,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "NotoSerifHebrew-Bold",
+                    fontSize: 16,
+                    color: colors.text,
+                    textAlign: "center",
+                  }}
+                >
+                  דלג לקטע
+                </Text>
+              </View>
+              <FlatList
+                data={tocEntries}
+                keyExtractor={(item) => item.sectionId}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    onPress={() => scrollToSection(item.sectionId)}
+                    activeOpacity={0.6}
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingVertical: 14,
+                      borderBottomWidth: index < tocEntries.length - 1 ? 1 : 0,
+                      borderBottomColor: colors.border,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "NotoSerifHebrew-Regular",
+                        fontSize: 16,
+                        color: colors.text,
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.title}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      )}
     </>
   );
 }

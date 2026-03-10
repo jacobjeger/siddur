@@ -4,15 +4,6 @@ import type { Tefila } from "../types";
 import { ALL_SHACHARIT } from "./shacharit";
 import { ALL_MINCHAH } from "./minchah";
 import { ALL_MAARIV } from "./maariv";
-import { ALL_SHABBAT_KABBALAT_SHABBAT } from "./shabbat-kabbalat-shabbat";
-import { ALL_SHABBAT_MAARIV } from "./shabbat-maariv";
-import { ALL_SHABBAT_SHABBAT_EVENING } from "./shabbat-shabbat-evening";
-import { ALL_SHABBAT_SHACHARIT } from "./shabbat-shacharit";
-import { ALL_SHABBAT_MUSAF_LESHABBAT } from "./shabbat-musaf-leshabbat";
-import { ALL_SHABBAT_DAYTIME_MEAL } from "./shabbat-daytime-meal";
-import { ALL_SHABBAT_MINCHAH } from "./shabbat-minchah";
-import { ALL_SHABBAT_THIRD_MEAL } from "./shabbat-third-meal";
-import { ALL_SHABBAT_HAVDALAH } from "./shabbat-havdalah";
 import { ALL_FESTIVALS_ROSH_CHODESH } from "./festivals-rosh-chodesh";
 import { ALL_FESTIVALS_SHALOSH_REGALIM } from "./festivals-shalosh-regalim";
 import { ALL_FESTIVALS_PRAYER_FOR_DEW } from "./festivals-prayer-for-dew";
@@ -41,15 +32,6 @@ export const ALL_TEFILOS: Tefila[] = [
   ...ALL_SHACHARIT,
   ...ALL_MINCHAH,
   ...ALL_MAARIV,
-  ...ALL_SHABBAT_KABBALAT_SHABBAT,
-  ...ALL_SHABBAT_MAARIV,
-  ...ALL_SHABBAT_SHABBAT_EVENING,
-  ...ALL_SHABBAT_SHACHARIT,
-  ...ALL_SHABBAT_MUSAF_LESHABBAT,
-  ...ALL_SHABBAT_DAYTIME_MEAL,
-  ...ALL_SHABBAT_MINCHAH,
-  ...ALL_SHABBAT_THIRD_MEAL,
-  ...ALL_SHABBAT_HAVDALAH,
   ...ALL_FESTIVALS_ROSH_CHODESH,
   ...ALL_FESTIVALS_SHALOSH_REGALIM,
   ...ALL_FESTIVALS_PRAYER_FOR_DEW,

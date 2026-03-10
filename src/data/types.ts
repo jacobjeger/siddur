@@ -30,7 +30,6 @@ export type TefilaCategory =
   | "mincha"
   | "maariv"
   | "blessings"
-  | "shabbos"
   | "tehillim"
   | "holidays"
   | "lifecycle"
