@@ -180,20 +180,6 @@ export default function DavenScreen() {
                   </Text>
                 )}
 
-                {/* Instruction — inline */}
-                {section.instruction && (
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.textMuted,
-                      textAlign: "right",
-                      writingDirection: "rtl",
-                      marginBottom: 12,
-                    }}
-                  >
-                    {section.instruction}
-                  </Text>
-                )}
 
                 <Text
                   style={{

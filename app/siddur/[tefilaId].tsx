@@ -144,20 +144,6 @@ export default function TefilaScreen() {
               </Text>
             )}
 
-            {/* Instruction — inline, not boxed */}
-            {section.instruction && (
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: colors.textMuted,
-                  textAlign: "right",
-                  writingDirection: "rtl",
-                  marginBottom: 12,
-                }}
-              >
-                {section.instruction}
-              </Text>
-            )}
 
             <Text
               style={{
