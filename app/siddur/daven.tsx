@@ -167,17 +167,29 @@ export default function DavenScreen() {
               >
                 {/* Hebrew section divider */}
                 {(tefila.sections.length > 1 || section.titleHe !== tefila.nameHe) && (
-                  <Text
-                    style={{
-                      fontFamily: "NotoSerifHebrew-Bold",
-                      fontSize: textSize - 2,
-                      color: colors.textSecondary,
-                      textAlign: "center",
-                      marginBottom: 20,
-                    }}
-                  >
-                    {section.titleHe}
-                  </Text>
+                  <View style={{ alignItems: "center", marginBottom: 20 }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+                      <Text
+                        style={{
+                          fontFamily: "NotoSerifHebrew-Bold",
+                          fontSize: textSize - 2,
+                          color: colors.textSecondary,
+                          textAlign: "center",
+                          marginHorizontal: 12,
+                        }}
+                      >
+                        {section.titleHe}
+                      </Text>
+                      <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+                    </View>
+                  </View>
                 )}
 
 
@@ -257,23 +269,34 @@ export default function DavenScreen() {
           onRequestClose={() => setTocVisible(false)}
         >
           <TouchableOpacity
-            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center" }}
+            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "flex-end" }}
             activeOpacity={1}
             onPress={() => setTocVisible(false)}
           >
             <View
               style={{
-                marginHorizontal: 32,
-                maxHeight: "70%",
+                maxHeight: "60%",
                 backgroundColor: colors.surface,
-                borderRadius: 12,
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
                 overflow: "hidden",
               }}
             >
+              {/* Handle bar */}
+              <View style={{ alignItems: "center", paddingTop: 10, paddingBottom: 6 }}>
+                <View
+                  style={{
+                    width: 36,
+                    height: 4,
+                    borderRadius: 2,
+                    backgroundColor: colors.border,
+                  }}
+                />
+              </View>
               <View
                 style={{
                   paddingHorizontal: 20,
-                  paddingVertical: 14,
+                  paddingVertical: 12,
                   borderBottomWidth: 1,
                   borderBottomColor: colors.border,
                 }}
@@ -281,7 +304,7 @@ export default function DavenScreen() {
                 <Text
                   style={{
                     fontFamily: "NotoSerifHebrew-Bold",
-                    fontSize: 16,
+                    fontSize: 17,
                     color: colors.text,
                     textAlign: "center",
                   }}
@@ -292,29 +315,35 @@ export default function DavenScreen() {
               <FlatList
                 data={tocEntries}
                 keyExtractor={(item) => item.sectionId}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={() => scrollToSection(item.sectionId)}
-                    activeOpacity={0.6}
-                    style={{
-                      paddingHorizontal: 20,
-                      paddingVertical: 14,
-                      borderBottomWidth: index < tocEntries.length - 1 ? 1 : 0,
-                      borderBottomColor: colors.border,
-                    }}
-                  >
-                    <Text
+                contentContainerStyle={{ paddingBottom: 30 }}
+                renderItem={({ item, index }) => {
+                  const isTefilaHeader = item.sectionId.startsWith("tefila-header-");
+                  return (
+                    <TouchableOpacity
+                      onPress={() => scrollToSection(item.sectionId)}
+                      activeOpacity={0.6}
                       style={{
-                        fontFamily: "NotoSerifHebrew-Regular",
-                        fontSize: 16,
-                        color: colors.text,
-                        textAlign: "center",
+                        paddingHorizontal: isTefilaHeader ? 20 : 32,
+                        paddingVertical: isTefilaHeader ? 14 : 13,
+                        borderBottomWidth: index < tocEntries.length - 1 ? 1 : 0,
+                        borderBottomColor: colors.border,
+                        backgroundColor: isTefilaHeader ? colors.surfaceSecondary : "transparent",
                       }}
                     >
-                      {item.title}
-                    </Text>
-                  </TouchableOpacity>
-                )}
+                      <Text
+                        style={{
+                          fontFamily: isTefilaHeader ? "NotoSerifHebrew-Bold" : "NotoSerifHebrew-Regular",
+                          fontSize: isTefilaHeader ? 16 : 15,
+                          color: isTefilaHeader ? colors.text : colors.primary,
+                          textAlign: "right",
+                          writingDirection: "rtl",
+                        }}
+                      >
+                        {item.title}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                }}
               />
             </View>
           </TouchableOpacity>

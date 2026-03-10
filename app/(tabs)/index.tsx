@@ -100,8 +100,11 @@ export default function SiddurTab() {
                 }}
                 activeOpacity={0.6}
                 style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                   paddingHorizontal: 20,
-                  paddingVertical: 15,
+                  paddingVertical: 16,
                   borderBottomWidth: index < mainCategories.length - 1 ? 1 : 0,
                   borderBottomColor: colors.border,
                 }}
@@ -109,6 +112,7 @@ export default function SiddurTab() {
                 <Text style={{ fontSize: 17, color: colors.text }}>
                   {category.name} - {category.nameHe}
                 </Text>
+                <Text style={{ fontSize: 16, color: colors.textMuted }}>›</Text>
               </TouchableOpacity>
             );
           })}
@@ -119,18 +123,22 @@ export default function SiddurTab() {
           onPress={() => router.push("/siddur/browse")}
           activeOpacity={0.6}
           style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
             backgroundColor: colors.surface,
             borderBottomWidth: 1,
             borderTopWidth: 1,
             borderColor: colors.border,
             marginTop: 16,
             paddingHorizontal: 20,
-            paddingVertical: 15,
+            paddingVertical: 16,
           }}
         >
           <Text style={{ fontSize: 17, color: colors.primary }}>
             כל התפילות - All Tefilos
           </Text>
+          <Text style={{ fontSize: 16, color: colors.textMuted }}>›</Text>
         </TouchableOpacity>
 
         {/* Start davening shortcut */}
@@ -144,16 +152,15 @@ export default function SiddurTab() {
             }}
             activeOpacity={0.6}
             style={{
-              backgroundColor: colors.surface,
-              borderBottomWidth: 1,
-              borderTopWidth: 1,
-              borderColor: colors.border,
-              marginTop: 16,
-              paddingHorizontal: 20,
-              paddingVertical: 15,
+              alignItems: "center",
+              backgroundColor: colors.accent,
+              borderRadius: 12,
+              marginTop: 20,
+              marginHorizontal: 16,
+              paddingVertical: 16,
             }}
           >
-            <Text style={{ fontSize: 17, color: colors.accent, fontWeight: "600" }}>
+            <Text style={{ fontSize: 18, color: "#ffffff", fontWeight: "700" }}>
               התחל להתפלל - Start Davening
             </Text>
           </TouchableOpacity>

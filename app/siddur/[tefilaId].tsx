@@ -131,17 +131,29 @@ export default function TefilaScreen() {
           >
             {/* Hebrew section divider */}
             {(tefila.sections.length > 1 || section.titleHe !== tefila.nameHe) && (
-              <Text
-                style={{
-                  fontFamily: "NotoSerifHebrew-Bold",
-                  fontSize: textSize - 2,
-                  color: colors.textSecondary,
-                  textAlign: "center",
-                  marginBottom: 20,
-                }}
-              >
-                {section.titleHe}
-              </Text>
+              <View style={{ alignItems: "center", marginBottom: 20 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+                  <Text
+                    style={{
+                      fontFamily: "NotoSerifHebrew-Bold",
+                      fontSize: textSize - 2,
+                      color: colors.textSecondary,
+                      textAlign: "center",
+                      marginHorizontal: 12,
+                    }}
+                  >
+                    {section.titleHe}
+                  </Text>
+                  <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+                </View>
+              </View>
             )}
 
 
@@ -191,23 +203,34 @@ export default function TefilaScreen() {
           onRequestClose={() => setTocVisible(false)}
         >
           <TouchableOpacity
-            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center" }}
+            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "flex-end" }}
             activeOpacity={1}
             onPress={() => setTocVisible(false)}
           >
             <View
               style={{
-                marginHorizontal: 32,
-                maxHeight: "70%",
+                maxHeight: "60%",
                 backgroundColor: colors.surface,
-                borderRadius: 12,
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
                 overflow: "hidden",
               }}
             >
+              {/* Handle bar */}
+              <View style={{ alignItems: "center", paddingTop: 10, paddingBottom: 6 }}>
+                <View
+                  style={{
+                    width: 36,
+                    height: 4,
+                    borderRadius: 2,
+                    backgroundColor: colors.border,
+                  }}
+                />
+              </View>
               <View
                 style={{
                   paddingHorizontal: 20,
-                  paddingVertical: 14,
+                  paddingVertical: 12,
                   borderBottomWidth: 1,
                   borderBottomColor: colors.border,
                 }}
@@ -215,7 +238,7 @@ export default function TefilaScreen() {
                 <Text
                   style={{
                     fontFamily: "NotoSerifHebrew-Bold",
-                    fontSize: 16,
+                    fontSize: 17,
                     color: colors.text,
                     textAlign: "center",
                   }}
@@ -226,13 +249,14 @@ export default function TefilaScreen() {
               <FlatList
                 data={tocEntries}
                 keyExtractor={(item) => item.sectionId}
+                contentContainerStyle={{ paddingBottom: 30 }}
                 renderItem={({ item, index }) => (
                   <TouchableOpacity
                     onPress={() => scrollToSection(item.sectionId)}
                     activeOpacity={0.6}
                     style={{
-                      paddingHorizontal: 20,
-                      paddingVertical: 14,
+                      paddingHorizontal: 24,
+                      paddingVertical: 15,
                       borderBottomWidth: index < tocEntries.length - 1 ? 1 : 0,
                       borderBottomColor: colors.border,
                     }}
@@ -241,8 +265,9 @@ export default function TefilaScreen() {
                       style={{
                         fontFamily: "NotoSerifHebrew-Regular",
                         fontSize: 16,
-                        color: colors.text,
-                        textAlign: "center",
+                        color: colors.primary,
+                        textAlign: "right",
+                        writingDirection: "rtl",
                       }}
                     >
                       {item.title}
