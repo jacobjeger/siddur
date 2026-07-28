@@ -203,7 +203,13 @@ export default function ZmanimTab() {
                       {ZMAN_NAMES[key]?.en ?? key}
                     </Text>
                     <HebrewText
-                      style={{ fontSize: 14, color: colors.textMuted }}
+                      // Left-aligned so it sits under its English label; the
+                      // RTL writing direction still orders the text correctly.
+                      style={{
+                        fontSize: 14,
+                        color: colors.textMuted,
+                        textAlign: "left",
+                      }}
                     >
                       {ZMAN_NAMES[key]?.he ?? ""}
                     </HebrewText>

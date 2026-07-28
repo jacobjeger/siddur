@@ -58,7 +58,11 @@ export function useZmanim(date?: Date): UseZmanimResult {
       ? cached?.source === "manual" &&
         cached.latitude === manual.lat &&
         cached.longitude === manual.lng
-      : cached?.source !== "manual";
+      : // A persisted "fallback" is NOT a usable cache: it means permission was
+        // denied or GPS failed at the time. Retrying is cheap (the permission
+        // check short-circuits) and without it, granting permission later left
+        // the user pinned to the default location forever.
+        cached?.source === "gps";
 
     if (cached && matchesMode) return;
     if (inFlightLocation) return;
