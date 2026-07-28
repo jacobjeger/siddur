@@ -329,27 +329,59 @@ export function getPirkeiAvos(
 
   const month = calendar.getJewishMonth();
   const day = calendar.getJewishDayOfMonth();
+  const inIsrael = safeBool(() => calendar.getInIsrael());
 
-  // From the Shabbos after Pesach (23 Nissan onward) …
-  const afterPesach = (month === 1 && day > 22) || (month >= 2 && month <= 6);
+  // Pesach ends 21 Nissan in Israel, 22 in the Diaspora; the season starts on
+  // the first Shabbos after that.
+  const lastDayOfPesach = inIsrael ? 21 : 22;
+  const afterPesach =
+    (month === 1 && day > lastDayOfPesach) || (month >= 2 && month <= 6);
   if (!afterPesach) return { said: false, chapter: null };
 
-  // … to Rosh Hashana, or to Shavuos for Edot HaMizrach.
+  // … through Elul for Ashkenaz and Sefard; Sephardim conclude at Shavuos.
   if (nusach === "edot_hamizrach" && (month > 3 || (month === 3 && day > 6))) {
     return { said: false, chapter: null };
   }
 
-  const week = shabbosIndexSincePesach(calendar);
+  const week = shabbosIndexSincePesach(calendar, lastDayOfPesach);
+  if (week === null) return { said: false, chapter: null };
   return { said: true, chapter: (week % 6) + 1 };
 }
 
-function shabbosIndexSincePesach(calendar: JewishCalendar): number {
-  const month = calendar.getJewishMonth();
-  const day = calendar.getJewishDayOfMonth();
-  // Approximate week count from 22 Nissan; exact enough to drive the cycle.
-  const daysFromNissan22 =
-    month === 1 ? day - 22 : (month - 1) * 29.5 + day - 22;
-  return Math.max(0, Math.floor(daysFromNissan22 / 7));
+/**
+ * How many Shabbosos have elapsed since the first one after Pesach (0-based).
+ *
+ * Counted from real day numbers via getAbsDate(). The previous implementation
+ * approximated Jewish months as 29.5 days, which drifts half a day at every
+ * month boundary and put Math.floor(days / 7) in the wrong bucket depending on
+ * phase — chapters were repeated and skipped in roughly a quarter of years
+ * (11 of 22 Shabbosos wrong in 2022 and 2029). It also began the count from
+ * 22 Nissan rather than from the first Shabbos, so a year where Pesach ended on
+ * Shabbos started the cycle at chapter 2.
+ */
+function shabbosIndexSincePesach(
+  calendar: JewishCalendar,
+  lastDayOfPesach: number
+): number | null {
+  try {
+    const anchor = new JewishCalendar();
+    anchor.setInIsrael(calendar.getInIsrael());
+    anchor.setJewishDate(
+      calendar.getJewishYear(),
+      1,
+      lastDayOfPesach
+    );
+
+    // Step to the first Shabbos strictly after the last day of Pesach.
+    const daysToShabbos = 7 - anchor.getDayOfWeek();
+    const firstShabbos = anchor.getAbsDate() + (daysToShabbos === 0 ? 7 : daysToShabbos);
+
+    const weeks = (calendar.getAbsDate() - firstShabbos) / 7;
+    if (!Number.isInteger(weeks) || weeks < 0) return null;
+    return weeks;
+  } catch {
+    return null;
+  }
 }
 
 // ---------------------------------------------------------------------------

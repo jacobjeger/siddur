@@ -121,21 +121,25 @@ export interface SplitText {
  * only fall back to the nikkud heuristic for text that had no markup.
  */
 export function splitSefariaHtml(html: string): SplitText {
-  const rubrics: string[] = [];
-  const liturgy: string[] = [];
-
   /**
-   * `<small>` marks a rubric, but Sefaria also wraps *optional liturgy* in it —
-   * Refaeinu's `<small>` contains both "מי שרוצה להתפלל על החולה יאמר כאן" (a
-   * rubric) and the vocalised Mi Shebeirach itself. Classifying the whole block
-   * as an instruction would have hidden real liturgy, so split inside the block
-   * too: vocalised lines are liturgy, unvocalised lines are rubric.
+   * Rubrics stay INLINE, in position.
+   *
+   * An earlier version hoisted every unvocalized line into `instructionHe`,
+   * which destroyed the interleaving wherever a cue label selects between
+   * alternatives — Birkas HaShanim ended up rendering both the summer and the
+   * winter formula run together mid-sentence with no way to tell them apart.
+   * The renderer (src/utils/sectionBlocks.ts) styles rubrics per-line instead,
+   * so position is preserved.
+   *
+   * Only a rubric that PRECEDES all liturgy is lifted out, since that one is a
+   * heading for the whole section and has no interleaving to lose.
    */
-  const classify = (chunk: string) => {
+  const lines: string[] = [];
+
+  const push = (chunk: string) => {
     for (const line of chunk.split("\n")) {
       const trimmed = line.trim();
-      if (!trimmed) continue;
-      (hasNikkud(trimmed) ? liturgy : rubrics).push(trimmed);
+      if (trimmed) lines.push(trimmed);
     }
   };
 
@@ -144,17 +148,22 @@ export function splitSefariaHtml(html: string): SplitText {
   let match: RegExpExecArray | null;
 
   while ((match = pattern.exec(html)) !== null) {
-    classify(stripTags(html.slice(cursor, match.index)));
-    classify(stripTags(match[1]));
+    push(stripTags(html.slice(cursor, match.index)));
+    push(stripTags(match[1]));
     cursor = match.index + match[0].length;
   }
-  classify(stripTags(html.slice(cursor)));
+  push(stripTags(html.slice(cursor)));
+
+  // Lift only the leading run of rubric lines.
+  let lead = 0;
+  while (lead < lines.length && !hasNikkud(lines[lead])) lead++;
 
   return {
-    text: normalizeHebrew(liturgy.join("\n")),
-    instructionHe: normalizeHebrew(rubrics.join("\n")),
+    instructionHe: normalizeHebrew(lines.slice(0, lead).join("\n")),
+    text: normalizeHebrew(lines.slice(lead).join("\n")),
   };
 }
+
 
 /**
  * Named HTML entities that appear in Sefaria's siddur text.
@@ -164,42 +173,47 @@ export function splitSefariaHtml(html: string): SplitText {
  * and rendered literally as "&thinsp;" in the middle of the liturgy.
  */
 const NAMED_ENTITIES: Record<string, string> = {
-  nbsp: " ",
-  thinsp: " ",
-  ensp: " ",
-  emsp: " ",
-  hairsp: " ",
-  zwj: "‍",
-  zwnj: "‌",
+  nbsp: "\u00a0",
+  thinsp: "\u2009",
+  ensp: "\u2002",
+  emsp: "\u2003",
+  hairsp: "\u200a",
   shy: "",
   amp: "&",
   lt: "<",
   gt: ">",
   quot: '"',
   apos: "'",
-  ndash: "–",
-  mdash: "—",
-  hellip: "…",
-  lsquo: "‘",
-  rsquo: "’",
-  ldquo: "“",
-  rdquo: "”",
-  middot: "·",
-  bull: "•",
+  ndash: "\u2013",
+  mdash: "\u2014",
+  hellip: "\u2026",
+  lsquo: "\u2018",
+  rsquo: "\u2019",
+  ldquo: "\u201c",
+  rdquo: "\u201d",
+  middot: "\u00b7",
+  bull: "\u2022",
 };
 
 export function decodeEntities(input: string): string {
+  const fromCode = (code: number) => {
+    // String.fromCodePoint throws RangeError above 0x10FFFF; an out-of-range
+    // numeric entity should not take down the whole fetch.
+    if (!Number.isFinite(code) || code < 0 || code > 0x10ffff) return null;
+    try {
+      return String.fromCodePoint(code);
+    } catch {
+      return null;
+    }
+  };
+
   return input
-    .replace(/&#x([0-9a-fA-F]+);/g, (_m, hex: string) =>
-      String.fromCodePoint(parseInt(hex, 16))
-    )
-    .replace(/&#(\d+);/g, (_m, dec: string) =>
-      String.fromCodePoint(Number(dec))
-    )
-    .replace(/&([a-zA-Z][a-zA-Z0-9]{1,10});/g, (match, name: string) => {
+    .replace(/&#[xX]([0-9a-fA-F]+);/g, (m, hex: string) => fromCode(parseInt(hex, 16)) ?? m)
+    .replace(/&#(\d+);/g, (m, dec: string) => fromCode(Number(dec)) ?? m)
+    .replace(/&([a-zA-Z][a-zA-Z0-9]*);/g, (match, name: string) => {
       const decoded = NAMED_ENTITIES[name.toLowerCase()];
       // Leave genuinely unknown entities alone rather than silently deleting
-      // text; the build guard will surface them.
+      // text; the build guard surfaces them.
       return decoded === undefined ? match : decoded;
     });
 }

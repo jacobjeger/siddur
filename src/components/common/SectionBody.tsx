@@ -1,14 +1,16 @@
 import { View, Text } from "react-native";
 import { useTheme } from "../../hooks/useTheme";
+import { toBlocks } from "../../utils/sectionBlocks";
 
 /**
- * Renders one prayer section's body: the rubric (if any), the liturgy, and a
- * placeholder when the text has not been restored yet.
+ * Renders one prayer section: liturgy and rubrics interleaved in their original
+ * order, with rubrics styled distinctly, plus a placeholder when the text has
+ * not been restored yet.
  *
- * Rubrics were previously mixed into `text` and rendered as if they were
- * liturgy. They are now separated into `instructionHe`, so they need a visually
- * distinct treatment — otherwise separating them out gains nothing and the
- * instructions simply disappear.
+ * Rubrics must render IN PLACE. An earlier version hoisted them into a separate
+ * block above the liturgy, which destroyed the meaning wherever a cue label
+ * selects between alternatives — Birkas HaShanim showed both the summer and
+ * winter formulas run together with nothing to distinguish them.
  */
 export function SectionBody({
   text,
@@ -22,24 +24,23 @@ export function SectionBody({
   textSize: number;
 }) {
   const { colors } = useTheme();
-  const hasText = Boolean(text?.trim());
+  const blocks = toBlocks(text);
+  const hasText = blocks.length > 0;
+
+  const rubricStyle = {
+    fontFamily: "NotoSerifHebrew-Regular",
+    fontSize: textSize * 0.62,
+    lineHeight: textSize * 1.15,
+    color: colors.textMuted,
+    writingDirection: "rtl" as const,
+    textAlign: "right" as const,
+  };
 
   return (
     <View>
+      {/* A leading rubric that applies to the whole section. */}
       {instructionHe ? (
-        <Text
-          style={{
-            fontFamily: "NotoSerifHebrew-Regular",
-            fontSize: textSize * 0.62,
-            lineHeight: textSize * 1.15,
-            color: colors.textMuted,
-            writingDirection: "rtl",
-            textAlign: "right",
-            marginBottom: 10,
-          }}
-        >
-          {instructionHe}
-        </Text>
+        <Text style={[rubricStyle, { marginBottom: 10 }]}>{instructionHe}</Text>
       ) : null}
 
       {instruction ? (
@@ -57,18 +58,33 @@ export function SectionBody({
       ) : null}
 
       {hasText ? (
-        <Text
-          style={{
-            fontFamily: "NotoSerifHebrew-Regular",
-            fontSize: textSize,
-            lineHeight: textSize * 2,
-            color: colors.text,
-            writingDirection: "rtl",
-            textAlign: "right",
-          }}
-        >
-          {text}
-        </Text>
+        blocks.map((block, i) =>
+          block.kind === "rubric" ? (
+            <Text
+              key={i}
+              style={[
+                rubricStyle,
+                { marginTop: i === 0 ? 0 : 8, marginBottom: 4 },
+              ]}
+            >
+              {block.text}
+            </Text>
+          ) : (
+            <Text
+              key={i}
+              style={{
+                fontFamily: "NotoSerifHebrew-Regular",
+                fontSize: textSize,
+                lineHeight: textSize * 2,
+                color: colors.text,
+                writingDirection: "rtl",
+                textAlign: "right",
+              }}
+            >
+              {block.text}
+            </Text>
+          )
+        )
       ) : (
         // 43 sections are still empty. Without this the screen shows a heading
         // followed by blank space, which reads as a rendering bug rather than
@@ -85,11 +101,7 @@ export function SectionBody({
           }}
         >
           <Text
-            style={{
-              fontSize: 13,
-              color: colors.textMuted,
-              textAlign: "center",
-            }}
+            style={{ fontSize: 13, color: colors.textMuted, textAlign: "center" }}
           >
             Text not yet available for this section
           </Text>

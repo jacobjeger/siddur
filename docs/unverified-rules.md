@@ -184,6 +184,44 @@ Two things to settle:
 
 ---
 
+## Rubric placement (6 sections) — needs a printed siddur to settle
+
+The importer used to hoist every unvocalized line out of `text` into
+`instructionHe`. That destroyed the position of cue labels, which is
+load-bearing: a cue selects the alternative that FOLLOWS it. 21 sections were
+repaired by `scripts/restore-inline-cues.ts` and 4 from the pre-xlsx archive.
+
+These 6 could not be settled from the data alone. In each, one cue sits in
+`instructionHe` and it is unclear whether it heads the section or labels an
+inner line. They are currently left at the head, which is the status quo — no
+liturgy is missing, but the cue may be attached to the wrong place. They are
+allowlisted in `runContentGuards` so the build passes; remove the id from
+`LEADING_CUE_OK` once resolved.
+
+1. **`shacharis-shema`, `maariv-shema-maariv`, `bedtime-shema-misc-shema-bedtime`**
+   — cue `שליח ציבור:`. The text opens with `אֵל מֶֽלֶךְ נֶאֱמָן` and ends with
+   `יְהֹוָה אֱלֹהֵיכֶם אֱמֶת`. The usual rubric is that an individual says
+   `אֵל מֶֽלֶךְ נֶאֱמָן` while the chazzan instead repeats
+   `יְהֹוָה אֱלֹהֵיכֶם אֱמֶת` aloud — which would put the cue on the LAST line,
+   not the first. Needs confirming against the siddur this text came from.
+
+2. **`shacharis-ol-malchus-shamayim`** — cue `ויאמר בלחש:` ("and he says
+   quietly"). Which of the 9 paragraphs it governs is not determinable from the
+   text; commonly it marks `רִבּוֹן כָּל הָעוֹלָמִים` or the line before
+   `שְׁמַע יִשְׂרָאֵל`.
+
+3. **`shacharis-tachanun-viddui-13-middos`** — cue `קהל וש"ץ:`. Most likely
+   belongs before `אֵל אֶֽרֶךְ־אַפַּֽיִם` / the Thirteen Middos, which are said by
+   congregation and chazzan together, rather than before the opening
+   `אֱלֹהֵֽינוּ וֵאלֹהֵי אֲבוֹתֵֽינוּ תָּבֹא לְפָנֶֽיךָ`.
+
+4. **`shacharis-tallis-bracha`** — cue
+   `בשעה שמניח אותו על ראשו להתעטף בו, יאמר:`. The section runs
+   `בָּרְ֒כִי נַפְשִׁי` → `לְשֵׁם יִחוּד` → the bracha → `מַה־יָּקָר`, so the cue
+   probably belongs immediately before the bracha, not at the top.
+
+---
+
 ## How to clear an item
 
 Fix the rule in `src/utils/tefillahRules.ts`, cite the source in the doc comment

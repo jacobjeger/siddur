@@ -107,32 +107,39 @@ function saysTalUMatar(
   const month = calendar.getJewishMonth();
   const day = calendar.getJewishDayOfMonth();
 
-  // Ends at Pesach regardless of where you are.
-  if (month === 1 && day >= 15) return false;
+  // The window ends at 15 Nissan everywhere. Establish membership from the
+  // JEWISH date first: Cheshvan (8) through Adar/Adar II (12/13), plus Nissan
+  // up to the 15th.
+  //
+  // The previous version tested only `civilMonth <= 3` for the Jan–Apr tail and
+  // excluded solely Nissan >= 15, so in any year where Iyar began before
+  // 1 May it kept returning true for the rest of April — 13 wrong days in 2026
+  // alone, and up to 20 in other years.
+  const inWinterMonths = month >= 8 && month <= 13;
   const beforePesach = month === 1 && day < 15;
+  if (!inWinterMonths && !beforePesach) return false;
 
   if (inIsrael) {
-    if (month === 8) return day >= 7; // 7 Cheshvan onward
-    if (month >= 9 && month <= 13) return true;
-    return beforePesach;
+    // 7 Cheshvan onward.
+    return month === 8 ? day >= 7 : true;
   }
 
-  // Diaspora: keyed to the civil date. The start shifts to 5 December in the
-  // civil year preceding a Gregorian leap year.
+  // Diaspora: the start is keyed to the civil date — the evening of 4 December,
+  // or 5 December in the civil year preceding a Gregorian leap year.
   const civilYear = date.getFullYear();
-  const isYearBeforeLeap = (civilYear + 1) % 4 === 0;
-  const startDay = isYearBeforeLeap ? 5 : 4;
+  const civilMonth = date.getMonth();
 
-  const decemberStart = new Date(civilYear, 11, startDay);
+  // Jan–Apr is the tail of a season that began the previous December, so by
+  // this point the start has certainly passed.
+  if (civilMonth <= 3) return true;
 
-  if (date.getMonth() === 11) {
-    // December: on or after the start date.
-    return date.getDate() >= startDay && date >= decemberStart;
+  if (civilMonth === 11) {
+    const startDay = (civilYear + 1) % 4 === 0 ? 5 : 4;
+    return date.getDate() >= startDay;
   }
-  // January through Pesach.
-  if (date.getMonth() <= 3) {
-    return !(month === 1 && day >= 15);
-  }
+
+  // Cheshvan/Kislev before December — the Israel start has passed but the
+  // Diaspora one has not.
   return false;
 }
 

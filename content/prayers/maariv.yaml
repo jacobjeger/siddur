@@ -16,11 +16,10 @@ sections:
     titleHe: ברכו
     group: Maariv
     text: |-
-      בָּרְ֒כוּ אֶת יְהֹוָה הַמְ֒בֹרָךְ:
-      בָּרוּךְ יְהֹוָה הַמְ֒בֹרָךְ לְעוֹלָם וָעֶד:
-    instructionHe: |-
       ואומר שליח צבור:
+      בָּרְ֒כוּ אֶת יְהֹוָה הַמְ֒בֹרָךְ:
       ועונין הקהל:
+      בָּרוּךְ יְהֹוָה הַמְ֒בֹרָךְ לְעוֹלָם וָעֶד:
     sourceRef: archive:maariv-barchu.yaml#maariv-barchu
   - id: maariv-maariv-aravim
     title: Maariv Aravim

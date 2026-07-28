@@ -274,16 +274,46 @@ export function getTefilosByCategory(
 
 /**
  * Guards for the defect classes that shipped silently before: sections with no
- * text, rubrics sitting inside `text`, and conditional insertions pointing at
- * section ids that no longer exist.
+ * text, cue labels hoisted out of position, unbalanced brackets, undecoded
+ * entities, and conditional insertions pointing at section ids that no longer
+ * exist.
  *
- * Empty text and stray rubrics warn (the corpus is still being restored —
- * see docs/remaining-text.md). A dead insertion target FAILS the build, because
- * it makes seasonal text silently never appear, which is invisible at runtime.
+ * Empty text warns (the corpus is still being restored — see
+ * docs/remaining-text.md). Everything else FAILS, because each of them ships
+ * liturgy that is actively wrong rather than merely missing, and none of them
+ * is visible at runtime.
+ *
+ * Note rubrics INSIDE `text` are correct and expected — see
+ * src/utils/sectionBlocks.ts.
  */
 function runContentGuards(tefilos: TefilaYaml[]): void {
   let empty = 0;
-  const rubricLeaks: string[] = [];
+  const hoistedCues: string[] = [];
+  /**
+   * Sections where the cue in `instructionHe` genuinely heads the whole
+   * section, so there is no interleaving to lose. Verified by reading each one
+   * — do not add to this list without doing the same.
+   *
+   * Anything NOT listed here and not repaired by scripts/restore-inline-cues.ts
+   * is either damaged or unreviewed, and must fail rather than ship silently.
+   */
+  const LEADING_CUE_OK = new Set([
+    "shacharis-vayehi-bnsoa", // one line of text; the cue heads it
+    "shacharis-chatzi-kaddish-1", // section IS the kaddish
+    "maariv-chatzi-kaddish-maariv",
+    "mincha-chatzi-kaddish-mincha",
+    "shacharis-avinu-malkeinu", // heads all 50 lines; per-line cues already inline
+    "shacharis-lecha-hashem", // the paired response cue is already inline
+    // Reviewed but NOT resolved — the cue may belong to an inner line. Listed
+    // in docs/unverified-rules.md rather than guessed at.
+    "shacharis-shema",
+    "maariv-shema-maariv",
+    "bedtime-shema-misc-shema-bedtime",
+    "shacharis-ol-malchus-shamayim",
+    "shacharis-tachanun-viddui-13-middos",
+    "shacharis-tallis-bracha",
+  ]);
+  const orphanBrackets: string[] = [];
   const entityLeaks: string[] = [];
   const ENTITY = /&(?:[a-zA-Z][a-zA-Z0-9]{1,10}|#\d+|#x[0-9a-fA-F]+);/;
   const nikkud = /[ְ-ׇּׁׂ]/;
@@ -295,15 +325,35 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
         empty++;
         continue;
       }
-      if (ENTITY.test(text)) {
-        entityLeaks.push(`${s.id}: ${ENTITY.exec(text)?.[0]}`);
+      // Check every user-visible field, not just `text` — the entity bug that
+      // shipped could equally have landed in an instruction.
+      const instruction = (s as { instructionHe?: string }).instructionHe ?? "";
+      for (const field of [text, instruction, (s as { instruction?: string }).instruction ?? ""]) {
+        if (ENTITY.test(field)) entityLeaks.push(`${s.id}: ${ENTITY.exec(field)?.[0]}`);
       }
+
+      // An unclosed '[' means a '[קהל: אמן]' response was torn apart.
       for (const line of text.split("\n")) {
+        const opens = (line.match(/\[/g) ?? []).length;
+        const closes = (line.match(/\]/g) ?? []).length;
+        if (opens !== closes) orphanBrackets.push(`${s.id}: ${line.trim().slice(0, 48)}`);
+      }
+
+      // A short label ending in ':' is a CUE — it selects the alternative that
+      // follows it, so it is meaningless once separated from that text. Finding
+      // one in `instructionHe` means it was hoisted out of position.
+      for (const line of instruction.split("\n")) {
         const trimmed = line.trim();
-        // A line of Hebrew with no nikkud at all is a rubric, not liturgy.
-        if (trimmed && /[א-ת]/.test(trimmed) && !nikkud.test(trimmed)) {
-          rubricLeaks.push(`${s.id}: ${trimmed.slice(0, 48)}`);
-          break;
+        // Require the trailing colon: that is what distinguishes a cue ("בחנוכה:")
+        // from a heading or gloss ("קדמות השם"), which may legitimately sit here.
+        if (
+          trimmed.length <= 40 &&
+          /[א-ת]/.test(trimmed) &&
+          !nikkud.test(trimmed) &&
+          /[:：]$/.test(trimmed) &&
+          !LEADING_CUE_OK.has(s.id)
+        ) {
+          hoistedCues.push(`${s.id}: ${trimmed}`);
         }
       }
     }
@@ -322,12 +372,22 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
         .join("\n  ")}`
     );
   }
-  if (rubricLeaks.length) {
-    console.warn(
-      `WARN: ${rubricLeaks.length} sections have an unvocalized line inside 'text' (likely a rubric that belongs in instructionHe):`
+  // Both of these produce liturgy that is wrong rather than merely incomplete
+  // — a hoisted cue prints mutually exclusive alternatives as one run-on
+  // sentence — so they fail the build instead of warning.
+  if (orphanBrackets.length) {
+    throw new Error(
+      `${orphanBrackets.length} line(s) have an unbalanced bracket:\n  ${orphanBrackets
+        .slice(0, 10)
+        .join("\n  ")}`
     );
-    for (const leak of rubricLeaks.slice(0, 10)) console.warn(`        ${leak}`);
-    if (rubricLeaks.length > 10) console.warn(`        …and ${rubricLeaks.length - 10} more`);
+  }
+  if (hoistedCues.length) {
+    throw new Error(
+      `${hoistedCues.length} cue label(s) sit in 'instructionHe' instead of inline in 'text'.\n` +
+        `A cue selects the text that FOLLOWS it; hoisting it runs the alternatives together.\n  ` +
+        hoistedCues.slice(0, 15).join("\n  ")
+    );
   }
 
   // Conditional insertions must resolve, or seasonal text silently never fires.
