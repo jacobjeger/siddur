@@ -5,7 +5,11 @@ import {
 } from "kosher-zmanim";
 import { DateTime } from "luxon";
 import type { UserLocation } from "../location/types";
-import type { HavdalaMethod } from "../../stores/useSettingsStore";
+import type {
+  AlosMethod,
+  HavdalaMethod,
+  TzeisMethod,
+} from "../../stores/useSettingsStore";
 import type { ZmanimData } from "./types";
 
 export interface ZmanimOptions {
@@ -13,13 +17,55 @@ export interface ZmanimOptions {
   candleLightingOffset: number;
   havdalaMethod: HavdalaMethod;
   inIsrael: boolean;
+  alosMethod: AlosMethod;
+  tzeisMethod: TzeisMethod;
 }
 
 export const DEFAULT_ZMANIM_OPTIONS: ZmanimOptions = {
   candleLightingOffset: 18,
   havdalaMethod: "8.5deg",
   inIsrael: false,
+  alosMethod: "72min",
+  tzeisMethod: "8.5deg",
 };
+
+function getAlos(
+  calendar: ComplexZmanimCalendar,
+  method: AlosMethod
+): unknown {
+  switch (method) {
+    case "16.1deg":
+      return calendar.getAlos16Point1Degrees();
+    case "18deg":
+      return calendar.getAlos18Degrees();
+    case "19.8deg":
+      return calendar.getAlos19Point8Degrees();
+    case "90min":
+      return calendar.getAlos90();
+    case "72min":
+    default:
+      return calendar.getAlos72();
+  }
+}
+
+function getTzeis(
+  calendar: ComplexZmanimCalendar,
+  method: TzeisMethod
+): unknown {
+  switch (method) {
+    case "16.1deg":
+      return calendar.getTzais16Point1Degrees();
+    case "18deg":
+      return calendar.getTzais18Degrees();
+    case "50min":
+      return calendar.getTzais50();
+    case "72min":
+      return calendar.getTzais72();
+    case "8.5deg":
+    default:
+      return calendar.getTzaisGeonim8Point5Degrees();
+  }
+}
 
 /**
  * kosher-zmanim returns Luxon DateTime objects; unwrap to JS Date.
@@ -84,7 +130,7 @@ export function getZmanimForDate(
   const sunset = toJSDate(calendar.getSunset());
 
   return {
-    alosHaShachar: toJSDate(calendar.getAlos72()),
+    alosHaShachar: toJSDate(getAlos(calendar, options.alosMethod)),
     misheyakir: toJSDate(calendar.getMisheyakir10Point2Degrees()),
     sunrise: toJSDate(calendar.getSunrise()),
     sofZmanShmaMGA: toJSDate(calendar.getSofZmanShmaMGA()),
@@ -101,7 +147,7 @@ export function getZmanimForDate(
       ? toJSDate(calendar.getCandleLighting())
       : null,
     sunset,
-    tzeis: toJSDate(calendar.getTzaisGeonim8Point5Degrees()),
+    tzeis: toJSDate(getTzeis(calendar, options.tzeisMethod)),
     tzeis72: toJSDate(calendar.getTzais72()),
     havdala: getHavdala(calendar, jewishCalendar, sunset, options.havdalaMethod),
     chatzosLayla: toJSDate(calendar.getSolarMidnight()),

@@ -34,6 +34,8 @@ export function useZmanim(date?: Date): UseZmanimResult {
     inIsrael,
     locationMode,
     manualLocation,
+    alosMethod,
+    tzeisMethod,
   } = useSettingsStore();
   const [zmanim, setZmanim] = useState<ZmanimData | null>(null);
   const [today, setToday] = useState(() => dayKey(new Date()));
@@ -110,6 +112,8 @@ export function useZmanim(date?: Date): UseZmanimResult {
           candleLightingOffset,
           havdalaMethod,
           inIsrael: effectiveInIsrael,
+          alosMethod,
+          tzeisMethod,
         })
       );
       setError(null);
@@ -129,6 +133,8 @@ export function useZmanim(date?: Date): UseZmanimResult {
     candleLightingOffset,
     havdalaMethod,
     effectiveInIsrael,
+    alosMethod,
+    tzeisMethod,
     setError,
   ]);
 

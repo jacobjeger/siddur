@@ -7,6 +7,8 @@ export type FontFamily = "NotoSerifHebrew";
 export type DarkMode = "on" | "off" | "system";
 export type TimeFormat = "12h" | "24h";
 export type HavdalaMethod = "72min" | "42min" | "8.5deg";
+export type AlosMethod = "72min" | "16.1deg" | "18deg" | "19.8deg" | "90min";
+export type TzeisMethod = "8.5deg" | "16.1deg" | "18deg" | "50min" | "72min";
 
 interface SettingsState {
   nusach: Nusach;
@@ -25,6 +27,9 @@ interface SettingsState {
    * Affects second-day Yom Tov, parsha, and the V'Sein Tal U'Matar start date.
    */
   inIsrael: boolean | null;
+  /** Which opinion to use for alos and tzeis; these were hardcoded before. */
+  alosMethod: AlosMethod;
+  tzeisMethod: TzeisMethod;
 
   setNusach: (nusach: Nusach) => void;
   setTextSize: (size: number) => void;
@@ -40,6 +45,8 @@ interface SettingsState {
   setKeepScreenOn: (keep: boolean) => void;
   setTimeFormat: (format: TimeFormat) => void;
   setInIsrael: (inIsrael: boolean | null) => void;
+  setAlosMethod: (method: AlosMethod) => void;
+  setTzeisMethod: (method: TzeisMethod) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -57,6 +64,8 @@ export const useSettingsStore = create<SettingsState>()(
       keepScreenOn: true,
       timeFormat: "12h",
       inIsrael: null,
+      alosMethod: "72min",
+      tzeisMethod: "8.5deg",
 
       setNusach: (nusach) => set({ nusach }),
       setTextSize: (textSize) => set({ textSize }),
@@ -71,6 +80,8 @@ export const useSettingsStore = create<SettingsState>()(
       setKeepScreenOn: (keepScreenOn) => set({ keepScreenOn }),
       setTimeFormat: (timeFormat) => set({ timeFormat }),
       setInIsrael: (inIsrael) => set({ inIsrael }),
+      setAlosMethod: (alosMethod) => set({ alosMethod }),
+      setTzeisMethod: (tzeisMethod) => set({ tzeisMethod }),
     }),
     {
       name: "siddur-settings",

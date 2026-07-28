@@ -13,11 +13,31 @@ import { useTheme, type ThemeColors } from "../../hooks/useTheme";
 import { searchCities } from "../../services/location/locationService";
 import { isLocationInIsrael } from "../../utils/geoRegion";
 import type { CitySearchResult } from "../../services/location/types";
-import type { HavdalaMethod } from "../../stores/useSettingsStore";
+import type {
+  AlosMethod,
+  HavdalaMethod,
+  TzeisMethod,
+} from "../../stores/useSettingsStore";
 
 const HAVDALA_OPTIONS: { value: HavdalaMethod; label: string }[] = [
   { value: "8.5deg", label: "8.5°" },
   { value: "42min", label: "42 min" },
+  { value: "72min", label: "72 min" },
+];
+
+const ALOS_OPTIONS: { value: AlosMethod; label: string }[] = [
+  { value: "72min", label: "72 min" },
+  { value: "16.1deg", label: "16.1°" },
+  { value: "18deg", label: "18°" },
+  { value: "19.8deg", label: "19.8°" },
+  { value: "90min", label: "90 min" },
+];
+
+const TZEIS_OPTIONS: { value: TzeisMethod; label: string }[] = [
+  { value: "8.5deg", label: "8.5°" },
+  { value: "16.1deg", label: "16.1°" },
+  { value: "18deg", label: "18°" },
+  { value: "50min", label: "50 min" },
   { value: "72min", label: "72 min" },
 ];
 
@@ -109,10 +129,14 @@ export function LocationSettings() {
     manualLocation,
     havdalaMethod,
     inIsrael,
+    alosMethod,
+    tzeisMethod,
     setLocationMode,
     setManualLocation,
     setHavdalaMethod,
     setInIsrael,
+    setAlosMethod,
+    setTzeisMethod,
   } = useSettingsStore();
   const location = useLocationStore((s) => s.location);
 
@@ -284,6 +308,42 @@ export function LocationSettings() {
               label={opt.label}
               selected={havdalaMethod === opt.value}
               onPress={() => setHavdalaMethod(opt.value)}
+              colors={colors}
+            />
+          ))}
+        </View>
+      </Card>
+
+      <Card
+        title="Alos HaShachar"
+        subtitle="Opinion used for dawn"
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+          {ALOS_OPTIONS.map((opt) => (
+            <Chip
+              key={opt.value}
+              label={opt.label}
+              selected={alosMethod === opt.value}
+              onPress={() => setAlosMethod(opt.value)}
+              colors={colors}
+            />
+          ))}
+        </View>
+      </Card>
+
+      <Card
+        title="Tzeis HaKochavim"
+        subtitle="Opinion used for nightfall — also decides when the Hebrew date rolls over"
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+          {TZEIS_OPTIONS.map((opt) => (
+            <Chip
+              key={opt.value}
+              label={opt.label}
+              selected={tzeisMethod === opt.value}
+              onPress={() => setTzeisMethod(opt.value)}
               colors={colors}
             />
           ))}
