@@ -131,12 +131,14 @@ export function LocationSettings() {
     inIsrael,
     alosMethod,
     tzeisMethod,
+    useElevation,
     setLocationMode,
     setManualLocation,
     setHavdalaMethod,
     setInIsrael,
     setAlosMethod,
     setTzeisMethod,
+    setUseElevation,
   } = useSettingsStore();
   const location = useLocationStore((s) => s.location);
 
@@ -347,6 +349,27 @@ export function LocationSettings() {
               colors={colors}
             />
           ))}
+        </View>
+      </Card>
+
+      <Card
+        title="Elevation"
+        subtitle="Factor your altitude into netz and shkia, and everything derived from them"
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Chip
+            label="Sea level"
+            selected={!useElevation}
+            onPress={() => setUseElevation(false)}
+            colors={colors}
+          />
+          <Chip
+            label="Use elevation"
+            selected={useElevation}
+            onPress={() => setUseElevation(true)}
+            colors={colors}
+          />
         </View>
       </Card>
     </>

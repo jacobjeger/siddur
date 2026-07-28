@@ -81,6 +81,32 @@ function safe<T>(fn: () => T, fallback: T): T {
   }
 }
 
+/**
+ * The parsha of the coming Shabbos.
+ *
+ * `JewishCalendar.getUpcomingParsha()` cannot be used: it throws
+ * `clone.getParsha is not a function` in kosher-zmanim 0.9.0, because
+ * `JewishDate.clone()` hardcodes `new JewishDate` and loses subclass methods
+ * (upstream issue #36 / PR #33, both open). The throw used to be swallowed by
+ * `safe()`, which left this blank on every weekday.
+ *
+ * So walk forward to the next Shabbos and format that calendar instead.
+ */
+function getUpcomingParshaName(
+  date: Date,
+  options: HebrewDateOptions
+): string {
+  for (let offset = 0; offset < 14; offset++) {
+    const day = new Date(date.getTime() + offset * 24 * 60 * 60 * 1000);
+    const calendar = getJewishCalendar(day, options);
+    if (calendar.getDayOfWeek() !== 7) continue;
+
+    const name = safe(() => englishFormatter.formatParsha(calendar), "");
+    if (name) return name;
+  }
+  return "";
+}
+
 export function getHebrewDateInfo(
   date: Date = new Date(),
   options: HebrewDateOptions = DEFAULT_HEBREW_DATE_OPTIONS
@@ -92,12 +118,7 @@ export function getHebrewDateInfo(
     hebrewDate: safe(() => hebrewFormatter.format(calendar), ""),
     englishDate: safe(() => englishFormatter.format(calendar), ""),
     parsha: safe(() => englishFormatter.formatParsha(calendar), ""),
-    // formatParsha(calendar) returns "" on a non-Shabbos day, so the upcoming
-    // parsha must be formatted from the Parsha enum, not the calendar.
-    upcomingParsha: safe(
-      () => englishFormatter.formatParsha(calendar.getUpcomingParsha()),
-      ""
-    ),
+    upcomingParsha: getUpcomingParshaName(date, options),
     specialDay: safe(() => englishFormatter.formatYomTov(calendar), ""),
     isShabbos: dayOfWeek === 7,
     isYomTov: safe(() => calendar.isYomTov(), false),

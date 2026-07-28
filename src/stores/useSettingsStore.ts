@@ -30,6 +30,11 @@ interface SettingsState {
   /** Which opinion to use for alos and tzeis; these were hardcoded before. */
   alosMethod: AlosMethod;
   tzeisMethod: TzeisMethod;
+  /**
+   * Factor the observer's elevation into sunrise/sunset and everything derived
+   * from them. Applied consistently — see ZmanimOptions.useElevation.
+   */
+  useElevation: boolean;
 
   setNusach: (nusach: Nusach) => void;
   setTextSize: (size: number) => void;
@@ -47,6 +52,7 @@ interface SettingsState {
   setInIsrael: (inIsrael: boolean | null) => void;
   setAlosMethod: (method: AlosMethod) => void;
   setTzeisMethod: (method: TzeisMethod) => void;
+  setUseElevation: (use: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -66,6 +72,7 @@ export const useSettingsStore = create<SettingsState>()(
       inIsrael: null,
       alosMethod: "72min",
       tzeisMethod: "8.5deg",
+      useElevation: false,
 
       setNusach: (nusach) => set({ nusach }),
       setTextSize: (textSize) => set({ textSize }),
@@ -82,6 +89,7 @@ export const useSettingsStore = create<SettingsState>()(
       setInIsrael: (inIsrael) => set({ inIsrael }),
       setAlosMethod: (alosMethod) => set({ alosMethod }),
       setTzeisMethod: (tzeisMethod) => set({ tzeisMethod }),
+      setUseElevation: (useElevation) => set({ useElevation }),
     }),
     {
       name: "siddur-settings",

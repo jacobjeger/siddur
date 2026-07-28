@@ -19,6 +19,21 @@ export interface ZmanimOptions {
   inIsrael: boolean;
   alosMethod: AlosMethod;
   tzeisMethod: TzeisMethod;
+  /**
+   * Whether sunrise/sunset (and therefore every derived zman) account for the
+   * observer's elevation.
+   *
+   * This must be applied consistently. `getSunrise()` is elevation-adjusted
+   * unconditionally, while derived zmanim go through the library's
+   * `getElevationAdjustedSunrise()`, which returns SEA LEVEL when the flag is
+   * off. Leaving the flag unset while passing a real altitude therefore
+   * displayed one sunrise and computed sof zman shma from another — 4.5 minutes
+   * apart in Jerusalem.
+   *
+   * Defaults off, which matches the previous behaviour of every derived zman.
+   * It is a genuine luach axis (Ohr HaChaim uses elevation).
+   */
+  useElevation: boolean;
 }
 
 export const DEFAULT_ZMANIM_OPTIONS: ZmanimOptions = {
@@ -27,7 +42,26 @@ export const DEFAULT_ZMANIM_OPTIONS: ZmanimOptions = {
   inIsrael: false,
   alosMethod: "72min",
   tzeisMethod: "8.5deg",
+  useElevation: false,
 };
+
+/**
+ * Mirrors the library's protected `getElevationAdjustedSunrise/Sunset` so the
+ * displayed netz/shkia use the same basis as everything derived from them.
+ */
+function adjustedSunrise(
+  calendar: ComplexZmanimCalendar,
+  useElevation: boolean
+): unknown {
+  return useElevation ? calendar.getSunrise() : calendar.getSeaLevelSunrise();
+}
+
+function adjustedSunset(
+  calendar: ComplexZmanimCalendar,
+  useElevation: boolean
+): unknown {
+  return useElevation ? calendar.getSunset() : calendar.getSeaLevelSunset();
+}
 
 function getAlos(
   calendar: ComplexZmanimCalendar,
@@ -121,18 +155,19 @@ export function getZmanimForDate(
   const calendar = new ComplexZmanimCalendar(geoLocation);
   calendar.setDate(DateTime.fromJSDate(date).setZone(location.timezone));
   calendar.setCandleLightingOffset(options.candleLightingOffset);
+  calendar.setUseElevation(options.useElevation);
 
   const noArg = calendar as unknown as NoArgZmanim;
 
   const jewishCalendar = new JewishCalendar(date);
   jewishCalendar.setInIsrael(options.inIsrael);
 
-  const sunset = toJSDate(calendar.getSunset());
+  const sunset = toJSDate(adjustedSunset(calendar, options.useElevation));
 
   return {
     alosHaShachar: toJSDate(getAlos(calendar, options.alosMethod)),
     misheyakir: toJSDate(calendar.getMisheyakir10Point2Degrees()),
-    sunrise: toJSDate(calendar.getSunrise()),
+    sunrise: toJSDate(adjustedSunrise(calendar, options.useElevation)),
     sofZmanShmaMGA: toJSDate(calendar.getSofZmanShmaMGA()),
     sofZmanShmaGRA: toJSDate(calendar.getSofZmanShmaGRA()),
     sofZmanTefilaMGA: toJSDate(calendar.getSofZmanTfilaMGA()),
