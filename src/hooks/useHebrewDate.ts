@@ -25,6 +25,7 @@ export function useHebrewDate(date?: Date): UseHebrewDateResult {
   const location = useLocationStore((s) => s.location);
   const inIsraelSetting = useSettingsStore((s) => s.inIsrael);
   const nusach = useSettingsStore((s) => s.nusach);
+  const minhag = useSettingsStore((s) => s.minhag);
 
   return useMemo(() => {
     const now = date ?? new Date();
@@ -44,10 +45,10 @@ export function useHebrewDate(date?: Date): UseHebrewDateResult {
     return {
       ...dateInfo,
       tefilaType: zmanim ? getCurrentTefilaType(now, zmanim) : "shacharis",
-      dayDavening: getDayDaveningInfo(context, now, options, nusach),
+      dayDavening: getDayDaveningInfo(context, now, options, nusach, minhag),
       options,
     };
     // `zmanim` already re-derives at midnight and on every relevant settings
     // change, so it is a sufficient trigger for recomputing the Hebrew date.
-  }, [zmanim, location, inIsraelSetting, nusach, date]);
+  }, [zmanim, location, inIsraelSetting, nusach, minhag, date]);
 }

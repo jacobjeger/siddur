@@ -132,6 +132,7 @@ export function LocationSettings() {
     alosMethod,
     tzeisMethod,
     useElevation,
+    minhag,
     setLocationMode,
     setManualLocation,
     setHavdalaMethod,
@@ -139,6 +140,7 @@ export function LocationSettings() {
     setAlosMethod,
     setTzeisMethod,
     setUseElevation,
+    setMinhag,
   } = useSettingsStore();
   const location = useLocationStore((s) => s.location);
 
@@ -349,6 +351,27 @@ export function LocationSettings() {
               colors={colors}
             />
           ))}
+        </View>
+      </Card>
+
+      <Card
+        title="Minhag"
+        subtitle="Independent of nusach — affects Shir Shel Yom and L'Dovid, not which text is shown"
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Chip
+            label="Standard"
+            selected={minhag === "standard"}
+            onPress={() => setMinhag("standard")}
+            colors={colors}
+          />
+          <Chip
+            label="Gra / Eretz Yisrael"
+            selected={minhag === "gra"}
+            onPress={() => setMinhag("gra")}
+            colors={colors}
+          />
         </View>
       </Card>
 

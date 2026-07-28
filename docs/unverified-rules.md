@@ -92,6 +92,32 @@ than Ashkenaz-mainstream). Currently taken straight from the library predicate.
 Rosh Chodesh is confirmed (weekday psalm plus Barchi Nafshi) and the Beis Yaakov
 omission on Musaf days is confirmed, but **what Chabad does on Yom Tov is not**.
 
+### Minhag ha-Gra / Eretz Yisrael — the multi-day cycles are NOT implemented
+
+The Gra's system, where the special-day psalm **replaces** the weekday psalm
+rather than being added to it, is implemented for the single-day cases:
+Rosh Chodesh (104), Rosh Hashana (81), Yom Kippur (32), Shemini Atzeres (12),
+Simchas Torah (8), Chanukah (30), Purim (22).
+
+**The multi-day cycles for Pesach and Succos are deliberately omitted**, because
+the day-by-day assignment could not be confidently sourced. The sources give
+Pesach as 114, 78, 80, 105, 135, 66, 18 (with 136 for the last day in chu"l) and
+Succos as 76, 42, 29, 50, 94:16–23, 94:1–15, 81, 82 — but which psalm maps to
+which day, and how that interacts with Chol HaMoed and the Israel/Diaspora day
+count, is not established. On those days the code currently falls back to the
+weekday psalm.
+
+Also unverified for this minhag:
+- The precedence rules. Implemented as Rosh Chodesh displacing everything, and
+  Shabbos keeping Ps 92. The sources say "Rosh Chodesh pushes off Shabbos and
+  Chanukah; Shabbos pushes off Chanukah, Yom Tov and Chol HaMoed", which is not
+  obviously the same thing.
+- Whether the Gra's practice on Chanukah and Purim also omits the introductory
+  Beis Yaakov paragraph.
+- Whether following the Gra for Shir Shel Yom implies the Eretz Yisrael L'Dovid
+  end date. They are currently coupled — selecting the Gra minhag ends L'Dovid
+  at Hoshana Rabba — which may be too strong an inference.
+
 ### Edot HaMizrach special-day psalms — replace or supplement?
 The siddur rubric just says "בחנוכה אומרים" without saying whether the weekday
 psalm is still said. The Ben Ish Chai instituted a split for Rosh Chodesh and

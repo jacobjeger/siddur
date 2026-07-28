@@ -3,6 +3,16 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
+
+/**
+ * Minhag is a THIRD axis, independent of both nusach (which text) and luach
+ * (which times). A user can be Ashkenaz nusach following the Gra's minhagim on
+ * a standard luach, and all three combinations occur in practice.
+ *
+ * "gra" is the Vilna Gaon's practice, widely followed by Ashkenazim in Eretz
+ * Yisrael and especially in Yerushalayim.
+ */
+export type Minhag = "standard" | "gra";
 export type FontFamily = "NotoSerifHebrew";
 export type DarkMode = "on" | "off" | "system";
 export type TimeFormat = "12h" | "24h";
@@ -12,6 +22,7 @@ export type TzeisMethod = "8.5deg" | "16.1deg" | "18deg" | "50min" | "72min";
 
 interface SettingsState {
   nusach: Nusach;
+  minhag: Minhag;
   textSize: number;
   fontFamily: FontFamily;
   showEnglish: boolean;
@@ -37,6 +48,7 @@ interface SettingsState {
   useElevation: boolean;
 
   setNusach: (nusach: Nusach) => void;
+  setMinhag: (minhag: Minhag) => void;
   setTextSize: (size: number) => void;
   setFontFamily: (font: FontFamily) => void;
   setShowEnglish: (show: boolean) => void;
@@ -59,6 +71,7 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       nusach: "ashkenaz",
+      minhag: "standard",
       textSize: 22,
       fontFamily: "NotoSerifHebrew",
       showEnglish: false,
@@ -75,6 +88,7 @@ export const useSettingsStore = create<SettingsState>()(
       useElevation: false,
 
       setNusach: (nusach) => set({ nusach }),
+      setMinhag: (minhag) => set({ minhag }),
       setTextSize: (textSize) => set({ textSize }),
       setFontFamily: (fontFamily) => set({ fontFamily }),
       setShowEnglish: (showEnglish) => set({ showEnglish }),

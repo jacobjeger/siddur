@@ -1,5 +1,5 @@
 import { JewishCalendar, Parsha } from "kosher-zmanim";
-import type { Nusach } from "../stores/useSettingsStore";
+import type { Minhag, Nusach } from "../stores/useSettingsStore";
 import {
   getJewishCalendar,
   type HebrewDateOptions,
@@ -55,18 +55,68 @@ export interface ShirShelYom {
   afterAleinu: boolean;
   /** Barchi Nafshi (Ps 104) is added on Rosh Chodesh in the mainstream custom. */
   addBarchiNafshi: boolean;
+  /**
+   * True when a special-day psalm has REPLACED the weekday one, which is the
+   * Gra's practice. In the mainstream custom the weekday psalm is always said
+   * and Barchi Nafshi is merely added on Rosh Chodesh.
+   */
+  replacedWeekdayPsalm: boolean;
+}
+
+/**
+ * The Gra's special-day psalms, which REPLACE the weekday psalm rather than
+ * being added to it. Followed by many Ashkenazim in Eretz Yisrael, especially
+ * in Yerushalayim.
+ *
+ * Not exhaustive — the multi-day cycles for Pesach and Succos are omitted
+ * because the day-by-day assignment could not be confidently sourced. See
+ * docs/unverified-rules.md.
+ */
+function getGraSpecialPsalm(calendar: JewishCalendar): number | null {
+  // Precedence: Rosh Chodesh displaces Shabbos and Chanukah.
+  if (safeBool(() => calendar.isRoshChodesh())) return 104; // Barchi Nafshi
+  if (calendar.getDayOfWeek() === 7) return null; // Shabbos keeps Ps 92
+
+  switch (calendar.getYomTovIndex()) {
+    case JewishCalendar.ROSH_HASHANA:
+      return 81;
+    case JewishCalendar.YOM_KIPPUR:
+      return 32;
+    case JewishCalendar.SHEMINI_ATZERES:
+      return 12;
+    case JewishCalendar.SIMCHAS_TORAH:
+      return 8;
+    case JewishCalendar.PURIM:
+      return 22;
+    default:
+      break;
+  }
+
+  if (safeBool(() => calendar.isChanukah())) return 30;
+  return null;
 }
 
 export function getShirShelYom(
   calendar: JewishCalendar,
-  nusach: Nusach
+  nusach: Nusach,
+  minhag: Minhag = "standard"
 ): ShirShelYom {
   const dayOfWeek = calendar.getDayOfWeek();
+  const isRoshChodesh = safeBool(() => calendar.isRoshChodesh());
+
+  const graPsalm = minhag === "gra" ? getGraSpecialPsalm(calendar) : null;
+  const psalm = graPsalm ?? WEEKDAY_PSALM[dayOfWeek] ?? 0;
+
   return {
-    psalm: WEEKDAY_PSALM[dayOfWeek] ?? 0,
-    includesPsalm95: dayOfWeek === 4 && nusach !== "edot_hamizrach",
+    psalm,
+    // The Wednesday tail only applies when Wednesday's own psalm is being said.
+    includesPsalm95:
+      graPsalm === null && dayOfWeek === 4 && nusach !== "edot_hamizrach",
     afterAleinu: nusach === "ashkenaz",
-    addBarchiNafshi: safeBool(() => calendar.isRoshChodesh()),
+    // The Gra never says two psalms, so Barchi Nafshi is a replacement there
+    // rather than an addition.
+    addBarchiNafshi: minhag === "gra" ? false : isRoshChodesh,
+    replacedWeekdayPsalm: graPsalm !== null,
   };
 }
 
@@ -90,7 +140,11 @@ export interface Ldovid {
  * Rabba for Chabad per Siddur Admur HaZaken. Edot HaMizrach practice varies
  * widely and many do not say it at all — see docs/unverified-rules.md.
  */
-export function getLdovid(calendar: JewishCalendar, nusach: Nusach): Ldovid {
+export function getLdovid(
+  calendar: JewishCalendar,
+  nusach: Nusach,
+  minhag: Minhag = "standard"
+): Ldovid {
   const month = calendar.getJewishMonth();
   const day = calendar.getJewishDayOfMonth();
 
@@ -99,8 +153,11 @@ export function getLdovid(calendar: JewishCalendar, nusach: Nusach): Ldovid {
   const startsOn30Av = nusach === "ari";
   const inElul = month === 6 || (startsOn30Av && month === 5 && day === 30);
 
-  // Tishrei: through Hoshana Rabba (21) for Chabad, Shemini Atzeres (22) others.
-  const tishreiEnd = startsOn30Av ? 21 : 22;
+  // The end date is a genuine three-way machlokes. Chabad and the Eretz Yisrael
+  // custom finish at Hoshana Rabba (21 Tishrei); Diaspora Ashkenaz continues
+  // through Shemini Atzeres (22).
+  const endsAtHoshanaRabba = startsOn30Av || minhag === "gra";
+  const tishreiEnd = endsAtHoshanaRabba ? 21 : 22;
   const inTishrei = month === 7 && day <= tishreiEnd;
 
   const said = (inElul || inTishrei) && nusach !== "edot_hamizrach";

@@ -1,6 +1,6 @@
 import { JewishCalendar } from "kosher-zmanim";
 import type { InsertionContext } from "../data/types";
-import type { Nusach } from "../stores/useSettingsStore";
+import type { Minhag, Nusach } from "../stores/useSettingsStore";
 import {
   getJewishCalendar,
   type HebrewDateOptions,
@@ -56,7 +56,8 @@ export function getDayDaveningInfo(
   context: InsertionContext,
   date: Date = new Date(),
   options: HebrewDateOptions = DEFAULT_HEBREW_DATE_OPTIONS,
-  nusach: Nusach = "ashkenaz"
+  nusach: Nusach = "ashkenaz",
+  minhag: Minhag = "standard"
 ): DayDaveningInfo {
   const calendar = getJewishCalendar(date, options);
 
@@ -109,8 +110,8 @@ export function getDayDaveningInfo(
     hallelBracha: R.saysHallelBracha(nusach),
     sayTachanun,
 
-    shirShelYom: R.getShirShelYom(calendar, nusach),
-    ldovid: R.getLdovid(calendar, nusach),
+    shirShelYom: R.getShirShelYom(calendar, nusach, minhag),
+    ldovid: R.getLdovid(calendar, nusach, minhag),
     tzidkascha: R.getTzidkascha(calendar, nusach, tachanunDay),
     pirkeiAvos: R.getPirkeiAvos(calendar, nusach),
     bircasHaChodesh: R.getBircasHaChodesh(date, options),
