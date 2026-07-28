@@ -268,8 +268,18 @@ export default function SettingsTab() {
         <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 8 }}>
           About
         </Text>
+        {/*
+          CC BY requires crediting the originator of the text, not the
+          distributor. Sefaria distributes it; Metsudah and Daat are the
+          licensors. See docs/text-licenses.md.
+        */}
         <Text style={{ fontSize: 13, color: colors.textMuted }}>
-          Texts provided by Sefaria (sefaria.org)
+          Hebrew text: The Metsudah Siddur (Avrohom Davis), licensed CC BY, and
+          Daat Siddur Ashkenaz (public domain). Nusach Sefard text: Torat Emet,
+          licensed CC BY-NC-SA — used here under its non-commercial terms.
+        </Text>
+        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
+          Texts distributed via Sefaria (sefaria.org)
         </Text>
         <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
           Zmanim powered by KosherJava/KosherZmanim
