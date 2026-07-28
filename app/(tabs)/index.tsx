@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
@@ -8,6 +9,7 @@ import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { getTefilosForTime } from "../../src/data/prayers";
+import { hasContent } from "../../src/utils/tefilaContent";
 import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
@@ -19,12 +21,17 @@ export default function SiddurTab() {
   const { tefilaType, dayDavening } = useHebrewDate();
   const { nextZman, countdown } = useNextZman();
   const timeFormat = useSettingsStore((s) => s.timeFormat);
+  const nusach = useSettingsStore((s) => s.nusach);
   const timeZone = useLocationStore((s) => s.location?.timezone);
   const router = useRouter();
   const { colors } = useTheme();
 
-  const tefilosForTime = getTefilosForTime(
-    tefilaType === "none" ? "shacharis" : tefilaType
+  // getTefilosForTime also sweeps in every "anytime" tefila, which appended
+  // Birchas HaMazon and Bedtime Shema to the Shacharis flow. Restrict the
+  // daven flow to this slot, and drop tefilos with no text yet.
+  const slot = tefilaType === "none" ? "shacharis" : tefilaType;
+  const tefilosForTime = getTefilosForTime(slot).filter(
+    (t) => t.timeContext === slot && hasContent(t, nusach)
   );
 
   const mainCategories = TEFILA_CATEGORIES.filter((c) =>
@@ -177,10 +184,14 @@ export default function SiddurTab() {
                   borderBottomColor: colors.border,
                 }}
               >
-                <Text style={{ fontSize: 17, color: colors.text }}>
+                <Text style={{ fontSize: 17, color: colors.text, flex: 1 }}>
                   {category.name} - {category.nameHe}
                 </Text>
-                <Text style={{ fontSize: 16, color: colors.textMuted }}>›</Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={colors.textMuted}
+                />
               </TouchableOpacity>
             );
           })}
@@ -203,10 +214,14 @@ export default function SiddurTab() {
             paddingVertical: 16,
           }}
         >
-          <Text style={{ fontSize: 17, color: colors.primary }}>
+          <Text style={{ fontSize: 17, color: colors.primary, flex: 1 }}>
             כל התפילות - All Tefilos
           </Text>
-          <Text style={{ fontSize: 16, color: colors.textMuted }}>›</Text>
+          <Ionicons
+            name="chevron-forward"
+            size={18}
+            color={colors.textMuted}
+          />
         </TouchableOpacity>
 
         {/* Start davening shortcut */}
@@ -228,7 +243,7 @@ export default function SiddurTab() {
               paddingVertical: 16,
             }}
           >
-            <Text style={{ fontSize: 18, color: "#ffffff", fontWeight: "700" }}>
+            <Text style={{ fontSize: 18, color: colors.onAccent, fontWeight: "700" }}>
               התחל להתפלל - Start Davening
             </Text>
           </TouchableOpacity>

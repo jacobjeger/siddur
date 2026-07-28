@@ -114,7 +114,7 @@ function Chip({
         style={{
           fontSize: 14,
           fontWeight: "500",
-          color: selected ? "#ffffff" : colors.text,
+          color: selected ? colors.onPrimary : colors.text,
         }}
       >
         {label}
@@ -205,7 +205,14 @@ export function LocationSettings() {
                 <Text style={{ color: colors.text, marginLeft: 6, flex: 1 }}>
                   {manualLocation.name}
                 </Text>
-                <Pressable onPress={() => setManualLocation(null)}>
+                <Pressable
+                  onPress={() => setManualLocation(null)}
+                  accessibilityRole="button"
+                  accessibilityLabel="Clear manual location"
+                  // The icon alone is an ~18pt target; hitSlop brings the
+                  // touchable area up to roughly 44pt.
+                  hitSlop={{ top: 13, bottom: 13, left: 13, right: 13 }}
+                >
                   <Ionicons name="close" size={18} color={colors.textMuted} />
                 </Pressable>
               </View>
@@ -240,9 +247,9 @@ export function LocationSettings() {
                 }}
               >
                 {searching ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
+                  <ActivityIndicator size="small" color={colors.onPrimary} />
                 ) : (
-                  <Ionicons name="search" size={16} color="#ffffff" />
+                  <Ionicons name="search" size={16} color={colors.onPrimary} />
                 )}
               </Pressable>
             </View>

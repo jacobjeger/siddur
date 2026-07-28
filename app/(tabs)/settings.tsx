@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
 import { LocationSettings } from "../../src/components/settings/LocationSettings";
+import { ALL_TEFILOS } from "../../src/data/prayers";
 
 type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
 
@@ -14,6 +15,11 @@ const NUSACH_OPTIONS: { value: Nusach; label: string }[] = [
 ];
 
 const CANDLE_LIGHTING_OPTIONS = [18, 20, 22, 30, 40];
+
+/** No English exists in the corpus yet, so the toggle would be inert. */
+const HAS_TRANSLATIONS = ALL_TEFILOS.some((t) =>
+  t.sections.some((s) => Boolean(s.translation))
+);
 
 export default function SettingsTab() {
   const {
@@ -36,10 +42,13 @@ export default function SettingsTab() {
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingTop: insets.top, paddingBottom: 24 }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      {/* Dark band behind the light-styled status bar — see minyanim.tsx. */}
+      <View style={{ height: insets.top, backgroundColor: colors.headerBg }} />
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 24 }}
+      >
       {/* Nusach */}
       <View
         style={{
@@ -73,7 +82,7 @@ export default function SettingsTab() {
                 style={{
                   fontSize: 14,
                   fontWeight: "500",
-                  color: nusach === opt.value ? "#ffffff" : colors.text,
+                  color: nusach === opt.value ? colors.onPrimary : colors.text,
                 }}
               >
                 {opt.label}
@@ -143,12 +152,20 @@ export default function SettingsTab() {
           borderColor: colors.border,
         }}
       >
-        <SettingRow
-          label="Show English Translation"
-          value={showEnglish}
-          onToggle={setShowEnglish}
-          colors={colors}
-        />
+        {/*
+          Hidden while the dataset has no translations at all — a visible switch
+          that changes nothing reads as a broken setting. See
+          docs/remaining-text.md; Metsudah (CC BY) or the Sefaria Community
+          Translation (CC0) are the license-clean sources when English lands.
+        */}
+        {HAS_TRANSLATIONS && (
+          <SettingRow
+            label="Show English Translation"
+            value={showEnglish}
+            onToggle={setShowEnglish}
+            colors={colors}
+          />
+        )}
         <SettingRow
           label="Keep Screen On While Davening"
           value={keepScreenOn}
@@ -198,7 +215,7 @@ export default function SettingsTab() {
                   fontSize: 14,
                   fontWeight: "500",
                   textTransform: "capitalize",
-                  color: darkMode === mode ? "#ffffff" : colors.text,
+                  color: darkMode === mode ? colors.onPrimary : colors.text,
                 }}
               >
                 {mode}
@@ -244,7 +261,7 @@ export default function SettingsTab() {
                 style={{
                   fontSize: 14,
                   fontWeight: "500",
-                  color: candleLightingOffset === min ? "#ffffff" : colors.text,
+                  color: candleLightingOffset === min ? colors.onPrimary : colors.text,
                 }}
               >
                 {min}
@@ -293,7 +310,8 @@ export default function SettingsTab() {
           Minyan data from GoDaven.com
         </Text>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -326,7 +344,7 @@ function SettingRow({
         value={value}
         onValueChange={onToggle}
         trackColor={{ false: colors.border, true: colors.accent }}
-        thumbColor={value ? "#ffffff" : colors.surfaceSecondary}
+        thumbColor={value ? colors.onAccent : colors.surfaceSecondary}
       />
     </View>
   );

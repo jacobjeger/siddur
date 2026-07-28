@@ -181,9 +181,12 @@ export default function CalendarTab() {
 
   const d = hebrew.dayDavening;
   if (d.specialShabbos) {
+    // The map covers the nine known parshiyos; an unmapped key must not crash
+    // the whole tab, so fall back to the raw id.
+    const special = SPECIAL_SHABBOS_LABELS[d.specialShabbos];
     todayEvents.push({
-      label: `Shabbos ${SPECIAL_SHABBOS_LABELS[d.specialShabbos].en}`,
-      labelHe: `שבת ${SPECIAL_SHABBOS_LABELS[d.specialShabbos].he}`,
+      label: `Shabbos ${special?.en ?? d.specialShabbos}`,
+      labelHe: special ? `שבת ${special.he}` : "",
       icon: "bookmark",
     });
   }

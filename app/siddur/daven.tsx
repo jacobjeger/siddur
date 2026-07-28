@@ -248,7 +248,14 @@ export default function DavenScreen() {
               paddingVertical: 14,
             }}
           >
-            <Text style={{ color: "#ffffff", fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{
+                color: colors.onPrimary,
+                fontFamily: "NotoSerifHebrew-Regular",
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               סיום
             </Text>
           </TouchableOpacity>

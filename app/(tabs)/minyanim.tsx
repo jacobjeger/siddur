@@ -53,7 +53,7 @@ function FilterChip({
         style={{
           fontSize: 13,
           fontWeight: "500",
-          color: selected ? "#ffffff" : colors.text,
+          color: selected ? colors.onPrimary : colors.text,
         }}
       >
         {label}
@@ -127,14 +127,13 @@ export default function MinyanimTab() {
   });
 
   return (
-    // No navigator header on tabs, so the inset has to be reserved here.
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: colors.background,
-        paddingTop: insets.top,
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      {/*
+        The status bar is styled "light" app-wide, so the band behind it has to
+        be dark on every screen. This tab has no header of its own, and without
+        this the clock and battery were white-on-cream.
+      */}
+      <View style={{ height: insets.top, backgroundColor: colors.headerBg }} />
       <LocationDisplay />
 
       {!isLive && (
@@ -231,7 +230,7 @@ export default function MinyanimTab() {
               backgroundColor: colors.primary,
             }}
           >
-            <Text style={{ color: "#ffffff", fontWeight: "600" }}>Retry</Text>
+            <Text style={{ color: colors.onPrimary, fontWeight: "600" }}>Retry</Text>
           </Pressable>
         </CenteredMessage>
       ) : !data || data.length === 0 ? (
@@ -290,18 +289,17 @@ export default function MinyanimTab() {
                       ? ` · ${formatDistance(minyan.distanceKm, "mi")}`
                       : ""}
                   </Text>
-                  {next && (
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.textSecondary,
-                        marginTop: 4,
-                      }}
-                    >
-                      {SLOT_LABELS[next.slot]}{" "}
-                      {formatMinyanTime(next.time, timeFormat)}
-                    </Text>
-                  )}
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: next ? colors.textSecondary : colors.textMuted,
+                      marginTop: 4,
+                    }}
+                  >
+                    {next
+                      ? `${SLOT_LABELS[next.slot]} ${formatMinyanTime(next.time, timeFormat)}`
+                      : "Times unavailable"}
+                  </Text>
                 </View>
                 <Ionicons
                   name="chevron-forward"

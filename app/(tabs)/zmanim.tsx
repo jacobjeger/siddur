@@ -36,13 +36,9 @@ export default function ZmanimTab() {
 
   if (error || !zmanim) {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.background,
-          paddingTop: insets.top,
-        }}
-      >
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        {/* Dark band behind the light-styled status bar — see minyanim.tsx. */}
+        <View style={{ height: insets.top, backgroundColor: colors.headerBg }} />
         <LocationDisplay />
         <View
           style={{
