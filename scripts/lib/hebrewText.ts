@@ -73,7 +73,10 @@ const DIVINE_NAME_VARIANTS: [RegExp, string][] = [
 const HYPHENATED_NAME = /([א-ת][ְ-ׇ]*)‑(?=[א-ת])/g;
 
 export function normalizeHebrew(input: string): string {
-  let out = input;
+  // Hebrew points can be stored in different combining orders that render
+  // identically — dagesh-before-kamatz vs kamatz-before-dagesh. Naive string
+  // matching silently fails across that difference, so canonicalize first.
+  let out = input.normalize("NFC");
 
   for (const [form, replacement] of Object.entries(PRESENTATION_FORMS)) {
     if (out.includes(form)) out = out.split(form).join(replacement);
