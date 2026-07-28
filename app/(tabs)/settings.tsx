@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, Pressable, Switch } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
 import { LocationSettings } from "../../src/components/settings/LocationSettings";
@@ -32,9 +33,13 @@ export default function SettingsTab() {
     setCandleLightingOffset,
   } = useSettingsStore();
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.background }}
+      contentContainerStyle={{ paddingTop: insets.top, paddingBottom: 24 }}
+    >
       {/* Nusach */}
       <View
         style={{

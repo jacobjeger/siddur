@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-system-ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../src/hooks/useTheme";
 import { useKeepScreenOn } from "../src/hooks/useKeepScreenOn";
 
@@ -61,8 +62,13 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppStack />
-    </QueryClientProvider>
+    // Tabs run with headerShown: false and several screens draw their own
+    // header, so they need the real inset values rather than relying on a
+    // navigator to reserve space.
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppStack />
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 }

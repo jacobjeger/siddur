@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { View, Text, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
@@ -133,6 +134,7 @@ function InfoRow({
 
 export default function CalendarTab() {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const hebrew = useHebrewDate();
   const { zmanim } = useZmanim();
   const timeZone = useLocationStore((s) => s.location?.timezone);
@@ -233,7 +235,7 @@ export default function CalendarTab() {
         style={{
           backgroundColor: colors.headerBg,
           paddingHorizontal: 20,
-          paddingTop: 16,
+          paddingTop: insets.top + 16,
           paddingBottom: 20,
           alignItems: "center",
         }}

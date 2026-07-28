@@ -8,6 +8,7 @@ import {
   Linking,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
@@ -111,6 +112,7 @@ function CenteredMessage({
 
 export default function MinyanimTab() {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
@@ -125,7 +127,14 @@ export default function MinyanimTab() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    // No navigator header on tabs, so the inset has to be reserved here.
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.background,
+        paddingTop: insets.top,
+      }}
+    >
       <LocationDisplay />
 
       {!isLive && (

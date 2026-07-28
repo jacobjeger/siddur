@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Modal, FlatList } from "react
 import { useLocalSearchParams, Stack } from "expo-router";
 import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
+import { SectionBody } from "../../src/components/common/SectionBody";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { assemblePrayer } from "../../src/utils/prayerAssembler";
@@ -157,18 +158,12 @@ export default function TefilaScreen() {
             )}
 
 
-            <Text
-              style={{
-                fontFamily: "NotoSerifHebrew-Regular",
-                fontSize: textSize,
-                lineHeight: textSize * 2,
-                color: colors.text,
-                writingDirection: "rtl",
-                textAlign: "right",
-              }}
-            >
-              {getTextForNusach(section.text, nusach)}
-            </Text>
+            <SectionBody
+              text={getTextForNusach(section.text, nusach)}
+              instruction={section.instruction}
+              instructionHe={section.instructionHe}
+              textSize={textSize}
+            />
 
             {showEnglish && section.translation && (
               <View

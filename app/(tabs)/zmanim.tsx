@@ -1,4 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
@@ -25,6 +26,7 @@ export default function ZmanimTab() {
   const location = useLocationStore((s) => s.location);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
 
   const timeZone = location?.timezone;
 
@@ -34,7 +36,13 @@ export default function ZmanimTab() {
 
   if (error || !zmanim) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.background,
+          paddingTop: insets.top,
+        }}
+      >
         <LocationDisplay />
         <View
           style={{
