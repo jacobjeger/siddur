@@ -1,11 +1,15 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, Stack, useLocalSearchParams } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { HebrewText } from "../../src/components/common/HebrewText";
+import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 import { useTheme } from "../../src/hooks/useTheme";
 
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
+  const textSize = useSettingsStore((s) => s.textSize);
   const router = useRouter();
   const { category } = useLocalSearchParams<{ category?: string }>();
 
@@ -77,15 +81,73 @@ export default function BrowseTefilosScreen() {
                       borderBottomColor: colors.border,
                     }}
                   >
-                    <Text style={{ fontSize: 17, color: colors.text }}>
-                      {tefila.name} - {tefila.nameHe}
-                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <Text
+                        style={{ fontSize: textSize - 5, color: colors.text }}
+                        numberOfLines={1}
+                      >
+                        {tefila.name}
+                      </Text>
+                      <HebrewText
+                        style={{
+                          fontSize: textSize - 5,
+                          color: colors.textSecondary,
+                          flexShrink: 1,
+                        }}
+                        numberOfLines={1}
+                      >
+                        {tefila.nameHe}
+                      </HebrewText>
+                    </View>
                   </TouchableOpacity>
                 ))}
               </View>
             </View>
           );
         })}
+        {categoriesToShow.every(
+          (cat) => getTefilosByCategory(cat.id).length === 0
+        ) && (
+          <View
+            style={{
+              alignItems: "center",
+              paddingHorizontal: 32,
+              paddingVertical: 64,
+            }}
+          >
+            <Ionicons
+              name="book-outline"
+              size={40}
+              color={colors.textMuted}
+            />
+            <Text
+              style={{
+                color: colors.text,
+                fontSize: 16,
+                fontWeight: "600",
+                marginTop: 10,
+                textAlign: "center",
+              }}
+            >
+              Nothing here yet
+            </Text>
+            <Text
+              style={{
+                color: colors.textSecondary,
+                marginTop: 4,
+                textAlign: "center",
+              }}
+            >
+              This category has no tefilos available.
+            </Text>
+          </View>
+        )}
         <View style={{ height: 32 }} />
       </ScrollView>
     </>

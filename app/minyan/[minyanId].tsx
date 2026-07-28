@@ -30,7 +30,7 @@ export default function MinyanDetailScreen() {
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner message="Loading minyan..." />;
   }
 
   if (isError || !minyan) {
@@ -91,6 +91,8 @@ export default function MinyanDetailScreen() {
       {minyan.address ? (
         <Pressable
           onPress={openMaps}
+          accessibilityRole="button"
+          accessibilityLabel={`Open ${minyan.address} in maps`}
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -117,6 +119,8 @@ export default function MinyanDetailScreen() {
       {minyan.phone ? (
         <Pressable
           onPress={() => Linking.openURL(`tel:${minyan.phone}`)}
+          accessibilityRole="button"
+          accessibilityLabel={`Call ${minyan.phone}`}
           style={{
             flexDirection: "row",
             alignItems: "center",

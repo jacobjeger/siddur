@@ -26,7 +26,6 @@ export type LuachId =
   | "rav_moshe"
   | "roy"
   | "custom";
-export type FontFamily = "NotoSerifHebrew";
 export type DarkMode = "on" | "off" | "system";
 export type TimeFormat = "12h" | "24h";
 export type HavdalaMethod = "72min" | "42min" | "8.5deg";
@@ -38,7 +37,6 @@ interface SettingsState {
   minhag: Minhag;
   luachId: LuachId;
   textSize: number;
-  fontFamily: FontFamily;
   showEnglish: boolean;
   darkMode: DarkMode;
   locationMode: "auto" | "manual";
@@ -65,7 +63,6 @@ interface SettingsState {
   setMinhag: (minhag: Minhag) => void;
   setLuachId: (luachId: LuachId) => void;
   setTextSize: (size: number) => void;
-  setFontFamily: (font: FontFamily) => void;
   setShowEnglish: (show: boolean) => void;
   setDarkMode: (mode: DarkMode) => void;
   setLocationMode: (mode: "auto" | "manual") => void;
@@ -89,7 +86,6 @@ export const useSettingsStore = create<SettingsState>()(
       minhag: "standard",
       luachId: "standard",
       textSize: 22,
-      fontFamily: "NotoSerifHebrew",
       showEnglish: false,
       darkMode: "off",
       locationMode: "auto",
@@ -107,7 +103,6 @@ export const useSettingsStore = create<SettingsState>()(
       setMinhag: (minhag) => set({ minhag }),
       setLuachId: (luachId) => set({ luachId }),
       setTextSize: (textSize) => set({ textSize }),
-      setFontFamily: (fontFamily) => set({ fontFamily }),
       setShowEnglish: (showEnglish) => set({ showEnglish }),
       setDarkMode: (darkMode) => set({ darkMode }),
       setLocationMode: (locationMode) => set({ locationMode }),

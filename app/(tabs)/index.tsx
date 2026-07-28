@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { HebrewText } from "../../src/components/common/HebrewText";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
@@ -8,6 +9,7 @@ import { useNextZman } from "../../src/hooks/useNextZman";
 import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
+import { radius } from "../../src/theme/tokens";
 import { getTefilosForTime } from "../../src/data/prayers";
 import { hasContent } from "../../src/utils/tefilaContent";
 import { ZMAN_NAMES } from "../../src/utils/constants";
@@ -60,9 +62,21 @@ export default function SiddurTab() {
               borderColor: colors.border,
             }}
           >
-            <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 4 }}>
-              הזמן הבא - Next Zman
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 6,
+                marginBottom: 4,
+              }}
+            >
+              <HebrewText style={{ fontSize: 13, color: colors.textMuted }}>
+                הזמן הבא
+              </HebrewText>
+              <Text style={{ fontSize: 13, color: colors.textMuted }}>
+                Next Zman
+              </Text>
+            </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
               <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
                 {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
@@ -93,11 +107,21 @@ export default function SiddurTab() {
               borderColor: colors.border,
             }}
           >
-            <Text
-              style={{ fontSize: 13, color: colors.textMuted, marginBottom: 8 }}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 6,
+                marginBottom: 8,
+              }}
             >
-              היום - Today
-            </Text>
+              <HebrewText style={{ fontSize: 13, color: colors.textMuted }}>
+                היום
+              </HebrewText>
+              <Text style={{ fontSize: 13, color: colors.textMuted }}>
+                Today
+              </Text>
+            </View>
 
             {dayDavening.specialDayLabel ? (
               <Text
@@ -131,7 +155,7 @@ export default function SiddurTab() {
                   style={{
                     paddingHorizontal: 8,
                     paddingVertical: 4,
-                    borderRadius: 6,
+                    borderRadius: radius.sm,
                     backgroundColor: colors.primaryLight,
                     borderWidth: 1,
                     borderColor: colors.border,
@@ -163,6 +187,8 @@ export default function SiddurTab() {
             return (
               <TouchableOpacity
                 key={category.id}
+                accessibilityRole="button"
+                accessibilityLabel={`${category.name} — ${tefilos.length} tefilos`}
                 onPress={() => {
                   if (tefilos.length === 1) {
                     router.push(`/siddur/${tefilos[0].id}`);
@@ -184,9 +210,27 @@ export default function SiddurTab() {
                   borderBottomColor: colors.border,
                 }}
               >
-                <Text style={{ fontSize: 17, color: colors.text, flex: 1 }}>
-                  {category.name} - {category.nameHe}
-                </Text>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 17, color: colors.text }}
+                    numberOfLines={1}
+                  >
+                    {category.name}
+                  </Text>
+                  <HebrewText
+                    style={{ fontSize: 17, color: colors.textSecondary, flexShrink: 1 }}
+                    numberOfLines={1}
+                  >
+                    {category.nameHe}
+                  </HebrewText>
+                </View>
                 <Ionicons
                   name="chevron-forward"
                   size={18}
@@ -200,6 +244,8 @@ export default function SiddurTab() {
         {/* Browse all */}
         <TouchableOpacity
           onPress={() => router.push("/siddur/browse")}
+          accessibilityRole="button"
+          accessibilityLabel="Browse all tefilos"
           activeOpacity={0.6}
           style={{
             flexDirection: "row",
@@ -214,9 +260,16 @@ export default function SiddurTab() {
             paddingVertical: 16,
           }}
         >
-          <Text style={{ fontSize: 17, color: colors.primary, flex: 1 }}>
-            כל התפילות - All Tefilos
-          </Text>
+          <View
+            style={{ flex: 1, flexDirection: "row", alignItems: "center", gap: 8 }}
+          >
+            <Text style={{ fontSize: 17, color: colors.primary }}>
+              All Tefilos
+            </Text>
+            <HebrewText style={{ fontSize: 17, color: colors.primary }}>
+              כל התפילות
+            </HebrewText>
+          </View>
           <Ionicons
             name="chevron-forward"
             size={18}
@@ -243,9 +296,19 @@ export default function SiddurTab() {
               paddingVertical: 16,
             }}
           >
-            <Text style={{ fontSize: 18, color: colors.onAccent, fontWeight: "700" }}>
-              התחל להתפלל - Start Davening
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <Text
+                style={{ fontSize: 18, color: colors.onAccent, fontWeight: "700" }}
+              >
+                Start Davening
+              </Text>
+              <HebrewText
+                bold
+                style={{ fontSize: 18, color: colors.onAccent }}
+              >
+                התחל להתפלל
+              </HebrewText>
+            </View>
           </TouchableOpacity>
         )}
       </ScrollView>

@@ -1,7 +1,8 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
+import { HebrewText } from "../../src/components/common/HebrewText";
 import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useZmanim } from "../../src/hooks/useZmanim";
@@ -21,7 +22,7 @@ import {
 } from "../../src/utils/timeFormatting";
 
 export default function ZmanimTab() {
-  const { zmanim, loading, error } = useZmanim();
+  const { zmanim, loading, error, refresh } = useZmanim();
   const { nextZman, countdown } = useNextZman();
   const location = useLocationStore((s) => s.location);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
@@ -30,8 +31,17 @@ export default function ZmanimTab() {
 
   const timeZone = location?.timezone;
 
+  // Previously this replaced the ENTIRE tab, so the header and location bar
+  // vanished and the layout jumped on every cold load — and the top of the
+  // screen went light behind a light-styled status bar.
   if (loading) {
-    return <LoadingSpinner message="Loading zmanim..." />;
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        <HebrewDateHeader />
+        <LocationDisplay />
+        <LoadingSpinner message="Loading zmanim..." />
+      </View>
+    );
   }
 
   if (error || !zmanim) {
@@ -143,7 +153,16 @@ export default function ZmanimTab() {
         </View>
       )}
 
-      <ScrollView style={{ flex: 1, paddingHorizontal: 16, paddingTop: 8 }}>
+      <ScrollView
+        style={{ flex: 1, paddingHorizontal: 16, paddingTop: 8 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={refresh}
+            tintColor={colors.primary}
+          />
+        }
+      >
         {(Object.keys(groups) as ZmanGroup[]).map((group) =>
           groups[group].length === 0 ? null : (
             <View key={group} style={{ marginBottom: 8 }}>
@@ -173,7 +192,7 @@ export default function ZmanimTab() {
                     borderBottomColor: colors.border,
                   }}
                 >
-                  <View>
+                  <View style={{ flex: 1, paddingRight: 12 }}>
                     <Text
                       style={{
                         fontSize: 16,
@@ -183,15 +202,11 @@ export default function ZmanimTab() {
                     >
                       {ZMAN_NAMES[key]?.en ?? key}
                     </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.textMuted,
-                        fontFamily: "NotoSerifHebrew-Regular",
-                      }}
+                    <HebrewText
+                      style={{ fontSize: 14, color: colors.textMuted }}
                     >
                       {ZMAN_NAMES[key]?.he ?? ""}
-                    </Text>
+                    </HebrewText>
                   </View>
                   <Text
                     style={{

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RefreshControl } from "react-native";
 import {
   View,
   Text,
@@ -13,7 +14,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
+import { radius } from "../../src/theme/tokens";
+import { Chip } from "../../src/components/common/ui";
 import { useMinyanim } from "../../src/hooks/useMinyanim";
+import { useDebounced } from "../../src/hooks/useDebounced";
 import {
   useSettingsStore,
   type Nusach,
@@ -25,42 +29,6 @@ import type { TefilaSlot } from "../../src/services/minyanim/types";
 
 const SLOTS: TefilaSlot[] = ["shacharis", "mincha", "maariv"];
 const NUSACHIM: Nusach[] = ["ashkenaz", "sefard", "edot_hamizrach", "ari"];
-
-function FilterChip({
-  label,
-  selected,
-  onPress,
-  colors,
-}: {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-  colors: ThemeColors;
-}) {
-  return (
-    <Pressable
-      onPress={onPress}
-      style={{
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 16,
-        borderWidth: 1,
-        backgroundColor: selected ? colors.primary : colors.surface,
-        borderColor: selected ? colors.primary : colors.border,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 13,
-          fontWeight: "500",
-          color: selected ? colors.onPrimary : colors.text,
-        }}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
-}
 
 function CenteredMessage({
   icon,
@@ -120,11 +88,10 @@ export default function MinyanimTab() {
   const [nusach, setNusach] = useState<Nusach | null>(null);
   const [slot, setSlot] = useState<TefilaSlot | null>(null);
 
-  const { data, isLoading, isError, error, refetch, isLive } = useMinyanim({
-    search,
-    nusach,
-    slot,
-  });
+  // Debounced so typing does not fire one query per keystroke.
+  const debouncedSearch = useDebounced(search);
+  const { data, isLoading, isError, error, refetch, isLive, isFetching } =
+    useMinyanim({ search: debouncedSearch, nusach, slot });
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -142,7 +109,7 @@ export default function MinyanimTab() {
             marginHorizontal: 16,
             marginTop: 12,
             padding: 12,
-            borderRadius: 10,
+            borderRadius: radius.md,
             backgroundColor: colors.primaryLight,
             borderWidth: 1,
             borderColor: colors.border,
@@ -177,7 +144,7 @@ export default function MinyanimTab() {
           style={{
             borderWidth: 1,
             borderColor: colors.border,
-            borderRadius: 10,
+            borderRadius: radius.md,
             paddingHorizontal: 12,
             paddingVertical: 9,
             color: colors.text,
@@ -187,25 +154,27 @@ export default function MinyanimTab() {
 
         <ScrollView
           horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 8, paddingVertical: 10 }}
+          // Indicator left on: with 7 chips the nusach filters scroll off-screen
+          // on a narrow phone and there was no hint they existed.
+          showsHorizontalScrollIndicator
+          contentContainerStyle={{ gap: 8, paddingVertical: 10, paddingRight: 8 }}
         >
           {SLOTS.map((s) => (
-            <FilterChip
+            <Chip
               key={s}
+              pill
               label={SLOT_LABELS[s]}
               selected={slot === s}
               onPress={() => setSlot(slot === s ? null : s)}
-              colors={colors}
             />
           ))}
           {NUSACHIM.map((n) => (
-            <FilterChip
+            <Chip
               key={n}
+              pill
               label={NUSACH_LABELS[n] ?? n}
               selected={nusach === n}
               onPress={() => setNusach(nusach === n ? null : n)}
-              colors={colors}
             />
           ))}
         </ScrollView>
@@ -222,6 +191,8 @@ export default function MinyanimTab() {
         >
           <Pressable
             onPress={() => refetch()}
+            accessibilityRole="button"
+            accessibilityLabel="Retry loading minyanim"
             style={{
               marginTop: 14,
               paddingHorizontal: 18,
@@ -244,6 +215,13 @@ export default function MinyanimTab() {
         <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching && !isLoading}
+              onRefresh={refetch}
+              tintColor={colors.primary}
+            />
+          }
         >
           {data.map((minyan) => {
             const next = slot
@@ -254,6 +232,8 @@ export default function MinyanimTab() {
               <Pressable
                 key={minyan.id}
                 onPress={() => router.push(`/minyan/${minyan.id}`)}
+                accessibilityRole="button"
+                accessibilityLabel={`${minyan.name}, ${minyan.address}`}
                 style={({ pressed }) => ({
                   backgroundColor: pressed
                     ? colors.surfaceSecondary
@@ -312,6 +292,8 @@ export default function MinyanimTab() {
 
           <Pressable
             onPress={() => Linking.openURL("https://www.godaven.com")}
+            accessibilityRole="link"
+            accessibilityLabel="Browse more minyanim on GoDaven.com"
             style={{ marginTop: 8, paddingVertical: 12, alignItems: "center" }}
           >
             <Text style={{ color: colors.primary, fontSize: 14 }}>

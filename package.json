@@ -35,12 +35,10 @@
     "expo-task-manager": "~55.0.9",
     "kosher-zmanim": "^0.9.0",
     "luxon": "^1.28.1",
-    "nativewind": "^4.2.2",
     "react": "^19.2.4",
     "react-native": "0.83.2",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.23.0",
-    "tailwindcss": "^3.4.19",
     "tz-lookup": "^6.1.25",
     "zustand": "^5.0.11"
   },

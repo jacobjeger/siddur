@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { AppState } from "react-native";
 import { getZmanimForDate } from "../services/zmanim/zmanimService";
 import { useLocationStore } from "../stores/useLocationStore";
@@ -12,6 +12,8 @@ interface UseZmanimResult {
   zmanim: ZmanimData | null;
   loading: boolean;
   error: string | null;
+  /** Re-resolve the location and recompute. Drives pull-to-refresh. */
+  refresh: () => void;
 }
 
 /**
@@ -157,9 +159,15 @@ export function useZmanim(date?: Date): UseZmanimResult {
     setError,
   ]);
 
+  const refresh = useCallback(() => {
+    inFlightLocation = null;
+    useLocationStore.getState().clearLocation();
+  }, []);
+
   return {
     zmanim,
     loading: loading && !location,
     error,
+    refresh,
   };
 }

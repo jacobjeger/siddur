@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
@@ -7,7 +7,10 @@ import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { useZmanim } from "../../src/hooks/useZmanim";
 import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
-import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
+import { useTheme } from "../../src/hooks/useTheme";
+import { Card, InfoRow } from "../../src/components/common/ui";
+import { HebrewText } from "../../src/components/common/HebrewText";
+import { radius } from "../../src/theme/tokens";
 import {
   getUpcomingEvents,
   getMolad,
@@ -46,102 +49,18 @@ const DAY_NAMES_HE = [
   "שבת",
 ];
 
-function Card({
-  icon,
-  title,
-  colors,
-  children,
-}: {
-  icon: keyof typeof Ionicons.glyphMap;
-  title: string;
-  colors: ThemeColors;
-  children: React.ReactNode;
-}) {
-  return (
-    <View
-      style={{
-        backgroundColor: colors.surface,
-        borderRadius: 14,
-        borderWidth: 1,
-        borderColor: colors.border,
-        padding: 16,
-        marginBottom: 16,
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 10,
-        }}
-      >
-        <Ionicons name={icon} size={18} color={colors.accent} />
-        <Text
-          style={{
-            fontSize: 13,
-            fontWeight: "600",
-            color: colors.textMuted,
-            textTransform: "uppercase",
-            letterSpacing: 0.5,
-            marginLeft: 8,
-          }}
-        >
-          {title}
-        </Text>
-      </View>
-      {children}
-    </View>
-  );
-}
-
-function InfoRow({
-  label,
-  value,
-  colors,
-  isLast,
-}: {
-  label: string;
-  value: string;
-  colors: ThemeColors;
-  isLast?: boolean;
-}) {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingVertical: 9,
-        borderBottomWidth: isLast ? 0 : 1,
-        borderBottomColor: colors.border,
-      }}
-    >
-      <Text style={{ fontSize: 15, color: colors.textSecondary }}>{label}</Text>
-      <Text
-        style={{
-          fontSize: 15,
-          fontWeight: "600",
-          color: colors.text,
-          flexShrink: 1,
-          textAlign: "right",
-        }}
-      >
-        {value}
-      </Text>
-    </View>
-  );
-}
-
 export default function CalendarTab() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const hebrew = useHebrewDate();
-  const { zmanim } = useZmanim();
+  const { zmanim, refresh } = useZmanim();
   const timeZone = useLocationStore((s) => s.location?.timezone);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
-  const now = new Date();
-  const dayIndex = now.getDay();
+  // `hebrew` already re-derives at midnight (useZmanim drives it off an
+  // AppState + interval day key), so deriving the day index from it keeps this
+  // screen from freezing at whatever date it happened to mount on.
+  const dayIndex = new Date().getDay();
 
   const upcoming = useMemo(
     () => getUpcomingEvents(new Date(), hebrew.options),
@@ -152,85 +71,72 @@ export default function CalendarTab() {
     [hebrew.options]
   );
 
-  const todayEvents: { label: string; labelHe: string; icon: keyof typeof Ionicons.glyphMap }[] =
-    [];
-  if (hebrew.specialDay) {
-    todayEvents.push({
-      label: hebrew.specialDay,
-      labelHe: hebrew.dayDavening.specialDayLabelHe,
-      icon: "star",
-    });
-  }
-  if (hebrew.isRoshChodesh && !hebrew.specialDay) {
-    todayEvents.push({
-      label: "Rosh Chodesh",
-      labelHe: "ראש חודש",
-      icon: "moon",
-    });
-  }
-  if (hebrew.omerDay > 0) {
-    todayEvents.push({
-      label: `Sefiras HaOmer — Day ${hebrew.omerDay}`,
-      labelHe: `ספירת העומר — יום ${toHebrewNumeral(hebrew.omerDay)}`,
-      icon: "leaf",
-    });
-  }
-  if (hebrew.isFastDay) {
-    todayEvents.push({ label: "Fast Day", labelHe: "יום צום", icon: "water" });
-  }
-
   const d = hebrew.dayDavening;
-  if (d.specialShabbos) {
-    // The map covers the nine known parshiyos; an unmapped key must not crash
-    // the whole tab, so fall back to the raw id.
-    const special = SPECIAL_SHABBOS_LABELS[d.specialShabbos];
-    todayEvents.push({
-      label: `Shabbos ${special?.en ?? d.specialShabbos}`,
-      labelHe: special ? `שבת ${special.he}` : "",
-      icon: "bookmark",
-    });
-  }
-  if (d.isYizkor) {
-    todayEvents.push({ label: "Yizkor", labelHe: "יזכור", icon: "flower" });
-  }
-  if (d.bircasHaChodesh.said) {
-    todayEvents.push({
-      label: "Bircas HaChodesh",
-      labelHe: "ברכת החודש",
-      icon: "moon",
-    });
-  }
-  if (d.isBaHab) {
-    todayEvents.push({ label: "Ba'Hab", labelHe: 'בה"ב', icon: "water" });
-  }
-  if (d.isYomKippurKatan) {
-    todayEvents.push({
-      label: "Yom Kippur Katan",
-      labelHe: "יום כיפור קטן",
-      icon: "moon",
-    });
-  }
-  if (d.isEruvTavshilin) {
-    todayEvents.push({
-      label: "Eruv Tavshilin",
-      labelHe: "עירוב תבשילין",
-      icon: "restaurant",
-    });
-  }
-  if (d.isBedikasChometzNight) {
-    todayEvents.push({
-      label: "Bedikas Chometz tonight",
-      labelHe: "בדיקת חמץ",
-      icon: "flashlight",
-    });
-  }
-  if (d.isTaanisBechoros) {
-    todayEvents.push({
-      label: "Taanis Bechoros",
-      labelHe: "תענית בכורות",
-      icon: "water",
-    });
-  }
+
+  // Previously ~76 lines of imperative pushes in the render body, re-running on
+  // every render.
+  const todayEvents = useMemo(() => {
+    const events: {
+      label: string;
+      labelHe: string;
+      icon: keyof typeof Ionicons.glyphMap;
+    }[] = [];
+    const add = (
+      when: boolean,
+      label: string,
+      labelHe: string,
+      icon: keyof typeof Ionicons.glyphMap
+    ) => {
+      if (when) events.push({ label, labelHe, icon });
+    };
+
+    add(
+      Boolean(hebrew.specialDay),
+      hebrew.specialDay,
+      d.specialDayLabelHe,
+      "star"
+    );
+    add(
+      hebrew.isRoshChodesh && !hebrew.specialDay,
+      "Rosh Chodesh",
+      "ראש חודש",
+      "moon"
+    );
+    add(
+      hebrew.omerDay > 0,
+      `Sefiras HaOmer — Day ${hebrew.omerDay}`,
+      `ספירת העומר — יום ${toHebrewNumeral(hebrew.omerDay)}`,
+      "leaf"
+    );
+    add(hebrew.isFastDay, "Fast Day", "יום צום", "water");
+
+    if (d.specialShabbos) {
+      // The map covers the nine known parshiyos; an unmapped key must not
+      // crash the tab, so fall back to the raw id.
+      const special = SPECIAL_SHABBOS_LABELS[d.specialShabbos];
+      add(
+        true,
+        `Shabbos ${special?.en ?? d.specialShabbos}`,
+        special ? `שבת ${special.he}` : "",
+        "bookmark"
+      );
+    }
+
+    add(d.isYizkor, "Yizkor", "יזכור", "flower");
+    add(d.bircasHaChodesh.said, "Bircas HaChodesh", "ברכת החודש", "moon");
+    add(d.isBaHab, "Ba'Hab", 'בה"ב', "water");
+    add(d.isYomKippurKatan, "Yom Kippur Katan", "יום כיפור קטן", "moon");
+    add(d.isEruvTavshilin, "Eruv Tavshilin", "עירוב תבשילין", "restaurant");
+    add(
+      d.isBedikasChometzNight,
+      "Bedikas Chometz tonight",
+      "בדיקת חמץ",
+      "flashlight"
+    );
+    add(d.isTaanisBechoros, "Taanis Bechoros", "תענית בכורות", "water");
+
+    return events;
+  }, [hebrew, d]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -243,21 +149,29 @@ export default function CalendarTab() {
           alignItems: "center",
         }}
       >
-        <Text
-          style={{
-            fontFamily: "NotoSerifHebrew-Bold",
-            fontSize: 26,
-            color: "#ffffff",
-            textAlign: "center",
-          }}
+        <HebrewText
+          bold
+          style={{ fontSize: 26, color: "#ffffff", textAlign: "center" }}
         >
           {hebrew.hebrewDate}
-        </Text>
-        <Text
-          style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", marginTop: 6 }}
+        </HebrewText>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 8,
+            marginTop: 6,
+          }}
         >
-          {DAY_NAMES[dayIndex]} — {DAY_NAMES_HE[dayIndex]}
-        </Text>
+          <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
+            {DAY_NAMES[dayIndex]}
+          </Text>
+          <HebrewText
+            style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}
+          >
+            {DAY_NAMES_HE[dayIndex]}
+          </HebrewText>
+        </View>
       </View>
 
       <LocationDisplay />
@@ -265,12 +179,18 @@ export default function CalendarTab() {
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={refresh}
+            tintColor={colors.primary}
+          />
+        }
       >
         {(hebrew.parsha || hebrew.upcomingParsha) && (
           <Card
             icon="book-outline"
             title={hebrew.parsha ? "This Week's Parsha" : "Upcoming Parsha"}
-            colors={colors}
           >
             <Text
               style={{ fontSize: 20, fontWeight: "700", color: colors.text }}
@@ -281,7 +201,7 @@ export default function CalendarTab() {
         )}
 
         {todayEvents.length > 0 && (
-          <Card icon="today-outline" title="Today" colors={colors}>
+          <Card icon="today-outline" title="Today">
             {todayEvents.map((event, i) => (
               <View
                 key={event.label}
@@ -316,15 +236,11 @@ export default function CalendarTab() {
                     {event.label}
                   </Text>
                   {event.labelHe ? (
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.accent,
-                        fontFamily: "NotoSerifHebrew-Regular",
-                      }}
+                    <HebrewText
+                      style={{ fontSize: 14, color: colors.accent }}
                     >
                       {event.labelHe}
-                    </Text>
+                    </HebrewText>
                   ) : null}
                 </View>
               </View>
@@ -332,14 +248,13 @@ export default function CalendarTab() {
           </Card>
         )}
 
-        <Card icon="information-circle-outline" title="Details" colors={colors}>
+        <Card icon="information-circle-outline" title="Details">
           <InfoRow
             label="Hebrew date"
             value={hebrew.englishDate}
-            colors={colors}
           />
           {hebrew.dafYomi ? (
-            <InfoRow label="Daf Yomi" value={hebrew.dafYomi} colors={colors} />
+            <InfoRow label="Daf Yomi" value={hebrew.dafYomi} />
           ) : null}
           <InfoRow
             label="Hallel"
@@ -350,12 +265,10 @@ export default function CalendarTab() {
                   ? "Full Hallel"
                   : "Half Hallel"
             }
-            colors={colors}
           />
           <InfoRow
             label="Tachanun"
             value={d.sayTachanun ? "Said" : "Not said"}
-            colors={colors}
           />
           {d.shirShelYom.psalm > 0 && (
             <InfoRow
@@ -363,7 +276,6 @@ export default function CalendarTab() {
               value={`Tehillim ${d.shirShelYom.psalm}${
                 d.shirShelYom.includesPsalm95 ? " + 95:1–3" : ""
               }${d.shirShelYom.addBarchiNafshi ? " + Barchi Nafshi" : ""}`}
-              colors={colors}
             />
           )}
           {d.ldovid.said && (
@@ -372,24 +284,22 @@ export default function CalendarTab() {
               value={d.ldovid.tefillos
                 .map((t) => t[0].toUpperCase() + t.slice(1))
                 .join(" & ")}
-              colors={colors}
             />
           )}
           {d.pirkeiAvos.said && (
             <InfoRow
               label="Pirkei Avos"
               value={`Chapter ${d.pirkeiAvos.chapter}`}
-              colors={colors}
             />
           )}
           {d.tzidkascha.said && (
-            <InfoRow label="Tzidkascha" value="Said at Mincha" colors={colors} />
+            <InfoRow label="Tzidkascha" value="Said at Mincha" />
           )}
           {d.isAvHaRachamim && (
-            <InfoRow label="Av HaRachamim" value="Said" colors={colors} />
+            <InfoRow label="Av HaRachamim" value="Said" />
           )}
           {d.isAvinuMalkeinu && (
-            <InfoRow label="Avinu Malkeinu" value="Said" colors={colors} />
+            <InfoRow label="Avinu Malkeinu" value="Said" />
           )}
           <InfoRow
             label="Molad"
@@ -406,30 +316,20 @@ export default function CalendarTab() {
                   )}`
                 : "—"
             }
-            colors={colors}
             isLast
           />
         </Card>
 
         {d.omerText ? (
-          <Card icon="leaf-outline" title="Sefiras HaOmer" colors={colors}>
-            <Text
-              style={{
-                fontSize: 18,
-                lineHeight: 30,
-                color: colors.text,
-                fontFamily: "NotoSerifHebrew-Regular",
-                textAlign: "right",
-                writingDirection: "rtl",
-              }}
-            >
+          <Card icon="leaf-outline" title="Sefiras HaOmer">
+            <HebrewText style={{ fontSize: 18, lineHeight: 30 }}>
               {d.omerText}
-            </Text>
+            </HebrewText>
           </Card>
         ) : null}
 
         {hebrew.dayDavening.activeInsertions.length > 0 && (
-          <Card icon="add-circle-outline" title="Insertions" colors={colors}>
+          <Card icon="add-circle-outline" title="Insertions">
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
               {hebrew.dayDavening.activeInsertions.map((ins) => (
                 <View
@@ -446,15 +346,9 @@ export default function CalendarTab() {
                   <Text style={{ fontSize: 13, color: colors.text }}>
                     {ins.name}
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      color: colors.accent,
-                      fontFamily: "NotoSerifHebrew-Regular",
-                    }}
-                  >
+                  <HebrewText style={{ fontSize: 13, color: colors.accent }}>
                     {ins.nameHe}
-                  </Text>
+                  </HebrewText>
                 </View>
               ))}
             </View>
@@ -462,7 +356,7 @@ export default function CalendarTab() {
         )}
 
         {(zmanim?.candleLighting || zmanim?.havdala) && (
-          <Card icon="flame-outline" title="Shabbos & Yom Tov" colors={colors}>
+          <Card icon="flame-outline" title="Shabbos & Yom Tov">
             {zmanim.candleLighting && (
               <InfoRow
                 label="Candle lighting"
@@ -471,7 +365,6 @@ export default function CalendarTab() {
                   timeFormat,
                   timeZone
                 )}
-                colors={colors}
                 isLast={!zmanim.havdala}
               />
             )}
@@ -479,7 +372,6 @@ export default function CalendarTab() {
               <InfoRow
                 label="Havdala"
                 value={formatZmanTime(zmanim.havdala, timeFormat, timeZone)}
-                colors={colors}
                 isLast
               />
             )}
@@ -487,7 +379,7 @@ export default function CalendarTab() {
         )}
 
         {upcoming.length > 0 && (
-          <Card icon="calendar-outline" title="Upcoming" colors={colors}>
+          <Card icon="calendar-outline" title="Upcoming">
             {upcoming.map((event, i) => (
               <View
                 key={`${event.date.toISOString()}-${event.label}`}
@@ -521,7 +413,7 @@ export default function CalendarTab() {
                   style={{
                     paddingHorizontal: 8,
                     paddingVertical: 3,
-                    borderRadius: 10,
+                    borderRadius: radius.sm,
                     backgroundColor: colors.primaryLight,
                   }}
                 >

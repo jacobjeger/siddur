@@ -2,6 +2,8 @@ import { View, Text, ScrollView, Pressable, Switch } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
+import { Chip } from "../../src/components/common/ui";
+import { MIN_TOUCH_TARGET } from "../../src/theme/tokens";
 import { LocationSettings } from "../../src/components/settings/LocationSettings";
 import { ALL_TEFILOS } from "../../src/data/prayers";
 
@@ -66,28 +68,12 @@ export default function SettingsTab() {
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
           {NUSACH_OPTIONS.map((opt) => (
-            <Pressable
+            <Chip
               key={opt.value}
+              label={opt.label}
+              selected={nusach === opt.value}
               onPress={() => setNusach(opt.value)}
-              style={{
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 8,
-                borderWidth: 1,
-                backgroundColor: nusach === opt.value ? colors.primary : colors.surface,
-                borderColor: nusach === opt.value ? colors.primary : colors.border,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  color: nusach === opt.value ? colors.onPrimary : colors.text,
-                }}
-              >
-                {opt.label}
-              </Text>
-            </Pressable>
+            />
           ))}
         </View>
       </View>
@@ -110,9 +96,11 @@ export default function SettingsTab() {
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Pressable
             onPress={() => setTextSize(Math.max(16, textSize - 2))}
+            accessibilityRole="button"
+            accessibilityLabel="Decrease text size"
             style={({ pressed }) => ({
-              width: 40,
-              height: 40,
+              width: MIN_TOUCH_TARGET,
+              height: MIN_TOUCH_TARGET,
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
@@ -126,9 +114,11 @@ export default function SettingsTab() {
           </Text>
           <Pressable
             onPress={() => setTextSize(Math.min(32, textSize + 2))}
+            accessibilityRole="button"
+            accessibilityLabel="Increase text size"
             style={({ pressed }) => ({
-              width: 40,
-              height: 40,
+              width: MIN_TOUCH_TARGET,
+              height: MIN_TOUCH_TARGET,
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
@@ -198,29 +188,12 @@ export default function SettingsTab() {
         </Text>
         <View style={{ flexDirection: "row", gap: 8 }}>
           {(["off", "on", "system"] as const).map((mode) => (
-            <Pressable
+            <Chip
               key={mode}
+              label={mode[0].toUpperCase() + mode.slice(1)}
+              selected={darkMode === mode}
               onPress={() => setDarkMode(mode)}
-              style={{
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 8,
-                borderWidth: 1,
-                backgroundColor: darkMode === mode ? colors.primary : colors.surface,
-                borderColor: darkMode === mode ? colors.primary : colors.border,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  textTransform: "capitalize",
-                  color: darkMode === mode ? colors.onPrimary : colors.text,
-                }}
-              >
-                {mode}
-              </Text>
-            </Pressable>
+            />
           ))}
         </View>
       </View>
@@ -245,29 +218,12 @@ export default function SettingsTab() {
         </Text>
         <View style={{ flexDirection: "row", gap: 8 }}>
           {CANDLE_LIGHTING_OPTIONS.map((min) => (
-            <Pressable
+            <Chip
               key={min}
+              label={`${min}${min === 40 ? " (Jer.)" : ""}`}
+              selected={candleLightingOffset === min}
               onPress={() => setCandleLightingOffset(min)}
-              style={{
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 8,
-                borderWidth: 1,
-                backgroundColor: candleLightingOffset === min ? colors.primary : colors.surface,
-                borderColor: candleLightingOffset === min ? colors.primary : colors.border,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  color: candleLightingOffset === min ? colors.onPrimary : colors.text,
-                }}
-              >
-                {min}
-                {min === 40 ? " (Jer.)" : ""}
-              </Text>
-            </Pressable>
+            />
           ))}
         </View>
       </View>

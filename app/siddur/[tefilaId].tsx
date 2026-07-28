@@ -1,8 +1,10 @@
 import { useRef, useMemo, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Modal, FlatList } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
+import { HebrewText } from "../../src/components/common/HebrewText";
 import { SectionBody } from "../../src/components/common/SectionBody";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
@@ -41,9 +43,9 @@ export default function TefilaScreen() {
   if (!tefila) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
+        <HebrewText bold style={{ fontSize: 18 }}>
           לא נמצאה תפילה
-        </Text>
+        </HebrewText>
       </View>
     );
   }
@@ -110,9 +112,20 @@ export default function TefilaScreen() {
                 backgroundColor: colors.background,
               }}
             >
-              <Text style={{ fontSize: 14, color: colors.primary }}>
-                דלג לקטע ▾
-              </Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              >
+                <HebrewText
+                  style={{ fontSize: textSize - 6, color: colors.primary }}
+                >
+                  דלג לקטע
+                </HebrewText>
+                <Ionicons
+                  name="chevron-down"
+                  size={14}
+                  color={colors.primary}
+                />
+              </View>
             </TouchableOpacity>
           )}
         </View>

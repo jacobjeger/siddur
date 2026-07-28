@@ -1,8 +1,10 @@
 import { useRef, useMemo, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Modal, FlatList } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { getTefilaById } from "../../src/data/prayers";
 import { getTextForNusach } from "../../src/data/types";
+import { HebrewText } from "../../src/components/common/HebrewText";
 import { SectionBody } from "../../src/components/common/SectionBody";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
@@ -63,14 +65,16 @@ export default function DavenScreen() {
           }}
         />
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
+          <HebrewText bold style={{ fontSize: 18 }}>
             לא נמצאו תפילות
-          </Text>
+          </HebrewText>
           <TouchableOpacity
             onPress={() => router.back()}
             style={{ marginTop: 16 }}
           >
-            <Text style={{ fontSize: 16, color: colors.primary }}>חזרה</Text>
+            <HebrewText style={{ fontSize: 16, color: colors.primary }}>
+              חזרה
+            </HebrewText>
           </TouchableOpacity>
         </View>
       </>
@@ -146,9 +150,20 @@ export default function DavenScreen() {
                     backgroundColor: colors.background,
                   }}
                 >
-                  <Text style={{ fontSize: 14, color: colors.primary }}>
-                    דלג לקטע ▾
-                  </Text>
+                  <View
+                    style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+                  >
+                    <HebrewText
+                      style={{ fontSize: textSize - 6, color: colors.primary }}
+                    >
+                      דלג לקטע
+                    </HebrewText>
+                    <Ionicons
+                      name="chevron-down"
+                      size={14}
+                      color={colors.primary}
+                    />
+                  </View>
                 </TouchableOpacity>
               )}
             </View>
@@ -252,7 +267,7 @@ export default function DavenScreen() {
               style={{
                 color: colors.onPrimary,
                 fontFamily: "NotoSerifHebrew-Regular",
-                fontSize: 16,
+                fontSize: textSize - 6,
                 fontWeight: "600",
               }}
             >

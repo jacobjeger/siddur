@@ -3,6 +3,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHebrewDate } from "../../hooks/useHebrewDate";
 import { useTheme } from "../../hooks/useTheme";
 
+/**
+ * colors.accent on headerBg is only ~3.7:1 at 13pt in light mode, under the
+ * 4.5:1 minimum. A translucent white reads far better on the dark header in
+ * both themes.
+ */
+const subtitleStyle = {
+  color: "rgba(255,255,255,0.92)",
+  textAlign: "center" as const,
+  fontSize: 13,
+  marginTop: 4,
+};
+
 export function HebrewDateHeader() {
   const { hebrewDate, englishDate, parsha, specialDay, omerDay } =
     useHebrewDate();
@@ -28,7 +40,7 @@ export function HebrewDateHeader() {
           fontSize: 18,
         }}
       >
-        {hebrewDate || "Loading..."}
+        {hebrewDate}
       </Text>
       <Text
         style={{
@@ -42,24 +54,14 @@ export function HebrewDateHeader() {
       </Text>
       {parsha ? (
         <Text
-          style={{
-            color: colors.accent,
-            textAlign: "center",
-            fontSize: 13,
-            marginTop: 4,
-          }}
+          style={subtitleStyle}
         >
           Parashat {parsha}
         </Text>
       ) : null}
       {specialDay ? (
         <Text
-          style={{
-            color: colors.accent,
-            textAlign: "center",
-            fontSize: 13,
-            marginTop: 4,
-          }}
+          style={subtitleStyle}
         >
           {specialDay}
         </Text>
@@ -67,12 +69,7 @@ export function HebrewDateHeader() {
       {/* omerDay was computed and threaded through the hook, then never shown. */}
       {omerDay > 0 ? (
         <Text
-          style={{
-            color: colors.accent,
-            textAlign: "center",
-            fontSize: 13,
-            marginTop: 4,
-          }}
+          style={subtitleStyle}
         >
           Omer: Day {omerDay}
         </Text>

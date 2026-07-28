@@ -44,6 +44,8 @@ export function LocationDisplay() {
       {isFallback && (
         <Pressable
           onPress={() => router.push("/(tabs)/settings")}
+          accessibilityRole="button"
+          accessibilityLabel="Using a default location. Tap to set your location."
           style={{
             flexDirection: "row",
             alignItems: "center",
