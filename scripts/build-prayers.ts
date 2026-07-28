@@ -284,6 +284,8 @@ export function getTefilosByCategory(
 function runContentGuards(tefilos: TefilaYaml[]): void {
   let empty = 0;
   const rubricLeaks: string[] = [];
+  const entityLeaks: string[] = [];
+  const ENTITY = /&(?:[a-zA-Z][a-zA-Z0-9]{1,10}|#\d+|#x[0-9a-fA-F]+);/;
   const nikkud = /[ְ-ׇּׁׂ]/;
 
   for (const t of tefilos) {
@@ -292,6 +294,9 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
       if (!text.trim()) {
         empty++;
         continue;
+      }
+      if (ENTITY.test(text)) {
+        entityLeaks.push(`${s.id}: ${ENTITY.exec(text)?.[0]}`);
       }
       for (const line of text.split("\n")) {
         const trimmed = line.trim();
@@ -306,6 +311,16 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
 
   if (empty) {
     console.warn(`WARN: ${empty} sections have no text (see docs/remaining-text.md)`);
+  }
+
+  // An undecoded entity renders literally as "&thinsp;" mid-prayer, which
+  // shipped once. Fail rather than warn — it is always a bug, never intended.
+  if (entityLeaks.length) {
+    throw new Error(
+      `${entityLeaks.length} section(s) contain undecoded HTML entities:\n  ${entityLeaks
+        .slice(0, 10)
+        .join("\n  ")}`
+    );
   }
   if (rubricLeaks.length) {
     console.warn(

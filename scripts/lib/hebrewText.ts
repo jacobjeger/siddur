@@ -156,15 +156,59 @@ export function splitSefariaHtml(html: string): SplitText {
   };
 }
 
+/**
+ * Named HTML entities that appear in Sefaria's siddur text.
+ *
+ * The original decoder only handled five names plus decimal numerics, so
+ * `&thinsp;` — which Sefaria uses around the paseq divider — leaked through
+ * and rendered literally as "&thinsp;" in the middle of the liturgy.
+ */
+const NAMED_ENTITIES: Record<string, string> = {
+  nbsp: " ",
+  thinsp: " ",
+  ensp: " ",
+  emsp: " ",
+  hairsp: " ",
+  zwj: "‍",
+  zwnj: "‌",
+  shy: "",
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  ndash: "–",
+  mdash: "—",
+  hellip: "…",
+  lsquo: "‘",
+  rsquo: "’",
+  ldquo: "“",
+  rdquo: "”",
+  middot: "·",
+  bull: "•",
+};
+
+export function decodeEntities(input: string): string {
+  return input
+    .replace(/&#x([0-9a-fA-F]+);/g, (_m, hex: string) =>
+      String.fromCodePoint(parseInt(hex, 16))
+    )
+    .replace(/&#(\d+);/g, (_m, dec: string) =>
+      String.fromCodePoint(Number(dec))
+    )
+    .replace(/&([a-zA-Z][a-zA-Z0-9]{1,10});/g, (match, name: string) => {
+      const decoded = NAMED_ENTITIES[name.toLowerCase()];
+      // Leave genuinely unknown entities alone rather than silently deleting
+      // text; the build guard will surface them.
+      return decoded === undefined ? match : decoded;
+    });
+}
+
 function stripTags(html: string): string {
-  return html
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/p>/gi, "\n")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#(\d+);/g, (_m, d: string) => String.fromCharCode(Number(d)));
+  return decodeEntities(
+    html
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/p>/gi, "\n")
+      .replace(/<[^>]+>/g, "")
+  );
 }
