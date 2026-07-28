@@ -49,8 +49,8 @@ sections:
     title: Baruch Hashem L'Olam
     titleHe: ברוך ה׳ לעולם
     group: Maariv
-    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Post-Shema, Baruch Hashem leOlam
-    status: needs-text
+    sourceRef: Siddur Ashkenaz, Shabbat, Shacharit, Pesukei Dezimra, Baruch Hashem
+    text: "בָּרוּךְ ה' לְעולָם. אָמֵן וְאָמֵן: בָּרוּךְ ה' מִצִּיּון שׁכֵן יְרוּשָׁלָיִם. הַלְלוּיָהּ: בָּרוּךְ ה' אֱלהִים אֱלהֵי יִשרָאֵל. עשה נִפְלָאות לְבַדּו: וּבָרוּךְ שֵׁם כְּבודו לְעולָם. וְיִמָּלֵא כְבודו אֶת כָּל הָאָרֶץ. אָמֵן וְאָמֵן:"
   - id: maariv-chatzi-kaddish-maariv
     title: Chatzi Kaddish
     titleHe: חצי קדיש
