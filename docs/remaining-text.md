@@ -136,3 +136,47 @@ are also currently empty.
 So when Mincha and Maariv text lands, it needs to be split per bracha (matching
 the Shacharis ids, minus the service prefix) or insertions will silently never
 appear in those services.
+
+---
+
+## Sections that are present but incomplete
+
+These are not empty, so they do not show the "not yet available" placeholder and
+do not appear in the empty-section count. They read as finished text and are
+not, which makes them more dangerous than the blank ones.
+
+1. **`shacharis-amidah-birchas-kohanim`** — the first line ends
+   `שֶׁתְּהֵא הַבְּרָכָה הַזּאת לכהנים: שֶׁצִּוִּיתָנו`, cut off mid-phrase. The section
+   carries two variants of the Yehi Ratzon, one for the kohanim
+   (`שֶׁצִּוִּיתָנוּ לְבָרֵךְ`) and one for the kahal (`שֶׁצִּוִּיתָ לְבָרֵךְ`). The kahal
+   variant is complete; the kohanim variant is truncated after two words, and
+   its `לכהנים:` cue is embedded mid-line rather than on its own line, so it
+   also renders as liturgy rather than as a rubric.
+
+2. **`maariv-baruch-hashem-lolam`** — 234 characters, four pesukim, ending at
+   `וְיִמָּלֵא כְבודו אֶת כָּל הָאָרֶץ. אָמֵן וְאָמֵן`. The full Ashkenaz
+   ברוך ה' לעולם is eighteen pesukim and concludes with a bracha
+   (`בָּרוּךְ אַתָּה יְהֹוָה הַמּוֹלֵךְ בִּכְבוֹדוֹ`). Note this passage is omitted
+   entirely in Eretz Yisrael and by several nuschaos, so restoring it is a
+   nusach decision, not only a text one.
+
+3. **`bedtime-shema-misc-hashkiveinu-bedtime`** — the Maariv chasima was removed
+   (see below), but whether Hashkiveinu belongs in Krias Shema al hamitah at
+   all, and in which nusach, is still unsettled. Carries a `needsReview` field.
+
+## Content errors already corrected
+
+Fixed in `scripts/fix-wrong-content.ts`; recorded here because each shipped to a
+device and may need a second look by someone qualified.
+
+- **`bedtime-shema-misc-hashkiveinu-bedtime`** was a byte-identical copy of
+  `maariv-hashkiveinu`, concluding bracha included. Hashkiveinu ends with
+  `שׁוֹמֵר עַמּוֹ יִשְׂרָאֵל לָעַד` only in Maariv, where it forms the geulah arichta.
+  The copied `instructionHe` was the Tur explaining that very point about
+  Maariv, which is what gave the duplication away. Chasima and note removed.
+- **`bedtime-shema-misc-hallel-full`** was titled "Full Hallel (Psalms 113-118)"
+  but contained only the bracha `לִקְרֹא אֶת הַהַלֵּל` — a bracha with no Hallel
+  after it. Cleared to `needs-text` so the placeholder shows instead.
+- **`shacharis-insert-hamelech-hamishpat`** was an insertion holding the whole
+  Hashiveinu bracha, duplicating `shacharis-amidah-11-mishpat`. Reduced to the
+  inserted words, `הַמֶּֽלֶךְ הַמִּשְׁפָּט`.

@@ -314,6 +314,19 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
     "shacharis-tallis-bracha",
   ]);
   const orphanBrackets: string[] = [];
+  const danglingBrachos: string[] = [];
+  /**
+   * A bracha over RECITING something — "לִקְרֹא אֶת הַהַלֵּל", "עַל מִקְרָא מְגִלָּה",
+   * "לַעֲסוֹק בְּדִבְרֵי תוֹרָה". If the section holds essentially nothing else, it
+   * prompts a bracha over a text that is not there, which is a berachah
+   * levatalah rather than a cosmetic gap. `hallel-full` shipped exactly this:
+   * the bracha לִקְרֹא אֶת הַהַלֵּל with none of Psalms 113-118 after it.
+   *
+   * Deliberately NOT every birchas hamitzvah: a bracha over an ACTION stands on
+   * its own perfectly well, which is why netilas yadayim is a section of one
+   * line and correct.
+   */
+  const RECITAL_BRACHA = /לִקְר[ֹאו]|מִקְרָא מְגִלָּה|לַעֲסוֹק בְּדִבְרֵי/;
   const entityLeaks: string[] = [];
   const ENTITY = /&(?:[a-zA-Z][a-zA-Z0-9]{1,10}|#\d+|#x[0-9a-fA-F]+);/;
   const nikkud = /[ְ-ׇּׁׂ]/;
@@ -330,6 +343,10 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
       const instruction = (s as { instructionHe?: string }).instructionHe ?? "";
       for (const field of [text, instruction, (s as { instruction?: string }).instruction ?? ""]) {
         if (ENTITY.test(field)) entityLeaks.push(`${s.id}: ${ENTITY.exec(field)?.[0]}`);
+      }
+
+      if (RECITAL_BRACHA.test(text) && text.replace(/[^א-ת]/g, "").length < 130) {
+        danglingBrachos.push(`${s.id}: ${text.trim().slice(0, 60)}`);
       }
 
       // An unclosed '[' means a '[קהל: אמן]' response was torn apart.
@@ -380,6 +397,13 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
       `${orphanBrackets.length} line(s) have an unbalanced bracket:\n  ${orphanBrackets
         .slice(0, 10)
         .join("\n  ")}`
+    );
+  }
+  if (danglingBrachos.length) {
+    throw new Error(
+      `${danglingBrachos.length} section(s) are a bracha with no text after it ` +
+        `(berachah levatalah — clear the text so the placeholder shows instead):\n  ` +
+        danglingBrachos.join("\n  ")
     );
   }
   if (hoistedCues.length) {
