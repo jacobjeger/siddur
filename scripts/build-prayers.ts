@@ -202,6 +202,8 @@ function main(): void {
     }
   }
 
+  runContentGuards(orderedTefilos);
+
   const categoryInfos = cats.categories.map((c) => ({
     id: c.id,
     name: c.name,
@@ -268,6 +270,68 @@ export function getTefilosByCategory(
   console.log(
     `Built ${path.relative(ROOT, OUT_FILE)}: ${orderedTefilos.length} tefilos, ${categoryInfos.length} categories`
   );
+}
+
+/**
+ * Guards for the defect classes that shipped silently before: sections with no
+ * text, rubrics sitting inside `text`, and conditional insertions pointing at
+ * section ids that no longer exist.
+ *
+ * Empty text and stray rubrics warn (the corpus is still being restored —
+ * see docs/remaining-text.md). A dead insertion target FAILS the build, because
+ * it makes seasonal text silently never appear, which is invisible at runtime.
+ */
+function runContentGuards(tefilos: TefilaYaml[]): void {
+  let empty = 0;
+  const rubricLeaks: string[] = [];
+  const nikkud = /[ְ-ׇּׁׂ]/;
+
+  for (const t of tefilos) {
+    for (const s of t.sections ?? []) {
+      const text = (s as { text?: string }).text ?? "";
+      if (!text.trim()) {
+        empty++;
+        continue;
+      }
+      for (const line of text.split("\n")) {
+        const trimmed = line.trim();
+        // A line of Hebrew with no nikkud at all is a rubric, not liturgy.
+        if (trimmed && /[א-ת]/.test(trimmed) && !nikkud.test(trimmed)) {
+          rubricLeaks.push(`${s.id}: ${trimmed.slice(0, 48)}`);
+          break;
+        }
+      }
+    }
+  }
+
+  if (empty) {
+    console.warn(`WARN: ${empty} sections have no text (see docs/remaining-text.md)`);
+  }
+  if (rubricLeaks.length) {
+    console.warn(
+      `WARN: ${rubricLeaks.length} sections have an unvocalized line inside 'text' (likely a rubric that belongs in instructionHe):`
+    );
+    for (const leak of rubricLeaks.slice(0, 10)) console.warn(`        ${leak}`);
+    if (rubricLeaks.length > 10) console.warn(`        …and ${rubricLeaks.length - 10} more`);
+  }
+
+  // Conditional insertions must resolve, or seasonal text silently never fires.
+  const sectionIds = new Set(
+    tefilos.flatMap((t) => (t.sections ?? []).map((s) => s.id))
+  );
+  const insertionsFile = path.join(ROOT, "src/data/insertions.ts");
+  if (fs.existsSync(insertionsFile)) {
+    const source = fs.readFileSync(insertionsFile, "utf8");
+    const targets = [...source.matchAll(/targetSectionId:\s*"([^"]+)"/g)].map(
+      (m) => m[1]
+    );
+    const dead = [...new Set(targets)].filter((id) => !sectionIds.has(id));
+    if (dead.length) {
+      throw new Error(
+        `insertions.ts targets ${dead.length} section id(s) that do not exist, so those insertions can never fire:\n  ${dead.join("\n  ")}`
+      );
+    }
+  }
 }
 
 main();
