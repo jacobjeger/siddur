@@ -23,6 +23,18 @@ const DAY_NAMES = [
   "Friday",
   "Shabbos",
 ];
+const SPECIAL_SHABBOS_LABELS: Record<string, { en: string; he: string }> = {
+  shkalim: { en: "Shkalim", he: "שקלים" },
+  zachor: { en: "Zachor", he: "זכור" },
+  parah: { en: "Parah", he: "פרה" },
+  hachodesh: { en: "HaChodesh", he: "החודש" },
+  shuva: { en: "Shuva", he: "שובה" },
+  shira: { en: "Shira", he: "שירה" },
+  hagadol: { en: "HaGadol", he: "הגדול" },
+  chazon: { en: "Chazon", he: "חזון" },
+  nachamu: { en: "Nachamu", he: "נחמו" },
+};
+
 const DAY_NAMES_HE = [
   "יום ראשון",
   "יום שני",
@@ -165,6 +177,56 @@ export default function CalendarTab() {
     todayEvents.push({ label: "Fast Day", labelHe: "יום צום", icon: "water" });
   }
 
+  const d = hebrew.dayDavening;
+  if (d.specialShabbos) {
+    todayEvents.push({
+      label: `Shabbos ${SPECIAL_SHABBOS_LABELS[d.specialShabbos].en}`,
+      labelHe: `שבת ${SPECIAL_SHABBOS_LABELS[d.specialShabbos].he}`,
+      icon: "bookmark",
+    });
+  }
+  if (d.isYizkor) {
+    todayEvents.push({ label: "Yizkor", labelHe: "יזכור", icon: "flower" });
+  }
+  if (d.bircasHaChodesh.said) {
+    todayEvents.push({
+      label: "Bircas HaChodesh",
+      labelHe: "ברכת החודש",
+      icon: "moon",
+    });
+  }
+  if (d.isBaHab) {
+    todayEvents.push({ label: "Ba'Hab", labelHe: 'בה"ב', icon: "water" });
+  }
+  if (d.isYomKippurKatan) {
+    todayEvents.push({
+      label: "Yom Kippur Katan",
+      labelHe: "יום כיפור קטן",
+      icon: "moon",
+    });
+  }
+  if (d.isEruvTavshilin) {
+    todayEvents.push({
+      label: "Eruv Tavshilin",
+      labelHe: "עירוב תבשילין",
+      icon: "restaurant",
+    });
+  }
+  if (d.isBedikasChometzNight) {
+    todayEvents.push({
+      label: "Bedikas Chometz tonight",
+      labelHe: "בדיקת חמץ",
+      icon: "flashlight",
+    });
+  }
+  if (d.isTaanisBechoros) {
+    todayEvents.push({
+      label: "Taanis Bechoros",
+      labelHe: "תענית בכורות",
+      icon: "water",
+    });
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View
@@ -287,23 +349,79 @@ export default function CalendarTab() {
           />
           <InfoRow
             label="Tachanun"
-            value={hebrew.dayDavening.sayTachanun ? "Said" : "Not said"}
+            value={d.sayTachanun ? "Said" : "Not said"}
             colors={colors}
-            isLast={!molad}
           />
-          {molad && (
+          {d.shirShelYom.psalm > 0 && (
             <InfoRow
-              label="Molad"
-              value={`${molad.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                timeZone,
-              })}, ${formatZmanTime(molad, timeFormat, timeZone)}`}
+              label="Shir Shel Yom"
+              value={`Tehillim ${d.shirShelYom.psalm}${
+                d.shirShelYom.includesPsalm95 ? " + 95:1–3" : ""
+              }${d.shirShelYom.addBarchiNafshi ? " + Barchi Nafshi" : ""}`}
               colors={colors}
-              isLast
             />
           )}
+          {d.ldovid.said && (
+            <InfoRow
+              label="L'Dovid"
+              value={d.ldovid.tefillos
+                .map((t) => t[0].toUpperCase() + t.slice(1))
+                .join(" & ")}
+              colors={colors}
+            />
+          )}
+          {d.pirkeiAvos.said && (
+            <InfoRow
+              label="Pirkei Avos"
+              value={`Chapter ${d.pirkeiAvos.chapter}`}
+              colors={colors}
+            />
+          )}
+          {d.tzidkascha.said && (
+            <InfoRow label="Tzidkascha" value="Said at Mincha" colors={colors} />
+          )}
+          {d.isAvHaRachamim && (
+            <InfoRow label="Av HaRachamim" value="Said" colors={colors} />
+          )}
+          {d.isAvinuMalkeinu && (
+            <InfoRow label="Avinu Malkeinu" value="Said" colors={colors} />
+          )}
+          <InfoRow
+            label="Molad"
+            value={
+              // Prefer the molad being announced today, if any.
+              (d.bircasHaChodesh.molad ?? molad)
+                ? `${(d.bircasHaChodesh.molad ?? molad)!.toLocaleDateString(
+                    "en-US",
+                    { month: "short", day: "numeric", timeZone }
+                  )}, ${formatZmanTime(
+                    d.bircasHaChodesh.molad ?? molad,
+                    timeFormat,
+                    timeZone
+                  )}`
+                : "—"
+            }
+            colors={colors}
+            isLast
+          />
         </Card>
+
+        {d.omerText ? (
+          <Card icon="leaf-outline" title="Sefiras HaOmer" colors={colors}>
+            <Text
+              style={{
+                fontSize: 18,
+                lineHeight: 30,
+                color: colors.text,
+                fontFamily: "NotoSerifHebrew-Regular",
+                textAlign: "right",
+                writingDirection: "rtl",
+              }}
+            >
+              {d.omerText}
+            </Text>
+          </Card>
+        ) : null}
 
         {hebrew.dayDavening.activeInsertions.length > 0 && (
           <Card icon="add-circle-outline" title="Insertions" colors={colors}>

@@ -1,10 +1,13 @@
 import { JewishCalendar } from "kosher-zmanim";
 import type { InsertionContext } from "../data/types";
+import type { Nusach } from "../stores/useSettingsStore";
 import {
   getJewishCalendar,
   type HebrewDateOptions,
   DEFAULT_HEBREW_DATE_OPTIONS,
 } from "../services/zmanim/hebrewCalendarService";
+import * as R from "./tefillahRules";
+import { getOmerText } from "./omer";
 
 export interface ActiveInsertion {
   name: string;
@@ -19,7 +22,30 @@ export interface DayDaveningInfo {
   activeInsertions: ActiveInsertion[];
   isRoshChodesh: boolean;
   hallelType: HallelType;
+  /** Whether a bracha is said over Hallel — Edot HaMizrach say none. */
+  hallelBracha: boolean;
   sayTachanun: boolean;
+
+  // Day-rules from tefillahRules.ts. All nusach-aware where the practice
+  // differs; see docs/unverified-rules.md for what is not yet settled.
+  shirShelYom: R.ShirShelYom;
+  ldovid: R.Ldovid;
+  tzidkascha: R.Tzidkascha;
+  pirkeiAvos: R.PirkeiAvos;
+  bircasHaChodesh: R.BircasHaChodesh;
+  specialShabbos: R.SpecialShabbos | null;
+  isYizkor: boolean;
+  isAvinuMalkeinu: boolean;
+  isAvHaRachamim: boolean;
+  isBaHab: boolean;
+  isYomKippurKatan: boolean;
+  isMacharChodesh: boolean;
+  isTaanisBechoros: boolean;
+  isIsruChag: boolean;
+  isEruvTavshilin: boolean;
+  isBedikasChometzNight: boolean;
+  /** Sefiras HaOmer counting text for today, in the user's nusach. */
+  omerText: string;
 }
 
 /**
@@ -29,7 +55,8 @@ export interface DayDaveningInfo {
 export function getDayDaveningInfo(
   context: InsertionContext,
   date: Date = new Date(),
-  options: HebrewDateOptions = DEFAULT_HEBREW_DATE_OPTIONS
+  options: HebrewDateOptions = DEFAULT_HEBREW_DATE_OPTIONS,
+  nusach: Nusach = "ashkenaz"
 ): DayDaveningInfo {
   const calendar = getJewishCalendar(date, options);
 
@@ -66,6 +93,12 @@ export function getDayDaveningInfo(
   }
 
   const { label, labelHe } = getSpecialDayLabel(calendar, context);
+  const sayTachanun = getSayTachanun(calendar);
+  // Tzidkascha and Av HaRachamim key off "would Tachanun be said on a weekday",
+  // NOT off sayTachanun — which is false every Shabbos, i.e. exactly when they
+  // are relevant.
+  const tachanunDay = isTachanunDay(calendar);
+  const omerDay = safeNumber(() => calendar.getDayOfOmer());
 
   return {
     specialDayLabel: label,
@@ -73,8 +106,36 @@ export function getDayDaveningInfo(
     activeInsertions,
     isRoshChodesh: context.isRoshChodesh,
     hallelType: getHallelType(calendar),
-    sayTachanun: getSayTachanun(calendar),
+    hallelBracha: R.saysHallelBracha(nusach),
+    sayTachanun,
+
+    shirShelYom: R.getShirShelYom(calendar, nusach),
+    ldovid: R.getLdovid(calendar, nusach),
+    tzidkascha: R.getTzidkascha(calendar, nusach, tachanunDay),
+    pirkeiAvos: R.getPirkeiAvos(calendar, nusach),
+    bircasHaChodesh: R.getBircasHaChodesh(date, options),
+    specialShabbos: R.getSpecialShabbos(calendar),
+    isYizkor: R.isYizkor(calendar),
+    isAvinuMalkeinu: R.isAvinuMalkeinu(calendar, nusach),
+    isAvHaRachamim: R.isAvHaRachamim(calendar, nusach, tachanunDay),
+    isBaHab: R.isBaHab(calendar),
+    isYomKippurKatan: R.isYomKippurKatan(calendar),
+    isMacharChodesh: R.isMacharChodesh(calendar),
+    isTaanisBechoros: R.isTaanisBechoros(calendar),
+    isIsruChag: R.isIsruChag(calendar),
+    isEruvTavshilin: R.isEruvTavshilin(calendar),
+    isBedikasChometzNight: R.isBedikasChometzNight(calendar),
+    omerText: omerDay > 0 ? getOmerText(omerDay, nusach) : "",
   };
+}
+
+function safeNumber(fn: () => number): number {
+  try {
+    const value = fn();
+    return Number.isFinite(value) ? value : 0;
+  } catch {
+    return 0;
+  }
 }
 
 function getSpecialDayLabel(
@@ -136,13 +197,24 @@ function getHallelType(calendar: JewishCalendar): HallelType {
  * the previous implementation handled only four.
  */
 function getSayTachanun(calendar: JewishCalendar): boolean {
-  const dayOfWeek = calendar.getDayOfWeek();
+  // Shabbos has no Tachanun at all.
+  if (calendar.getDayOfWeek() === 7) return false;
+  return isTachanunDay(calendar);
+}
+
+/**
+ * Whether today is a day Tachanun WOULD be said, ignoring the day of the week.
+ *
+ * Tzidkascha (Shabbos Mincha) and Av HaRachamim are omitted on days when
+ * Tachanun would not be said "if it fell on a weekday" — so they cannot be
+ * gated on getSayTachanun(), which is false every Shabbos by definition and
+ * would suppress both of them permanently.
+ */
+export function isTachanunDay(calendar: JewishCalendar): boolean {
   const month = calendar.getJewishMonth();
   const day = calendar.getJewishDayOfMonth();
   const index = calendar.getYomTovIndex();
 
-  // Shabbos and Yom Tov have no Tachanun at all.
-  if (dayOfWeek === 7) return false;
   if (calendar.isYomTov() || calendar.isCholHamoed()) return false;
   if (calendar.isRoshChodesh() || calendar.isChanukah()) return false;
 

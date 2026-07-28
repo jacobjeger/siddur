@@ -62,6 +62,21 @@ export interface InsertionContext {
   isFastDay: boolean;
   isMotzaeiShabbos: boolean;
   isAseresYemeiTeshuva: boolean;
+
+  // Day-rules, so conditional text can key off them directly rather than
+  // re-deriving the calendar. Populated by getInsertionContext().
+  /** Yom Kippur, Shmini Atzeres, last day Pesach, Shavuos (region-aware). */
+  isYizkor: boolean;
+  /** Tzidkascha Tzedek at Shabbos Mincha. */
+  saysTzidkascha: boolean;
+  /** L'Dovid Hashem Ori (Ps 27), Elul through Tishrei. */
+  saysLdovid: boolean;
+  /** Shabbos Mevorchim — Bircas HaChodesh is announced. */
+  isShabbosMevorchim: boolean;
+  /** Which of the nine special Shabbosos today is, if any. */
+  specialShabbos: string | null;
+  /** Day of the Omer, 0 when not counting. */
+  omerDay: number;
 }
 
 export interface ConditionalInsertion {

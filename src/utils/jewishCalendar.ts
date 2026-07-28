@@ -1,5 +1,7 @@
 import type { JewishCalendar } from "kosher-zmanim";
 import type { InsertionContext } from "../data/types";
+import * as R from "./tefillahRules";
+import { isTachanunDay } from "./dayDavening";
 import {
   getJewishCalendar,
   type HebrewDateOptions,
@@ -30,7 +32,34 @@ export function getInsertionContext(
     isFastDay: calendar.isTaanis(),
     isMotzaeiShabbos: isMotzaeiShabbos(date, options),
     isAseresYemeiTeshuva: calendar.isAseresYemeiTeshuva(),
+
+    isYizkor: R.isYizkor(calendar),
+    // Tzidkascha and L'Dovid vary by nusach; the context carries the
+    // nusach-independent "does today qualify" answer, and the nusach-specific
+    // shape (verse order, which tefillos) lives on DayDaveningInfo.
+    saysTzidkascha: R.getTzidkascha(calendar, "ashkenaz", isTachanunDay(calendar))
+      .said,
+    saysLdovid: R.getLdovid(calendar, "ashkenaz").said,
+    isShabbosMevorchim: safeBool(() => calendar.isShabbosMevorchim()),
+    specialShabbos: R.getSpecialShabbos(calendar),
+    omerDay: safeOmer(calendar),
   };
+}
+
+function safeBool(fn: () => boolean): boolean {
+  try {
+    return fn();
+  } catch {
+    return false;
+  }
+}
+
+function safeOmer(calendar: JewishCalendar): number {
+  try {
+    return Math.max(0, calendar.getDayOfOmer());
+  } catch {
+    return 0;
+  }
 }
 
 function getHoliday(calendar: JewishCalendar): InsertionContext["holiday"] {
