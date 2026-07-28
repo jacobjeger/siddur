@@ -30,7 +30,8 @@
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION"
       ],
-      "minSdkVersion": 24
+      "minSdkVersion": 24,
+      "package": "com.akivajeger.siddur"
     },
     "web": {
       "favicon": "./assets/favicon.png",

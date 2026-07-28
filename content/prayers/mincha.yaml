@@ -1,0 +1,40 @@
+id: mincha
+name: Mincha
+nameHe: מנחה
+category: mincha
+timeContext: mincha
+sections:
+  - id: mincha-ashrei-mincha
+    title: Ashrei
+    titleHe: אשרי
+    group: Mincha
+    instruction: Same text as Shacharis Ashrei
+    status: needs-text
+  - id: mincha-chatzi-kaddish-mincha
+    title: Chatzi Kaddish
+    titleHe: חצי קדיש
+    group: Mincha
+    status: needs-text
+  - id: mincha-amidah-mincha
+    title: Shemoneh Esrei (same 19 brachos)
+    titleHe: שמונה עשרה
+    group: Mincha
+    instruction: Same as Shacharis. Ashkenaz uses Shalom Rav instead of Sim Shalom.
+    status: needs-text
+  - id: mincha-tachanun-mincha
+    title: Tachanun (short only)
+    titleHe: תחנון
+    group: Mincha
+    instruction: No long Tachanun. No Tachanun at Mincha erev Shabbos/YT.
+    status: needs-text
+  - id: mincha-aleinu-mincha
+    title: Aleinu
+    titleHe: עלינו
+    group: Mincha
+    instruction: Same text as Shacharis
+    status: needs-text
+  - id: mincha-kaddish-yasom-mincha
+    title: Kaddish Yasom
+    titleHe: קדיש יתום
+    group: Mincha
+    status: needs-text

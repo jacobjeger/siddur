@@ -1,0 +1,99 @@
+id: maariv
+name: Maariv
+nameHe: מעריב
+category: maariv
+timeContext: maariv
+sections:
+  - id: maariv-vhu-rachum-maariv
+    title: V'Hu Rachum (before Barchu)
+    titleHe: והוא רחום
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, VeHu Rachum
+    status: needs-text
+  - id: maariv-barchu-maariv
+    title: Barchu
+    titleHe: ברכו
+    group: Maariv
+    status: needs-text
+  - id: maariv-maariv-aravim
+    title: Maariv Aravim
+    titleHe: מעריב ערבים
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Blessings of the Shema, Maariv Aravim
+    status: needs-text
+  - id: maariv-ahavas-olam-maariv
+    title: Ahavas Olam
+    titleHe: אהבת עולם
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Blessings of the Shema, Ahavat Olam
+    status: needs-text
+  - id: maariv-shema-maariv
+    title: Krias Shema (3 parshiyos)
+    titleHe: קריאת שמע
+    group: Maariv
+    instruction: Same 3 parshiyos as Shacharis
+    status: needs-text
+  - id: maariv-emes-vemuna
+    title: Emes V'Emuna
+    titleHe: אמת ואמונה
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Post-Shema, Emet veEmuna
+    status: needs-text
+  - id: maariv-hashkiveinu
+    title: Hashkiveinu
+    titleHe: השכיבנו
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Post-Shema, Hashkivenu
+    status: needs-text
+  - id: maariv-baruch-hashem-lolam
+    title: Baruch Hashem L'Olam
+    titleHe: ברוך ה׳ לעולם
+    group: Maariv
+    sourceRef: Siddur Ashkenaz, Weekday, Maariv, Post-Shema, Baruch Hashem leOlam
+    status: needs-text
+  - id: maariv-chatzi-kaddish-maariv
+    title: Chatzi Kaddish
+    titleHe: חצי קדיש
+    group: Maariv
+    status: needs-text
+  - id: maariv-amidah-maariv
+    title: Shemoneh Esrei (same 19 brachos)
+    titleHe: שמונה עשרה
+    group: Maariv
+    instruction: No chazaras hashatz at Maariv
+    status: needs-text
+  - id: maariv-kaddish-shalem-maariv
+    title: Kaddish Shalem
+    titleHe: קדיש שלם
+    group: Maariv
+    status: needs-text
+  - id: maariv-aleinu-maariv
+    title: Aleinu
+    titleHe: עלינו
+    group: Maariv
+    status: needs-text
+  - id: maariv-kaddish-yasom-maariv
+    title: Kaddish Yasom
+    titleHe: קדיש יתום
+    group: Maariv
+    status: needs-text
+  - id: maariv-sefiras-haomer
+    title: Sefiras HaOmer (full count)
+    titleHe: ספירת העומר
+    group: Maariv
+    status: needs-text
+  - id: maariv-ata-chonantanu
+    title: Ata Chonantanu
+    titleHe: אתה חוננתנו
+    group: Motzaei Shabbos Additions
+    status: needs-text
+  - id: maariv-vihi-noam
+    title: Vihi Noam + Yoshev B'Seser (Psalm 91)
+    titleHe: ויהי נועם
+    group: Motzaei Shabbos Additions
+    status: needs-text
+  - id: maariv-vata-kadosh
+    title: V'Ata Kadosh
+    titleHe: ואתה קדוש
+    group: Motzaei Shabbos Additions
+    status: needs-text

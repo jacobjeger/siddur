@@ -1,0 +1,11 @@
+id: blessings-borei-nefashos
+name: Borei Nefashos
+nameHe: בורא נפשות
+category: blessings
+timeContext: anytime
+sections:
+  - id: blessings-borei-nefashos-text
+    title: Borei Nefashos
+    titleHe: בורא נפשות
+    instruction: "על פירות האילן חוץ מז' מינים ופירות האדמה וירקות ועל כל המשקין ועל דבר שאין גידולו מן הארץ אחרי האכילה אומר:"
+    text: "בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא נְפָשׁוֹת רַבּוֹת וְחֶסְרוֹנָן עַל כָּל מַה שֶׁבָּרָאתָּ לְהַחֲיוֹת בָּהֶם נֶפֶשׁ כָּל חָי בָּרוּךְ חֵי חַי הָעוֹלָמִים:"

@@ -1,0 +1,60 @@
+id: birchas-hamazon
+name: Birchas HaMazon
+nameHe: ברכת המזון
+category: blessings
+timeContext: anytime
+sections:
+  - id: birchas-hamazon-shir-hamaalos
+    title: Shir HaMaalos (Psalm 126)
+    titleHe: שיר המעלות
+    group: Birchas Hamazon
+    instruction: "Shabbos/YT/happy occasions. Weekday: Al Naharos Bavel (some)"
+    sourceRef: Siddur Ashkenaz, Berachot, Birkat HaMazon, Shir Hama'alot
+    status: needs-text
+  - id: birchas-hamazon-zimun
+    title: Zimun (invitation)
+    titleHe: זימון
+    group: Birchas Hamazon
+    instruction: "With 3+ men. With 10+: add Elokeinu."
+    status: needs-text
+  - id: birchas-hamazon-bmz-01-hazan
+    title: "Bracha 1: HaZan"
+    titleHe: הזן
+    group: Birchas Hamazon
+    sourceRef: Siddur Ashkenaz, Berachot, Birkat HaMazon, Birkat HaMazon
+    status: needs-text
+  - id: birchas-hamazon-bmz-02-haaretz
+    title: "Bracha 2: Al HaAretz"
+    titleHe: על הארץ
+    group: Birchas Hamazon
+    status: needs-text
+  - id: birchas-hamazon-bmz-03-yerushalayim
+    title: "Bracha 3: Bonei Yerushalayim"
+    titleHe: בונה ירושלים
+    group: Birchas Hamazon
+    status: needs-text
+  - id: birchas-hamazon-bmz-04-hatov
+    title: "Bracha 4: HaTov V'HaMeitiv"
+    titleHe: הטוב והמטיב
+    group: Birchas Hamazon
+    status: needs-text
+  - id: birchas-hamazon-bmz-harachamans
+    title: HaRachaman prayers
+    titleHe: הרחמן
+    group: Birchas Hamazon
+    status: needs-text
+  - id: birchas-hamazon-bmz-retzei
+    title: Retzei (Shabbos)
+    titleHe: רצה
+    group: Bmz Insertions
+    status: needs-text
+  - id: birchas-hamazon-bmz-yaaleh-vyavo
+    title: Ya'aleh V'Yavo
+    titleHe: יעלה ויבא
+    group: Bmz Insertions
+    status: needs-text
+  - id: birchas-hamazon-bmz-al-hanissim
+    title: Al HaNissim
+    titleHe: על הניסים
+    group: Bmz Insertions
+    status: needs-text

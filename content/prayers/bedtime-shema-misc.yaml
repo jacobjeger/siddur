@@ -1,0 +1,123 @@
+id: bedtime-shema-misc
+name: Bedtime Shema & Misc
+nameHe: קריאת שמע על המיטה ושונות
+category: other
+timeContext: anytime
+sections:
+  - id: bedtime-shema-misc-hamapil
+    title: HaMapil
+    titleHe: המפיל
+    group: Krias Shema Al Hamitah
+    status: needs-text
+  - id: bedtime-shema-misc-shema-bedtime
+    title: Shema (1st parsha)
+    titleHe: שמע
+    group: Krias Shema Al Hamitah
+    instruction: First parsha of Shema only
+    status: needs-text
+  - id: bedtime-shema-misc-hashkiveinu-bedtime
+    title: Hashkiveinu
+    titleHe: השכיבנו
+    group: Krias Shema Al Hamitah
+    status: needs-text
+  - id: bedtime-shema-misc-bedtime-pesukim
+    title: Bedtime Pesukim & Psalms
+    titleHe: פסוקים
+    group: Krias Shema Al Hamitah
+    instruction: Psalm 91, various pesukim - varies by nusach
+    status: needs-text
+  - id: bedtime-shema-misc-vidui-bedtime
+    title: Vidui / Ribono Shel Olam Hareini Mochel
+    titleHe: וידוי
+    group: Krias Shema Al Hamitah
+    status: needs-text
+  - id: bedtime-shema-misc-adon-olam-bedtime
+    title: Adon Olam
+    titleHe: אדון עולם
+    group: Krias Shema Al Hamitah
+    status: needs-text
+  - id: bedtime-shema-misc-havdala-pesukim
+    title: Hinei Kel Yeshuasi (pesukim)
+    titleHe: הנה קל ישועתי
+    group: Havdala
+    status: needs-text
+  - id: bedtime-shema-misc-havdala-brachos
+    title: Havdala Brachos (4 brachos)
+    titleHe: הבדלה
+    group: Havdala
+    instruction: Gafen, Besamim, Eish, HaMavdil
+    status: needs-text
+  - id: bedtime-shema-misc-hallel-full
+    title: Full Hallel (Psalms 113-118)
+    titleHe: הלל שלם
+    group: Hallel
+    instruction: "With bracha. Full: RH Sukkos, Chanukah, Shavuos, 1st days Pesach"
+    sourceRef: Siddur Ashkenaz, Festivals, Shalosh Regalim, Hallel
+    status: needs-text
+  - id: bedtime-shema-misc-hallel-half
+    title: Half Hallel
+    titleHe: חצי הלל
+    group: Hallel
+    instruction: Rosh Chodesh, Chol HaMoed Pesach, last days Pesach
+    status: needs-text
+  - id: bedtime-shema-misc-kaddish-chatzi
+    title: Chatzi Kaddish
+    titleHe: חצי קדיש
+    group: Kaddish Variations
+    sourceRef: Siddur Ashkenaz, Kaddish, Half Kaddish
+    status: needs-text
+  - id: bedtime-shema-misc-kaddish-shalem
+    title: Kaddish Shalem
+    titleHe: קדיש שלם
+    group: Kaddish Variations
+    sourceRef: Siddur Ashkenaz, Kaddish, Kaddish Shalem
+    status: needs-text
+  - id: bedtime-shema-misc-kaddish-yasom
+    title: Kaddish Yasom
+    titleHe: קדיש יתום
+    group: Kaddish Variations
+    sourceRef: Siddur Ashkenaz, Kaddish, Mourner's Kaddish
+    status: needs-text
+  - id: bedtime-shema-misc-kaddish-drabbanan
+    title: Kaddish D'Rabbanan
+    titleHe: קדיש דרבנן
+    group: Kaddish Variations
+    sourceRef: Siddur Ashkenaz, Kaddish, Kaddish d'Rabbanan
+    status: needs-text
+  - id: bedtime-shema-misc-kiddush-levana
+    title: Kiddush Levana
+    titleHe: קידוש לבנה
+    group: Special Prayers
+    status: needs-text
+  - id: bedtime-shema-misc-tefilas-haderech
+    title: Tefillas HaDerech
+    titleHe: תפילת הדרך
+    group: Special Prayers
+    sourceRef: Siddur Ashkenaz, Berachot, Tefillat HaDerekh
+    status: needs-text
+  - id: bedtime-shema-misc-hatoras-nedarim
+    title: Hatoras Nedarim
+    titleHe: התרת נדרים
+    group: Special Prayers
+    status: needs-text
+  - id: bedtime-shema-misc-al-hamichya
+    title: Al HaMichya / Me'ein Shalosh
+    titleHe: מעין שלוש
+    group: Special Prayers
+    sourceRef: Siddur Ashkenaz, Berachot, Birkat Hanehenin, Bracha Achat Me'ein Shalosh
+    status: needs-text
+  - id: bedtime-shema-misc-borei-nefashos
+    title: Borei Nefashos
+    titleHe: בורא נפשות
+    group: Special Prayers
+    status: needs-text
+  - id: bedtime-shema-misc-sheva-brachos
+    title: Sheva Brachos
+    titleHe: שבע ברכות
+    group: Special Prayers
+    status: needs-text
+  - id: bedtime-shema-misc-bris-milah
+    title: Bris Milah Brachos
+    titleHe: ברית מילה
+    group: Special Prayers
+    status: needs-text

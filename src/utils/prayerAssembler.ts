@@ -1,5 +1,5 @@
 import type { Tefila, PrayerSection, InsertionContext, ConditionalInsertion } from "../data/types";
-import { ALL_INSERTIONS } from "../data/prayers/insertions";
+import { ALL_INSERTIONS } from "../data/insertions";
 
 /**
  * Assemble a final prayer by applying conditional insertions based on the current date context.

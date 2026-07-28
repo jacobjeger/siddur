@@ -1,0 +1,50 @@
+# Categories drive the top-level grouping shown in the app.
+# Each category has an ordered list of tefila IDs. Reorder freely.
+# Tefila IDs must match `id:` in content/prayers/*.yaml files.
+
+categories:
+  - id: shacharis
+    name: Shacharis
+    nameHe: שחרית
+    icon: sunny
+    tefilos:
+      - shacharis
+  - id: mincha
+    name: Mincha
+    nameHe: מנחה
+    icon: partly-sunny
+    tefilos:
+      - mincha
+  - id: maariv
+    name: Maariv
+    nameHe: מעריב
+    icon: moon
+    tefilos:
+      - maariv
+  - id: blessings
+    name: Brachos
+    nameHe: ברכות
+    icon: heart
+    tefilos:
+      - birchas-hamazon
+  - id: tehillim
+    name: Tehillim
+    nameHe: תהלים
+    icon: book
+    tefilos: []
+  - id: holidays
+    name: Holidays
+    nameHe: חגים
+    icon: calendar
+    tefilos: []
+  - id: lifecycle
+    name: Lifecycle
+    nameHe: מעגל החיים
+    icon: people
+    tefilos: []
+  - id: other
+    name: Other
+    nameHe: שונות
+    icon: ellipsis-horizontal
+    tefilos:
+      - bedtime-shema-misc

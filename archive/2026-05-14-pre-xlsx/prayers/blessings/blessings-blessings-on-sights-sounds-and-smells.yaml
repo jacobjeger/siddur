@@ -1,0 +1,44 @@
+id: blessings-blessings-on-sights-sounds-and-smells
+name: Blessings on Sights Sounds and Smells
+nameHe: ברכת הנהנין
+category: blessings
+timeContext: anytime
+sections:
+  - id: blessings-birchot-hareach
+    title: Blessings on Smells
+    titleHe: ברכות הריח
+    instruction: "ברכות הריח:"
+    text: "בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא מִינֵי בְשֹמִים:"
+  - id: blessings-birchot-hareiyah
+    title: Blessings on Sights
+    titleHe: ברכות הראיה
+    instruction: "ברכות הראיה:"
+    text: |-
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹשֹה מַעֲשֹה בְּרֵאשִׁית:
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשֹה אֶת הָיַּם הַגָּדוֹל:
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹכֵר הַבְּרִית וְנֶאֱמָן בְּרִיתוֹ וְקַיָּם בַּמַאֲמָרוֹ:
+  - id: blessings-birchot-hashmiah
+    title: Blessings on Sounds
+    titleHe: ברכות השמיעה
+    instruction: "ברכות השמיעה:"
+    text: |-
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, שׁכֹּחוֹ וּגְבוּרָתוֹ מָלֵא עוֹלָם:
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַטּוֹב וְהַמֵּטִיב:
+      בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, דַּיַּן הָאֱמֶת:
+  - id: blessings-birkat-hakeshet
+    title: Blessing on a Rainbow
+    titleHe: ברכת הקשת
+    instruction: "הרואה קשת צריך לברך ברכה זו, ואסור להסתכל בו:"
+    text: "בָּרוּךְ אַתָּה יְ‑יָ אֱ‑לֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹכֵר הַבְּרִית נֶאֱמָן בִּבְרִיתוֹ וְקַיָּם בְּמַאֲמָרוֹ:"
+  - id: blessings-brakim-reamim
+    title: Lightning and Thunder
+    titleHe: ברקים ורעמים
+    instruction: |-
+      על הברקים ועל הרעמים:
+      על הברקים מברך:
+    text: "בָּרוּךְ עוֹשֹה מַעֲשֹה בְרֵאשִׁית:"
+  - id: blessings-brakim-reamim-1
+    title: Lightning and Thunder
+    titleHe: ברקים ורעמים
+    instruction: "על הרעמים מברך:"
+    text: "בָּרוּךְ שֶׁכֹּחוֹ וּגְבוּרָתוֹ מָלֵא עוֹלָם:"

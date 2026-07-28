@@ -1,0 +1,106 @@
+categories:
+  - id: shacharis
+    name: Shacharis
+    nameHe: שחרית
+    icon: sunny
+    tefilos:
+      - shacharis-preparatory-prayers
+      - shacharis-pesukei-dezimra
+      - shacharis-blessings-of-the-shema
+      - shacharis-amidah
+      - shacharis-post-amidah
+      - shacharis-torah-reading
+      - shacharis-concluding-prayers
+      - shacharis-post-service
+  - id: mincha
+    name: Mincha
+    nameHe: מנחה
+    icon: partly-sunny
+    tefilos:
+      - mincha-ashrei
+      - mincha-amida
+      - mincha-post-amidah
+      - mincha-concluding-prayers
+  - id: maariv
+    name: Maariv
+    nameHe: מעריב
+    icon: moon
+    tefilos:
+      - maariv-vehu-rachum
+      - maariv-barchu
+      - maariv-blessings-of-the-shema
+      - maariv-amidah
+      - maariv-kaddish-shalem
+      - maariv-additions-for-motzaei-shabbat
+      - maariv-sefirat-haomer
+      - maariv-alenu
+      - maariv-mourners-kaddish
+      - maariv-ledavid
+      - maariv-birkat-halevana
+      - maariv-keriat-shema-al-hamita
+  - id: blessings
+    name: Brachos
+    nameHe: ברכות
+    icon: heart
+    tefilos:
+      - blessings-birkat-hamazon
+      - blessings-eating
+      - blessings-blessings-on-sights-sounds-and-smells
+      - blessings-al-hamichya
+      - blessings-borei-nefashos
+      - blessings-sheva-brachos
+  - id: tehillim
+    name: Tehillim
+    nameHe: תהלים
+    icon: book
+    tefilos: []
+  - id: holidays
+    name: Holidays
+    nameHe: חגים
+    icon: calendar
+    tefilos:
+      - holidays-hallel
+      - holidays-musaf-amidah-for-rosh-chodesh
+      - holidays-amida-for-maariv-shacharit-mincha
+      - holidays-mussaf
+      - holidays-festivals-prayer-for-dew
+      - holidays-festivals-prayer-for-rain
+      - holidays-prayers-in-the-sukkah
+      - holidays-blessing-on-lulav
+      - holidays-hoshaanot
+      - holidays-service-for-lighting-chanukah-candles
+      - holidays-fast-of-gedalia
+      - holidays-ten-of-tevet
+      - holidays-fast-of-esther
+      - holidays-seventeen-of-tamuz
+      - holidays-yom-kippur-katan
+      - holidays-bahab
+  - id: lifecycle
+    name: Lifecycle
+    nameHe: מעגל החיים
+    icon: people
+    tefilos:
+      - lifecycle-bris-milah
+      - lifecycle-pidyon-haben
+      - lifecycle-to-mourners
+      - lifecycle-at-cemetery
+  - id: other
+    name: Other
+    nameHe: שונות
+    icon: ellipsis-horizontal
+    tefilos:
+      - other-birkhot-hamitzvot
+      - other-asher-yatzar-etchem-badin
+      - other-tefillat-haderech
+      - other-havinenu
+      - other-kaddish
+      - other-prayer-for-state-of-israel
+      - other-eruv-tavshilin
+      - other-separating-challah
+      - other-separating-trumos
+      - other-ayin-hora
+      - other-physicians-prayer
+      - other-learning-prayer
+      - other-amelioration-of-dream
+      - other-motzei-shabbos-service
+      - other-tikun-chatzos

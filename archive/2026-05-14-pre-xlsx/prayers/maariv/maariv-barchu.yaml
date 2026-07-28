@@ -1,0 +1,16 @@
+id: maariv-barchu
+name: Barchu
+nameHe: מעריב
+category: maariv
+timeContext: maariv
+sections:
+  - id: maariv-barchu
+    title: Barchu
+    titleHe: ברכו
+    instruction: "ואומר שליח צבור:"
+    text: "בָּרְ֒כוּ אֶת יְהֹוָה הַמְ֒בֹרָךְ:"
+  - id: maariv-barchu-1
+    title: Barchu
+    titleHe: ברכו
+    instruction: "ועונין הקהל:"
+    text: "בָּרוּךְ יְהֹוָה הַמְ֒בֹרָךְ לְעוֹלָם וָעֶד:"

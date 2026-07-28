@@ -11,6 +11,12 @@ export interface PrayerSection {
   /** Instruction/rubric shown before the section */
   instruction?: string;
   instructionHe?: string;
+  /** Group heading from the source workbook (e.g., "Pesukei D'Zimra") */
+  group?: string;
+  /** Sefaria ref or other source pointer for this section */
+  sourceRef?: string;
+  /** Editorial status: "complete" | "needs-text" | "draft" | etc. — free-form */
+  status?: string;
 }
 
 export type NusachVariants = Partial<Record<Nusach, string>>;

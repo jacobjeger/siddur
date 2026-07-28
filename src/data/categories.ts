@@ -1,12 +1,4 @@
-import type { TefilaCategoryInfo } from "./types";
+// Re-export from the YAML-driven generated module.
+// Edit content/categories.yaml and run `npm run build:prayers` to update.
 
-export const TEFILA_CATEGORIES: TefilaCategoryInfo[] = [
-  { id: "shacharis", name: "Shacharis", nameHe: "שחרית", icon: "sunny" },
-  { id: "mincha", name: "Mincha", nameHe: "מנחה", icon: "partly-sunny" },
-  { id: "maariv", name: "Maariv", nameHe: "מעריב", icon: "moon" },
-  { id: "blessings", name: "Brachos", nameHe: "ברכות", icon: "heart" },
-  { id: "tehillim", name: "Tehillim", nameHe: "תהלים", icon: "book" },
-  { id: "holidays", name: "Holidays", nameHe: "חגים", icon: "calendar" },
-  { id: "lifecycle", name: "Lifecycle", nameHe: "מעגל החיים", icon: "people" },
-  { id: "other", name: "Other", nameHe: "שונות", icon: "ellipsis-horizontal" },
-];
+export { TEFILA_CATEGORIES } from "./generated/prayers";
