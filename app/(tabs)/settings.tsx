@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Pressable, Switch } from "react-native";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
-import { useTheme } from "../../src/hooks/useTheme";
+import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
+import { LocationSettings } from "../../src/components/settings/LocationSettings";
 
 type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
 
@@ -249,6 +250,8 @@ export default function SettingsTab() {
         </View>
       </View>
 
+      <LocationSettings />
+
       {/* About */}
       <View
         style={{
@@ -289,7 +292,7 @@ function SettingRow({
   label: string;
   value: boolean;
   onToggle: (v: boolean) => void;
-  colors: any;
+  colors: ThemeColors;
   isLast?: boolean;
 }) {
   return (

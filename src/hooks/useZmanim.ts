@@ -27,20 +27,37 @@ function dayKey(date: Date): string {
 }
 
 export function useZmanim(date?: Date): UseZmanimResult {
-  const { location, loading, error, setLocation, setLoading, setError } =
-    useLocationStore();
-  const { candleLightingOffset, havdalaMethod, inIsrael } = useSettingsStore();
+  const { location, loading, error, setLoading, setError } = useLocationStore();
+  const {
+    candleLightingOffset,
+    havdalaMethod,
+    inIsrael,
+    locationMode,
+    manualLocation,
+  } = useSettingsStore();
   const [zmanim, setZmanim] = useState<ZmanimData | null>(null);
   const [today, setToday] = useState(() => dayKey(new Date()));
 
-  // Fetch location once, shared across all hook instances.
-  useEffect(() => {
-    if (location) return;
+  const manual = locationMode === "manual" ? manualLocation : null;
+  // Changing location mode or the manual pin must re-resolve the location.
+  const manualKey = manual ? `${manual.lat},${manual.lng},${manual.name}` : "";
 
+  useEffect(() => {
+    const cached = useLocationStore.getState().location;
+
+    // If the user picked a manual location, a cached GPS/fallback result is
+    // stale (and vice versa).
+    const matchesMode = manual
+      ? cached?.source === "manual" &&
+        cached.latitude === manual.lat &&
+        cached.longitude === manual.lng
+      : cached?.source !== "manual";
+
+    if (cached && matchesMode) return;
     if (inFlightLocation) return;
 
     setLoading(true);
-    inFlightLocation = getCurrentLocation()
+    inFlightLocation = getCurrentLocation(manual)
       .then((loc) => {
         useLocationStore.getState().setLocation(loc);
       })
@@ -54,7 +71,9 @@ export function useZmanim(date?: Date): UseZmanimResult {
       .finally(() => {
         inFlightLocation = null;
       });
-  }, [location, setLocation, setLoading, setError]);
+    // `manual` is captured via manualKey to keep the dep list stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, manualKey, setLoading, setError]);
 
   // Roll over when the civil date changes, so an app left open overnight does
   // not keep showing yesterday's zmanim.
