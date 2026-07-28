@@ -83,6 +83,32 @@ export function Card({
   );
 }
 
+/**
+ * Group heading for a run of related cards. Settings was 13 ungrouped cards in
+ * one scroll, with prayer and zmanim settings interleaved arbitrarily.
+ */
+export function SectionHeader({ title }: { title: string }) {
+  const { colors } = useTheme();
+
+  return (
+    <Text
+      accessibilityRole="header"
+      style={{
+        fontSize: type.eyebrow,
+        fontWeight: "700",
+        color: colors.textMuted,
+        textTransform: "uppercase",
+        letterSpacing: 0.8,
+        marginTop: spacing.xl,
+        marginBottom: spacing.sm,
+        marginHorizontal: spacing.lg + spacing.xs,
+      }}
+    >
+      {title}
+    </Text>
+  );
+}
+
 export function Chip({
   label,
   selected,

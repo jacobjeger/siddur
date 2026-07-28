@@ -1,22 +1,23 @@
-import { View, Text, ScrollView, Pressable, Switch } from "react-native";
+import { View, Text, ScrollView, Switch } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
-import { Chip } from "../../src/components/common/ui";
-import { MIN_TOUCH_TARGET } from "../../src/theme/tokens";
-import { LocationSettings } from "../../src/components/settings/LocationSettings";
+import { Card, Chip, SectionHeader } from "../../src/components/common/ui";
+import { spacing } from "../../src/theme/tokens";
 import { ALL_TEFILOS } from "../../src/data/prayers";
-
-type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
-
-const NUSACH_OPTIONS: { value: Nusach; label: string }[] = [
-  { value: "ashkenaz", label: "Ashkenaz" },
-  { value: "sefard", label: "Sefard" },
-  { value: "edot_hamizrach", label: "Edot HaMizrach" },
-  { value: "ari", label: "Ari (Chabad)" },
-];
-
-const CANDLE_LIGHTING_OPTIONS = [18, 20, 22, 30, 40];
+import {
+  NusachCard,
+  MinhagCard,
+  TextSizeCard,
+} from "../../src/components/settings/prayerSettings";
+import {
+  LocationCard,
+  IsraelDiasporaCard,
+  LuachCard,
+  CandleLightingCard,
+  HavdalaCard,
+  CustomZmanimCards,
+} from "../../src/components/settings/zmanimSettings";
 
 /** No English exists in the corpus yet, so the toggle would be inert. */
 const HAS_TRANSLATIONS = ALL_TEFILOS.some((t) =>
@@ -25,20 +26,14 @@ const HAS_TRANSLATIONS = ALL_TEFILOS.some((t) =>
 
 export default function SettingsTab() {
   const {
-    nusach,
-    textSize,
     showEnglish,
     darkMode,
     keepScreenOn,
     timeFormat,
-    candleLightingOffset,
-    setNusach,
-    setTextSize,
     setShowEnglish,
     setDarkMode,
     setKeepScreenOn,
     setTimeFormat,
-    setCandleLightingOffset,
   } = useSettingsStore();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -49,223 +44,108 @@ export default function SettingsTab() {
       <View style={{ height: insets.top, backgroundColor: colors.headerBg }} />
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingBottom: 24 }}
-      >
-      {/* Nusach */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
+        contentContainerStyle={{
+          paddingHorizontal: spacing.lg,
+          paddingBottom: spacing.xxl,
         }}
       >
-        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
-          Nusach
-        </Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
-          {NUSACH_OPTIONS.map((opt) => (
-            <Chip
-              key={opt.value}
-              label={opt.label}
-              selected={nusach === opt.value}
-              onPress={() => setNusach(opt.value)}
-            />
-          ))}
+        {/*
+          This screen was 13 ungrouped cards in one scroll, with prayer and
+          zmanim settings interleaved — Nusach sat after every zmanim control,
+          and Candle Lighting was stranded away from the rest of them. The
+          grouping now matches the three independent axes the app models:
+          nusach (which text), minhag (which customs) and luach (which times).
+        */}
+        <SectionHeader title="Prayer" />
+        <View style={{ gap: spacing.md }}>
+          <NusachCard />
+          <MinhagCard />
+          <TextSizeCard />
+          {HAS_TRANSLATIONS && (
+            <Card title="Translation">
+              <SettingRow
+                label="Show English"
+                value={showEnglish}
+                onToggle={setShowEnglish}
+                colors={colors}
+                isLast
+              />
+            </Card>
+          )}
         </View>
-      </View>
 
-      {/* Text Size */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
-          Text Size
-        </Text>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Pressable
-            onPress={() => setTextSize(Math.max(16, textSize - 2))}
-            accessibilityRole="button"
-            accessibilityLabel="Decrease text size"
-            style={({ pressed }) => ({
-              width: MIN_TOUCH_TARGET,
-              height: MIN_TOUCH_TARGET,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
-              borderRadius: 8,
-            })}
-          >
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>−</Text>
-          </Pressable>
-          <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
-            {textSize}pt
+        <SectionHeader title="Zmanim" />
+        <View style={{ gap: spacing.md }}>
+          <LuachCard />
+          <LocationCard />
+          <IsraelDiasporaCard />
+          <CandleLightingCard />
+          <HavdalaCard />
+          <CustomZmanimCards />
+        </View>
+
+        <SectionHeader title="App" />
+        <View style={{ gap: spacing.md }}>
+          <Card title="Appearance" subtitle="Dark mode">
+            <View
+              style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+            >
+              {(["off", "on", "system"] as const).map((mode) => (
+                <Chip
+                  key={mode}
+                  label={mode[0].toUpperCase() + mode.slice(1)}
+                  selected={darkMode === mode}
+                  onPress={() => setDarkMode(mode)}
+                />
+              ))}
+            </View>
+          </Card>
+
+          <Card title="Behaviour">
+            <SettingRow
+              label="Keep screen on while davening"
+              value={keepScreenOn}
+              onToggle={setKeepScreenOn}
+              colors={colors}
+            />
+            <SettingRow
+              label="24-hour time"
+              value={timeFormat === "24h"}
+              onToggle={(v) => setTimeFormat(v ? "24h" : "12h")}
+              colors={colors}
+              isLast
+            />
+          </Card>
+        </View>
+
+        <SectionHeader title="About" />
+        <Card>
+          {/*
+            CC BY requires crediting the originator of the text, not the
+            distributor. Sefaria distributes it; Metsudah and Daat are the
+            licensors. See docs/text-licenses.md.
+          */}
+          <Text style={{ fontSize: 13, color: colors.textMuted }}>
+            Hebrew text: The Metsudah Siddur (Avrohom Davis), licensed CC BY, and
+            Daat Siddur Ashkenaz (public domain). Nusach Sefard text: Torat Emet,
+            licensed CC BY-NC-SA — used here under its non-commercial terms.
           </Text>
-          <Pressable
-            onPress={() => setTextSize(Math.min(32, textSize + 2))}
-            accessibilityRole="button"
-            accessibilityLabel="Increase text size"
-            style={({ pressed }) => ({
-              width: MIN_TOUCH_TARGET,
-              height: MIN_TOUCH_TARGET,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
-              borderRadius: 8,
-            })}
+          <Text
+            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>+</Text>
-          </Pressable>
-        </View>
-      </View>
-
-      {/* Toggles */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        {/*
-          Hidden while the dataset has no translations at all — a visible switch
-          that changes nothing reads as a broken setting. See
-          docs/remaining-text.md; Metsudah (CC BY) or the Sefaria Community
-          Translation (CC0) are the license-clean sources when English lands.
-        */}
-        {HAS_TRANSLATIONS && (
-          <SettingRow
-            label="Show English Translation"
-            value={showEnglish}
-            onToggle={setShowEnglish}
-            colors={colors}
-          />
-        )}
-        <SettingRow
-          label="Keep Screen On While Davening"
-          value={keepScreenOn}
-          onToggle={setKeepScreenOn}
-          colors={colors}
-        />
-        <SettingRow
-          label="24-Hour Time"
-          value={timeFormat === "24h"}
-          onToggle={(v) => setTimeFormat(v ? "24h" : "12h")}
-          colors={colors}
-          isLast
-        />
-      </View>
-
-      {/* Dark Mode */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 12 }}>
-          Dark Mode
-        </Text>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          {(["off", "on", "system"] as const).map((mode) => (
-            <Chip
-              key={mode}
-              label={mode[0].toUpperCase() + mode.slice(1)}
-              selected={darkMode === mode}
-              onPress={() => setDarkMode(mode)}
-            />
-          ))}
-        </View>
-      </View>
-
-      {/* Candle Lighting Offset */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 4 }}>
-          Candle Lighting
-        </Text>
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>
-          Minutes before shkia
-        </Text>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          {CANDLE_LIGHTING_OPTIONS.map((min) => (
-            <Chip
-              key={min}
-              label={`${min}${min === 40 ? " (Jer.)" : ""}`}
-              selected={candleLightingOffset === min}
-              onPress={() => setCandleLightingOffset(min)}
-            />
-          ))}
-        </View>
-      </View>
-
-      <LocationSettings />
-
-      {/* About */}
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginTop: 16,
-          marginHorizontal: 16,
-          marginBottom: 32,
-          borderRadius: 12,
-          padding: 16,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        <Text style={{ fontSize: 17, fontWeight: "bold", color: colors.text, marginBottom: 8 }}>
-          About
-        </Text>
-        {/*
-          CC BY requires crediting the originator of the text, not the
-          distributor. Sefaria distributes it; Metsudah and Daat are the
-          licensors. See docs/text-licenses.md.
-        */}
-        <Text style={{ fontSize: 13, color: colors.textMuted }}>
-          Hebrew text: The Metsudah Siddur (Avrohom Davis), licensed CC BY, and
-          Daat Siddur Ashkenaz (public domain). Nusach Sefard text: Torat Emet,
-          licensed CC BY-NC-SA — used here under its non-commercial terms.
-        </Text>
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
-          Texts distributed via Sefaria (sefaria.org)
-        </Text>
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
-          Zmanim powered by KosherJava/KosherZmanim
-        </Text>
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4 }}>
-          Minyan data from GoDaven.com
-        </Text>
-      </View>
+            Texts distributed via Sefaria (sefaria.org)
+          </Text>
+          <Text
+            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
+          >
+            Zmanim powered by KosherJava/KosherZmanim
+          </Text>
+          <Text
+            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
+          >
+            Minyan data from GoDaven.com
+          </Text>
+        </Card>
       </ScrollView>
     </View>
   );
@@ -290,15 +170,17 @@ function SettingRow({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: 12,
+        paddingVertical: spacing.md,
         borderBottomWidth: isLast ? 0 : 1,
         borderBottomColor: colors.border,
+        minHeight: 44,
       }}
     >
       <Text style={{ fontSize: 16, color: colors.text, flex: 1 }}>{label}</Text>
       <Switch
         value={value}
         onValueChange={onToggle}
+        accessibilityLabel={label}
         trackColor={{ false: colors.border, true: colors.accent }}
         thumbColor={value ? colors.onAccent : colors.surfaceSecondary}
       />
