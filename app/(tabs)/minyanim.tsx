@@ -1,170 +1,325 @@
-import { View, Text, Pressable, ScrollView, Linking } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  TextInput,
+  ActivityIndicator,
+  Linking,
+} from "react-native";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
-import { useTheme } from "../../src/hooks/useTheme";
+import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
+import { useMinyanim } from "../../src/hooks/useMinyanim";
+import {
+  useSettingsStore,
+  type Nusach,
+} from "../../src/stores/useSettingsStore";
+import { NUSACH_LABELS } from "../../src/utils/constants";
+import { formatDistance } from "../../src/utils/distance";
+import { SLOT_LABELS, formatMinyanTime } from "../../src/utils/minyanFormatting";
+import type { TefilaSlot } from "../../src/services/minyanim/types";
 
-const SAMPLE_MINYANIM = [
-  {
-    id: "1",
-    name: "Young Israel",
-    type: "Shacharis",
-    time: "6:45 AM",
-    nusach: "Ashkenaz",
-    distance: "0.3 mi",
-  },
-  {
-    id: "2",
-    name: "Chabad House",
-    type: "Shacharis",
-    time: "7:30 AM",
-    nusach: "Ari",
-    distance: "0.8 mi",
-  },
-  {
-    id: "3",
-    name: "Sephardic Center",
-    type: "Mincha/Maariv",
-    time: "5:15 PM",
-    nusach: "Edot HaMizrach",
-    distance: "1.2 mi",
-  },
-  {
-    id: "4",
-    name: "Beis Medrash",
-    type: "Maariv",
-    time: "9:00 PM",
-    nusach: "Ashkenaz",
-    distance: "0.5 mi",
-  },
-];
+const SLOTS: TefilaSlot[] = ["shacharis", "mincha", "maariv"];
+const NUSACHIM: Nusach[] = ["ashkenaz", "sefard", "edot_hamizrach", "ari"];
 
-export default function MinyanomTab() {
+function FilterChip({
+  label,
+  selected,
+  onPress,
+  colors,
+}: {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+  colors: ThemeColors;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={{
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 16,
+        borderWidth: 1,
+        backgroundColor: selected ? colors.primary : colors.surface,
+        borderColor: selected ? colors.primary : colors.border,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 13,
+          fontWeight: "500",
+          color: selected ? "#ffffff" : colors.text,
+        }}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
+function CenteredMessage({
+  icon,
+  title,
+  body,
+  colors,
+  children,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  title: string;
+  body: string;
+  colors: ThemeColors;
+  children?: React.ReactNode;
+}) {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 32,
+      }}
+    >
+      <Ionicons name={icon} size={40} color={colors.textMuted} />
+      <Text
+        style={{
+          color: colors.text,
+          fontSize: 16,
+          fontWeight: "600",
+          marginTop: 10,
+          textAlign: "center",
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{
+          color: colors.textSecondary,
+          marginTop: 4,
+          textAlign: "center",
+        }}
+      >
+        {body}
+      </Text>
+      {children}
+    </View>
+  );
+}
+
+export default function MinyanimTab() {
   const { colors } = useTheme();
+  const router = useRouter();
+  const timeFormat = useSettingsStore((s) => s.timeFormat);
+
+  const [search, setSearch] = useState("");
+  const [nusach, setNusach] = useState<Nusach | null>(null);
+  const [slot, setSlot] = useState<TefilaSlot | null>(null);
+
+  const { data, isLoading, isError, error, refetch, isLive } = useMinyanim({
+    search,
+    nusach,
+    slot,
+  });
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <LocationDisplay />
 
-      <ScrollView style={{ flex: 1 }}>
-        {/* Info banner */}
+      {!isLive && (
         <View
           style={{
             marginHorizontal: 16,
-            marginTop: 16,
+            marginTop: 12,
+            padding: 12,
+            borderRadius: 10,
             backgroundColor: colors.primaryLight,
-            borderRadius: 12,
-            padding: 16,
             borderWidth: 1,
             borderColor: colors.border,
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
-            <Ionicons name="information-circle" size={20} color={colors.primary} />
-            <Text style={{ fontSize: 14, fontWeight: "bold", color: colors.primary, marginLeft: 8 }}>
-              Minyan Finder Preview
-            </Text>
-          </View>
-          <Text style={{ fontSize: 14, color: colors.textSecondary }}>
-            Live minyan data from GoDaven integration is coming soon.
-            Below is a preview of the experience.
-          </Text>
-        </View>
-
-        {/* Sample minyanim */}
-        <View style={{ marginHorizontal: 16, marginTop: 16 }}>
+          <Ionicons
+            name="information-circle-outline"
+            size={16}
+            color={colors.primary}
+          />
           <Text
             style={{
+              color: colors.textSecondary,
               fontSize: 12,
-              fontWeight: "bold",
-              color: colors.textMuted,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              marginBottom: 8,
-              paddingHorizontal: 4,
+              marginLeft: 6,
+              flex: 1,
             }}
           >
-            Nearby Minyanim
+            Sample data — live GoDaven minyanim are not connected yet.
           </Text>
-          <View
+        </View>
+      )}
+
+      <View style={{ paddingHorizontal: 16, paddingTop: 12 }}>
+        <TextInput
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search by name or address"
+          placeholderTextColor={colors.textMuted}
+          style={{
+            borderWidth: 1,
+            borderColor: colors.border,
+            borderRadius: 10,
+            paddingHorizontal: 12,
+            paddingVertical: 9,
+            color: colors.text,
+            backgroundColor: colors.surface,
+          }}
+        />
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 8, paddingVertical: 10 }}
+        >
+          {SLOTS.map((s) => (
+            <FilterChip
+              key={s}
+              label={SLOT_LABELS[s]}
+              selected={slot === s}
+              onPress={() => setSlot(slot === s ? null : s)}
+              colors={colors}
+            />
+          ))}
+          {NUSACHIM.map((n) => (
+            <FilterChip
+              key={n}
+              label={NUSACH_LABELS[n] ?? n}
+              selected={nusach === n}
+              onPress={() => setNusach(nusach === n ? null : n)}
+              colors={colors}
+            />
+          ))}
+        </ScrollView>
+      </View>
+
+      {isLoading ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={{ color: colors.textSecondary, marginTop: 12 }}>
+            Loading minyanim...
+          </Text>
+        </View>
+      ) : isError ? (
+        <CenteredMessage
+          icon="cloud-offline-outline"
+          title="Couldn't load minyanim"
+          body={error instanceof Error ? error.message : "Something went wrong."}
+          colors={colors}
+        >
+          <Pressable
+            onPress={() => refetch()}
             style={{
-              backgroundColor: colors.surface,
-              borderRadius: 12,
-              overflow: "hidden",
-              borderWidth: 1,
-              borderColor: colors.border,
+              marginTop: 14,
+              paddingHorizontal: 18,
+              paddingVertical: 9,
+              borderRadius: 8,
+              backgroundColor: colors.primary,
             }}
           >
-            {SAMPLE_MINYANIM.map((minyan, index) => (
-              <View
-                key={minyan.id}
-                style={{
-                  paddingHorizontal: 16,
-                  paddingVertical: 12,
-                  borderBottomWidth: index < SAMPLE_MINYANIM.length - 1 ? 1 : 0,
-                  borderBottomColor: colors.border,
-                }}
-              >
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
-                      {minyan.name}
-                    </Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
-                      <View
-                        style={{
-                          backgroundColor: colors.primaryLight,
-                          borderRadius: 4,
-                          paddingHorizontal: 8,
-                          paddingVertical: 2,
-                          marginRight: 8,
-                        }}
-                      >
-                        <Text style={{ fontSize: 12, fontWeight: "500", color: colors.primary }}>
-                          {minyan.type}
-                        </Text>
-                      </View>
-                      <Text style={{ fontSize: 12, color: colors.textMuted }}>
-                        {minyan.nusach}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={{ alignItems: "flex-end" }}>
-                    <Text style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}>
-                      {minyan.time}
-                    </Text>
-                    <Text style={{ fontSize: 12, color: colors.textMuted, marginTop: 4 }}>
-                      {minyan.distance}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
+            <Text style={{ color: "#ffffff", fontWeight: "600" }}>Retry</Text>
+          </Pressable>
+        </CenteredMessage>
+      ) : !data || data.length === 0 ? (
+        <CenteredMessage
+          icon="search-outline"
+          title="No minyanim found"
+          body="Try clearing the filters or widening your search."
+          colors={colors}
+        />
+      ) : (
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+        >
+          {data.map((minyan) => {
+            const next = slot
+              ? minyan.times.find((t) => t.slot === slot)
+              : minyan.times[0];
 
-        {/* GoDaven link */}
-        <View style={{ marginHorizontal: 16, marginTop: 16, marginBottom: 32 }}>
+            return (
+              <Pressable
+                key={minyan.id}
+                onPress={() => router.push(`/minyan/${minyan.id}`)}
+                style={({ pressed }) => ({
+                  backgroundColor: pressed
+                    ? colors.surfaceSecondary
+                    : colors.surface,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  padding: 14,
+                  marginBottom: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                })}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "600",
+                      color: colors.text,
+                    }}
+                  >
+                    {minyan.name}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: colors.textMuted,
+                      marginTop: 2,
+                    }}
+                  >
+                    {NUSACH_LABELS[minyan.nusach] ?? minyan.nusach}
+                    {minyan.distanceKm != null
+                      ? ` · ${formatDistance(minyan.distanceKm, "mi")}`
+                      : ""}
+                  </Text>
+                  {next && (
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: colors.textSecondary,
+                        marginTop: 4,
+                      }}
+                    >
+                      {SLOT_LABELS[next.slot]}{" "}
+                      {formatMinyanTime(next.time, timeFormat)}
+                    </Text>
+                  )}
+                </View>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={colors.textMuted}
+                />
+              </Pressable>
+            );
+          })}
+
           <Pressable
             onPress={() => Linking.openURL("https://www.godaven.com")}
-            style={({ pressed }) => ({
-              borderWidth: 1,
-              borderColor: colors.border,
-              borderRadius: 12,
-              paddingHorizontal: 24,
-              paddingVertical: 16,
-              alignItems: "center",
-              backgroundColor: pressed ? colors.surfaceSecondary : colors.surface,
-              flexDirection: "row",
-              justifyContent: "center",
-            })}
+            style={{ marginTop: 8, paddingVertical: 12, alignItems: "center" }}
           >
-            <Ionicons name="globe-outline" size={20} color={colors.text} />
-            <Text style={{ color: colors.text, fontSize: 16, marginLeft: 8 }}>
-              Find Minyanim on GoDaven.com
+            <Text style={{ color: colors.primary, fontSize: 14 }}>
+              Browse more on GoDaven.com
             </Text>
           </Pressable>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
     </View>
   );
 }
