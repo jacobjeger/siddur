@@ -17,19 +17,12 @@ export function useKeepScreenOn() {
         // Not supported on every platform (notably web); harmless.
       });
     } else {
-      try {
-        deactivateKeepAwake(TAG);
-      } catch {
-        // Already inactive.
-      }
+      // Returns a promise; rejects harmlessly if already inactive.
+      void Promise.resolve(deactivateKeepAwake(TAG)).catch(() => {});
     }
 
     return () => {
-      try {
-        deactivateKeepAwake(TAG);
-      } catch {
-        // Already inactive.
-      }
+      void Promise.resolve(deactivateKeepAwake(TAG)).catch(() => {});
     };
   }, [keepScreenOn]);
 }

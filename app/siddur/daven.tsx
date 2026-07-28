@@ -8,6 +8,7 @@ import { HebrewText } from "../../src/components/common/HebrewText";
 import { SectionBody } from "../../src/components/common/SectionBody";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
+import { useKeepScreenOn } from "../../src/hooks/useKeepScreenOn";
 import { assemblePrayer } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import type { Tefila, PrayerSection } from "../../src/data/types";
@@ -41,6 +42,9 @@ export default function DavenScreen() {
   const { tefilaIds } = useLocalSearchParams<{ tefilaIds: string }>();
   const { nusach, textSize, showEnglish } = useSettingsStore();
   const { colors } = useTheme();
+  // Scoped to the davening screens so it matches its label; mounting it at the
+  // app root kept the screen awake on every tab.
+  useKeepScreenOn();
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const sectionYPositions = useRef<Record<string, number>>({});

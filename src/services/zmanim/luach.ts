@@ -33,7 +33,6 @@ export interface LuachPreset {
   /** Degrees below the horizon for misheyakir; null uses the library default. */
   misheyakirDegrees: number | null;
   useElevation: boolean;
-  candleLightingOffset: number;
   /**
    * When set, the whole day is computed by dedicated library methods rather
    * than by composing alos/tzeis. Used by shitos that define their own shaah
@@ -51,7 +50,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: "8.5deg",
     misheyakirDegrees: 10.2,
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: null,
   },
   mga72: {
@@ -62,7 +60,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: "72min",
     misheyakirDegrees: 11.5,
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: null,
   },
   baal_hatanya: {
@@ -76,7 +73,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     // Chabad's published times are sea-level; netz amiti is a degree-based
     // calculation, not an elevation adjustment.
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: "baal_hatanya",
   },
   ateret_torah: {
@@ -88,7 +84,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: null,
     misheyakirDegrees: 10.2,
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: "ateret_torah",
   },
   rav_moshe: {
@@ -99,7 +94,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: "50min",
     misheyakirDegrees: 11.5,
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: null,
   },
   roy: {
@@ -112,7 +106,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     misheyakirDegrees: null,
     // Elevation is decided per-luach at runtime: ON in Israel, OFF in chu"l.
     useElevation: false,
-    candleLightingOffset: 20,
     dedicated: "roy",
   },
   custom: {
@@ -123,7 +116,6 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: null,
     misheyakirDegrees: null,
     useElevation: false,
-    candleLightingOffset: 18,
     dedicated: null,
   },
 };

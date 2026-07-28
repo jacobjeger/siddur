@@ -6,13 +6,11 @@ import * as SplashScreen from "expo-system-ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../src/hooks/useTheme";
-import { useKeepScreenOn } from "../src/hooks/useKeepScreenOn";
 
 const queryClient = new QueryClient();
 
 function AppStack() {
   const { colors } = useTheme();
-  useKeepScreenOn();
 
   return (
     <>

@@ -6,6 +6,7 @@ import { useSettingsStore } from "../stores/useSettingsStore";
 import { getCurrentLocation } from "../services/location/locationService";
 import { resolveInIsrael } from "../utils/geoRegion";
 import { LUACH_PRESETS } from "../services/zmanim/luach";
+import { useHydrated } from "./useHydrated";
 import type { ZmanimData } from "../services/zmanim/types";
 
 interface UseZmanimResult {
@@ -44,12 +45,18 @@ export function useZmanim(date?: Date): UseZmanimResult {
   } = useSettingsStore();
   const [zmanim, setZmanim] = useState<ZmanimData | null>(null);
   const [today, setToday] = useState(() => dayKey(new Date()));
+  const hydrated = useHydrated();
 
   const manual = locationMode === "manual" ? manualLocation : null;
   // Changing location mode or the manual pin must re-resolve the location.
   const manualKey = manual ? `${manual.lat},${manual.lng},${manual.name}` : "";
 
   useEffect(() => {
+    // Persisted settings decide whether we should be using a manual location at
+    // all, so resolving before rehydration would prompt for GPS against default
+    // settings and then have to redo it.
+    if (!hydrated) return;
+
     const cached = useLocationStore.getState().location;
 
     // If the user picked a manual location, a cached GPS/fallback result is
@@ -84,7 +91,7 @@ export function useZmanim(date?: Date): UseZmanimResult {
       });
     // `manual` is captured via manualKey to keep the dep list stable.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, manualKey, setLoading, setError]);
+  }, [hydrated, location, manualKey, setLoading, setError]);
 
   // Roll over when the civil date changes, so an app left open overnight does
   // not keep showing yesterday's zmanim.
@@ -120,10 +127,11 @@ export function useZmanim(date?: Date): UseZmanimResult {
     try {
       setZmanim(
         getZmanimForDate(location, date ?? new Date(), {
-          // A named luach owns these; "custom" defers to the individual
-          // pickers so the previous behaviour is still reachable.
-          candleLightingOffset:
-            luach.id === "custom" ? candleLightingOffset : luach.candleLightingOffset,
+          // The user's choice always wins. Candle lighting is a community
+          // minhag (18 vs 40 in Jerusalem), not a luach opinion, so gating it
+          // on the luach made the Settings picker silently inert on six of the
+          // seven presets — tapping "40 (Jer.)" changed nothing.
+          candleLightingOffset,
           havdalaMethod,
           inIsrael: effectiveInIsrael,
           alosMethod: luach.alos ?? alosMethod,

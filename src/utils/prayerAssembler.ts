@@ -82,12 +82,22 @@ export function getActiveInsertionNames(
 
 // --- Helpers ---
 
+/**
+ * Insertions are declared against the Shacharis Amidah section ids, but the
+ * same bracha recurs in Mincha and Maariv under a service-prefixed id
+ * (`shacharis-amidah-09-shanim` vs `mincha-amidah-09-shanim`). Match on the
+ * part after the service prefix so an insertion reaches every service.
+ *
+ * The previous implementation stripped an `se-` prefix that no id in the
+ * corpus has used since the XLSX migration, so it matched nothing and Mincha
+ * and Maariv received zero insertions — Ya'aleh V'Yavo, Al HaNissim, Aneinu
+ * and Tal U'Matar could never appear there.
+ */
+const SERVICE_PREFIX = /^(shacharis|mincha|maariv)-/;
+
 function matchesSectionId(sectionId: string, targetId: string): boolean {
-  // Match across service prefixes: se-gevuros matches se-mincha-gevuros, se-maariv-gevuros, etc.
   if (sectionId === targetId) return true;
-  // Strip service prefix and compare
-  const baseSectionId = sectionId.replace(/^se-(mincha|maariv)-/, "se-");
-  return baseSectionId === targetId;
+  return sectionId.replace(SERVICE_PREFIX, "") === targetId.replace(SERVICE_PREFIX, "");
 }
 
 function createInsertionSection(insertion: ConditionalInsertion): PrayerSection {

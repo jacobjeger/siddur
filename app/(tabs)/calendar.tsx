@@ -57,10 +57,10 @@ export default function CalendarTab() {
   const timeZone = useLocationStore((s) => s.location?.timezone);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
-  // `hebrew` already re-derives at midnight (useZmanim drives it off an
-  // AppState + interval day key), so deriving the day index from it keeps this
-  // screen from freezing at whatever date it happened to mount on.
-  const dayIndex = new Date().getDay();
+  // Must come from the same calendar as hebrewDate, which rolls at tzeis.
+  // Using the civil weekday showed e.g. Shabbos's Hebrew date over "Friday"
+  // every evening after nightfall.
+  const dayIndex = hebrew.dayOfWeek - 1;
 
   const upcoming = useMemo(
     () => getUpcomingEvents(new Date(), hebrew.options),

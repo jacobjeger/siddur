@@ -118,3 +118,21 @@ Related: the UI (`app/siddur/[tefilaId].tsx`) renders only `section.text` and
 does not display `instruction` or `instructionHe` at all, so rubrics are
 currently invisible rather than misleading. Rendering them — visually distinct
 from liturgy — is the other half of this.
+
+---
+
+## Mincha and Maariv model the Amidah as one section
+
+Conditional insertions (Ya'aleh V'Yavo, Al HaNissim, Aneinu, Tal U'Matar) target
+individual Amidah brachos. Shacharis has 19+ per-bracha sections, so they attach
+correctly there.
+
+**Mincha and Maariv each have a single `*-amidah-*` section for the entire
+Amidah**, so there is nothing at bracha granularity to attach to. Fixing the
+section matcher — which was separately broken, stripping an `se-` prefix no id
+has used since the XLSX migration — does not change this. Both of those sections
+are also currently empty.
+
+So when Mincha and Maariv text lands, it needs to be split per bracha (matching
+the Shacharis ids, minus the service prefix) or insertions will silently never
+appear in those services.

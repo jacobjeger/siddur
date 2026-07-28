@@ -35,6 +35,8 @@ export interface HebrewDateInfo {
   isYomTov: boolean;
   isFastDay: boolean;
   isRoshChodesh: boolean;
+  /** 1 = Sunday … 7 = Shabbos, on the SAME basis as hebrewDate (rolls at tzeis). */
+  dayOfWeek: number;
   omerDay: number;
   dafYomi: string;
   dayType: DayType;
@@ -124,6 +126,7 @@ export function getHebrewDateInfo(
     isYomTov: safe(() => calendar.isYomTov(), false),
     isFastDay: safe(() => calendar.isTaanis(), false),
     isRoshChodesh: safe(() => calendar.isRoshChodesh(), false),
+    dayOfWeek,
     omerDay: safe(() => Math.max(0, calendar.getDayOfOmer()), 0),
     dafYomi: safe(
       () =>
