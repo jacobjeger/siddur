@@ -3,7 +3,8 @@ import { useHebrewDate } from "../../hooks/useHebrewDate";
 import { useTheme } from "../../hooks/useTheme";
 
 export function HebrewDateHeader() {
-  const { hebrewDate, englishDate, parsha, specialDay } = useHebrewDate();
+  const { hebrewDate, englishDate, parsha, specialDay, omerDay } =
+    useHebrewDate();
   const { colors } = useTheme();
 
   return (
@@ -50,6 +51,19 @@ export function HebrewDateHeader() {
           }}
         >
           {specialDay}
+        </Text>
+      ) : null}
+      {/* omerDay was computed and threaded through the hook, then never shown. */}
+      {omerDay > 0 ? (
+        <Text
+          style={{
+            color: colors.accent,
+            textAlign: "center",
+            fontSize: 13,
+            marginTop: 4,
+          }}
+        >
+          Omer: Day {omerDay}
         </Text>
       ) : null}
     </View>

@@ -49,7 +49,13 @@ export interface TefilaCategoryInfo {
 }
 
 export interface InsertionContext {
+  /** Mashiv HaRuach season: Shemini Atzeres through the first day of Pesach. */
   season: "winter" | "summer";
+  /**
+   * V'Sein Tal U'Matar, which starts later than Mashiv HaRuach and on a
+   * different rule in Israel (7 Cheshvan) vs the Diaspora (Dec 4/5).
+   */
+  saysTalUMatar: boolean;
   isRoshChodesh: boolean;
   isCholHamoed: boolean;
   holiday?: "chanukah" | "purim" | "tishaBAv" | "fastDay" | "roshHashana" | "yomKippur";

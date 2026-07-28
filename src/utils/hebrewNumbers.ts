@@ -36,11 +36,22 @@ const HEBREW_HUNDREDS = [
 ];
 
 /**
- * Convert a number (1-999) to Hebrew numeral representation.
- * Used for sefira count, Hebrew dates, etc.
+ * Convert a number to its Hebrew numeral representation.
+ * Handles thousands (so Hebrew years such as 5786 -> ה׳תשפ״ו work), the
+ * 15/16 exception, and geresh/gershayim placement.
  */
 export function toHebrewNumeral(n: number): string {
-  if (n <= 0 || n > 999) return String(n);
+  if (n <= 0) return String(n);
+
+  // Thousands are written as their own letter followed by a geresh, then the
+  // remainder — e.g. 5786 is ה׳ + תשפ״ו.
+  if (n >= 1000) {
+    const thousands = Math.floor(n / 1000);
+    const remainder = n % 1000;
+    if (thousands > 9) return String(n);
+    const prefix = HEBREW_ONES[thousands] + "׳";
+    return remainder === 0 ? prefix : prefix + toHebrewNumeral(remainder);
+  }
 
   const hundreds = Math.floor(n / 100);
   const tens = Math.floor((n % 100) / 10);

@@ -1,82 +1,132 @@
-import { JewishCalendar } from "kosher-zmanim";
+import type { JewishCalendar } from "kosher-zmanim";
 import type { InsertionContext } from "../data/types";
+import {
+  getJewishCalendar,
+  type HebrewDateOptions,
+  DEFAULT_HEBREW_DATE_OPTIONS,
+} from "../services/zmanim/hebrewCalendarService";
 
-/**
- * Build an InsertionContext from a JewishCalendar instance.
- * This determines which conditional insertions should be active for the given date.
- */
-export function getInsertionContext(
-  date: Date = new Date()
-): InsertionContext {
-  const calendar = new JewishCalendar(date);
-
-  const jewishMonth = calendar.getJewishMonth();
-  const jewishDay = calendar.getJewishDayOfMonth();
-  const dayOfWeek = calendar.getDayOfWeek();
-
-  // Season: winter = Shemini Atzeres (22 Tishrei) through Pesach (15 Nissan)
-  // Mashiv HaRuach: from Musaf of Shemini Atzeres through Musaf of 1st day Pesach
-  // V'Sein Tal U'Matar: from 7 Cheshvan (Israel) / Dec 4-5 (Diaspora) through Pesach
-  const isWinterSeason = getIsWinterSeason(jewishMonth, jewishDay);
-
-  // Rosh Chodesh
-  const isRoshChodesh = calendar.isRoshChodesh();
-
-  // Chol HaMoed
-  const isCholHamoed = calendar.isCholHamoed();
-
-  // Fast day
-  const isFastDay = calendar.isTaanis();
-
-  // Motzaei Shabbos (Saturday night = Sunday in Jewish calendar after nightfall)
-  // dayOfWeek: 1=Sun, 7=Shabbos. Motzaei Shabbos is Saturday night.
-  // After nightfall on Shabbos, the calendar already shows Sunday (day 1),
-  // but we check if it's Saturday evening context.
-  const isMotzaeiShabbos = dayOfWeek === 1;
-
-  // Aseres Yemei Teshuva: 1-10 Tishrei
-  const isAseresYemeiTeshuva = jewishMonth === 7 && jewishDay >= 1 && jewishDay <= 10;
-
-  // Holiday detection
-  let holiday: InsertionContext["holiday"] = undefined;
-  if (calendar.isChanukah()) {
-    holiday = "chanukah";
-  } else if (jewishMonth === 12 && (jewishDay === 14 || jewishDay === 15)) {
-    holiday = "purim";
-  } else if (isFastDay && jewishMonth === 5 && jewishDay === 9) {
-    holiday = "tishaBAv";
-  } else if (isFastDay) {
-    holiday = "fastDay";
-  }
-
-  return {
-    season: isWinterSeason ? "winter" : "summer",
-    isRoshChodesh,
-    isCholHamoed,
-    holiday,
-    isFastDay,
-    isMotzaeiShabbos,
-    isAseresYemeiTeshuva,
-  };
+export interface InsertionContextOptions extends HebrewDateOptions {
+  /** Shkia for the civil day, used to decide whether Shabbos has ended. */
+  sunset?: Date | null;
 }
 
 /**
- * Determine if we're in the "winter" season for prayer insertions.
- * Winter = roughly from after Sukkos through Pesach.
- * For Mashiv HaRuach: Shemini Atzeres (22 Tishrei) through 1st day Pesach (15 Nissan).
+ * Build an InsertionContext for the given moment. This determines which
+ * conditional insertions are active.
  */
-function getIsWinterSeason(month: number, day: number): boolean {
-  // Jewish months: 7=Tishrei, 8=Cheshvan, ..., 1=Nissan
-  // Winter: from 22 Tishrei through 14 Nissan
-  if (month === 7 && day >= 22) return true; // Late Tishrei
-  if (month >= 8 && month <= 13) return true; // Cheshvan through Adar (13 for Adar II)
-  if (month === 1 && day < 15) return true; // Early Nissan before Pesach
+export function getInsertionContext(
+  date: Date = new Date(),
+  options: InsertionContextOptions = DEFAULT_HEBREW_DATE_OPTIONS
+): InsertionContext {
+  const calendar = getJewishCalendar(date, options);
+
+  return {
+    season: isMashivHaRuachSeason(calendar) ? "winter" : "summer",
+    saysTalUMatar: saysTalUMatar(calendar, date, options.inIsrael),
+    isRoshChodesh: calendar.isRoshChodesh(),
+    isCholHamoed: calendar.isCholHamoed(),
+    holiday: getHoliday(calendar),
+    isFastDay: calendar.isTaanis(),
+    isMotzaeiShabbos: isMotzaeiShabbos(date, options),
+    isAseresYemeiTeshuva: calendar.isAseresYemeiTeshuva(),
+  };
+}
+
+function getHoliday(calendar: JewishCalendar): InsertionContext["holiday"] {
+  if (calendar.isChanukah()) return "chanukah";
+  // isPurim() is Adar-II-aware; the old month === 12 check fired in Adar I.
+  if (calendar.isPurim()) return "purim";
+  if (calendar.isTaanis()) {
+    const month = calendar.getJewishMonth();
+    const day = calendar.getJewishDayOfMonth();
+    if (month === 5 && day === 9) return "tishaBAv";
+    return "fastDay";
+  }
+  return undefined;
+}
+
+/**
+ * Mashiv HaRuach: from Musaf of Shemini Atzeres (22 Tishrei) through Musaf of
+ * the first day of Pesach (15 Nissan).
+ */
+function isMashivHaRuachSeason(calendar: JewishCalendar): boolean {
+  const month = calendar.getJewishMonth();
+  const day = calendar.getJewishDayOfMonth();
+
+  if (month === 7) return day >= 22; // Tishrei
+  if (month === 1) return day < 15; // Nissan, up to Pesach
+  // Cheshvan (8) through Adar / Adar II (12, 13).
+  return month >= 8 && month <= 13;
+}
+
+/**
+ * V'Sein Tal U'Matar starts later than Mashiv HaRuach and on a different rule
+ * inside and outside Israel:
+ *   - Israel:   7 Cheshvan
+ *   - Diaspora: the evening of 4 December (5 December before a civil leap year)
+ * Both run until (but not including) 15 Nissan.
+ *
+ * The previous implementation applied one crude 22 Tishrei window to both,
+ * which was wrong for roughly the three weeks between them in chu"l.
+ */
+function saysTalUMatar(
+  calendar: JewishCalendar,
+  date: Date,
+  inIsrael: boolean
+): boolean {
+  const month = calendar.getJewishMonth();
+  const day = calendar.getJewishDayOfMonth();
+
+  // Ends at Pesach regardless of where you are.
+  if (month === 1 && day >= 15) return false;
+  const beforePesach = month === 1 && day < 15;
+
+  if (inIsrael) {
+    if (month === 8) return day >= 7; // 7 Cheshvan onward
+    if (month >= 9 && month <= 13) return true;
+    return beforePesach;
+  }
+
+  // Diaspora: keyed to the civil date. The start shifts to 5 December in the
+  // civil year preceding a Gregorian leap year.
+  const civilYear = date.getFullYear();
+  const isYearBeforeLeap = (civilYear + 1) % 4 === 0;
+  const startDay = isYearBeforeLeap ? 5 : 4;
+
+  const decemberStart = new Date(civilYear, 11, startDay);
+
+  if (date.getMonth() === 11) {
+    // December: on or after the start date.
+    return date.getDate() >= startDay && date >= decemberStart;
+  }
+  // January through Pesach.
+  if (date.getMonth() <= 3) {
+    return !(month === 1 && day >= 15);
+  }
   return false;
 }
 
 /**
- * Get the day of the week (0=Sunday, 6=Shabbos) for Shir Shel Yom selection.
+ * Motzaei Shabbos is Saturday after nightfall — not "any time on Sunday",
+ * which is what `dayOfWeek === 1` used to mean.
+ */
+function isMotzaeiShabbos(
+  date: Date,
+  options: InsertionContextOptions
+): boolean {
+  const isSaturday = date.getDay() === 6;
+  if (!isSaturday) return false;
+
+  const nightfall = options.tzeis ?? options.sunset;
+  if (!nightfall) return false;
+
+  return date.getTime() >= nightfall.getTime();
+}
+
+/**
+ * Day of the week for Shir Shel Yom selection (0 = Sunday, 6 = Shabbos).
  */
 export function getDayOfWeekIndex(date: Date = new Date()): number {
-  return date.getDay(); // 0=Sunday, 6=Saturday
+  return date.getDay();
 }

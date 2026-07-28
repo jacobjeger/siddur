@@ -1,0 +1,173 @@
+import { JewishCalendar } from "kosher-zmanim";
+import type { InsertionContext } from "../data/types";
+import {
+  getJewishCalendar,
+  type HebrewDateOptions,
+  DEFAULT_HEBREW_DATE_OPTIONS,
+} from "../services/zmanim/hebrewCalendarService";
+
+export interface ActiveInsertion {
+  name: string;
+  nameHe: string;
+}
+
+export type HallelType = "full" | "half" | "none";
+
+export interface DayDaveningInfo {
+  specialDayLabel: string;
+  specialDayLabelHe: string;
+  activeInsertions: ActiveInsertion[];
+  isRoshChodesh: boolean;
+  hallelType: HallelType;
+  sayTachanun: boolean;
+}
+
+/**
+ * Summarise what is different about today's davening: which insertions apply,
+ * whether Hallel is said and in what form, and whether Tachanun is said.
+ */
+export function getDayDaveningInfo(
+  context: InsertionContext,
+  date: Date = new Date(),
+  options: HebrewDateOptions = DEFAULT_HEBREW_DATE_OPTIONS
+): DayDaveningInfo {
+  const calendar = getJewishCalendar(date, options);
+
+  const activeInsertions: ActiveInsertion[] = [];
+
+  // Mashiv HaRuach and Tal U'Matar start on different dates, so they are
+  // tracked separately rather than both hanging off one "winter" flag.
+  if (context.season === "winter") {
+    activeInsertions.push({ name: "Mashiv HaRuach", nameHe: "משיב הרוח" });
+  } else {
+    activeInsertions.push({ name: "Morid HaTal", nameHe: "מוריד הטל" });
+  }
+  if (context.saysTalUMatar) {
+    activeInsertions.push({ name: "V'Sein Tal U'Matar", nameHe: "ותן טל ומטר" });
+  }
+
+  if (context.isRoshChodesh || context.isCholHamoed) {
+    activeInsertions.push({ name: "Ya'aleh V'Yavo", nameHe: "יעלה ויבא" });
+  }
+  if (context.holiday === "chanukah" || context.holiday === "purim") {
+    activeInsertions.push({ name: "Al HaNissim", nameHe: "על הנסים" });
+  }
+  if (context.isMotzaeiShabbos) {
+    activeInsertions.push({ name: "Ata Chonantanu", nameHe: "אתה חוננתנו" });
+  }
+  if (context.isFastDay) {
+    activeInsertions.push({ name: "Aneinu", nameHe: "עננו" });
+  }
+  if (context.isAseresYemeiTeshuva) {
+    activeInsertions.push(
+      { name: "Zachreinu", nameHe: "זכרנו" },
+      { name: "HaMelech HaKadosh", nameHe: "המלך הקדוש" }
+    );
+  }
+
+  const { label, labelHe } = getSpecialDayLabel(calendar, context);
+
+  return {
+    specialDayLabel: label,
+    specialDayLabelHe: labelHe,
+    activeInsertions,
+    isRoshChodesh: context.isRoshChodesh,
+    hallelType: getHallelType(calendar),
+    sayTachanun: getSayTachanun(calendar),
+  };
+}
+
+function getSpecialDayLabel(
+  calendar: JewishCalendar,
+  context: InsertionContext
+): { label: string; labelHe: string } {
+  if (context.holiday === "chanukah") {
+    const day = calendar.getDayOfChanukah();
+    return { label: `Chanukah — Day ${day}`, labelHe: `חנוכה — יום ${day}` };
+  }
+  if (context.holiday === "purim") return { label: "Purim", labelHe: "פורים" };
+  if (context.isAseresYemeiTeshuva) {
+    return { label: "Aseres Yemei Teshuva", labelHe: "עשרת ימי תשובה" };
+  }
+  if (context.isCholHamoed) {
+    return { label: "Chol HaMoed", labelHe: "חול המועד" };
+  }
+  if (context.isRoshChodesh) {
+    return { label: "Rosh Chodesh", labelHe: "ראש חודש" };
+  }
+  if (context.isFastDay) return { label: "Fast Day", labelHe: "יום צום" };
+  return { label: "", labelHe: "" };
+}
+
+/**
+ * Full Hallel: Chanukah, Succos (including Chol HaMoed), Shemini Atzeres /
+ * Simchas Torah, Shavuos, and the first day(s) of Pesach.
+ * Half Hallel: Rosh Chodesh, and Pesach after the first day(s).
+ */
+function getHallelType(calendar: JewishCalendar): HallelType {
+  const index = calendar.getYomTovIndex();
+
+  if (calendar.isChanukah()) return "full";
+
+  switch (index) {
+    case JewishCalendar.SUCCOS:
+    case JewishCalendar.CHOL_HAMOED_SUCCOS:
+    case JewishCalendar.HOSHANA_RABBA:
+    case JewishCalendar.SHEMINI_ATZERES:
+    case JewishCalendar.SIMCHAS_TORAH:
+    case JewishCalendar.SHAVUOS:
+      return "full";
+    case JewishCalendar.PESACH:
+      // Only the opening day(s) of Pesach get full Hallel; from Chol HaMoed
+      // onward it is half. (The previous implementation marked all of Chol
+      // HaMoed as half, including Succos, which is wrong.)
+      return calendar.getJewishDayOfMonth() <= (calendar.getInIsrael() ? 15 : 16)
+        ? "full"
+        : "half";
+    case JewishCalendar.CHOL_HAMOED_PESACH:
+      return "half";
+    default:
+      return calendar.isRoshChodesh() ? "half" : "none";
+  }
+}
+
+/**
+ * Tachanun is omitted on a long list of days. This covers the common ones;
+ * the previous implementation handled only four.
+ */
+function getSayTachanun(calendar: JewishCalendar): boolean {
+  const dayOfWeek = calendar.getDayOfWeek();
+  const month = calendar.getJewishMonth();
+  const day = calendar.getJewishDayOfMonth();
+  const index = calendar.getYomTovIndex();
+
+  // Shabbos and Yom Tov have no Tachanun at all.
+  if (dayOfWeek === 7) return false;
+  if (calendar.isYomTov() || calendar.isCholHamoed()) return false;
+  if (calendar.isRoshChodesh() || calendar.isChanukah()) return false;
+
+  switch (index) {
+    case JewishCalendar.PURIM:
+    case JewishCalendar.SHUSHAN_PURIM:
+    case JewishCalendar.PURIM_KATAN:
+    case JewishCalendar.SHUSHAN_PURIM_KATAN:
+    case JewishCalendar.TU_BESHVAT:
+    case JewishCalendar.TU_BEAV:
+    case JewishCalendar.PESACH_SHENI:
+    case JewishCalendar.LAG_BAOMER:
+    case JewishCalendar.EREV_ROSH_HASHANA:
+    case JewishCalendar.EREV_YOM_KIPPUR:
+    case JewishCalendar.TISHA_BEAV:
+    case JewishCalendar.ISRU_CHAG:
+      return false;
+  }
+
+  // The whole month of Nissan.
+  if (month === 1) return false;
+  // Rosh Chodesh Sivan through Isru Chag Shavuos (12 Sivan).
+  if (month === 3 && day <= 12) return false;
+  // From Yom Kippur through the end of Tishrei.
+  if (month === 7 && day >= 9) return false;
+
+  return true;
+}

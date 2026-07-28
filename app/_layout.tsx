@@ -10,7 +10,7 @@ import { useTheme } from "../src/hooks/useTheme";
 const queryClient = new QueryClient();
 
 function AppStack() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <>
@@ -40,7 +40,10 @@ function AppStack() {
           options={{ headerShown: true, title: "Minyan Details" }}
         />
       </Stack>
-      <StatusBar style={isDark ? "light" : "light"} />
+      {/* headerBg is a dark brand colour in BOTH themes, so status bar content
+          is always light. This was previously a dead
+          `isDark ? "light" : "light"` ternary. */}
+      <StatusBar style="light" />
     </>
   );
 }

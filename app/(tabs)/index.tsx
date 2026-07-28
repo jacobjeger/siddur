@@ -16,7 +16,7 @@ import { getTefilosByCategory } from "../../src/data/prayers";
 const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
 export default function SiddurTab() {
-  const { tefilaType } = useHebrewDate();
+  const { tefilaType, dayDavening } = useHebrewDate();
   const { nextZman, countdown } = useNextZman();
   const timeFormat = useSettingsStore((s) => s.timeFormat);
   const timeZone = useLocationStore((s) => s.location?.timezone);
@@ -68,6 +68,73 @@ export default function SiddurTab() {
                   in {formatCountdown(countdown)}
                 </Text>
               </View>
+            </View>
+          </View>
+        )}
+
+        {/* What's different about today's davening */}
+        {(dayDavening.specialDayLabel ||
+          dayDavening.activeInsertions.length > 0) && (
+          <View
+            style={{
+              marginHorizontal: 16,
+              marginTop: 16,
+              padding: 16,
+              backgroundColor: colors.surface,
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: colors.border,
+            }}
+          >
+            <Text
+              style={{ fontSize: 13, color: colors.textMuted, marginBottom: 8 }}
+            >
+              היום - Today
+            </Text>
+
+            {dayDavening.specialDayLabel ? (
+              <Text
+                style={{
+                  fontSize: 17,
+                  fontWeight: "600",
+                  color: colors.text,
+                  marginBottom: 8,
+                }}
+              >
+                {dayDavening.specialDayLabel}
+              </Text>
+            ) : null}
+
+            <View style={{ flexDirection: "row", gap: 16, marginBottom: 10 }}>
+              <Text style={{ fontSize: 14, color: colors.textSecondary }}>
+                Tachanun: {dayDavening.sayTachanun ? "Yes" : "No"}
+              </Text>
+              {dayDavening.hallelType !== "none" && (
+                <Text style={{ fontSize: 14, color: colors.textSecondary }}>
+                  Hallel:{" "}
+                  {dayDavening.hallelType === "full" ? "Full" : "Half"}
+                </Text>
+              )}
+            </View>
+
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
+              {dayDavening.activeInsertions.map((ins) => (
+                <View
+                  key={ins.name}
+                  style={{
+                    paddingHorizontal: 8,
+                    paddingVertical: 4,
+                    borderRadius: 6,
+                    backgroundColor: colors.primaryLight,
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                  }}
+                >
+                  <Text style={{ fontSize: 12, color: colors.text }}>
+                    {ins.name}
+                  </Text>
+                </View>
+              ))}
             </View>
           </View>
         )}
