@@ -65,6 +65,13 @@ const DIVINE_NAME_VARIANTS: [RegExp, string][] = [
   [/יְ‑יָ/g, "יְהֹוָה"], // יְ‑יָ
 ];
 
+/**
+ * A non-breaking hyphen inside a word is the "אֱ‑לֹהִים" convention for avoiding
+ * writing a Name in full. The rest of this corpus spells Names out (231 uses of
+ * יְהֹוָה), so join them for consistency rather than shipping both conventions.
+ */
+const HYPHENATED_NAME = /([א-ת][ְ-ׇ]*)‑(?=[א-ת])/g;
+
 export function normalizeHebrew(input: string): string {
   let out = input;
 
@@ -75,6 +82,7 @@ export function normalizeHebrew(input: string): string {
   for (const [pattern, replacement] of DIVINE_NAME_VARIANTS) {
     out = out.replace(pattern, replacement);
   }
+  out = out.replace(HYPHENATED_NAME, "$1");
 
   // Collapse runs of spaces (the xlsx round-trip left an 8-space run in Modeh
   // Ani) without touching newlines.
