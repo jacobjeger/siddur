@@ -3,12 +3,12 @@ import {
   Text,
   ScrollView,
   Pressable,
-  ActivityIndicator,
   Linking,
   Platform,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { useMinyan } from "../../src/hooks/useMinyanim";
 import { useTheme } from "../../src/hooks/useTheme";
 import { useLocationStore } from "../../src/stores/useLocationStore";
@@ -30,18 +30,7 @@ export default function MinyanDetailScreen() {
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
   if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.background,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
+    return <LoadingSpinner />;
   }
 
   if (isError || !minyan) {

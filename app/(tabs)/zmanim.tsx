@@ -1,6 +1,7 @@
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
+import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useZmanim } from "../../src/hooks/useZmanim";
 import { useNextZman } from "../../src/hooks/useNextZman";
@@ -28,21 +29,7 @@ export default function ZmanimTab() {
   const timeZone = location?.timezone;
 
   if (loading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.background,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={{ color: colors.textSecondary, marginTop: 16 }}>
-          Loading zmanim...
-        </Text>
-      </View>
-    );
+    return <LoadingSpinner message="Loading zmanim..." />;
   }
 
   if (error || !zmanim) {

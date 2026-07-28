@@ -5,11 +5,11 @@ import {
   Pressable,
   ScrollView,
   TextInput,
-  ActivityIndicator,
   Linking,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
 import { useMinyanim } from "../../src/hooks/useMinyanim";
@@ -204,14 +204,7 @@ export default function MinyanimTab() {
       </View>
 
       {isLoading ? (
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={{ color: colors.textSecondary, marginTop: 12 }}>
-            Loading minyanim...
-          </Text>
-        </View>
+        <LoadingSpinner message="Loading minyanim..." />
       ) : isError ? (
         <CenteredMessage
           icon="cloud-offline-outline"

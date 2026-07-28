@@ -6,11 +6,13 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-system-ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTheme } from "../src/hooks/useTheme";
+import { useKeepScreenOn } from "../src/hooks/useKeepScreenOn";
 
 const queryClient = new QueryClient();
 
 function AppStack() {
   const { colors } = useTheme();
+  useKeepScreenOn();
 
   return (
     <>

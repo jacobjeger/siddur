@@ -1,15 +1,33 @@
 import { View, ActivityIndicator, Text } from "react-native";
+import { useTheme } from "../../hooks/useTheme";
 
 interface LoadingSpinnerProps {
   message?: string;
 }
 
 export function LoadingSpinner({ message }: LoadingSpinnerProps) {
+  const { colors } = useTheme();
+
   return (
-    <View className="flex-1 items-center justify-center">
-      <ActivityIndicator size="large" color="#1a56db" />
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: colors.background,
+      }}
+    >
+      <ActivityIndicator size="large" color={colors.primary} />
       {message && (
-        <Text className="text-gray-500 mt-4 text-center">{message}</Text>
+        <Text
+          style={{
+            color: colors.textSecondary,
+            marginTop: 16,
+            textAlign: "center",
+          }}
+        >
+          {message}
+        </Text>
       )}
     </View>
   );
