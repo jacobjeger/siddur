@@ -13,6 +13,18 @@ export type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
  * Yisrael and especially in Yerushalayim.
  */
 export type Minhag = "standard" | "gra";
+
+/**
+ * Which luach (opinion set) drives zmanim. Independent of nusach and minhag —
+ * see src/services/zmanim/luach.ts.
+ */
+export type LuachId =
+  | "standard"
+  | "mga72"
+  | "baal_hatanya"
+  | "ateret_torah"
+  | "rav_moshe"
+  | "custom";
 export type FontFamily = "NotoSerifHebrew";
 export type DarkMode = "on" | "off" | "system";
 export type TimeFormat = "12h" | "24h";
@@ -23,6 +35,7 @@ export type TzeisMethod = "8.5deg" | "16.1deg" | "18deg" | "50min" | "72min";
 interface SettingsState {
   nusach: Nusach;
   minhag: Minhag;
+  luachId: LuachId;
   textSize: number;
   fontFamily: FontFamily;
   showEnglish: boolean;
@@ -49,6 +62,7 @@ interface SettingsState {
 
   setNusach: (nusach: Nusach) => void;
   setMinhag: (minhag: Minhag) => void;
+  setLuachId: (luachId: LuachId) => void;
   setTextSize: (size: number) => void;
   setFontFamily: (font: FontFamily) => void;
   setShowEnglish: (show: boolean) => void;
@@ -72,6 +86,7 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       nusach: "ashkenaz",
       minhag: "standard",
+      luachId: "standard",
       textSize: 22,
       fontFamily: "NotoSerifHebrew",
       showEnglish: false,
@@ -89,6 +104,7 @@ export const useSettingsStore = create<SettingsState>()(
 
       setNusach: (nusach) => set({ nusach }),
       setMinhag: (minhag) => set({ minhag }),
+      setLuachId: (luachId) => set({ luachId }),
       setTextSize: (textSize) => set({ textSize }),
       setFontFamily: (fontFamily) => set({ fontFamily }),
       setShowEnglish: (showEnglish) => set({ showEnglish }),

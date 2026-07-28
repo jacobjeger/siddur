@@ -12,6 +12,7 @@ import { useLocationStore } from "../../stores/useLocationStore";
 import { useTheme, type ThemeColors } from "../../hooks/useTheme";
 import { searchCities } from "../../services/location/locationService";
 import { isLocationInIsrael } from "../../utils/geoRegion";
+import { LUACH_PRESETS, LUACH_ORDER } from "../../services/zmanim/luach";
 import type { CitySearchResult } from "../../services/location/types";
 import type {
   AlosMethod,
@@ -133,6 +134,7 @@ export function LocationSettings() {
     tzeisMethod,
     useElevation,
     minhag,
+    luachId,
     setLocationMode,
     setManualLocation,
     setHavdalaMethod,
@@ -141,6 +143,7 @@ export function LocationSettings() {
     setTzeisMethod,
     setUseElevation,
     setMinhag,
+    setLuachId,
   } = useSettingsStore();
   const location = useLocationStore((s) => s.location);
 
@@ -318,6 +321,59 @@ export function LocationSettings() {
         </View>
       </Card>
 
+      {/* Minhag is a custom axis, not a zmanim one — it stays visible
+          regardless of which luach is selected. */}
+      <Card
+        title="Minhag"
+        subtitle="Independent of nusach — affects Shir Shel Yom and L'Dovid, not which text is shown"
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Chip
+            label="Standard"
+            selected={minhag === "standard"}
+            onPress={() => setMinhag("standard")}
+            colors={colors}
+          />
+          <Chip
+            label="Gra / Eretz Yisrael"
+            selected={minhag === "gra"}
+            onPress={() => setMinhag("gra")}
+            colors={colors}
+          />
+        </View>
+      </Card>
+
+      <Card
+        title="Luach"
+        subtitle="The opinion set used for zmanim. Independent of nusach — nusach chooses the text, luach chooses the times."
+        colors={colors}
+      >
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+          {LUACH_ORDER.map((id) => (
+            <Chip
+              key={id}
+              label={LUACH_PRESETS[id].name}
+              selected={luachId === id}
+              onPress={() => setLuachId(id)}
+              colors={colors}
+            />
+          ))}
+        </View>
+        <Text
+          style={{ fontSize: 13, color: colors.textMuted, marginTop: 10 }}
+        >
+          {LUACH_PRESETS[luachId]?.description ?? ""}
+        </Text>
+      </Card>
+
+      {/*
+        A named luach defines its own alos, tzeis and elevation, so exposing the
+        individual pickers alongside it would be misleading — they would appear
+        to do something and not. Only "Custom" shows them.
+      */}
+      {luachId !== "custom" ? null : (
+      <>
       <Card
         title="Alos HaShachar"
         subtitle="Opinion used for dawn"
@@ -355,27 +411,6 @@ export function LocationSettings() {
       </Card>
 
       <Card
-        title="Minhag"
-        subtitle="Independent of nusach — affects Shir Shel Yom and L'Dovid, not which text is shown"
-        colors={colors}
-      >
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          <Chip
-            label="Standard"
-            selected={minhag === "standard"}
-            onPress={() => setMinhag("standard")}
-            colors={colors}
-          />
-          <Chip
-            label="Gra / Eretz Yisrael"
-            selected={minhag === "gra"}
-            onPress={() => setMinhag("gra")}
-            colors={colors}
-          />
-        </View>
-      </Card>
-
-      <Card
         title="Elevation"
         subtitle="Factor your altitude into netz and shkia, and everything derived from them"
         colors={colors}
@@ -395,6 +430,8 @@ export function LocationSettings() {
           />
         </View>
       </Card>
+      </>
+      )}
     </>
   );
 }

@@ -5,6 +5,7 @@ import { useLocationStore } from "../stores/useLocationStore";
 import { useSettingsStore } from "../stores/useSettingsStore";
 import { getCurrentLocation } from "../services/location/locationService";
 import { resolveInIsrael } from "../utils/geoRegion";
+import { LUACH_PRESETS } from "../services/zmanim/luach";
 import type { ZmanimData } from "../services/zmanim/types";
 
 interface UseZmanimResult {
@@ -37,6 +38,7 @@ export function useZmanim(date?: Date): UseZmanimResult {
     alosMethod,
     tzeisMethod,
     useElevation,
+    luachId,
   } = useSettingsStore();
   const [zmanim, setZmanim] = useState<ZmanimData | null>(null);
   const [today, setToday] = useState(() => dayKey(new Date()));
@@ -104,18 +106,24 @@ export function useZmanim(date?: Date): UseZmanimResult {
     [inIsrael, location]
   );
 
+  const luach = LUACH_PRESETS[luachId] ?? LUACH_PRESETS.standard;
+
   useEffect(() => {
     if (!location) return;
 
     try {
       setZmanim(
         getZmanimForDate(location, date ?? new Date(), {
-          candleLightingOffset,
+          // A named luach owns these; "custom" defers to the individual
+          // pickers so the previous behaviour is still reachable.
+          candleLightingOffset:
+            luach.id === "custom" ? candleLightingOffset : luach.candleLightingOffset,
           havdalaMethod,
           inIsrael: effectiveInIsrael,
-          alosMethod,
-          tzeisMethod,
-          useElevation,
+          alosMethod: luach.alos ?? alosMethod,
+          tzeisMethod: luach.tzeis ?? tzeisMethod,
+          useElevation: luach.id === "custom" ? useElevation : luach.useElevation,
+          luach,
         })
       );
       setError(null);
@@ -138,6 +146,7 @@ export function useZmanim(date?: Date): UseZmanimResult {
     alosMethod,
     tzeisMethod,
     useElevation,
+    luach,
     setError,
   ]);
 

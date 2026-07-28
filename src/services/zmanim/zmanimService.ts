@@ -11,6 +11,7 @@ import type {
   TzeisMethod,
 } from "../../stores/useSettingsStore";
 import type { ZmanimData } from "./types";
+import { LUACH_PRESETS, getMisheyakir, type LuachPreset } from "./luach";
 
 export interface ZmanimOptions {
   /** Minutes before shkia for candle lighting. */
@@ -34,6 +35,12 @@ export interface ZmanimOptions {
    * It is a genuine luach axis (Ohr HaChaim uses elevation).
    */
   useElevation: boolean;
+  /**
+   * Complete opinion set. When the preset names a `dedicated` shitah, the whole
+   * day comes from that shitah's own methods rather than from alos/tzeis above,
+   * because it defines its own shaah zmanis basis.
+   */
+  luach: LuachPreset;
 }
 
 export const DEFAULT_ZMANIM_OPTIONS: ZmanimOptions = {
@@ -43,6 +50,7 @@ export const DEFAULT_ZMANIM_OPTIONS: ZmanimOptions = {
   alosMethod: "72min",
   tzeisMethod: "8.5deg",
   useElevation: false,
+  luach: LUACH_PRESETS.standard,
 };
 
 /**
@@ -132,6 +140,57 @@ function toJSDate(dateTime: unknown): Date | null {
 interface NoArgZmanim {
   getMinchaKetana(): unknown;
   getPlagHamincha(): unknown;
+  getMinchaGedolaAteretTorah(): unknown;
+  getMinchaKetanaAteretTorah(): unknown;
+  getPlagHaminchaAteretTorah(): unknown;
+}
+
+/** The set of getters a self-contained shitah supplies for the whole day. */
+interface DedicatedShitah {
+  alos(): unknown;
+  sofZmanShma(): unknown;
+  sofZmanTfila(): unknown;
+  minchaGedola(): unknown;
+  minchaKetana(): unknown;
+  plag(): unknown;
+  tzeis(): unknown;
+}
+
+/**
+ * Some shitos define their own shaah zmanis basis and so cannot be expressed by
+ * composing an alos and a tzeis. Baal HaTanya measures the day from netz amiti
+ * (1.583°) to shkiah amiti; Ateret Torah from alos 72 zmanis to 40 minutes
+ * after sunset. kosher-zmanim ships a complete method family for each.
+ */
+function getDedicatedShitah(
+  calendar: ComplexZmanimCalendar,
+  noArg: NoArgZmanim,
+  preset: LuachPreset
+): DedicatedShitah | null {
+  switch (preset.dedicated) {
+    case "baal_hatanya":
+      return {
+        alos: () => calendar.getAlosBaalHatanya(),
+        sofZmanShma: () => calendar.getSofZmanShmaBaalHatanya(),
+        sofZmanTfila: () => calendar.getSofZmanTfilaBaalHatanya(),
+        minchaGedola: () => calendar.getMinchaGedolaBaalHatanya(),
+        minchaKetana: () => calendar.getMinchaKetanaBaalHatanya(),
+        plag: () => calendar.getPlagHaminchaBaalHatanya(),
+        tzeis: () => calendar.getTzaisBaalHatanya(),
+      };
+    case "ateret_torah":
+      return {
+        alos: () => calendar.getAlos72Zmanis(),
+        sofZmanShma: () => calendar.getSofZmanShmaAteretTorah(),
+        sofZmanTfila: () => calendar.getSofZmanTfilaAteretTorah(),
+        minchaGedola: () => noArg.getMinchaGedolaAteretTorah(),
+        minchaKetana: () => noArg.getMinchaKetanaAteretTorah(),
+        plag: () => noArg.getPlagHaminchaAteretTorah(),
+        tzeis: () => calendar.getTzaisAteretTorah(),
+      };
+    default:
+      return null;
+  }
 }
 
 export function getZmanimForDate(
@@ -164,25 +223,42 @@ export function getZmanimForDate(
 
   const sunset = toJSDate(adjustedSunset(calendar, options.useElevation));
 
+  const luach = options.luach ?? LUACH_PRESETS.standard;
+  const shitah = getDedicatedShitah(calendar, noArg, luach);
+
   return {
-    alosHaShachar: toJSDate(getAlos(calendar, options.alosMethod)),
-    misheyakir: toJSDate(calendar.getMisheyakir10Point2Degrees()),
+    alosHaShachar: shitah
+      ? toJSDate(shitah.alos())
+      : toJSDate(getAlos(calendar, options.alosMethod)),
+    misheyakir: toJSDate(getMisheyakir(calendar, luach)),
     sunrise: toJSDate(adjustedSunrise(calendar, options.useElevation)),
     sofZmanShmaMGA: toJSDate(calendar.getSofZmanShmaMGA()),
-    sofZmanShmaGRA: toJSDate(calendar.getSofZmanShmaGRA()),
+    sofZmanShmaGRA: shitah
+      ? toJSDate(shitah.sofZmanShma())
+      : toJSDate(calendar.getSofZmanShmaGRA()),
     sofZmanTefilaMGA: toJSDate(calendar.getSofZmanTfilaMGA()),
-    sofZmanTefilaGRA: toJSDate(calendar.getSofZmanTfilaGRA()),
+    sofZmanTefilaGRA: shitah
+      ? toJSDate(shitah.sofZmanTfila())
+      : toJSDate(calendar.getSofZmanTfilaGRA()),
     chatzos: toJSDate(calendar.getChatzos()),
-    minchaGedola: toJSDate(calendar.getMinchaGedola()),
-    minchaKetana: toJSDate(noArg.getMinchaKetana()),
-    plagHaMincha: toJSDate(noArg.getPlagHamincha()),
+    minchaGedola: shitah
+      ? toJSDate(shitah.minchaGedola())
+      : toJSDate(calendar.getMinchaGedola()),
+    minchaKetana: shitah
+      ? toJSDate(shitah.minchaKetana())
+      : toJSDate(noArg.getMinchaKetana()),
+    plagHaMincha: shitah
+      ? toJSDate(shitah.plag())
+      : toJSDate(noArg.getPlagHamincha()),
     // Only meaningful on erev Shabbos / erev Yom Tov — previously emitted
     // unconditionally, so "Candle Lighting" showed up on a random Tuesday.
     candleLighting: jewishCalendar.hasCandleLighting()
       ? toJSDate(calendar.getCandleLighting())
       : null,
     sunset,
-    tzeis: toJSDate(getTzeis(calendar, options.tzeisMethod)),
+    tzeis: shitah
+      ? toJSDate(shitah.tzeis())
+      : toJSDate(getTzeis(calendar, options.tzeisMethod)),
     tzeis72: toJSDate(calendar.getTzais72()),
     havdala: getHavdala(calendar, jewishCalendar, sunset, options.havdalaMethod),
     chatzosLayla: toJSDate(calendar.getSolarMidnight()),
