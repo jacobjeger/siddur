@@ -12,6 +12,7 @@ import type {
 } from "../../stores/useSettingsStore";
 import type { ZmanimData } from "./types";
 import { LUACH_PRESETS, getMisheyakir, type LuachPreset } from "./luach";
+import { getRoyZmanim } from "./royZmanim";
 
 export interface ZmanimOptions {
   /** Minutes before shkia for candle lighting. */
@@ -226,11 +227,21 @@ export function getZmanimForDate(
   const luach = options.luach ?? LUACH_PRESETS.standard;
   const shitah = getDedicatedShitah(calendar, noArg, luach);
 
+  // Rabbi Ovadiah Yosef's luach is seasonal-minute based and supplies its own
+  // alos/tzeis; it cannot be composed from the ordinary pickers.
+  const roy =
+    luach.dedicated === "roy"
+      ? getRoyZmanim(calendar, options.inIsrael ? "ohr_hachaim" : "amudeh_horaah")
+      : null;
+
   return {
-    alosHaShachar: shitah
-      ? toJSDate(shitah.alos())
-      : toJSDate(getAlos(calendar, options.alosMethod)),
-    misheyakir: toJSDate(getMisheyakir(calendar, luach)),
+    alosHaShachar:
+      roy?.alos ??
+      (shitah
+        ? toJSDate(shitah.alos())
+        : toJSDate(getAlos(calendar, options.alosMethod))),
+    // ROY's talis/tefillin time is its misheyakir equivalent.
+    misheyakir: roy?.talisTefillin ?? toJSDate(getMisheyakir(calendar, luach)),
     sunrise: toJSDate(adjustedSunrise(calendar, options.useElevation)),
     sofZmanShmaMGA: toJSDate(calendar.getSofZmanShmaMGA()),
     sofZmanShmaGRA: shitah
@@ -256,10 +267,12 @@ export function getZmanimForDate(
       ? toJSDate(calendar.getCandleLighting())
       : null,
     sunset,
-    tzeis: shitah
-      ? toJSDate(shitah.tzeis())
-      : toJSDate(getTzeis(calendar, options.tzeisMethod)),
-    tzeis72: toJSDate(calendar.getTzais72()),
+    tzeis:
+      roy?.tzeis ??
+      (shitah
+        ? toJSDate(shitah.tzeis())
+        : toJSDate(getTzeis(calendar, options.tzeisMethod))),
+    tzeis72: roy?.rabbeinuTam ?? toJSDate(calendar.getTzais72()),
     havdala: getHavdala(calendar, jewishCalendar, sunset, options.havdalaMethod),
     chatzosLayla: toJSDate(calendar.getSolarMidnight()),
   };

@@ -24,6 +24,7 @@ export type LuachId =
   | "baal_hatanya"
   | "ateret_torah"
   | "rav_moshe"
+  | "roy"
   | "custom";
 export type FontFamily = "NotoSerifHebrew";
 export type DarkMode = "on" | "off" | "system";

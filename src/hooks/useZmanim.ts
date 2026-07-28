@@ -122,7 +122,14 @@ export function useZmanim(date?: Date): UseZmanimResult {
           inIsrael: effectiveInIsrael,
           alosMethod: luach.alos ?? alosMethod,
           tzeisMethod: luach.tzeis ?? tzeisMethod,
-          useElevation: luach.id === "custom" ? useElevation : luach.useElevation,
+          // ROY uses elevation in Eretz Yisrael and mishor (sea level)
+          // outside it, so the region decides rather than the preset.
+          useElevation:
+            luach.id === "custom"
+              ? useElevation
+              : luach.id === "roy"
+                ? effectiveInIsrael
+                : luach.useElevation,
           luach,
         })
       );

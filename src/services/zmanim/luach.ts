@@ -20,6 +20,7 @@ export type LuachId =
   | "baal_hatanya"
   | "ateret_torah"
   | "rav_moshe"
+  | "roy"
   | "custom";
 
 export interface LuachPreset {
@@ -38,7 +39,7 @@ export interface LuachPreset {
    * than by composing alos/tzeis. Used by shitos that define their own shaah
    * zmanis basis — Baal HaTanya measures from netz amiti to shkiah amiti.
    */
-  dedicated: "baal_hatanya" | "ateret_torah" | null;
+  dedicated: "baal_hatanya" | "ateret_torah" | "roy" | null;
 }
 
 export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
@@ -101,6 +102,19 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     candleLightingOffset: 18,
     dedicated: null,
   },
+  roy: {
+    id: "roy",
+    name: "Rabbi Ovadiah Yosef",
+    description:
+      "Seasonal minutes. Ohr HaChaim in Eretz Yisrael (with elevation); Amudeh Hora'ah elsewhere, stretching the Israeli counts to your latitude.",
+    alos: null,
+    tzeis: null,
+    misheyakirDegrees: null,
+    // Elevation is decided per-luach at runtime: ON in Israel, OFF in chu"l.
+    useElevation: false,
+    candleLightingOffset: 20,
+    dedicated: "roy",
+  },
   custom: {
     id: "custom",
     name: "Custom",
@@ -120,6 +134,7 @@ export const LUACH_ORDER: LuachId[] = [
   "baal_hatanya",
   "ateret_torah",
   "rav_moshe",
+  "roy",
   "custom",
 ];
 

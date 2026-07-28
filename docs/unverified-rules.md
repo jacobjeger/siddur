@@ -128,6 +128,33 @@ special-day psalm systems are not.**
 
 ---
 
+## Zmanim: Rabbi Ovadiah Yosef luach — the extreme-latitude floor is omitted
+
+The ROY luach (`src/services/zmanim/royZmanim.ts`) is implemented and verified
+against the documented figures — Jerusalem gives alos 83.6 minutes before netz on
+28 Jul 2026, and Brooklyn stretches to 98.0, which is the latitude adjustment
+working as described.
+
+**The extreme-latitude backstop is deliberately NOT implemented.** The reference
+implementation applies `max(seasonal, 98.5°-offset)` to alos and tzeis. Taken
+literally at ordinary latitudes that is wrong: in Jerusalem the 8.5° point is
+35.6 minutes before netz while 72 zmaniyos minutes is 83.6, so "the later of the
+two" clamps every normal location to 35.6 and silently discards the shitah. This
+was caught during verification.
+
+Since the intended semantics could not be established, no floor is applied. That
+is correct wherever the seasonal calculation is well-behaved, but **times at far
+northern latitudes are unguarded** and should be checked before the app is used
+there.
+
+Also not implemented for this luach:
+- The three plag opinions (Halacha Berurah, Yalkut Yosef, Maamar Mordechai) —
+  only one plag is produced.
+- The multi-stringency motzaei Shabbos resolution with 5-minute rounding.
+- Visible sunrise (netz amiti / ChaiTables) — this needs a ~40 GB terrain
+  dataset and is out of scope permanently. The reference apps download it rather
+  than computing it.
+
 ## Sefiras HaOmer text — needs a native reviewer
 
 This is the best-sourced item here and still wants confirmation, because it is
