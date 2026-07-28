@@ -1,31 +1,99 @@
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useZmanim } from "../../src/hooks/useZmanim";
 import { useNextZman } from "../../src/hooks/useNextZman";
+import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { ZMAN_NAMES } from "../../src/utils/constants";
-import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
+import {
+  ZMAN_ORDER,
+  ZMAN_GROUP_LABELS,
+  type ZmanGroup,
+} from "../../src/services/zmanim/types";
+import {
+  formatZmanTime,
+  formatCountdown,
+} from "../../src/utils/timeFormatting";
 
 export default function ZmanimTab() {
-  const { zmanim, loading } = useZmanim();
+  const { zmanim, loading, error } = useZmanim();
   const { nextZman, countdown } = useNextZman();
+  const location = useLocationStore((s) => s.location);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
   const { colors } = useTheme();
 
-  if (loading || !zmanim) {
+  const timeZone = location?.timezone;
+
+  if (loading) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background, alignItems: "center", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.background,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={{ color: colors.textSecondary, marginTop: 16 }}>Loading zmanim...</Text>
+        <Text style={{ color: colors.textSecondary, marginTop: 16 }}>
+          Loading zmanim...
+        </Text>
       </View>
     );
   }
 
-  const zmanimEntries = Object.entries(zmanim).filter(
-    ([_, value]) => value != null
-  ) as [string, Date][];
+  if (error || !zmanim) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        <LocationDisplay />
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: 32,
+          }}
+        >
+          <Ionicons
+            name="alert-circle-outline"
+            size={44}
+            color={colors.textMuted}
+          />
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: 17,
+              fontWeight: "600",
+              marginTop: 12,
+              textAlign: "center",
+            }}
+          >
+            Couldn&apos;t calculate zmanim
+          </Text>
+          <Text
+            style={{
+              color: colors.textSecondary,
+              marginTop: 6,
+              textAlign: "center",
+            }}
+          >
+            {error ?? "No zmanim are available for this location."}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  const groups = ZMAN_ORDER.reduce<Record<ZmanGroup, typeof ZMAN_ORDER>>(
+    (acc, entry) => {
+      if (zmanim[entry.key] != null) acc[entry.group].push(entry);
+      return acc;
+    },
+    { morning: [], afternoon: [], evening: [] }
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -45,17 +113,39 @@ export default function ZmanimTab() {
             borderColor: colors.border,
           }}
         >
-          <Text style={{ fontSize: 13, color: colors.textSecondary, fontWeight: "500" }}>
+          <Text
+            style={{
+              fontSize: 13,
+              color: colors.textSecondary,
+              fontWeight: "500",
+            }}
+          >
             Next Zman
           </Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.primary, marginTop: 4 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: colors.primary,
+              marginTop: 4,
+            }}
+          >
             {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 8,
+            }}
+          >
             <Text style={{ fontSize: 17, color: colors.text }}>
-              {formatZmanTime(nextZman.time, timeFormat)}
+              {formatZmanTime(nextZman.time, timeFormat, timeZone)}
             </Text>
-            <Text style={{ fontSize: 17, fontWeight: "600", color: colors.primary }}>
+            <Text
+              style={{ fontSize: 17, fontWeight: "600", color: colors.primary }}
+            >
               {formatCountdown(countdown)}
             </Text>
           </View>
@@ -63,37 +153,69 @@ export default function ZmanimTab() {
       )}
 
       <ScrollView style={{ flex: 1, paddingHorizontal: 16, paddingTop: 8 }}>
-        {zmanimEntries.map(([key, time]) => (
-          <View
-            key={key}
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingVertical: 12,
-              borderBottomWidth: 1,
-              borderBottomColor: colors.border,
-            }}
-          >
-            <View>
-              <Text style={{ fontSize: 16, fontWeight: "500", color: colors.text }}>
-                {ZMAN_NAMES[key]?.en ?? key}
-              </Text>
+        {(Object.keys(groups) as ZmanGroup[]).map((group) =>
+          groups[group].length === 0 ? null : (
+            <View key={group} style={{ marginBottom: 8 }}>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: 13,
+                  fontWeight: "700",
                   color: colors.textMuted,
-                  fontFamily: "NotoSerifHebrew-Regular",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                  marginTop: 12,
+                  marginBottom: 4,
                 }}
               >
-                {ZMAN_NAMES[key]?.he ?? ""}
+                {ZMAN_GROUP_LABELS[group].en}
               </Text>
+
+              {groups[group].map(({ key }) => (
+                <View
+                  key={key}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingVertical: 12,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.border,
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "500",
+                        color: colors.text,
+                      }}
+                    >
+                      {ZMAN_NAMES[key]?.en ?? key}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: colors.textMuted,
+                        fontFamily: "NotoSerifHebrew-Regular",
+                      }}
+                    >
+                      {ZMAN_NAMES[key]?.he ?? ""}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "600",
+                      color: colors.text,
+                    }}
+                  >
+                    {formatZmanTime(zmanim[key], timeFormat, timeZone)}
+                  </Text>
+                </View>
+              ))}
             </View>
-            <Text style={{ fontSize: 16, fontWeight: "600", color: colors.text }}>
-              {formatZmanTime(time, timeFormat)}
-            </Text>
-          </View>
-        ))}
+          )
+        )}
         <View style={{ height: 32 }} />
       </ScrollView>
     </View>

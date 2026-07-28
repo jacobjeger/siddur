@@ -2,8 +2,12 @@ export const ZMAN_NAMES: Record<string, { en: string; he: string }> = {
   alosHaShachar: { en: "Alos HaShachar", he: "עלות השחר" },
   misheyakir: { en: "Misheyakir", he: "משיכיר" },
   sunrise: { en: "HaNetz (Sunrise)", he: "הנץ החמה" },
-  sofZmanShmaGRA: { en: "Sof Zman Shma (GRA)", he: 'סוף זמן ק"ש (גר"א)' },
   sofZmanShmaMGA: { en: "Sof Zman Shma (MGA)", he: 'סוף זמן ק"ש (מג"א)' },
+  sofZmanShmaGRA: { en: "Sof Zman Shma (GRA)", he: 'סוף זמן ק"ש (גר"א)' },
+  sofZmanTefilaMGA: {
+    en: "Sof Zman Tefila (MGA)",
+    he: 'סוף זמן תפילה (מג"א)',
+  },
   sofZmanTefilaGRA: {
     en: "Sof Zman Tefila (GRA)",
     he: 'סוף זמן תפילה (גר"א)',
@@ -15,6 +19,9 @@ export const ZMAN_NAMES: Record<string, { en: string; he: string }> = {
   candleLighting: { en: "Candle Lighting", he: "הדלקת נרות" },
   sunset: { en: "Shkia (Sunset)", he: "שקיעה" },
   tzeis: { en: "Tzeis HaKochavim", he: "צאת הכוכבים" },
+  tzeis72: { en: "Tzeis (Rabbeinu Tam)", he: 'צאת הכוכבים (ר"ת)' },
+  havdala: { en: "Havdala", he: "הבדלה" },
+  chatzosLayla: { en: "Chatzos Layla", he: "חצות הלילה" },
 };
 
 export const NUSACH_LABELS: Record<string, string> = {

@@ -1,10 +1,10 @@
-import { useMemo } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { HebrewDateHeader } from "../../src/components/common/HebrewDateHeader";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { useNextZman } from "../../src/hooks/useNextZman";
+import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { getTefilosForTime } from "../../src/data/prayers";
@@ -19,6 +19,7 @@ export default function SiddurTab() {
   const { tefilaType } = useHebrewDate();
   const { nextZman, countdown } = useNextZman();
   const timeFormat = useSettingsStore((s) => s.timeFormat);
+  const timeZone = useLocationStore((s) => s.location?.timezone);
   const router = useRouter();
   const { colors } = useTheme();
 
@@ -61,7 +62,7 @@ export default function SiddurTab() {
               </Text>
               <View style={{ alignItems: "flex-end" }}>
                 <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
-                  {formatZmanTime(nextZman.time, timeFormat)}
+                  {formatZmanTime(nextZman.time, timeFormat, timeZone)}
                 </Text>
                 <Text style={{ fontSize: 14, fontWeight: "600", color: colors.accent, marginTop: 2 }}>
                   in {formatCountdown(countdown)}

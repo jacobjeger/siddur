@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useZmanim } from "./useZmanim";
-import { ZMAN_NAMES } from "../utils/constants";
+import { ZMAN_ORDER, type ZmanKey } from "../services/zmanim/types";
 
 interface NextZmanInfo {
-  key: string;
+  key: ZmanKey;
   time: Date;
 }
 
@@ -16,52 +16,63 @@ export function useNextZman(): UseNextZmanResult {
   const { zmanim } = useZmanim();
   const [nextZman, setNextZman] = useState<NextZmanInfo | null>(null);
   const [countdown, setCountdown] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const nextRef = useRef<NextZmanInfo | null>(null);
 
   useEffect(() => {
-    if (!zmanim) return;
+    if (!zmanim) {
+      setNextZman(null);
+      setCountdown(0);
+      nextRef.current = null;
+      return;
+    }
 
     function findNext() {
       const now = Date.now();
-      const entries = Object.entries(zmanim!).filter(
-        ([_, value]) => value != null && (value as Date).getTime() > now
-      ) as [string, Date][];
+      const upcoming = ZMAN_ORDER.map(({ key }) => ({
+        key,
+        time: zmanim![key],
+      }))
+        .filter(
+          (entry): entry is NextZmanInfo =>
+            entry.time != null && entry.time.getTime() > now
+        )
+        .sort((a, b) => a.time.getTime() - b.time.getTime());
 
-      entries.sort((a, b) => a[1].getTime() - b[1].getTime());
-
-      if (entries.length > 0) {
-        const [key, time] = entries[0];
-        setNextZman({ key, time });
-        setCountdown(time.getTime() - now);
-      } else {
-        setNextZman(null);
-        setCountdown(0);
-      }
+      const next = upcoming[0] ?? null;
+      nextRef.current = next;
+      setNextZman(next);
+      setCountdown(next ? next.time.getTime() - now : 0);
+      return next;
     }
 
     findNext();
 
-    // Update countdown: every second if < 60s, every minute otherwise
-    function tick() {
-      if (!nextZman) return;
-      const remaining = nextZman.time.getTime() - Date.now();
-      if (remaining <= 0) {
-        findNext();
-      } else {
-        setCountdown(remaining);
-      }
+    // Re-evaluate on a 1s cadence only when the next zman is close; otherwise
+    // 1/minute is plenty. Previously the interval was chosen from `countdown`
+    // state, which is 0 on the first run, so it always ran at 1s.
+    let timer: ReturnType<typeof setTimeout>;
+
+    function schedule() {
+      const remaining = nextRef.current
+        ? nextRef.current.time.getTime() - Date.now()
+        : 0;
+      const delay = remaining > 60_000 ? 60_000 : 1_000;
+
+      timer = setTimeout(() => {
+        const current = nextRef.current;
+        if (!current || current.time.getTime() - Date.now() <= 0) {
+          findNext();
+        } else {
+          setCountdown(current.time.getTime() - Date.now());
+        }
+        schedule();
+      }, delay);
     }
 
-    // Start with minute interval, switch to second when close
-    if (intervalRef.current) clearInterval(intervalRef.current);
+    schedule();
 
-    const interval = countdown > 60000 ? 60000 : 1000;
-    intervalRef.current = setInterval(tick, interval);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [zmanim, nextZman?.key]);
+    return () => clearTimeout(timer);
+  }, [zmanim]);
 
   return { nextZman, countdown };
 }

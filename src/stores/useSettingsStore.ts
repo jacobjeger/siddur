@@ -20,6 +20,11 @@ interface SettingsState {
   havdalaMethod: HavdalaMethod;
   keepScreenOn: boolean;
   timeFormat: TimeFormat;
+  /**
+   * null = auto-detect from the resolved location's coordinates.
+   * Affects second-day Yom Tov, parsha, and the V'Sein Tal U'Matar start date.
+   */
+  inIsrael: boolean | null;
 
   setNusach: (nusach: Nusach) => void;
   setTextSize: (size: number) => void;
@@ -34,6 +39,7 @@ interface SettingsState {
   setHavdalaMethod: (method: HavdalaMethod) => void;
   setKeepScreenOn: (keep: boolean) => void;
   setTimeFormat: (format: TimeFormat) => void;
+  setInIsrael: (inIsrael: boolean | null) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -50,6 +56,7 @@ export const useSettingsStore = create<SettingsState>()(
       havdalaMethod: "8.5deg",
       keepScreenOn: true,
       timeFormat: "12h",
+      inIsrael: null,
 
       setNusach: (nusach) => set({ nusach }),
       setTextSize: (textSize) => set({ textSize }),
@@ -63,6 +70,7 @@ export const useSettingsStore = create<SettingsState>()(
       setHavdalaMethod: (havdalaMethod) => set({ havdalaMethod }),
       setKeepScreenOn: (keepScreenOn) => set({ keepScreenOn }),
       setTimeFormat: (timeFormat) => set({ timeFormat }),
+      setInIsrael: (inIsrael) => set({ inIsrael }),
     }),
     {
       name: "siddur-settings",
