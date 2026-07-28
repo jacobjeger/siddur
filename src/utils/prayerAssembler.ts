@@ -75,31 +75,10 @@ export function getActiveInsertionNames(
     .map((ins) => ins.name);
 }
 
-/**
- * Check if Tachanun should be said today.
- * Tachanun is omitted on Rosh Chodesh, holidays, Chol HaMoed,
- * Chanukah, Purim, and other occasions.
- */
-export function shouldSayTachanun(context: InsertionContext): boolean {
-  if (context.isRoshChodesh) return false;
-  if (context.isCholHamoed) return false;
-  if (context.holiday === "chanukah") return false;
-  if (context.holiday === "purim") return false;
-  if (context.isAseresYemeiTeshuva) return true; // Tachanun IS said during AYT
-  return true;
-}
-
-/**
- * Determine if Hallel should be said, and which type.
- */
-export function getHallelType(
-  context: InsertionContext
-): "full" | "half" | "none" {
-  if (context.holiday === "chanukah") return "full";
-  if (context.isRoshChodesh) return "half";
-  if (context.isCholHamoed) return "half"; // Last 6 days of Pesach; Sukkos is full
-  return "none";
-}
+// Tachanun and Hallel live in src/utils/dayDavening.ts, which derives them
+// from JewishCalendar. Duplicates previously lived here with materially wrong
+// rules (Chol HaMoed Succos marked half Hallel; Tachanun missing Nissan, Lag
+// BaOmer, Tu B'Av, Isru Chag and more). They had no callers and are removed.
 
 // --- Helpers ---
 

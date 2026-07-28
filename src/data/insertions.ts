@@ -30,7 +30,10 @@ export const veSeinTalUmatar: ConditionalInsertion = {
   nameHe: "ותן טל ומטר",
   targetSectionId: "se-bareich-aleinu",
   position: "replace",
-  condition: (ctx) => ctx.season === "winter",
+  // NOT ctx.season — Tal U'Matar starts later than Mashiv HaRuach (7 Cheshvan
+  // in Israel, Dec 4/5 in the Diaspora), so keying off the season flag made
+  // this text appear roughly three weeks early in chu"l.
+  condition: (ctx) => ctx.saysTalUMatar,
   text: "וְתֵן טַל וּמָטָר לִבְרָכָה עַל כָּל פְּנֵי הָאֲדָמָה.",
   translation: "And bestow dew and rain for a blessing upon the face of the earth.",
 };
@@ -41,7 +44,8 @@ export const veSeinBracha: ConditionalInsertion = {
   nameHe: "ותן ברכה",
   targetSectionId: "se-bareich-aleinu",
   position: "replace",
-  condition: (ctx) => ctx.season === "summer",
+  // The complement of veSeinTalUmatar, for the same reason.
+  condition: (ctx) => !ctx.saysTalUMatar,
   text: "וְתֵן בְּרָכָה עַל כָּל פְּנֵי הָאֲדָמָה.",
   translation: "And bestow blessing upon the face of the earth.",
 };
