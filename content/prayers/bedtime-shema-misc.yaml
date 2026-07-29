@@ -10,7 +10,7 @@ sections:
     group: Krias Shema Al Hamitah
     status: needs-text
   - id: bedtime-shema-misc-shema-bedtime
-    title: Shema (1st parsha)
+    title: Shema
     titleHe: שמע
     group: Krias Shema Al Hamitah
     instruction: First parsha of Shema only
@@ -207,7 +207,7 @@ sections:
     title: Borei Nefashos
     titleHe: בורא נפשות
     group: Special Prayers
-    text: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא נְפָשׁוֹת רַבּוֹת וְחֶסְרוֹנָן עַל כָּל מַה שֶׁבָּרָאתָּ לְהַחֲיוֹת בָּהֶם נֶפֶשׁ כָּל חָי בָּרוּךְ חֵי חַי הָעוֹלָמִים:"
+    text: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא נְפָשׁוֹת רַבּוֹת וְחֶסְרוֹנָן עַל כָּל מַה שֶׁבָּרָאתָּ לְהַחֲיוֹת בָּהֶם נֶפֶשׁ כָּל חָי בָּרוּךְ חֵי הָעוֹלָמִים:"
     instructionHe: "על פירות האילן חוץ מז' מינים ופירות האדמה וירקות ועל כל המשקין ועל דבר שאין גידולו מן הארץ אחרי האכילה אומר:"
     sourceRef: archive:blessings-borei-nefashos.yaml#blessings-borei-nefashos-text
   - id: bedtime-shema-misc-sheva-brachos

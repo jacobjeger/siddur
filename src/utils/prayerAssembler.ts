@@ -1,112 +1,55 @@
-import type { Tefila, PrayerSection, InsertionContext, ConditionalInsertion } from "../data/types";
+import type { Tefila, InsertionContext, ConditionalInsertion } from "../data/types";
 import { ALL_INSERTIONS } from "../data/insertions";
 
 /**
- * Assemble a final prayer by applying conditional insertions based on the current date context.
- * Returns a new Tefila with modified sections where applicable.
+ * Which conditional insertions apply today.
+ *
+ * This deliberately does NOT modify the prayer text. The corpus is a siddur:
+ * it already carries every seasonal and conditional alternative inline, in
+ * position, behind its own cue — `בקיץ:`/`בחורף:` in Gevuros, `בעשי"ת:` in Avos
+ * and Sim Shalom, `בראש חדש ובחול המועד אומרים זה:` in Retzei, both Al HaNissim
+ * paragraphs in Modim. Measured: 13 of the 15 insertions duplicate text that is
+ * already present in their target section.
+ *
+ * The previous implementation appended each active insertion as a whole extra
+ * SECTION after the target, so the user read Morid HaTal in place and then
+ * again as a separate block titled in English — every day of the year — and on
+ * Chanukah read Al HaNissim inside Modim and then a second full Al HaNissim
+ * *after* `בָּרוּךְ אַתָּה יְהֹוָה הַטּוֹב שִׁמְךָ`. Text that belongs mid-bracha can never
+ * be correct when appended after the chasima.
+ *
+ * `position: "replace"` was worse than a no-op: it discarded `insertion.text`
+ * and appended an English tag (`[V'Sein Tal U'Matar]`) to the section, so the
+ * only visible effect was Latin text above the Hebrew.
+ *
+ * So insertions are now purely an ANNOTATION of what applies today, which is
+ * what the Today and Calendar panels already render from `activeInsertions`.
+ * Anything genuinely missing from the corpus is a content gap to be filled in
+ * the YAML, in position, with its cue — not patched in at runtime. The one
+ * such gap today is Aneinu; see docs/remaining-text.md.
  */
-export function assemblePrayer(
-  baseTefila: Tefila,
+export function getActiveInsertions(
   context: InsertionContext
-): Tefila {
-  // Find active insertions for this context
-  const activeInsertions = ALL_INSERTIONS.filter((ins) => ins.condition(context));
-
-  if (activeInsertions.length === 0) {
-    return baseTefila;
-  }
-
-  // Apply insertions to sections
-  const newSections: PrayerSection[] = [];
-
-  for (const section of baseTefila.sections) {
-    const sectionInsertions = activeInsertions.filter(
-      (ins) => matchesSectionId(section.id, ins.targetSectionId)
-    );
-
-    if (sectionInsertions.length === 0) {
-      newSections.push(section);
-      continue;
-    }
-
-    // Process insertions for this section
-    for (const insertion of sectionInsertions) {
-      if (insertion.position === "before") {
-        newSections.push(createInsertionSection(insertion));
-      }
-    }
-
-    // Check for replacements
-    const replacement = sectionInsertions.find((ins) => ins.position === "replace");
-    if (replacement) {
-      // For "replace" type, we modify the section's closing bracha text
-      // This is used for HaMelech HaKadosh / HaMelech HaMishpat
-      newSections.push({
-        ...section,
-        instruction: section.instruction
-          ? `${section.instruction} [${replacement.name}]`
-          : `[${replacement.name}]`,
-      });
-    } else {
-      newSections.push(section);
-    }
-
-    for (const insertion of sectionInsertions) {
-      if (insertion.position === "after") {
-        newSections.push(createInsertionSection(insertion));
-      }
-    }
-  }
-
-  return {
-    ...baseTefila,
-    sections: newSections,
-  };
+): ConditionalInsertion[] {
+  return ALL_INSERTIONS.filter((insertion) => insertion.condition(context));
 }
 
 /**
- * Get a list of active insertion names for display (badges in the UI).
+ * Kept for call-site compatibility. Returns the tefila unchanged.
+ *
+ * Assembly is a no-op by design — see getActiveInsertions above. It stays as a
+ * named seam so that if per-nusach text variants land later (see
+ * `NusachVariants` in src/data/types.ts, currently unused by all 174 sections),
+ * there is one obvious place to resolve them.
  */
-export function getActiveInsertionNames(
-  context: InsertionContext
-): string[] {
-  return ALL_INSERTIONS
-    .filter((ins) => ins.condition(context))
-    .map((ins) => ins.name);
+export function assemblePrayer(
+  baseTefila: Tefila,
+  _context: InsertionContext
+): Tefila {
+  return baseTefila;
 }
 
 // Tachanun and Hallel live in src/utils/dayDavening.ts, which derives them
 // from JewishCalendar. Duplicates previously lived here with materially wrong
 // rules (Chol HaMoed Succos marked half Hallel; Tachanun missing Nissan, Lag
 // BaOmer, Tu B'Av, Isru Chag and more). They had no callers and are removed.
-
-// --- Helpers ---
-
-/**
- * Insertions are declared against the Shacharis Amidah section ids, but the
- * same bracha recurs in Mincha and Maariv under a service-prefixed id
- * (`shacharis-amidah-09-shanim` vs `mincha-amidah-09-shanim`). Match on the
- * part after the service prefix so an insertion reaches every service.
- *
- * The previous implementation stripped an `se-` prefix that no id in the
- * corpus has used since the XLSX migration, so it matched nothing and Mincha
- * and Maariv received zero insertions — Ya'aleh V'Yavo, Al HaNissim, Aneinu
- * and Tal U'Matar could never appear there.
- */
-const SERVICE_PREFIX = /^(shacharis|mincha|maariv)-/;
-
-function matchesSectionId(sectionId: string, targetId: string): boolean {
-  if (sectionId === targetId) return true;
-  return sectionId.replace(SERVICE_PREFIX, "") === targetId.replace(SERVICE_PREFIX, "");
-}
-
-function createInsertionSection(insertion: ConditionalInsertion): PrayerSection {
-  return {
-    id: `insertion-${insertion.id}`,
-    title: insertion.name,
-    titleHe: insertion.nameHe,
-    instruction: `[Conditional insertion: ${insertion.name}]`,
-    text: insertion.text,
-    translation: insertion.translation,
-  };
-}

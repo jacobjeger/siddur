@@ -57,7 +57,7 @@ export const yaalehVeyavo: ConditionalInsertion = {
   targetSectionId: "shacharis-amidah-17-avoda",
   position: "after",
   condition: (ctx) => ctx.isRoshChodesh || ctx.isCholHamoed,
-  text: "אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, יַעֲלֶה וְיָבֹא, וְיַגִּיעַ, וְיֵרָאֶה, וְיֵרָצֶה, וְיִשָּׁמַע, וְיִפָּקֵד, וְיִזָּכֵר זִכְרוֹנֵנוּ וּפִקְדוֹנֵנוּ, וְזִכְרוֹן אֲבוֹתֵינוּ, וְזִכְרוֹן מָשִׁיחַ בֶּן דָּוִד עַבְדֶּךָ, וְזִכְרוֹן יְרוּשָׁלַיִם עִיר קָדְשֶׁךָ, וְזִכְרוֹן כָּל עַמְּךָ בֵּית יִשְׂרָאֵל לְפָנֶיךָ, לִפְלֵיטָה, לְטוֹבָה, לְחֵן וּלְחֶסֶד וּלְרַחֲמִים, לְחַיִּים וּלְשָׁלוֹם, בְּיוֹם רֹאשׁ הַחֹדֶשׁ הַזֶּה. זָכְרֵנוּ ה' אֱלֹהֵינוּ בּוֹ לְטוֹבָה, וּפָקְדֵנוּ בוֹ לִבְרָכָה, וְהוֹשִׁיעֵנוּ בוֹ לְחַיִּים. וּבִדְבַר יְשׁוּעָה וְרַחֲמִים חוּס וְחָנֵּנוּ, וְרַחֵם עָלֵינוּ וְהוֹשִׁיעֵנוּ, כִּי אֵלֶיךָ עֵינֵינוּ, כִּי אֵל מֶלֶךְ חַנּוּן וְרַחוּם אָתָּה.",
+  text: "אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, יַעֲלֶה וְיָבֹא, וְיַגִּיעַ, וְיֵרָאֶה, וְיֵרָצֶה, וְיִשָּׁמַע, וְיִפָּקֵד, וְיִזָּכֵר זִכְרוֹנֵנוּ וּפִקְדוֹנֵנוּ, וְזִכְרוֹן אֲבוֹתֵינוּ, וְזִכְרוֹן מָשִׁיחַ בֶּן דָּוִד עַבְדֶּךָ, וְזִכְרוֹן יְרוּשָׁלַיִם עִיר קָדְשֶׁךָ, וְזִכְרוֹן כָּל עַמְּךָ בֵּית יִשְׂרָאֵל לְפָנֶיךָ, לִפְלֵיטָה, לְטוֹבָה, לְחֵן וּלְחֶסֶד וּלְרַחֲמִים, לְחַיִּים וּלְשָׁלוֹם, בְּיוֹם רֹאשׁ הַחֹדֶשׁ הַזֶּה. זָכְרֵנוּ יְהֹוָה אֱלֹהֵינוּ בּוֹ לְטוֹבָה, וּפָקְדֵנוּ בוֹ לִבְרָכָה, וְהוֹשִׁיעֵנוּ בוֹ לְחַיִּים. וּבִדְבַר יְשׁוּעָה וְרַחֲמִים חוּס וְחָנֵּנוּ, וְרַחֵם עָלֵינוּ וְהוֹשִׁיעֵנוּ, כִּי אֵלֶיךָ עֵינֵינוּ, כִּי אֵל מֶלֶךְ חַנּוּן וְרַחוּם אָתָּה.",
   translation: "Our God and God of our fathers, may there ascend, come, and reach, be seen, accepted, and heard, recalled and remembered before You—our remembrance and our reckoning, the remembrance of our fathers, the remembrance of the Messiah son of David Your servant, the remembrance of Jerusalem Your holy city, and the remembrance of all Your people the House of Israel—for deliverance, goodness, grace, kindness and mercy, life and peace, on this day of the New Month. Remember us, Lord our God, on it for goodness; consider us on it for blessing; and save us on it for life. With a word of salvation and mercy, spare us and be gracious to us; have mercy upon us and save us, for our eyes are turned to You, for You are a gracious and merciful God and King.",
 };
 
@@ -87,10 +87,13 @@ export const ataChonantanu: ConditionalInsertion = {
   id: "ata-chonantanu",
   name: "Ata Chonantanu",
   nameHe: "אתה חוננתנו",
-  targetSectionId: "shacharis-amidah-04-daas",
+  // Ata Chonantanu is a MAARIV insert, said only at Motzaei Shabbos. Pointing
+  // it at the Shacharis Daas bracha aimed it at a tefilla nobody davens at
+  // that hour, and it could never reach the Maariv section that exists for it.
+  targetSectionId: "maariv-ata-chonantanu",
   position: "after",
   condition: (ctx) => ctx.isMotzaeiShabbos,
-  text: "אַתָּה חוֹנַנְתָּנוּ לְמַדַּע תּוֹרָתֶךָ, וַתְּלַמְּדֵנוּ לַעֲשׂוֹת חֻקֵּי רְצוֹנֶךָ. וַתַּבְדֵּל ה' אֱלֹהֵינוּ, בֵּין קֹדֶשׁ לְחוֹל, בֵּין אוֹר לְחשֶׁךְ, בֵּין יִשְׂרָאֵל לָעַמִּים, בֵּין יוֹם הַשְּׁבִיעִי לְשֵׁשֶׁת יְמֵי הַמַּעֲשֶׂה. אָבִינוּ מַלְכֵּנוּ, הָחֵל עָלֵינוּ הַיָּמִים הַבָּאִים לִקְרָאתֵנוּ לְשָׁלוֹם, חֲשׂוּכִים מִכָּל חֵטְא, וּמְנֻקִּים מִכָּל עָוֹן, וּמְדֻבָּקִים בְּיִרְאָתֶךָ.",
+  text: "אַתָּה חוֹנַנְתָּנוּ לְמַדַּע תּוֹרָתֶךָ, וַתְּלַמְּדֵנוּ לַעֲשׂוֹת חֻקֵּי רְצוֹנֶךָ. וַתַּבְדֵּל יְהֹוָה אֱלֹהֵינוּ, בֵּין קֹדֶשׁ לְחוֹל, בֵּין אוֹר לְחשֶׁךְ, בֵּין יִשְׂרָאֵל לָעַמִּים, בֵּין יוֹם הַשְּׁבִיעִי לְשֵׁשֶׁת יְמֵי הַמַּעֲשֶׂה. אָבִינוּ מַלְכֵּנוּ, הָחֵל עָלֵינוּ הַיָּמִים הַבָּאִים לִקְרָאתֵנוּ לְשָׁלוֹם, חֲשׂוּכִים מִכָּל חֵטְא, וּמְנֻקִּים מִכָּל עָוֹן, וּמְדֻבָּקִים בְּיִרְאָתֶךָ.",
   translation: "You have graced us with the knowledge of Your Torah, and taught us to perform the statutes of Your will. You have distinguished, Lord our God, between sacred and secular, between light and darkness, between Israel and the nations, between the seventh day and the six working days. Our Father, our King, begin for us the days that come to meet us in peace, free from all sin, cleansed from all iniquity, and attached to the fear of You.",
 };
 
@@ -101,7 +104,7 @@ export const aneinu: ConditionalInsertion = {
   targetSectionId: "shacharis-amidah-16-tefila",
   position: "after",
   condition: (ctx) => ctx.isFastDay,
-  text: "עֲנֵנוּ ה' עֲנֵנוּ בְּיוֹם צוֹם תַּעֲנִיתֵנוּ, כִּי בְצָרָה גְדוֹלָה אֲנָחְנוּ. אַל תֵּפֶן אֶל רִשְׁעֵנוּ, וְאַל תַּסְתֵּר פָּנֶיךָ מִמֶּנוּ, וְאַל תִּתְעַלַּם מִתְּחִנָּתֵנוּ. הֱיֵה נָא קָרוֹב לְשַׁוְעָתֵנוּ, יְהִי נָא חַסְדְּךָ לְנַחֲמֵנוּ. טֶרֶם נִקְרָא אֵלֶיךָ עֲנֵנוּ, כַּדָּבָר שֶׁנֶּאֱמַר: וְהָיָה טֶרֶם יִקְרָאוּ וַאֲנִי אֶעֱנֶה, עוֹד הֵם מְדַבְּרִים וַאֲנִי אֶשְׁמָע. כִּי אַתָּה ה' הָעוֹנֶה בְּעֵת צָרָה, פּוֹדֶה וּמַצִּיל בְּכָל עֵת צָרָה וְצוּקָה.",
+  text: "עֲנֵנוּ יְהֹוָה עֲנֵנוּ בְּיוֹם צוֹם תַּעֲנִיתֵנוּ, כִּי בְצָרָה גְדוֹלָה אֲנָחְנוּ. אַל תֵּפֶן אֶל רִשְׁעֵנוּ, וְאַל תַּסְתֵּר פָּנֶיךָ מִמֶּנוּ, וְאַל תִּתְעַלַּם מִתְּחִנָּתֵנוּ. הֱיֵה נָא קָרוֹב לְשַׁוְעָתֵנוּ, יְהִי נָא חַסְדְּךָ לְנַחֲמֵנוּ. טֶרֶם נִקְרָא אֵלֶיךָ עֲנֵנוּ, כַּדָּבָר שֶׁנֶּאֱמַר: וְהָיָה טֶרֶם יִקְרָאוּ וַאֲנִי אֶעֱנֶה, עוֹד הֵם מְדַבְּרִים וַאֲנִי אֶשְׁמָע. כִּי אַתָּה יְהֹוָה הָעוֹנֶה בְּעֵת צָרָה, פּוֹדֶה וּמַצִּיל בְּכָל עֵת צָרָה וְצוּקָה.",
   translation: "Answer us, Lord, answer us on this fast day, for we are in great distress. Do not turn to our wickedness, do not hide Your face from us, and do not ignore our supplication. Please be near to our cry; let Your kindness comfort us. Before we call to You, answer us, as it is said: And it shall be that before they call, I will answer; while they yet speak, I will hear. For You, Lord, are the One Who answers in time of distress, Who redeems and rescues in every time of trouble and anguish.",
 };
 
@@ -136,7 +139,7 @@ export const hamelechHakadosh: ConditionalInsertion = {
   targetSectionId: "shacharis-amidah-03-kedusha",
   position: "replace",
   condition: (ctx) => ctx.isAseresYemeiTeshuva,
-  text: "בָּרוּךְ אַתָּה ה', הַמֶּלֶךְ הַקָּדוֹשׁ.",
+  text: "בָּרוּךְ אַתָּה יְהֹוָה, הַמֶּלֶךְ הַקָּדוֹשׁ.",
   translation: "Blessed are You, Lord, the Holy King.",
 };
 
@@ -147,7 +150,7 @@ export const hamelechHamishpat: ConditionalInsertion = {
   targetSectionId: "shacharis-amidah-11-mishpat",
   position: "replace",
   condition: (ctx) => ctx.isAseresYemeiTeshuva,
-  text: "בָּרוּךְ אַתָּה ה', הַמֶּלֶךְ הַמִּשְׁפָּט.",
+  text: "בָּרוּךְ אַתָּה יְהֹוָה, הַמֶּלֶךְ הַמִּשְׁפָּט.",
   translation: "Blessed are You, Lord, the King of Judgment.",
 };
 
