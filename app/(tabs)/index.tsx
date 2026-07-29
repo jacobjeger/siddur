@@ -22,6 +22,7 @@ import { describeTachanun } from "../../src/utils/describeTachanun";
 
 import { useKeyHandler } from "../../src/hooks/useKeyHandler";
 import { useReadingStore, getResumable } from "../../src/stores/useReadingStore";
+import { Bilingual } from "../../src/components/common/Bilingual";
 const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
 export default function SiddurTab() {
@@ -118,9 +119,13 @@ export default function SiddurTab() {
               </Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={{ fontSize: typeScale.title, fontWeight: "600", color: colors.text }}>
-                {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
-              </Text>
+              <Bilingual
+                he={ZMAN_NAMES[nextZman.key]?.he ?? ""}
+                en={ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
+                align="right"
+                numberOfLines={1}
+                style={{ flex: 1 }}
+              />
               <View style={{ alignItems: "flex-end" }}>
                 <Text style={{ fontSize: typeScale.title, fontWeight: "600", color: colors.text }}>
                   {formatZmanTime(nextZman.time, timeFormat, timeZone)}
@@ -257,18 +262,13 @@ export default function SiddurTab() {
                     gap: 8,
                   }}
                 >
-                  <Text
-                    style={{ fontSize: typeScale.title, color: colors.text }}
+                  <Bilingual
+                    he={category.nameHe}
+                    en={category.name}
+                    align="right"
                     numberOfLines={1}
-                  >
-                    {category.name}
-                  </Text>
-                  <HebrewText
-                    style={{ fontSize: typeScale.title, color: colors.textSecondary, flexShrink: 1 }}
-                    numberOfLines={1}
-                  >
-                    {category.nameHe}
-                  </HebrewText>
+                    style={{ flex: 1 }}
+                  />
                 </View>
                 <Ionicons
                   name="chevron-forward"
@@ -301,12 +301,13 @@ export default function SiddurTab() {
           <View
             style={{ flex: 1, flexDirection: "row", alignItems: "center", gap: 8 }}
           >
-            <Text style={{ fontSize: typeScale.title, color: colors.primary }}>
-              All Tefilos
-            </Text>
-            <HebrewText style={{ fontSize: typeScale.title, color: colors.primary }}>
-              כל התפילות
-            </HebrewText>
+            <Bilingual
+              he="כל התפילות"
+              en="All Tefilos"
+              align="right"
+              numberOfLines={1}
+              style={{ flex: 1 }}
+            />
           </View>
           <Ionicons
             name="chevron-forward"
@@ -331,18 +332,23 @@ export default function SiddurTab() {
               paddingVertical: 16,
             }}
           >
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <View style={{ alignItems: "center" }}>
+              <HebrewText
+                bold
+                style={{ fontSize: typeScale.display, color: colors.onPrimary }}
+              >
+                הַתְחֵל
+              </HebrewText>
               <Text
-                style={{ fontSize: typeScale.title, color: colors.onPrimary, fontWeight: "700" }}
+                style={{
+                  fontSize: typeScale.caption,
+                  color: colors.onPrimary,
+                  opacity: 0.85,
+                  marginTop: 1,
+                }}
               >
                 Start Davening
               </Text>
-              <HebrewText
-                bold
-                style={{ fontSize: typeScale.title, color: colors.onPrimary }}
-              >
-                התחל להתפלל
-              </HebrewText>
             </View>
           </Focusable>
         )}

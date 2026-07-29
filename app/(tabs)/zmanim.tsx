@@ -22,6 +22,7 @@ import {
 } from "../../src/utils/timeFormatting";
 
 import { typeScale, radius } from "../../src/theme/tokens";
+import { Bilingual } from "../../src/components/common/Bilingual";
 export default function ZmanimTab() {
   const { zmanim, loading, error, refresh } = useZmanim();
   const { nextZman, countdown } = useNextZman();
@@ -124,16 +125,13 @@ export default function ZmanimTab() {
           >
             Next Zman
           </Text>
-          <Text
-            style={{
-              fontSize: typeScale.display,
-              fontWeight: "bold",
-              color: colors.primary,
-              marginTop: 4,
-            }}
-          >
-            {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
-          </Text>
+          <Bilingual
+            he={ZMAN_NAMES[nextZman.key]?.he ?? ""}
+            en={ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
+            size="display"
+            align="left"
+            style={{ marginTop: 4 }}
+          />
           <View
             style={{
               flexDirection: "row",
@@ -193,28 +191,14 @@ export default function ZmanimTab() {
                     borderBottomColor: colors.border,
                   }}
                 >
-                  <View style={{ flex: 1, paddingRight: 12 }}>
-                    <Text
-                      style={{
-                        fontSize: typeScale.body,
-                        fontWeight: "500",
-                        color: colors.text,
-                      }}
-                    >
-                      {ZMAN_NAMES[key]?.en ?? key}
-                    </Text>
-                    <HebrewText
-                      // Left-aligned so it sits under its English label; the
-                      // RTL writing direction still orders the text correctly.
-                      style={{
-                        fontSize: typeScale.body,
-                        color: colors.textMuted,
-                        textAlign: "left",
-                      }}
-                    >
-                      {ZMAN_NAMES[key]?.he ?? ""}
-                    </HebrewText>
-                  </View>
+                  <Bilingual
+                    he={ZMAN_NAMES[key]?.he ?? ""}
+                    en={ZMAN_NAMES[key]?.en ?? key}
+                    size="body"
+                    align="left"
+                    numberOfLines={1}
+                    style={{ flex: 1, paddingRight: 12 }}
+                  />
                   <Text
                     style={{
                       fontSize: typeScale.body,

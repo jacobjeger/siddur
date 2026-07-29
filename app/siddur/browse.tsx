@@ -9,6 +9,7 @@ import { getTefilosByCategory } from "../../src/data/prayers";
 import { useTheme } from "../../src/hooks/useTheme";
 
 import { typeScale } from "../../src/theme/tokens";
+import { Bilingual } from "../../src/components/common/Bilingual";
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
   const router = useRouter();
@@ -88,22 +89,13 @@ export default function BrowseTefilosScreen() {
                         gap: 8,
                       }}
                     >
-                      <Text
-                        style={{ fontSize: typeScale.title, color: colors.text }}
+                      <Bilingual
+                        he={tefila.nameHe}
+                        en={tefila.name}
+                        align="right"
                         numberOfLines={1}
-                      >
-                        {tefila.name}
-                      </Text>
-                      <HebrewText
-                        style={{
-                          fontSize: typeScale.caption,
-                          color: colors.textSecondary,
-                          flexShrink: 1,
-                        }}
-                        numberOfLines={1}
-                      >
-                        {tefila.nameHe}
-                      </HebrewText>
+                        style={{ flex: 1 }}
+                      />
                     </View>
                   </Focusable>
                 ))}
