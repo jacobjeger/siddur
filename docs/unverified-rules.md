@@ -227,3 +227,29 @@ allowlisted in `runContentGuards` so the build passes; remove the id from
 Fix the rule in `src/utils/tefillahRules.ts`, cite the source in the doc comment
 next to it, and delete the entry here. The rule sweeps in the verification step
 should be extended to cover whatever was just settled.
+
+---
+
+## Tachanun at Mincha on the preceding afternoon
+
+Tachanun is now modelled per-tefillah, and is omitted at Mincha on the
+afternoon before a day when Tachanun is not said. Over 2026 that fires on 15
+days. The general rule is well established; two applications of it are not, and
+both are coded to omit, which is the more widespread Ashkenaz practice:
+
+1. **Erev Rosh Chodesh** (6 of the 15 days). The Rema (OC 131:6) omits at
+   Mincha; others say it is recited. Widespread Ashkenaz practice follows the
+   Rema, so that is the default — but this is a real machlokes and a Sephardi
+   user may want the opposite.
+
+2. **28 Elul**, the afternoon before Erev Rosh Hashana. Falls out of the general
+   rule because Erev Rosh Hashana is itself a no-Tachanun day, but it is not in
+   the classical lists and practice varies.
+
+Not affected, and deliberately so: **erev Shabbos**. The look-ahead uses
+`isTachanunDay()`, which ignores the day of the week, so the coming day merely
+being Shabbos does not suppress Tachanun at Mincha on Friday — only a coming day
+that is independently a no-Tachanun day does.
+
+If either of the two above needs to become nusach-dependent, the place to do it
+is `getSayTachanun()` in `src/utils/dayDavening.ts`.

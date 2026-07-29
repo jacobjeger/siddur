@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { AppState } from "react-native";
 import { getZmanimForDate } from "../services/zmanim/zmanimService";
 import { useLocationStore } from "../stores/useLocationStore";
@@ -30,6 +30,24 @@ function dayKey(date: Date): string {
   return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 }
 
+/**
+ * Key for the HALACHIC day, which turns over at nightfall rather than midnight.
+ *
+ * Keying the rollover on the civil date alone meant nothing recomputed between
+ * tzeis and midnight, so an evening user kept seeing the previous Hebrew date
+ * and the previous day's rules — on 14 Av the app still offered Tachanun at
+ * Mincha well after Tu B'Av had begun.
+ *
+ * The tzeis must belong to the same civil day as `now`, or just after midnight
+ * the previous evening's (now past) tzeis would mark the fresh day as already
+ * nightfallen and roll the Hebrew date a day early until the next tick.
+ */
+function halachicDayKey(now: Date, tzeis: Date | null): string {
+  const afterNightfall =
+    tzeis && dayKey(tzeis) === dayKey(now) && now.getTime() >= tzeis.getTime();
+  return `${dayKey(now)}${afterNightfall ? "|night" : ""}`;
+}
+
 export function useZmanim(date?: Date): UseZmanimResult {
   const { location, loading, error, setLoading, setError } = useLocationStore();
   const {
@@ -45,6 +63,8 @@ export function useZmanim(date?: Date): UseZmanimResult {
   } = useSettingsStore();
   const [zmanim, setZmanim] = useState<ZmanimData | null>(null);
   const [today, setToday] = useState(() => dayKey(new Date()));
+  // Read by the rollover tick, which must not close over stale state.
+  const tzeisRef = useRef<Date | null>(null);
   const hydrated = useHydrated();
 
   const manual = locationMode === "manual" ? manualLocation : null;
@@ -93,13 +113,13 @@ export function useZmanim(date?: Date): UseZmanimResult {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated, location, manualKey, setLoading, setError]);
 
-  // Roll over when the civil date changes, so an app left open overnight does
-  // not keep showing yesterday's zmanim.
+  // Roll over when the halachic date changes, so an app left open through the
+  // evening does not keep showing the previous day's date and rules.
   useEffect(() => {
     if (date) return; // caller pinned an explicit date
 
     const check = () => {
-      const key = dayKey(new Date());
+      const key = halachicDayKey(new Date(), tzeisRef.current);
       setToday((prev) => (prev === key ? prev : key));
     };
 
@@ -125,8 +145,7 @@ export function useZmanim(date?: Date): UseZmanimResult {
     if (!location) return;
 
     try {
-      setZmanim(
-        getZmanimForDate(location, date ?? new Date(), {
+      const next = getZmanimForDate(location, date ?? new Date(), {
           // The user's choice always wins. Candle lighting is a community
           // minhag (18 vs 40 in Jerusalem), not a luach opinion, so gating it
           // on the luach made the Settings picker silently inert on six of the
@@ -145,18 +164,21 @@ export function useZmanim(date?: Date): UseZmanimResult {
                 ? effectiveInIsrael
                 : luach.useElevation,
           luach,
-        })
-      );
+        });
+      tzeisRef.current = next.tzeis ?? null;
+      setZmanim(next);
       setError(null);
     } catch (err) {
       // Previously this was a console.warn and the hook reported error: null,
       // so any failure was indistinguishable from a permanent loading state.
+      tzeisRef.current = null;
       setZmanim(null);
       setError(
         err instanceof Error ? err.message : "Failed to calculate zmanim"
       );
     }
-    // `today` is intentionally a dependency: it changes at midnight.
+    // `today` is intentionally a dependency: it changes at nightfall as well
+    // as at midnight, which is what makes the Hebrew date roll on time.
   }, [
     location,
     date,

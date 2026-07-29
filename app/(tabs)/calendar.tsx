@@ -17,6 +17,7 @@ import {
 } from "../../src/services/zmanim/hebrewCalendarService";
 import { formatZmanTime } from "../../src/utils/timeFormatting";
 import { toHebrewNumeral } from "../../src/utils/hebrewNumbers";
+import { describeTachanun } from "../../src/utils/describeTachanun";
 
 const DAY_NAMES = [
   "Sunday",
@@ -268,7 +269,7 @@ export default function CalendarTab() {
           />
           <InfoRow
             label="Tachanun"
-            value={d.sayTachanun ? "Said" : "Not said"}
+            value={describeTachanun(d.sayTachanun)}
           />
           {d.shirShelYom.psalm > 0 && (
             <InfoRow

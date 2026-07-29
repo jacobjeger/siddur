@@ -24,7 +24,7 @@ export interface DayDaveningInfo {
   hallelType: HallelType;
   /** Whether a bracha is said over Hallel — Edot HaMizrach say none. */
   hallelBracha: boolean;
-  sayTachanun: boolean;
+  sayTachanun: Tachanun;
 
   // Day-rules from tefillahRules.ts. All nusach-aware where the practice
   // differs; see docs/unverified-rules.md for what is not yet settled.
@@ -194,13 +194,102 @@ function getHallelType(calendar: JewishCalendar): HallelType {
 }
 
 /**
- * Tachanun is omitted on a long list of days. This covers the common ones;
- * the previous implementation handled only four.
+ * Whether Tachanun is said, PER TEFILLAH.
+ *
+ * It is not a property of the day. Tachanun is omitted at Mincha on the
+ * afternoon preceding a day when Tachanun is not said, so on erev Rosh Chodesh
+ * or — as on 14 Av — erev Tu B'Av, it is said at Shacharis and omitted at
+ * Mincha. Modelling this as one boolean for the whole day made the app answer
+ * "Tachanun: Yes" on exactly those afternoons.
+ *
+ * The look-ahead deliberately uses isTachanunDay(), which ignores the day of
+ * the week. That is what keeps Friday Mincha correct: the coming day being
+ * merely Shabbos does not suppress Tachanun on erev Shabbos, whereas the coming
+ * day being Tu B'Av does.
  */
-function getSayTachanun(calendar: JewishCalendar): boolean {
-  // Shabbos has no Tachanun at all.
-  if (calendar.getDayOfWeek() === 7) return false;
-  return isTachanunDay(calendar);
+export interface Tachanun {
+  shacharis: boolean;
+  mincha: boolean;
+  /** Short English reason when it is omitted, for the Today and Calendar tabs. */
+  reason?: string;
+}
+
+function getSayTachanun(calendar: JewishCalendar): Tachanun {
+  // Shabbos has no Tachanun at any tefillah.
+  if (calendar.getDayOfWeek() === 7) {
+    return { shacharis: false, mincha: false, reason: "Shabbos" };
+  }
+
+  if (!isTachanunDay(calendar)) {
+    return { shacharis: false, mincha: false, reason: omissionReason(calendar) };
+  }
+
+  const tomorrow = nextJewishDay(calendar);
+  if (!isTachanunDay(tomorrow)) {
+    const coming = omissionReason(tomorrow) ?? "a day with no Tachanun";
+    // Erev Rosh Hashana and Erev Yom Kippur already carry "Erev", so prefixing
+    // again produced "erev Erev Rosh Hashana".
+    const label = /^Erev /.test(coming) ? coming : `erev ${coming}`;
+    return { shacharis: true, mincha: false, reason: `Mincha only — ${label}` };
+  }
+
+  return { shacharis: true, mincha: true };
+}
+
+/** The same calendar advanced one day, preserving the Israel/Diaspora setting. */
+function nextJewishDay(calendar: JewishCalendar): JewishCalendar {
+  const next = new JewishCalendar(
+    new Date(
+      calendar.getGregorianYear(),
+      calendar.getGregorianMonth(),
+      calendar.getGregorianDayOfMonth() + 1
+    )
+  );
+  next.setInIsrael(calendar.getInIsrael());
+  return next;
+}
+
+/** A short label for why Tachanun is not said, used to explain the omission. */
+function omissionReason(calendar: JewishCalendar): string | undefined {
+  const month = calendar.getJewishMonth();
+  const day = calendar.getJewishDayOfMonth();
+
+  if (calendar.isRoshChodesh()) return "Rosh Chodesh";
+  if (calendar.isChanukah()) return "Chanukah";
+  if (calendar.isCholHamoed()) return "Chol HaMoed";
+
+  switch (calendar.getYomTovIndex()) {
+    case JewishCalendar.PURIM:
+      return "Purim";
+    case JewishCalendar.SHUSHAN_PURIM:
+      return "Shushan Purim";
+    case JewishCalendar.PURIM_KATAN:
+      return "Purim Katan";
+    case JewishCalendar.SHUSHAN_PURIM_KATAN:
+      return "Shushan Purim Katan";
+    case JewishCalendar.TU_BESHVAT:
+      return "Tu BiShvat";
+    case JewishCalendar.TU_BEAV:
+      return "Tu B'Av";
+    case JewishCalendar.PESACH_SHENI:
+      return "Pesach Sheni";
+    case JewishCalendar.LAG_BAOMER:
+      return "Lag BaOmer";
+    case JewishCalendar.EREV_ROSH_HASHANA:
+      return "Erev Rosh Hashana";
+    case JewishCalendar.EREV_YOM_KIPPUR:
+      return "Erev Yom Kippur";
+    case JewishCalendar.TISHA_BEAV:
+      return "Tisha B'Av";
+    case JewishCalendar.ISRU_CHAG:
+      return "Isru Chag";
+  }
+
+  if (calendar.isYomTov()) return "Yom Tov";
+  if (month === 1) return "Nissan";
+  if (month === 3 && day <= 12) return "Sivan, before Isru Chag";
+  if (month === 7 && day >= 9) return "Tishrei, after Yom Kippur";
+  return undefined;
 }
 
 /**

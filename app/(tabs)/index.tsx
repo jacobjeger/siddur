@@ -16,6 +16,7 @@ import { ZMAN_NAMES } from "../../src/utils/constants";
 import { formatZmanTime, formatCountdown } from "../../src/utils/timeFormatting";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
+import { describeTachanun } from "../../src/utils/describeTachanun";
 
 const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
@@ -138,7 +139,7 @@ export default function SiddurTab() {
 
             <View style={{ flexDirection: "row", gap: 16, marginBottom: 10 }}>
               <Text style={{ fontSize: 14, color: colors.textSecondary }}>
-                Tachanun: {dayDavening.sayTachanun ? "Yes" : "No"}
+                Tachanun: {describeTachanun(dayDavening.sayTachanun)}
               </Text>
               {dayDavening.hallelType !== "none" && (
                 <Text style={{ fontSize: 14, color: colors.textSecondary }}>
