@@ -191,6 +191,8 @@ export default function MinyanimTab() {
           colors={colors}
         >
           <Focusable
+            // The only action on this screen, so it must be where focus lands.
+            autoFocus
             onPress={() => refetch()}
             accessibilityRole="button"
             accessibilityLabel="Retry loading minyanim"
