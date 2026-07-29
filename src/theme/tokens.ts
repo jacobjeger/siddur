@@ -7,6 +7,29 @@
  * canonical values; prefer them over ad-hoc numbers.
  */
 
+/**
+ * The target device, measured — not assumed.
+ *
+ * The MegaLife F1's inner display reports 480 × 640 at density 204, i.e.
+ * **376 × 502 dp**. The B2 reports an identical panel, so one layout serves
+ * both. The design handoff in docs/design/f1-redesign assumed 240 × 320 dp and
+ * is therefore out by ×1.57 on every constant; its ratios and ranking hold, its
+ * absolute values do not.
+ *
+ * A subtlety that argues against compressing anything: `dumpsys display` gives
+ * the panel's true density as ~283 ppi while Android buckets it at 204, so text
+ * renders roughly **1.39× physically smaller** than its dp value suggests. Type
+ * here should read generous on a desktop simulator to be legible on the device.
+ *
+ * If a future device differs, change these two numbers and nothing else.
+ */
+export const VIEWPORT = {
+  width: 376,
+  height: 502,
+  /** Usable height after the ~24 dp system status bar. */
+  usableHeight: 478,
+} as const;
+
 export const radius = {
   /** Chips, inputs, small buttons. */
   sm: 8,
