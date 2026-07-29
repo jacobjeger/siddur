@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,6 +18,13 @@ import {
 import { formatZmanTime } from "../../src/utils/timeFormatting";
 import { toHebrewNumeral } from "../../src/utils/hebrewNumbers";
 import { describeTachanun } from "../../src/utils/describeTachanun";
+import {
+  ViewSwitcher,
+  MonthView,
+  WeekView,
+  AgendaView,
+  type CalendarView,
+} from "../../src/components/calendar/CalendarViews";
 
 const DAY_NAMES = [
   "Sunday",
@@ -54,6 +61,7 @@ export default function CalendarTab() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const hebrew = useHebrewDate();
+  const [view, setView] = useState<CalendarView>("today");
   const { zmanim, refresh } = useZmanim();
   const timeZone = useLocationStore((s) => s.location?.timezone);
   const timeFormat = useSettingsStore((s) => s.timeFormat);
@@ -177,6 +185,8 @@ export default function CalendarTab() {
 
       <LocationDisplay />
 
+      <ViewSwitcher value={view} onChange={setView} />
+
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
@@ -188,6 +198,27 @@ export default function CalendarTab() {
           />
         }
       >
+        {view === "month" ? (
+          <MonthView options={hebrew.options} />
+        ) : view === "week" ? (
+          <WeekView options={hebrew.options} />
+        ) : view === "list" ? (
+          <AgendaView options={hebrew.options} />
+        ) : (
+          renderToday()
+        )}
+      </ScrollView>
+    </View>
+  );
+
+  /**
+   * The Today panel's markup. A plain function, not a nested component —
+   * declaring a component inside render gives it a new identity every pass and
+   * React remounts the whole subtree.
+   */
+  function renderToday() {
+    return (
+      <>
         {(hebrew.parsha || hebrew.upcomingParsha) && (
           <Card
             icon="book-outline"
@@ -426,7 +457,7 @@ export default function CalendarTab() {
             ))}
           </Card>
         )}
-      </ScrollView>
-    </View>
-  );
+      </>
+    );
+  }
 }
