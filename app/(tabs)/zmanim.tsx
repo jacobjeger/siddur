@@ -21,6 +21,7 @@ import {
   formatCountdown,
 } from "../../src/utils/timeFormatting";
 
+import { typeScale, radius } from "../../src/theme/tokens";
 export default function ZmanimTab() {
   const { zmanim, loading, error, refresh } = useZmanim();
   const { nextZman, countdown } = useNextZman();
@@ -66,7 +67,7 @@ export default function ZmanimTab() {
           <Text
             style={{
               color: colors.text,
-              fontSize: 17,
+              fontSize: typeScale.title,
               fontWeight: "600",
               marginTop: 12,
               textAlign: "center",
@@ -108,7 +109,7 @@ export default function ZmanimTab() {
             marginTop: 8,
             marginBottom: 8,
             backgroundColor: colors.primaryLight,
-            borderRadius: 12,
+            borderRadius: radius.md,
             padding: 16,
             borderWidth: 1,
             borderColor: colors.border,
@@ -116,7 +117,7 @@ export default function ZmanimTab() {
         >
           <Text
             style={{
-              fontSize: 13,
+              fontSize: typeScale.caption,
               color: colors.textSecondary,
               fontWeight: "500",
             }}
@@ -125,7 +126,7 @@ export default function ZmanimTab() {
           </Text>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: typeScale.display,
               fontWeight: "bold",
               color: colors.primary,
               marginTop: 4,
@@ -141,11 +142,11 @@ export default function ZmanimTab() {
               marginTop: 8,
             }}
           >
-            <Text style={{ fontSize: 17, color: colors.text }}>
+            <Text style={{ fontSize: typeScale.title, color: colors.text }}>
               {formatZmanTime(nextZman.time, timeFormat, timeZone)}
             </Text>
             <Text
-              style={{ fontSize: 17, fontWeight: "600", color: colors.primary }}
+              style={{ fontSize: typeScale.title, fontWeight: "600", color: colors.primary }}
             >
               {formatCountdown(countdown)}
             </Text>
@@ -168,7 +169,7 @@ export default function ZmanimTab() {
             <View key={group} style={{ marginBottom: 8 }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: typeScale.caption,
                   fontWeight: "700",
                   color: colors.textMuted,
                   textTransform: "uppercase",
@@ -195,7 +196,7 @@ export default function ZmanimTab() {
                   <View style={{ flex: 1, paddingRight: 12 }}>
                     <Text
                       style={{
-                        fontSize: 16,
+                        fontSize: typeScale.body,
                         fontWeight: "500",
                         color: colors.text,
                       }}
@@ -206,7 +207,7 @@ export default function ZmanimTab() {
                       // Left-aligned so it sits under its English label; the
                       // RTL writing direction still orders the text correctly.
                       style={{
-                        fontSize: 14,
+                        fontSize: typeScale.body,
                         color: colors.textMuted,
                         textAlign: "left",
                       }}
@@ -216,7 +217,7 @@ export default function ZmanimTab() {
                   </View>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: typeScale.body,
                       fontWeight: "600",
                       color: colors.text,
                     }}

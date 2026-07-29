@@ -10,7 +10,7 @@ import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { Card, InfoRow } from "../../src/components/common/ui";
 import { HebrewText } from "../../src/components/common/HebrewText";
-import { radius } from "../../src/theme/tokens";
+import { radius, typeScale } from "../../src/theme/tokens";
 import {
   getUpcomingEvents,
   getMolad,
@@ -160,7 +160,7 @@ export default function CalendarTab() {
       >
         <HebrewText
           bold
-          style={{ fontSize: 26, color: "#ffffff", textAlign: "center" }}
+          style={{ fontSize: typeScale.display, color: "#ffffff", textAlign: "center" }}
         >
           {hebrew.hebrewDate}
         </HebrewText>
@@ -172,11 +172,11 @@ export default function CalendarTab() {
             marginTop: 6,
           }}
         >
-          <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
+          <Text style={{ fontSize: typeScale.body, color: "rgba(255,255,255,0.7)" }}>
             {DAY_NAMES[dayIndex]}
           </Text>
           <HebrewText
-            style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}
+            style={{ fontSize: typeScale.body, color: "rgba(255,255,255,0.7)" }}
           >
             {DAY_NAMES_HE[dayIndex]}
           </HebrewText>
@@ -225,7 +225,7 @@ export default function CalendarTab() {
             title={hebrew.parsha ? "This Week's Parsha" : "Upcoming Parsha"}
           >
             <Text
-              style={{ fontSize: 20, fontWeight: "700", color: colors.text }}
+              style={{ fontSize: typeScale.display, fontWeight: "700", color: colors.text }}
             >
               {hebrew.parsha || hebrew.upcomingParsha}
             </Text>
@@ -249,7 +249,7 @@ export default function CalendarTab() {
                   style={{
                     width: 30,
                     height: 30,
-                    borderRadius: 15,
+                    borderRadius: radius.md,
                     alignItems: "center",
                     justifyContent: "center",
                     backgroundColor: colors.accent + "22",
@@ -260,7 +260,7 @@ export default function CalendarTab() {
                 <View style={{ marginLeft: 10, flex: 1 }}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: typeScale.body,
                       fontWeight: "600",
                       color: colors.text,
                     }}
@@ -269,7 +269,7 @@ export default function CalendarTab() {
                   </Text>
                   {event.labelHe ? (
                     <HebrewText
-                      style={{ fontSize: 14, color: colors.accent }}
+                      style={{ fontSize: typeScale.body, color: colors.accent }}
                     >
                       {event.labelHe}
                     </HebrewText>
@@ -354,7 +354,7 @@ export default function CalendarTab() {
 
         {d.omerText ? (
           <Card icon="leaf-outline" title="Sefiras HaOmer">
-            <HebrewText style={{ fontSize: 18, lineHeight: 30 }}>
+            <HebrewText style={{ fontSize: typeScale.title, lineHeight: 30 }}>
               {d.omerText}
             </HebrewText>
           </Card>
@@ -369,16 +369,16 @@ export default function CalendarTab() {
                   style={{
                     paddingHorizontal: 10,
                     paddingVertical: 6,
-                    borderRadius: 8,
+                    borderRadius: radius.sm,
                     backgroundColor: colors.primaryLight,
                     borderWidth: 1,
                     borderColor: colors.border,
                   }}
                 >
-                  <Text style={{ fontSize: 13, color: colors.text }}>
+                  <Text style={{ fontSize: typeScale.caption, color: colors.text }}>
                     {ins.name}
                   </Text>
-                  <HebrewText style={{ fontSize: 13, color: colors.accent }}>
+                  <HebrewText style={{ fontSize: typeScale.caption, color: colors.accent }}>
                     {ins.nameHe}
                   </HebrewText>
                 </View>
@@ -426,14 +426,14 @@ export default function CalendarTab() {
                 <View style={{ flex: 1 }}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: typeScale.body,
                       fontWeight: "600",
                       color: colors.text,
                     }}
                   >
                     {event.label}
                   </Text>
-                  <Text style={{ fontSize: 13, color: colors.textMuted }}>
+                  <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                     {event.date.toLocaleDateString("en-US", {
                       weekday: "short",
                       month: "short",
@@ -449,7 +449,7 @@ export default function CalendarTab() {
                     backgroundColor: colors.primaryLight,
                   }}
                 >
-                  <Text style={{ fontSize: 12, color: colors.textSecondary }}>
+                  <Text style={{ fontSize: typeScale.caption, color: colors.textSecondary }}>
                     {event.daysAway === 1 ? "Tomorrow" : `${event.daysAway}d`}
                   </Text>
                 </View>

@@ -5,7 +5,7 @@ import { useSettingsStore } from "../../stores/useSettingsStore";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Card, Chip } from "../common/ui";
-import { hitSlopFor, spacing } from "../../theme/tokens";
+import { hitSlopFor, spacing, typeScale, radius } from "../../theme/tokens";
 import { searchCities } from "../../services/location/locationService";
 import { isLocationInIsrael } from "../../utils/geoRegion";
 import { LUACH_PRESETS, LUACH_ORDER } from "../../services/zmanim/luach";
@@ -133,7 +133,7 @@ export function LocationCard() {
                 flex: 1,
                 borderWidth: 1,
                 borderColor: colors.border,
-                borderRadius: 8,
+                borderRadius: radius.sm,
                 paddingHorizontal: spacing.md,
                 paddingVertical: spacing.sm,
                 color: colors.text,
@@ -147,7 +147,7 @@ export function LocationCard() {
               style={{
                 paddingHorizontal: 14,
                 justifyContent: "center",
-                borderRadius: 8,
+                borderRadius: radius.sm,
                 backgroundColor: colors.primary,
               }}
             >
@@ -177,7 +177,7 @@ export function LocationCard() {
 
           {!searching && failed && query.length >= 2 && (
             <Text
-              style={{ color: colors.textMuted, fontSize: 13, paddingVertical: spacing.md }}
+              style={{ color: colors.textMuted, fontSize: typeScale.caption, paddingVertical: spacing.md }}
             >
               No matches. Check the spelling, try a larger nearby city, or
               confirm you are online.
@@ -235,7 +235,7 @@ export function LuachCard() {
           />
         ))}
       </View>
-      <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.md }}>
+      <Text style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: spacing.md }}>
         {LUACH_PRESETS[luachId]?.description ?? ""}
       </Text>
     </Card>

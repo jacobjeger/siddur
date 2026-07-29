@@ -17,6 +17,7 @@ import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
 import { RunningHead } from "../../src/components/common/RunningHead";
 import { useReadingStore } from "../../src/stores/useReadingStore";
+import { typeScale } from "../../src/theme/tokens";
 /** Build a deduplicated TOC: unique titles mapped to first section with that title */
 function buildTocEntries(sections: PrayerSection[]) {
   const seen = new Set<string>();
@@ -94,7 +95,7 @@ export default function TefilaScreen() {
   if (!tefila) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-        <HebrewText bold style={{ fontSize: 18 }}>
+        <HebrewText bold style={{ fontSize: typeScale.title }}>
           לא נמצאה תפילה
         </HebrewText>
       </View>
@@ -307,7 +308,7 @@ export default function TefilaScreen() {
                 <Text
                   style={{
                     fontFamily: "NotoSerifHebrew-Bold",
-                    fontSize: 17,
+                    fontSize: typeScale.title,
                     color: colors.text,
                     textAlign: "center",
                   }}
@@ -333,7 +334,7 @@ export default function TefilaScreen() {
                     <Text
                       style={{
                         fontFamily: "NotoSerifHebrew-Regular",
-                        fontSize: 16,
+                        fontSize: typeScale.body,
                         color: colors.primary,
                         textAlign: "right",
                         writingDirection: "rtl",

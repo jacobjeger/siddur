@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { useTheme } from "../../hooks/useTheme";
 import { toBlocks } from "../../utils/sectionBlocks";
 
+import { typeScale, radius } from "../../theme/tokens";
 /**
  * Renders one prayer section: liturgy and rubrics interleaved in their original
  * order, with rubrics styled distinctly, plus a placeholder when the text has
@@ -93,7 +94,7 @@ export function SectionBody({
           style={{
             paddingVertical: 14,
             paddingHorizontal: 12,
-            borderRadius: 8,
+            borderRadius: radius.sm,
             borderWidth: 1,
             borderStyle: "dashed",
             borderColor: colors.border,
@@ -101,7 +102,7 @@ export function SectionBody({
           }}
         >
           <Text
-            style={{ fontSize: 13, color: colors.textMuted, textAlign: "center" }}
+            style={{ fontSize: typeScale.caption, color: colors.textMuted, textAlign: "center" }}
           >
             Text not yet available for this section
           </Text>

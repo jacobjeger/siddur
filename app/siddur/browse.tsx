@@ -8,6 +8,7 @@ import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 import { useTheme } from "../../src/hooks/useTheme";
 
+import { typeScale } from "../../src/theme/tokens";
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
   const textSize = useSettingsStore((s) => s.textSize);
@@ -49,7 +50,7 @@ export default function BrowseTefilosScreen() {
                 >
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: typeScale.caption,
                       fontWeight: "600",
                       color: colors.textMuted,
                       textTransform: "uppercase",
@@ -129,7 +130,7 @@ export default function BrowseTefilosScreen() {
             <Text
               style={{
                 color: colors.text,
-                fontSize: 16,
+                fontSize: typeScale.body,
                 fontWeight: "600",
                 marginTop: 10,
                 textAlign: "center",

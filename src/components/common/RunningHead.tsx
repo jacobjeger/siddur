@@ -4,6 +4,7 @@ import { HebrewText } from "./HebrewText";
 import { Focusable } from "./Focusable";
 import type { PrayerSection } from "../../data/types";
 
+import { typeScale } from "../../theme/tokens";
 /**
  * The reader's sticky head: where you are, and how far through.
  *
@@ -52,7 +53,7 @@ export function RunningHead({
           <Text
             numberOfLines={1}
             style={{
-              fontSize: 10,
+              fontSize: typeScale.micro,
               letterSpacing: 1.2,
               textTransform: "uppercase",
               color: "rgba(255,255,255,0.62)",
@@ -65,7 +66,7 @@ export function RunningHead({
             <HebrewText
               bold
               numberOfLines={1}
-              style={{ fontSize: 15, color: "#ffffff", marginTop: 1 }}
+              style={{ fontSize: typeScale.body, color: "#ffffff", marginTop: 1 }}
             >
               {section?.titleHe ?? ""}
             </HebrewText>
@@ -73,7 +74,7 @@ export function RunningHead({
         </View>
         <Text
           style={{
-            fontSize: 11,
+            fontSize: typeScale.micro,
             color: "rgba(255,255,255,0.7)",
             fontVariant: ["tabular-nums"],
             paddingBottom: 2,

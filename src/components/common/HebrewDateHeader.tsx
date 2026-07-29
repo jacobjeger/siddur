@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHebrewDate } from "../../hooks/useHebrewDate";
 import { useTheme } from "../../hooks/useTheme";
 
+import { typeScale } from "../../theme/tokens";
 /**
  * colors.accent on headerBg is only ~3.7:1 at 13pt in light mode, under the
  * 4.5:1 minimum. A translucent white reads far better on the dark header in
@@ -11,7 +12,7 @@ import { useTheme } from "../../hooks/useTheme";
 const subtitleStyle = {
   color: "rgba(255,255,255,0.92)",
   textAlign: "center" as const,
-  fontSize: 13,
+  fontSize: typeScale.caption,
   marginTop: 4,
 };
 
@@ -37,7 +38,7 @@ export function HebrewDateHeader() {
           fontFamily: "NotoSerifHebrew-Bold",
           color: "#fff",
           textAlign: "center",
-          fontSize: 18,
+          fontSize: typeScale.title,
         }}
       >
         {hebrewDate}
@@ -46,7 +47,7 @@ export function HebrewDateHeader() {
         style={{
           color: "rgba(255,255,255,0.7)",
           textAlign: "center",
-          fontSize: 13,
+          fontSize: typeScale.caption,
           marginTop: 4,
         }}
       >

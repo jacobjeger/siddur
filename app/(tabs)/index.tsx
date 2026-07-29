@@ -10,7 +10,7 @@ import { useNextZman } from "../../src/hooks/useNextZman";
 import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
-import { radius } from "../../src/theme/tokens";
+import { radius, typeScale } from "../../src/theme/tokens";
 import { Focusable } from "../../src/components/common/Focusable";
 import { getTefilosForTime } from "../../src/data/prayers";
 import { hasContent } from "../../src/utils/tefilaContent";
@@ -94,7 +94,7 @@ export default function SiddurTab() {
               marginTop: 16,
               padding: 16,
               backgroundColor: colors.surface,
-              borderRadius: 12,
+              borderRadius: radius.md,
               borderWidth: 1,
               borderColor: colors.border,
             }}
@@ -107,22 +107,22 @@ export default function SiddurTab() {
                 marginBottom: 4,
               }}
             >
-              <HebrewText style={{ fontSize: 13, color: colors.textMuted }}>
+              <HebrewText style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                 הזמן הבא
               </HebrewText>
-              <Text style={{ fontSize: 13, color: colors.textMuted }}>
+              <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                 Next Zman
               </Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
+              <Text style={{ fontSize: typeScale.title, fontWeight: "600", color: colors.text }}>
                 {ZMAN_NAMES[nextZman.key]?.en ?? nextZman.key}
               </Text>
               <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 17, fontWeight: "600", color: colors.text }}>
+                <Text style={{ fontSize: typeScale.title, fontWeight: "600", color: colors.text }}>
                   {formatZmanTime(nextZman.time, timeFormat, timeZone)}
                 </Text>
-                <Text style={{ fontSize: 14, fontWeight: "600", color: colors.accent, marginTop: 2 }}>
+                <Text style={{ fontSize: typeScale.body, fontWeight: "600", color: colors.accent, marginTop: 2 }}>
                   in {formatCountdown(countdown)}
                 </Text>
               </View>
@@ -139,7 +139,7 @@ export default function SiddurTab() {
               marginTop: 16,
               padding: 16,
               backgroundColor: colors.surface,
-              borderRadius: 12,
+              borderRadius: radius.md,
               borderWidth: 1,
               borderColor: colors.border,
             }}
@@ -152,10 +152,10 @@ export default function SiddurTab() {
                 marginBottom: 8,
               }}
             >
-              <HebrewText style={{ fontSize: 13, color: colors.textMuted }}>
+              <HebrewText style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                 היום
               </HebrewText>
-              <Text style={{ fontSize: 13, color: colors.textMuted }}>
+              <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                 Today
               </Text>
             </View>
@@ -163,7 +163,7 @@ export default function SiddurTab() {
             {dayDavening.specialDayLabel ? (
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: typeScale.title,
                   fontWeight: "600",
                   color: colors.text,
                   marginBottom: 8,
@@ -174,11 +174,11 @@ export default function SiddurTab() {
             ) : null}
 
             <View style={{ flexDirection: "row", gap: 16, marginBottom: 10 }}>
-              <Text style={{ fontSize: 14, color: colors.textSecondary }}>
+              <Text style={{ fontSize: typeScale.body, color: colors.textSecondary }}>
                 Tachanun: {describeTachanun(dayDavening.sayTachanun)}
               </Text>
               {dayDavening.hallelType !== "none" && (
-                <Text style={{ fontSize: 14, color: colors.textSecondary }}>
+                <Text style={{ fontSize: typeScale.body, color: colors.textSecondary }}>
                   Hallel:{" "}
                   {dayDavening.hallelType === "full" ? "Full" : "Half"}
                 </Text>
@@ -198,7 +198,7 @@ export default function SiddurTab() {
                     borderColor: colors.border,
                   }}
                 >
-                  <Text style={{ fontSize: 12, color: colors.text }}>
+                  <Text style={{ fontSize: typeScale.caption, color: colors.text }}>
                     {ins.name}
                   </Text>
                 </View>
@@ -255,13 +255,13 @@ export default function SiddurTab() {
                   }}
                 >
                   <Text
-                    style={{ fontSize: 17, color: colors.text }}
+                    style={{ fontSize: typeScale.title, color: colors.text }}
                     numberOfLines={1}
                   >
                     {category.name}
                   </Text>
                   <HebrewText
-                    style={{ fontSize: 17, color: colors.textSecondary, flexShrink: 1 }}
+                    style={{ fontSize: typeScale.title, color: colors.textSecondary, flexShrink: 1 }}
                     numberOfLines={1}
                   >
                     {category.nameHe}
@@ -298,10 +298,10 @@ export default function SiddurTab() {
           <View
             style={{ flex: 1, flexDirection: "row", alignItems: "center", gap: 8 }}
           >
-            <Text style={{ fontSize: 17, color: colors.primary }}>
+            <Text style={{ fontSize: typeScale.title, color: colors.primary }}>
               All Tefilos
             </Text>
-            <HebrewText style={{ fontSize: 17, color: colors.primary }}>
+            <HebrewText style={{ fontSize: typeScale.title, color: colors.primary }}>
               כל התפילות
             </HebrewText>
           </View>
@@ -322,7 +322,7 @@ export default function SiddurTab() {
             style={{
               alignItems: "center",
               backgroundColor: colors.primary,
-              borderRadius: 12,
+              borderRadius: radius.md,
               marginTop: 20,
               marginHorizontal: 16,
               paddingVertical: 16,
@@ -330,13 +330,13 @@ export default function SiddurTab() {
           >
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
               <Text
-                style={{ fontSize: 18, color: colors.onPrimary, fontWeight: "700" }}
+                style={{ fontSize: typeScale.title, color: colors.onPrimary, fontWeight: "700" }}
               >
                 Start Davening
               </Text>
               <HebrewText
                 bold
-                style={{ fontSize: 18, color: colors.onPrimary }}
+                style={{ fontSize: typeScale.title, color: colors.onPrimary }}
               >
                 התחל להתפלל
               </HebrewText>
@@ -359,10 +359,10 @@ export default function SiddurTab() {
             }}
           >
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-              <HebrewText bold style={{ fontSize: 15, color: colors.primary }}>
+              <HebrewText bold style={{ fontSize: typeScale.body, color: colors.primary }}>
                 הַמְשֵׁךְ
               </HebrewText>
-              <Text style={{ fontSize: 12, color: colors.textSecondary }}>
+              <Text style={{ fontSize: typeScale.caption, color: colors.textSecondary }}>
                 Resume · {resumable.position.sectionTitle}
               </Text>
             </View>

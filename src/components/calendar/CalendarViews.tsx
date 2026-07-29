@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme, type ThemeColors } from "../../hooks/useTheme";
 import { HebrewText } from "../common/HebrewText";
-import { radius, MIN_TOUCH_TARGET } from "../../theme/tokens";
+import { radius, MIN_TOUCH_TARGET, typeScale } from "../../theme/tokens";
 import {
   getMonthGrid,
   getWeekDays,
@@ -107,7 +107,7 @@ export function ViewSwitcher({
           >
             <Text
               style={{
-                fontSize: 14,
+                fontSize: typeScale.body,
                 fontWeight: active ? "700" : "500",
                 color: active ? colors.onPrimary : colors.textSecondary,
               }}
@@ -177,16 +177,16 @@ function Pager({
         accessibilityLabel="Jump to today"
         style={{ flex: 1, alignItems: "center" }}
       >
-        <Text style={{ fontSize: 17, fontWeight: "700", color: colors.text }}>
+        <Text style={{ fontSize: typeScale.title, fontWeight: "700", color: colors.text }}>
           {title}
         </Text>
         {subtitle ? (
-          <HebrewText style={{ fontSize: 13, color: colors.textMuted }}>
+          <HebrewText style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
             {subtitle}
           </HebrewText>
         ) : null}
         {showToday ? (
-          <Text style={{ fontSize: 11, color: colors.primary, marginTop: 2 }}>
+          <Text style={{ fontSize: typeScale.micro, color: colors.primary, marginTop: 2 }}>
             Tap to return to today
           </Text>
         ) : null}
@@ -221,19 +221,19 @@ function DayDetail({ day }: { day: CalendarDay }) {
         borderLeftColor: accent ?? colors.border,
       }}
     >
-      <Text style={{ fontSize: 15, fontWeight: "700", color: colors.text }}>
+      <Text style={{ fontSize: typeScale.body, fontWeight: "700", color: colors.text }}>
         {WEEKDAY_SHORT[day.date.getDay()]}, {MONTHS[day.date.getMonth()]}{" "}
         {day.civilDay}
       </Text>
-      <HebrewText style={{ fontSize: 15, color: colors.textSecondary, marginTop: 3 }}>
+      <HebrewText style={{ fontSize: typeScale.body, color: colors.textSecondary, marginTop: 3 }}>
         {day.hebrewDayHe} {day.hebrewMonthHe}
       </HebrewText>
       {notes.length ? (
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 6 }}>
+        <Text style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: 6 }}>
           {notes.join(" · ")}
         </Text>
       ) : (
-        <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 6 }}>
+        <Text style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: 6 }}>
           No special observance
         </Text>
       )}
@@ -293,7 +293,7 @@ function MonthCell({
       >
         <Text
           style={{
-            fontSize: 15,
+            fontSize: typeScale.body,
             fontWeight: day.isToday || selected ? "700" : "500",
             color: selected ? colors.onPrimary : colors.text,
           }}
@@ -302,7 +302,7 @@ function MonthCell({
         </Text>
         <HebrewText
           style={{
-            fontSize: 10,
+            fontSize: typeScale.micro,
             color: selected ? colors.onPrimary : colors.textMuted,
           }}
         >
@@ -383,7 +383,7 @@ export function MonthView({ options }: { options: HebrewDateOptions }) {
             style={{
               width: `${100 / 7}%`,
               textAlign: "center",
-              fontSize: 12,
+              fontSize: typeScale.caption,
               fontWeight: "600",
               color: i === 6 ? colors.primary : colors.textMuted,
             }}
@@ -472,7 +472,7 @@ export function WeekView({ options }: { options: HebrewDateOptions }) {
               <View style={{ width: 58 }}>
                 <Text
                   style={{
-                    fontSize: 12,
+                    fontSize: typeScale.caption,
                     fontWeight: "600",
                     color: colors.textMuted,
                   }}
@@ -481,7 +481,7 @@ export function WeekView({ options }: { options: HebrewDateOptions }) {
                 </Text>
                 <Text
                   style={{
-                    fontSize: 19,
+                    fontSize: typeScale.title,
                     fontWeight: day.isToday ? "800" : "600",
                     color: colors.text,
                   }}
@@ -491,13 +491,13 @@ export function WeekView({ options }: { options: HebrewDateOptions }) {
               </View>
 
               <View style={{ flex: 1 }}>
-                <HebrewText style={{ fontSize: 15, color: colors.text }}>
+                <HebrewText style={{ fontSize: typeScale.body, color: colors.text }}>
                   {day.hebrewDayHe} {day.hebrewMonthHe}
                 </HebrewText>
                 {day.label ? (
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: typeScale.caption,
                       color: colors.textSecondary,
                       marginTop: 2,
                     }}
@@ -507,7 +507,7 @@ export function WeekView({ options }: { options: HebrewDateOptions }) {
                 ) : null}
                 {day.omerDay > 0 ? (
                   <Text
-                    style={{ fontSize: 12, color: colors.textMuted, marginTop: 2 }}
+                    style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: 2 }}
                   >
                     Omer {day.omerDay}
                   </Text>
@@ -517,7 +517,7 @@ export function WeekView({ options }: { options: HebrewDateOptions }) {
               {day.isToday ? (
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: typeScale.micro,
                     fontWeight: "700",
                     color: colors.primary,
                   }}
@@ -568,27 +568,27 @@ export function AgendaView({ options }: { options: HebrewDateOptions }) {
           >
             <View style={{ width: 64 }}>
               <Text
-                style={{ fontSize: 12, color: colors.textMuted, fontWeight: "600" }}
+                style={{ fontSize: typeScale.caption, color: colors.textMuted, fontWeight: "600" }}
               >
                 {WEEKDAY_SHORT[entry.date.getDay()].slice(0, 3)}
               </Text>
-              <Text style={{ fontSize: 17, fontWeight: "700", color: colors.text }}>
+              <Text style={{ fontSize: typeScale.title, fontWeight: "700", color: colors.text }}>
                 {MONTHS[entry.date.getMonth()].slice(0, 3)} {entry.civilDay}
               </Text>
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 15, fontWeight: "600", color: colors.text }}>
+              <Text style={{ fontSize: typeScale.body, fontWeight: "600", color: colors.text }}>
                 {entry.label || WEEKDAY_SHORT[entry.date.getDay()]}
               </Text>
               <HebrewText
-                style={{ fontSize: 13, color: colors.textSecondary, marginTop: 2 }}
+                style={{ fontSize: typeScale.caption, color: colors.textSecondary, marginTop: 2 }}
               >
                 {entry.hebrewDayHe} {entry.hebrewMonthHe}
               </HebrewText>
             </View>
 
-            <Text style={{ fontSize: 12, color: colors.textMuted }}>
+            <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
               {entry.daysAway === 0
                 ? "Today"
                 : entry.daysAway === 1

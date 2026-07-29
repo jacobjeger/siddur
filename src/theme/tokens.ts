@@ -32,33 +32,61 @@ export const VIEWPORT = {
 
 export const radius = {
   /** Chips, inputs, small buttons. */
-  sm: 8,
+  sm: 6,
   /** Cards, list items, primary buttons. */
-  md: 12,
+  md: 10,
   /** Pill-shaped filter chips. */
   pill: 999,
 } as const;
 
 export const spacing = {
   xs: 4,
-  sm: 8,
+  sm: 6,
   md: 12,
-  lg: 16,
-  xl: 20,
-  xxl: 32,
+  lg: 18,
+  xl: 24,
+  xxl: 30,
 } as const;
 
-export const type = {
-  /** Eyebrow / uppercase section label. */
-  eyebrow: 13,
-  /** Secondary and helper text. */
+/** Horizontal page margin. 376dp cannot afford the old 16 on both sides plus card padding. */
+export const gutter = 16;
+
+/**
+ * Six roles, one scale.
+ *
+ * The old scale had four distinct values (13/15/17/20) with `eyebrow` and
+ * `caption` both 13, and 95% of the app's type bypassed it anyway: 99 hardcoded
+ * `fontSize` literals against 5 that came from here, using 13 distinct sizes of
+ * which 14, 16, 18, 19, 22 and 26 had no token at all. `title` and `heading`
+ * had ZERO usages while their values were hardcoded 14 and 3 times.
+ *
+ * Sized for the measured 376 x 502 viewport (see VIEWPORT). Not scaled
+ * mechanically from the handoff's 240dp figures: those x1.57 would give
+ * 14/17/20/25/31/47, which is larger than the app's current 13-17 that reads
+ * acceptably on the device. These sit between the two and want checking at both
+ * ends on hardware.
+ *
+ * Floor is `micro` at 11. Below that nothing is legible on this panel, whose
+ * true density is ~283ppi against Android's 204 bucket.
+ */
+export const typeScale = {
+  /** Uppercase eyebrows and soft-key legends. Needs letterSpacing to read. */
+  micro: 11,
+  /** English gloss, metadata, distances. */
   caption: 13,
-  /** Default body and list rows. */
+  /** List rows and values. */
   body: 15,
-  /** Emphasised row, list item title. */
-  title: 17,
-  /** Card / screen heading. */
-  heading: 20,
+  /** Tefila and section names in lists. */
+  title: 18,
+  /** Screen identity — dates, screen titles. */
+  display: 24,
+  /** The one thing on Home. */
+  hero: 34,
+
+  /** @deprecated Use `micro`. Kept so existing call sites still compile. */
+  eyebrow: 11,
+  /** @deprecated Use `display`. */
+  heading: 24,
 } as const;
 
 /**

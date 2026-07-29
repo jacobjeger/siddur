@@ -5,6 +5,7 @@ import { useLocationStore } from "../../stores/useLocationStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Focusable } from "./Focusable";
 
+import { typeScale } from "../../theme/tokens";
 export function LocationDisplay() {
   const { location, loading } = useLocationStore();
   const { colors } = useTheme();
@@ -30,7 +31,7 @@ export function LocationDisplay() {
           color={colors.textMuted}
         />
         <Text
-          style={{ color: colors.textSecondary, fontSize: 13, marginLeft: 4 }}
+          style={{ color: colors.textSecondary, fontSize: typeScale.caption, marginLeft: 4 }}
         >
           {loading
             ? "Getting location..."
@@ -62,7 +63,7 @@ export function LocationDisplay() {
           <Text
             style={{
               color: colors.text,
-              fontSize: 12,
+              fontSize: typeScale.caption,
               marginLeft: 6,
               flex: 1,
             }}

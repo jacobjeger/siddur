@@ -2,7 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import { useSettingsStore, type Nusach } from "../../stores/useSettingsStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Card, Chip } from "../common/ui";
-import { MIN_TOUCH_TARGET, spacing } from "../../theme/tokens";
+import { MIN_TOUCH_TARGET, spacing, typeScale, radius } from "../../theme/tokens";
 
 import { Focusable } from "../common/Focusable";
 const NUSACH_OPTIONS: { value: Nusach; label: string }[] = [
@@ -71,11 +71,11 @@ export function TextSizeCard() {
         height: MIN_TOUCH_TARGET,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 8,
+        borderRadius: radius.sm,
         backgroundColor: pressed ? colors.surfaceSecondary : colors.background,
       })}
     >
-      <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
+      <Text style={{ fontSize: typeScale.title, fontWeight: "bold", color: colors.text }}>
         {label}
       </Text>
     </Focusable>
@@ -105,7 +105,7 @@ export function TextSizeCard() {
       </View>
       <Text
         style={{
-          fontSize: 13,
+          fontSize: typeScale.caption,
           color: colors.textMuted,
           textAlign: "center",
           marginTop: spacing.sm,

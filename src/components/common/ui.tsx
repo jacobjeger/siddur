@@ -2,7 +2,7 @@ import { View, Text, Pressable, type ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../hooks/useTheme";
 import { Focusable } from "./Focusable";
-import { radius, spacing, type, MIN_TOUCH_TARGET } from "../../theme/tokens";
+import { radius, spacing, typeScale, MIN_TOUCH_TARGET } from "../../theme/tokens";
 
 /**
  * Shared surface primitives.
@@ -53,7 +53,7 @@ export function Card({
             ) : null}
             <Text
               style={{
-                fontSize: type.eyebrow,
+                fontSize: typeScale.eyebrow,
                 fontWeight: "600",
                 color: colors.textMuted,
                 textTransform: "uppercase",
@@ -70,7 +70,7 @@ export function Card({
       {subtitle ? (
         <Text
           style={{
-            fontSize: type.caption,
+            fontSize: typeScale.caption,
             color: colors.textMuted,
             marginBottom: spacing.md,
           }}
@@ -95,7 +95,7 @@ export function SectionHeader({ title }: { title: string }) {
     <Text
       accessibilityRole="header"
       style={{
-        fontSize: type.eyebrow,
+        fontSize: typeScale.eyebrow,
         fontWeight: "700",
         color: colors.textMuted,
         textTransform: "uppercase",
@@ -144,7 +144,7 @@ export function Chip({
     >
       <Text
         style={{
-          fontSize: 14,
+          fontSize: typeScale.body,
           fontWeight: "500",
           color: selected ? colors.onPrimary : colors.text,
         }}
@@ -182,13 +182,13 @@ export function InfoRow({
       {/* Both sides shrink, so a long value wraps instead of crushing the
           label into a one-word-per-line column. */}
       <Text
-        style={{ fontSize: type.body, color: colors.textSecondary, flexShrink: 1 }}
+        style={{ fontSize: typeScale.body, color: colors.textSecondary, flexShrink: 1 }}
       >
         {label}
       </Text>
       <Text
         style={{
-          fontSize: type.body,
+          fontSize: typeScale.body,
           fontWeight: "600",
           color: colors.text,
           flexShrink: 1,

@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LoadingSpinner } from "../../src/components/common/LoadingSpinner";
 import { LocationDisplay } from "../../src/components/common/LocationDisplay";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
-import { radius } from "../../src/theme/tokens";
+import { radius, typeScale } from "../../src/theme/tokens";
 import { Chip } from "../../src/components/common/ui";
 import { useMinyanim } from "../../src/hooks/useMinyanim";
 import { useDebounced } from "../../src/hooks/useDebounced";
@@ -57,7 +57,7 @@ function CenteredMessage({
       <Text
         style={{
           color: colors.text,
-          fontSize: 16,
+          fontSize: typeScale.body,
           fontWeight: "600",
           marginTop: 10,
           textAlign: "center",
@@ -126,7 +126,7 @@ export default function MinyanimTab() {
           <Text
             style={{
               color: colors.textSecondary,
-              fontSize: 12,
+              fontSize: typeScale.caption,
               marginLeft: 6,
               flex: 1,
             }}
@@ -200,7 +200,7 @@ export default function MinyanimTab() {
               marginTop: 14,
               paddingHorizontal: 18,
               paddingVertical: 9,
-              borderRadius: 8,
+              borderRadius: radius.sm,
               backgroundColor: colors.primary,
             }}
           >
@@ -241,7 +241,7 @@ export default function MinyanimTab() {
                   backgroundColor: pressed
                     ? colors.surfaceSecondary
                     : colors.surface,
-                  borderRadius: 12,
+                  borderRadius: radius.md,
                   borderWidth: 1,
                   borderColor: colors.border,
                   padding: 14,
@@ -253,7 +253,7 @@ export default function MinyanimTab() {
                 <View style={{ flex: 1 }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: typeScale.body,
                       fontWeight: "600",
                       color: colors.text,
                     }}
@@ -262,7 +262,7 @@ export default function MinyanimTab() {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: typeScale.caption,
                       color: colors.textMuted,
                       marginTop: 2,
                     }}
@@ -274,7 +274,7 @@ export default function MinyanimTab() {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 14,
+                      fontSize: typeScale.body,
                       color: next ? colors.textSecondary : colors.textMuted,
                       marginTop: 4,
                     }}
@@ -299,7 +299,7 @@ export default function MinyanimTab() {
             accessibilityLabel="Browse more minyanim on GoDaven.com"
             style={{ marginTop: 8, paddingVertical: 12, alignItems: "center" }}
           >
-            <Text style={{ color: colors.primary, fontSize: 14 }}>
+            <Text style={{ color: colors.primary, fontSize: typeScale.body }}>
               Browse more on GoDaven.com
             </Text>
           </Focusable>

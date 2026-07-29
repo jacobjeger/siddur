@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme, type ThemeColors } from "../../src/hooks/useTheme";
 import { Card, Chip, SectionHeader } from "../../src/components/common/ui";
-import { spacing } from "../../src/theme/tokens";
+import { spacing, typeScale } from "../../src/theme/tokens";
 import { ALL_TEFILOS } from "../../src/data/prayers";
 import {
   NusachCard,
@@ -125,23 +125,23 @@ export default function SettingsTab() {
             distributor. Sefaria distributes it; Metsudah and Daat are the
             licensors. See docs/text-licenses.md.
           */}
-          <Text style={{ fontSize: 13, color: colors.textMuted }}>
+          <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
             Hebrew text: The Metsudah Siddur (Avrohom Davis), licensed CC BY, and
             Daat Siddur Ashkenaz (public domain). Nusach Sefard text: Torat Emet,
             licensed CC BY-NC-SA — used here under its non-commercial terms.
           </Text>
           <Text
-            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
+            style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: spacing.xs }}
           >
             Texts distributed via Sefaria (sefaria.org)
           </Text>
           <Text
-            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
+            style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: spacing.xs }}
           >
             Zmanim powered by KosherJava/KosherZmanim
           </Text>
           <Text
-            style={{ fontSize: 13, color: colors.textMuted, marginTop: spacing.xs }}
+            style={{ fontSize: typeScale.caption, color: colors.textMuted, marginTop: spacing.xs }}
           >
             Minyan data from GoDaven.com
           </Text>
@@ -176,7 +176,7 @@ function SettingRow({
         minHeight: 44,
       }}
     >
-      <Text style={{ fontSize: 16, color: colors.text, flex: 1 }}>{label}</Text>
+      <Text style={{ fontSize: typeScale.body, color: colors.text, flex: 1 }}>{label}</Text>
       <Switch
         value={value}
         onValueChange={onToggle}

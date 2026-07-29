@@ -23,6 +23,7 @@ import {
 } from "../../src/utils/minyanFormatting";
 
 import { Focusable } from "../../src/components/common/Focusable";
+import { typeScale, radius } from "../../src/theme/tokens";
 export default function MinyanDetailScreen() {
   const { minyanId } = useLocalSearchParams<{ minyanId: string }>();
   const { colors } = useTheme();
@@ -53,7 +54,7 @@ export default function MinyanDetailScreen() {
         <Text
           style={{
             color: colors.text,
-            fontSize: 16,
+            fontSize: typeScale.body,
             fontWeight: "600",
             marginTop: 10,
           }}
@@ -81,10 +82,10 @@ export default function MinyanDetailScreen() {
       style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
     >
-      <Text style={{ fontSize: 22, fontWeight: "700", color: colors.text }}>
+      <Text style={{ fontSize: typeScale.display, fontWeight: "700", color: colors.text }}>
         {minyan.name}
       </Text>
-      <Text style={{ fontSize: 14, color: colors.textMuted, marginTop: 4 }}>
+      <Text style={{ fontSize: typeScale.body, color: colors.textMuted, marginTop: 4 }}>
         {NUSACH_LABELS[minyan.nusach] ?? minyan.nusach}
         {distanceKm != null ? ` · ${formatDistance(distanceKm, "mi")}` : ""}
       </Text>
@@ -99,7 +100,7 @@ export default function MinyanDetailScreen() {
             alignItems: "center",
             marginTop: 16,
             padding: 14,
-            borderRadius: 12,
+            borderRadius: radius.md,
             borderWidth: 1,
             borderColor: colors.border,
             backgroundColor: colors.surface,
@@ -127,7 +128,7 @@ export default function MinyanDetailScreen() {
             alignItems: "center",
             marginTop: 10,
             padding: 14,
-            borderRadius: 12,
+            borderRadius: radius.md,
             borderWidth: 1,
             borderColor: colors.border,
             backgroundColor: colors.surface,
@@ -145,7 +146,7 @@ export default function MinyanDetailScreen() {
           key={scope}
           style={{
             marginTop: 16,
-            borderRadius: 12,
+            borderRadius: radius.md,
             borderWidth: 1,
             borderColor: colors.border,
             backgroundColor: colors.surface,
@@ -154,7 +155,7 @@ export default function MinyanDetailScreen() {
         >
           <Text
             style={{
-              fontSize: 13,
+              fontSize: typeScale.caption,
               fontWeight: "600",
               color: colors.textMuted,
               textTransform: "uppercase",
@@ -177,18 +178,18 @@ export default function MinyanDetailScreen() {
               }}
             >
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 15, color: colors.text }}>
+                <Text style={{ fontSize: typeScale.body, color: colors.text }}>
                   {SLOT_LABELS[t.slot]}
                 </Text>
                 {t.note ? (
-                  <Text style={{ fontSize: 12, color: colors.textMuted }}>
+                  <Text style={{ fontSize: typeScale.caption, color: colors.textMuted }}>
                     {t.note}
                   </Text>
                 ) : null}
               </View>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: typeScale.body,
                   fontWeight: "600",
                   color: colors.text,
                 }}
@@ -202,7 +203,7 @@ export default function MinyanDetailScreen() {
 
       {minyan.notes ? (
         <Text
-          style={{ color: colors.textSecondary, fontSize: 13, marginTop: 16 }}
+          style={{ color: colors.textSecondary, fontSize: typeScale.caption, marginTop: 16 }}
         >
           {minyan.notes}
         </Text>

@@ -17,6 +17,7 @@ import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
 import { RunningHead } from "../../src/components/common/RunningHead";
 import { useReadingStore } from "../../src/stores/useReadingStore";
+import { typeScale, radius } from "../../src/theme/tokens";
 /** Build a deduplicated TOC from all tefilos' sections */
 function buildTocEntries(tefilos: Tefila[]) {
   const seen = new Set<string>();
@@ -104,14 +105,14 @@ export default function DavenScreen() {
           }}
         />
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}>
-          <HebrewText bold style={{ fontSize: 18 }}>
+          <HebrewText bold style={{ fontSize: typeScale.title }}>
             לא נמצאו תפילות
           </HebrewText>
           <TouchableOpacity
             onPress={() => router.back()}
             style={{ marginTop: 16 }}
           >
-            <HebrewText style={{ fontSize: 16, color: colors.primary }}>
+            <HebrewText style={{ fontSize: typeScale.body, color: colors.primary }}>
               חזרה
             </HebrewText>
           </TouchableOpacity>
@@ -249,7 +250,7 @@ export default function DavenScreen() {
             >
               <HebrewText
                 bold
-                style={{ fontSize: 13, color: colors.textMuted, textAlign: "right" }}
+                style={{ fontSize: typeScale.caption, color: colors.textMuted, textAlign: "right" }}
               >
                 {tefila.nameHe}
               </HebrewText>
@@ -319,7 +320,7 @@ export default function DavenScreen() {
           <Text
             style={{
               fontFamily: "NotoSerifHebrew-Bold",
-              fontSize: 20,
+              fontSize: typeScale.display,
               color: colors.text,
             }}
           >
@@ -331,7 +332,7 @@ export default function DavenScreen() {
             style={{
               marginTop: 20,
               backgroundColor: colors.primary,
-              borderRadius: 12,
+              borderRadius: radius.md,
               paddingHorizontal: 40,
               paddingVertical: 14,
             }}
@@ -394,7 +395,7 @@ export default function DavenScreen() {
                 <Text
                   style={{
                     fontFamily: "NotoSerifHebrew-Bold",
-                    fontSize: 17,
+                    fontSize: typeScale.title,
                     color: colors.text,
                     textAlign: "center",
                   }}
