@@ -4,6 +4,7 @@ import { useTheme } from "../../hooks/useTheme";
 import { Card, Chip } from "../common/ui";
 import { MIN_TOUCH_TARGET, spacing } from "../../theme/tokens";
 
+import { Focusable } from "../common/Focusable";
 const NUSACH_OPTIONS: { value: Nusach; label: string }[] = [
   { value: "ashkenaz", label: "Ashkenaz" },
   { value: "sefard", label: "Sefard" },
@@ -61,7 +62,7 @@ export function TextSizeCard() {
   const { textSize, setTextSize } = useSettingsStore();
 
   const step = (delta: number, label: string) => (
-    <Pressable
+    <Focusable
       onPress={() => setTextSize(Math.min(32, Math.max(16, textSize + delta)))}
       accessibilityRole="button"
       accessibilityLabel={delta > 0 ? "Increase text size" : "Decrease text size"}
@@ -77,7 +78,7 @@ export function TextSizeCard() {
       <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
         {label}
       </Text>
-    </Pressable>
+    </Focusable>
   );
 
   return (

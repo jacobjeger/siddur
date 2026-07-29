@@ -16,6 +16,7 @@ import type {
   HebrewDateOptions,
 } from "../../services/zmanim/hebrewCalendarService";
 
+import { Focusable } from "../common/Focusable";
 export type CalendarView = "today" | "week" | "month" | "list";
 
 const VIEWS: { key: CalendarView; label: string }[] = [
@@ -87,7 +88,7 @@ export function ViewSwitcher({
       {VIEWS.map((view) => {
         const active = view.key === value;
         return (
-          <Pressable
+          <Focusable
             key={view.key}
             onPress={() => onChange(view.key)}
             accessibilityRole="tab"
@@ -113,7 +114,7 @@ export function ViewSwitcher({
             >
               {view.label}
             </Text>
-          </Pressable>
+          </Focusable>
         );
       })}
     </View>
@@ -142,7 +143,7 @@ function Pager({
     onPress: () => void,
     label: string
   ) => (
-    <Pressable
+    <Focusable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
@@ -155,7 +156,7 @@ function Pager({
       }}
     >
       <Ionicons name={name} size={22} color={colors.primary} />
-    </Pressable>
+    </Focusable>
   );
 
   return (
@@ -169,7 +170,7 @@ function Pager({
       }}
     >
       {arrow("chevron-back", onPrev, "Previous")}
-      <Pressable
+      <Focusable
         onPress={onToday}
         disabled={!showToday}
         accessibilityRole="button"
@@ -189,7 +190,7 @@ function Pager({
             Tap to return to today
           </Text>
         ) : null}
-      </Pressable>
+      </Focusable>
       {arrow("chevron-forward", onNext, "Next")}
     </View>
   );
@@ -254,7 +255,7 @@ function MonthCell({
   const dim = !day.inMonth;
 
   return (
-    <Pressable
+    <Focusable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ selected }}
@@ -318,7 +319,7 @@ function MonthCell({
           }}
         />
       </View>
-    </Pressable>
+    </Focusable>
   );
 }
 

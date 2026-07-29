@@ -1,6 +1,7 @@
 import { View, Text, Pressable, type ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../hooks/useTheme";
+import { Focusable } from "./Focusable";
 import { radius, spacing, type, MIN_TOUCH_TARGET } from "../../theme/tokens";
 
 /**
@@ -124,11 +125,13 @@ export function Chip({
   const { colors } = useTheme();
 
   return (
-    <Pressable
+    <Focusable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityState={{ selected }}
       accessibilityLabel={label}
+      // Selection stays a FILL here and focus is a ring drawn outside the chip,
+      // so the two never collide. Deliberately not `selected` on Focusable: a
+      // gold left edge on a pill reads as damage, and the fill already says it.
       style={{
         minHeight: MIN_TOUCH_TARGET,
         justifyContent: "center",
@@ -148,7 +151,7 @@ export function Chip({
       >
         {label}
       </Text>
-    </Pressable>
+    </Focusable>
   );
 }
 

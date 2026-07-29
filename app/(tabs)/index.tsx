@@ -10,6 +10,7 @@ import { useLocationStore } from "../../src/stores/useLocationStore";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
 import { useTheme } from "../../src/hooks/useTheme";
 import { radius } from "../../src/theme/tokens";
+import { Focusable } from "../../src/components/common/Focusable";
 import { getTefilosForTime } from "../../src/data/prayers";
 import { hasContent } from "../../src/utils/tefilaContent";
 import { ZMAN_NAMES } from "../../src/utils/constants";
@@ -186,7 +187,7 @@ export default function SiddurTab() {
             if (tefilos.length === 0) return null;
 
             return (
-              <TouchableOpacity
+              <Focusable
                 key={category.id}
                 accessibilityRole="button"
                 accessibilityLabel={`${category.name} — ${tefilos.length} tefilos`}
@@ -200,7 +201,6 @@ export default function SiddurTab() {
                     });
                   }
                 }}
-                activeOpacity={0.6}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
@@ -237,17 +237,16 @@ export default function SiddurTab() {
                   size={18}
                   color={colors.textMuted}
                 />
-              </TouchableOpacity>
+              </Focusable>
             );
           })}
         </View>
 
         {/* Browse all */}
-        <TouchableOpacity
+        <Focusable
           onPress={() => router.push("/siddur/browse")}
           accessibilityRole="button"
           accessibilityLabel="Browse all tefilos"
-          activeOpacity={0.6}
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -276,21 +275,23 @@ export default function SiddurTab() {
             size={18}
             color={colors.textMuted}
           />
-        </TouchableOpacity>
+        </Focusable>
 
         {/* Start davening shortcut */}
         {tefilosForTime.length > 0 && (
-          <TouchableOpacity
+          <Focusable
+            autoFocus
+            accessibilityRole="button"
+            accessibilityLabel="Start davening"
             onPress={() => {
               router.push({
                 pathname: "/siddur/daven",
                 params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
               });
             }}
-            activeOpacity={0.6}
             style={{
               alignItems: "center",
-              backgroundColor: colors.accent,
+              backgroundColor: colors.primary,
               borderRadius: 12,
               marginTop: 20,
               marginHorizontal: 16,
@@ -299,18 +300,18 @@ export default function SiddurTab() {
           >
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
               <Text
-                style={{ fontSize: 18, color: colors.onAccent, fontWeight: "700" }}
+                style={{ fontSize: 18, color: colors.onPrimary, fontWeight: "700" }}
               >
                 Start Davening
               </Text>
               <HebrewText
                 bold
-                style={{ fontSize: 18, color: colors.onAccent }}
+                style={{ fontSize: 18, color: colors.onPrimary }}
               >
                 התחל להתפלל
               </HebrewText>
             </View>
-          </TouchableOpacity>
+          </Focusable>
         )}
       </ScrollView>
     </View>

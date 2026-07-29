@@ -3,6 +3,7 @@ import { useRouter, Stack, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { HebrewText } from "../../src/components/common/HebrewText";
 import { useSettingsStore } from "../../src/stores/useSettingsStore";
+import { Focusable } from "../../src/components/common/Focusable";
 import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 import { useTheme } from "../../src/hooks/useTheme";
@@ -70,10 +71,9 @@ export default function BrowseTefilosScreen() {
                 }}
               >
                 {tefilos.map((tefila, index) => (
-                  <TouchableOpacity
+                  <Focusable
                     key={tefila.id}
                     onPress={() => router.push(`/siddur/${tefila.id}`)}
-                    activeOpacity={0.6}
                     style={{
                       paddingHorizontal: 20,
                       paddingVertical: 15,
@@ -105,7 +105,7 @@ export default function BrowseTefilosScreen() {
                         {tefila.nameHe}
                       </HebrewText>
                     </View>
-                  </TouchableOpacity>
+                  </Focusable>
                 ))}
               </View>
             </View>

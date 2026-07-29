@@ -26,6 +26,7 @@ import { NUSACH_LABELS } from "../../src/utils/constants";
 import { formatDistance } from "../../src/utils/distance";
 import { SLOT_LABELS, formatMinyanTime } from "../../src/utils/minyanFormatting";
 import type { TefilaSlot } from "../../src/services/minyanim/types";
+import { Focusable } from "../../src/components/common/Focusable";
 
 const SLOTS: TefilaSlot[] = ["shacharis", "mincha", "maariv"];
 const NUSACHIM: Nusach[] = ["ashkenaz", "sefard", "edot_hamizrach", "ari"];
@@ -189,7 +190,7 @@ export default function MinyanimTab() {
           body={error instanceof Error ? error.message : "Something went wrong."}
           colors={colors}
         >
-          <Pressable
+          <Focusable
             onPress={() => refetch()}
             accessibilityRole="button"
             accessibilityLabel="Retry loading minyanim"
@@ -202,7 +203,7 @@ export default function MinyanimTab() {
             }}
           >
             <Text style={{ color: colors.onPrimary, fontWeight: "600" }}>Retry</Text>
-          </Pressable>
+          </Focusable>
         </CenteredMessage>
       ) : !data || data.length === 0 ? (
         <CenteredMessage
@@ -229,7 +230,7 @@ export default function MinyanimTab() {
               : minyan.times[0];
 
             return (
-              <Pressable
+              <Focusable
                 key={minyan.id}
                 onPress={() => router.push(`/minyan/${minyan.id}`)}
                 accessibilityRole="button"
@@ -286,11 +287,11 @@ export default function MinyanimTab() {
                   size={18}
                   color={colors.textMuted}
                 />
-              </Pressable>
+              </Focusable>
             );
           })}
 
-          <Pressable
+          <Focusable
             onPress={() => Linking.openURL("https://www.godaven.com")}
             accessibilityRole="link"
             accessibilityLabel="Browse more minyanim on GoDaven.com"
@@ -299,7 +300,7 @@ export default function MinyanimTab() {
             <Text style={{ color: colors.primary, fontSize: 14 }}>
               Browse more on GoDaven.com
             </Text>
-          </Pressable>
+          </Focusable>
         </ScrollView>
       )}
     </View>

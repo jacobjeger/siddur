@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useTheme } from "../../hooks/useTheme";
+import { Focusable } from "./Focusable";
 
 export function LocationDisplay() {
   const { location, loading } = useLocationStore();
@@ -42,7 +43,7 @@ export function LocationDisplay() {
         UI presented it as real, so zmanim could be wrong with no indication.
       */}
       {isFallback && (
-        <Pressable
+        <Focusable
           onPress={() => router.push("/(tabs)/settings")}
           accessibilityRole="button"
           accessibilityLabel="Using a default location. Tap to set your location."
@@ -70,7 +71,7 @@ export function LocationDisplay() {
             location.
           </Text>
           <Ionicons name="chevron-forward" size={14} color={colors.textMuted} />
-        </Pressable>
+        </Focusable>
       )}
     </View>
   );

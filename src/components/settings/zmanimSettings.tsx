@@ -16,6 +16,7 @@ import type {
   TzeisMethod,
 } from "../../stores/useSettingsStore";
 
+import { Focusable } from "../common/Focusable";
 /**
  * Zmanim-related settings, split into independently-composable cards so the
  * settings screen can group them under headings rather than presenting one
@@ -108,14 +109,14 @@ export function LocationCard() {
               <Text style={{ color: colors.text, marginLeft: 6, flex: 1 }}>
                 {manualLocation.name}
               </Text>
-              <Pressable
+              <Focusable
                 onPress={() => setManualLocation(null)}
                 accessibilityRole="button"
                 accessibilityLabel="Clear manual location"
                 hitSlop={hitSlopFor(18)}
               >
                 <Ionicons name="close" size={18} color={colors.textMuted} />
-              </Pressable>
+              </Focusable>
             </View>
           )}
 
@@ -139,7 +140,7 @@ export function LocationCard() {
                 backgroundColor: colors.background,
               }}
             />
-            <Pressable
+            <Focusable
               onPress={runSearch}
               accessibilityRole="button"
               accessibilityLabel="Search cities"
@@ -155,11 +156,11 @@ export function LocationCard() {
               ) : (
                 <Ionicons name="search" size={16} color={colors.onPrimary} />
               )}
-            </Pressable>
+            </Focusable>
           </View>
 
           {results.map((city) => (
-            <Pressable
+            <Focusable
               key={`${city.latitude},${city.longitude}`}
               onPress={() => choose(city)}
               accessibilityRole="button"
@@ -171,7 +172,7 @@ export function LocationCard() {
               }}
             >
               <Text style={{ color: colors.text }}>{city.name}</Text>
-            </Pressable>
+            </Focusable>
           ))}
 
           {!searching && failed && query.length >= 2 && (

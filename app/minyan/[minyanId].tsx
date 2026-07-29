@@ -22,6 +22,7 @@ import {
   groupTimes,
 } from "../../src/utils/minyanFormatting";
 
+import { Focusable } from "../../src/components/common/Focusable";
 export default function MinyanDetailScreen() {
   const { minyanId } = useLocalSearchParams<{ minyanId: string }>();
   const { colors } = useTheme();
@@ -89,7 +90,7 @@ export default function MinyanDetailScreen() {
       </Text>
 
       {minyan.address ? (
-        <Pressable
+        <Focusable
           onPress={openMaps}
           accessibilityRole="button"
           accessibilityLabel={`Open ${minyan.address} in maps`}
@@ -113,11 +114,11 @@ export default function MinyanDetailScreen() {
             size={16}
             color={colors.textMuted}
           />
-        </Pressable>
+        </Focusable>
       ) : null}
 
       {minyan.phone ? (
-        <Pressable
+        <Focusable
           onPress={() => Linking.openURL(`tel:${minyan.phone}`)}
           accessibilityRole="button"
           accessibilityLabel={`Call ${minyan.phone}`}
@@ -136,7 +137,7 @@ export default function MinyanDetailScreen() {
           <Text style={{ color: colors.text, marginLeft: 10, flex: 1 }}>
             {minyan.phone}
           </Text>
-        </Pressable>
+        </Focusable>
       ) : null}
 
       {groupTimes(minyan.times).map(([scope, times]) => (
