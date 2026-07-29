@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo, useState, Fragment } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Modal, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
@@ -15,6 +15,7 @@ import type { Tefila, PrayerSection } from "../../src/data/types";
 
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
+import { RunningHead } from "../../src/components/common/RunningHead";
 /** Build a deduplicated TOC from all tefilos' sections */
 function buildTocEntries(tefilos: Tefila[]) {
   const seen = new Set<string>();
@@ -30,9 +31,11 @@ function buildTocEntries(tefilos: Tefila[]) {
       });
     }
     for (const s of tefila.sections) {
-      const key = `${tefila.id}-${s.titleHe}`;
-      if (!seen.has(key) && s.titleHe !== tefila.nameHe) {
-        seen.add(key);
+      // Keyed by section ID, not by title. Keying on the title collapsed every
+      // repeated section to its first occurrence, so you could not jump to the
+      // second Chatzi Kaddish — and Shacharis has several.
+      if (!seen.has(s.id) && s.titleHe !== tefila.nameHe) {
+        seen.add(s.id);
         entries.push({ title: s.titleHe, sectionId: s.id, tefilaName: tefila.nameHe });
       }
     }
@@ -51,6 +54,7 @@ export default function DavenScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const sectionYPositions = useRef<Record<string, number>>({});
   const [tocVisible, setTocVisible] = useState(false);
+  const [scroll, setScroll] = useState({ offset: 0, visible: 0, total: 1 });
 
   const hebrew = useHebrewDate();
   // Was `getInsertionContext()` with no arguments, memoised on [] — so it used
@@ -114,6 +118,26 @@ export default function DavenScreen() {
   const tocEntries = buildTocEntries(tefilos);
   const showToc = tocEntries.length >= 3;
 
+  // The running head counts across the whole flow, not per tefila — the user
+  // is reading one continuous davening.
+  const flat = tefilos.flatMap((t) =>
+    t.sections.map((section) => ({ section, tefilaName: t.name }))
+  );
+  const currentIndex = (() => {
+    const positions = sectionYPositions.current;
+    let index = 0;
+    flat.forEach((entry, i) => {
+      const y = positions[entry.section.id];
+      if (y != null && y <= scroll.offset + 8) index = i;
+    });
+    return index;
+  })();
+  const current = flat[currentIndex];
+  const progress =
+    scroll.total > scroll.visible
+      ? Math.min(1, scroll.offset / (scroll.total - scroll.visible))
+      : 0;
+
   const scrollToSection = (sectionId: string) => {
     setTocVisible(false);
     setTimeout(() => {
@@ -134,67 +158,55 @@ export default function DavenScreen() {
           headerTintColor: "#ffffff",
         }}
       />
+      <RunningHead
+        tefilaName={current?.tefilaName ?? ""}
+        section={current?.section}
+        index={currentIndex}
+        total={flat.length || 1}
+        progress={progress}
+        onPressIndex={showToc ? () => setTocVisible(true) : undefined}
+      />
       <ScrollView
         ref={scrollRef}
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
+        scrollEventThrottle={16}
+        onScroll={(e) =>
+          setScroll({
+            offset: e.nativeEvent.contentOffset.y,
+            visible: e.nativeEvent.layoutMeasurement.height,
+            total: e.nativeEvent.contentSize.height,
+          })
+        }
       >
         {tefilos.map((tefila, tefilaIndex) => (
-          <View key={tefila.id}>
-            {/* Tefila header */}
+          // No wrapper View. Section offsets are captured with onLayout and
+          // `layout.y` is relative to the PARENT — so wrapping each tefila made
+          // every offset after the first short by the height of everything
+          // before it, and jumps landed in the wrong place. A Fragment keeps
+          // the sections as direct children of the scroll content.
+          <Fragment key={tefila.id}>
+            {/* A slim anchor, not a header. The running head above the
+                scroll view carries the tefila name permanently, so repeating
+                it here (at textSize + 2, with a jump chip) cost ~101dp per
+                tefila to say what is already on screen. Kept as a measured
+                target so the jump list can still land on a tefila. */}
             <View
               onLayout={(e) => {
                 sectionYPositions.current[`tefila-header-${tefila.id}`] = e.nativeEvent.layout.y;
               }}
               style={{
-                alignItems: "center",
-                paddingVertical: 20,
-                paddingHorizontal: 20,
-                backgroundColor: colors.surface,
-                borderBottomWidth: 1,
-                borderBottomColor: colors.border,
-                marginTop: tefilaIndex > 0 ? 4 : 0,
+                paddingHorizontal: 16,
+                paddingTop: tefilaIndex > 0 ? 18 : 8,
+                paddingBottom: 2,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "NotoSerifHebrew-Bold",
-                  fontSize: textSize + 2,
-                  color: colors.text,
-                }}
+              <HebrewText
+                bold
+                style={{ fontSize: 13, color: colors.textMuted, textAlign: "right" }}
               >
                 {tefila.nameHe}
-              </Text>
-              {tefilaIndex === 0 && showToc && (
-                <TouchableOpacity
-                  onPress={() => setTocVisible(true)}
-                  activeOpacity={0.6}
-                  style={{
-                    marginTop: 12,
-                    paddingHorizontal: 16,
-                    paddingVertical: 8,
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: colors.border,
-                    backgroundColor: colors.background,
-                  }}
-                >
-                  <View
-                    style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-                  >
-                    <HebrewText
-                      style={{ fontSize: textSize - 6, color: colors.primary }}
-                    >
-                      דלג לקטע
-                    </HebrewText>
-                    <Ionicons
-                      name="chevron-down"
-                      size={14}
-                      color={colors.primary}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
+              </HebrewText>
             </View>
 
             {/* Sections */}
@@ -205,38 +217,24 @@ export default function DavenScreen() {
                   sectionYPositions.current[section.id] = e.nativeEvent.layout.y;
                 }}
                 style={{
-                  paddingHorizontal: 20,
-                  paddingTop: 28,
-                  paddingBottom: 20,
+                  paddingHorizontal: 16,
+                  paddingTop: 10,
+                  paddingBottom: 10,
                 }}
               >
-                {/* Hebrew section divider */}
                 {(tefila.sections.length > 1 || section.titleHe !== tefila.nameHe) && (
-                  <View style={{ alignItems: "center", marginBottom: 20 }}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        width: "100%",
-                      }}
-                    >
-                      <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-                      <Text
-                        style={{
-                          fontFamily: "NotoSerifHebrew-Bold",
-                          fontSize: textSize - 2,
-                          color: colors.textSecondary,
-                          textAlign: "center",
-                          marginHorizontal: 12,
-                        }}
-                      >
-                        {section.titleHe}
-                      </Text>
-                      <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-                    </View>
-                  </View>
+                  <HebrewText
+                    bold
+                    style={{
+                      fontSize: textSize * 1.15,
+                      color: colors.textSecondary,
+                      textAlign: "right",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {section.titleHe}
+                  </HebrewText>
                 )}
-
 
                 <SectionBody
                   text={getTextForNusach(section.text, nusach)}
@@ -267,7 +265,7 @@ export default function DavenScreen() {
                 )}
               </View>
             ))}
-          </View>
+          </Fragment>
         ))}
 
         {/* Completion */}

@@ -15,6 +15,7 @@ import type { PrayerSection } from "../../src/data/types";
 
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
+import { RunningHead } from "../../src/components/common/RunningHead";
 /** Build a deduplicated TOC: unique titles mapped to first section with that title */
 function buildTocEntries(sections: PrayerSection[]) {
   const seen = new Set<string>();
@@ -38,6 +39,10 @@ export default function TefilaScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const sectionYPositions = useRef<Record<string, number>>({});
   const [tocVisible, setTocVisible] = useState(false);
+  // Drives the running head. Kept in state (not a ref) because the head has to
+  // re-render as you scroll; throttled to 16ms so `group` and `n/62` stay
+  // truthful rather than lagging a section behind.
+  const [scroll, setScroll] = useState({ offset: 0, visible: 0, total: 1 });
 
   const baseTefila = getTefilaById(tefilaId ?? "");
   const hebrew = useHebrewDate();
@@ -90,6 +95,23 @@ export default function TefilaScreen() {
     );
   }
 
+  // Which section the top of the viewport is in. Offsets come from the same
+  // onLayout measurements the jump list already used.
+  const currentIndex = (() => {
+    const positions = sectionYPositions.current;
+    let index = 0;
+    tefila.sections.forEach((section, i) => {
+      const y = positions[section.id];
+      if (y != null && y <= scroll.offset + 8) index = i;
+    });
+    return index;
+  })();
+  const currentSection = tefila.sections[currentIndex];
+  const progress =
+    scroll.total > scroll.visible
+      ? Math.min(1, scroll.offset / (scroll.total - scroll.visible))
+      : 0;
+
   const tocEntries = buildTocEntries(tefila.sections);
   const showToc = tocEntries.length >= 3;
 
@@ -113,63 +135,27 @@ export default function TefilaScreen() {
           headerTintColor: "#ffffff",
         }}
       />
+      <RunningHead
+        tefilaName={tefila.name}
+        section={currentSection}
+        index={currentIndex}
+        total={tefila.sections.length}
+        progress={progress}
+        onPressIndex={showToc ? () => setTocVisible(true) : undefined}
+      />
       <ScrollView
         ref={scrollRef}
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
+        scrollEventThrottle={16}
+        onScroll={(e) =>
+          setScroll({
+            offset: e.nativeEvent.contentOffset.y,
+            visible: e.nativeEvent.layoutMeasurement.height,
+            total: e.nativeEvent.contentSize.height,
+          })
+        }
       >
-        {/* Header with tefila name and jump-to button */}
-        <View
-          style={{
-            alignItems: "center",
-            paddingVertical: 24,
-            paddingHorizontal: 20,
-            backgroundColor: colors.surface,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.border,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "NotoSerifHebrew-Bold",
-              fontSize: textSize + 2,
-              color: colors.text,
-            }}
-          >
-            {tefila.nameHe}
-          </Text>
-          {showToc && (
-            <TouchableOpacity
-              onPress={() => setTocVisible(true)}
-              activeOpacity={0.6}
-              style={{
-                marginTop: 12,
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: colors.border,
-                backgroundColor: colors.background,
-              }}
-            >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-              >
-                <HebrewText
-                  style={{ fontSize: textSize - 6, color: colors.primary }}
-                >
-                  דלג לקטע
-                </HebrewText>
-                <Ionicons
-                  name="chevron-down"
-                  size={14}
-                  color={colors.primary}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-
         {/* Prayer sections */}
         {tefila.sections.map((section, index) => (
           <View
@@ -178,38 +164,27 @@ export default function TefilaScreen() {
               sectionYPositions.current[section.id] = e.nativeEvent.layout.y;
             }}
             style={{
-              paddingHorizontal: 20,
-              paddingTop: 28,
-              paddingBottom: 20,
+              paddingHorizontal: 16,
+              paddingTop: 10,
+              paddingBottom: 10,
             }}
           >
-            {/* Hebrew section divider */}
+            {/* Right-aligned, like the text it introduces. The old centred
+                rule-divider cost 40dp per section and gave all 118 sections
+                equal weight; the running head now carries the hierarchy. */}
             {(tefila.sections.length > 1 || section.titleHe !== tefila.nameHe) && (
-              <View style={{ alignItems: "center", marginBottom: 20 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-                  <Text
-                    style={{
-                      fontFamily: "NotoSerifHebrew-Bold",
-                      fontSize: textSize - 2,
-                      color: colors.textSecondary,
-                      textAlign: "center",
-                      marginHorizontal: 12,
-                    }}
-                  >
-                    {section.titleHe}
-                  </Text>
-                  <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-                </View>
-              </View>
+              <HebrewText
+                bold
+                style={{
+                  fontSize: textSize * 1.15,
+                  color: colors.textSecondary,
+                  textAlign: "right",
+                  marginBottom: 6,
+                }}
+              >
+                {section.titleHe}
+              </HebrewText>
             )}
-
 
             <SectionBody
               text={getTextForNusach(section.text, nusach)}
