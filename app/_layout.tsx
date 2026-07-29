@@ -49,12 +49,16 @@ function AppStack() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     "NotoSerifHebrew-Regular": require("../src/assets/fonts/NotoSerifHebrew-Regular.ttf"),
     "NotoSerifHebrew-Bold": require("../src/assets/fonts/NotoSerifHebrew-Bold.ttf"),
   });
 
-  if (!fontsLoaded) {
+  // The error from useFonts used to be discarded, so a font that fails to load
+  // left `fontsLoaded` false forever and the app rendered a permanently blank
+  // screen, indistinguishable from a hang. Hebrew still renders in the system
+  // fallback face, so on failure carry on rather than showing nothing at all.
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 

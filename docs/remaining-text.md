@@ -114,9 +114,7 @@ Doing this properly needs a speaker/role concept on the section model
 That affects Kedusha, Barchu, Kaddish and the Torah service. Worth doing before
 those are used for actual davening.
 
-Related: the UI (`app/siddur/[tefilaId].tsx`) renders only `section.text` and
-does not display `instruction` or `instructionHe` at all, so rubrics are
-currently invisible rather than misleading. Rendering them — visually distinct
+renders rubrics inline (see src/utils/sectionBlocks.ts) rather than misleading. Rendering them — visually distinct
 from liturgy — is the other half of this.
 
 ---
@@ -180,3 +178,42 @@ device and may need a second look by someone qualified.
 - **`shacharis-insert-hamelech-hamishpat`** was an insertion holding the whole
   Hashiveinu bracha, duplicating `shacharis-amidah-11-mishpat`. Reduced to the
   inserted words, `הַמֶּֽלֶךְ הַמִּשְׁפָּט`.
+
+---
+
+## Corrections after the full audit (2026-07-28)
+
+Several statements earlier in this document were written before the rubric work
+landed and are no longer true. Recorded rather than silently edited, because a
+doc that quietly rewrites its own history is not trustworthy either.
+
+- The claim that the UI "does not display `instruction` or `instructionHe` at
+  all, so rubrics are currently invisible" was **false** by the time it was
+  written: `app/siddur/[tefilaId].tsx` and `app/siddur/daven.tsx` both pass
+  them, and rubrics now render inline via `src/utils/sectionBlocks.ts`.
+- The claim that moving `shacharis-amidah-kedusha`'s lines to `instructionHe`
+  "loses the interleaving" describes a state that no longer exists — that
+  section carries six rubric lines inline and an empty `instructionHe`.
+- `shacharis-amidah-birchas-kohanim`'s `לכהנים:` cue is no longer embedded
+  mid-line; `scripts/split-leading-cues.ts` moved it. The **truncation** of the
+  kohanim variant of the Yehi Ratzon is still real and still open.
+- The section count is **172 of 174**, not 131 of 174: two byte-identical
+  duplicate sections were removed (see scripts/fix-audit-content.ts).
+- The figure of "English translations for 1,038 sections" in `archive/dgjE2`
+  could not be substantiated — the tag has 522 `translation:` keys over 766
+  section ids. Treat the number as unverified.
+
+## Still missing, and not inventable from any source here
+
+- **Psalm 92** (`מִזְמוֹר שִׁיר לְיוֹם הַשַּׁבָּת`). Shir Shel Yom carries six of seven
+  days. The psalm is absent from the current corpus AND from the pre-xlsx
+  archive, so it cannot be restored by remapping — it needs a text source.
+  `src/utils/tefillahRules.ts` correctly reports psalm 92 for Shabbos, so the
+  Calendar tab names a psalm whose text the Siddur tab cannot show.
+- **Av HaRachamim (the Shabbos memorial**, `אב הרחמים שוכן מרומים`). The corpus
+  holds only the ark-opening `אב הרחמים הוא ירחם`; the section has been retitled
+  to match what it actually contains.
+- **Aneinu.** The only conditional insertion whose text is genuinely not in the
+  corpus. It belongs inside Shomea Tefilla on a fast day. It must be added to
+  the YAML in position with its cue — not appended at runtime, which is what
+  the old assembler did, and which placed it after the chasima.

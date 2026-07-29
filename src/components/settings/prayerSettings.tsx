@@ -17,7 +17,7 @@ export function NusachCard() {
   const { nusach, setNusach } = useSettingsStore();
 
   return (
-    <Card title="Nusach" subtitle="Which text is shown">
+    <Card title="Nusach" subtitle="Affects day-rules and the Omer text">
       <View style={row}>
         {NUSACH_OPTIONS.map((opt) => (
           <Chip
