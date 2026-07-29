@@ -189,6 +189,33 @@ function getDedicatedShitah(
         plag: () => noArg.getPlagHaminchaAteretTorah(),
         tzeis: () => calendar.getTzaisAteretTorah(),
       };
+    case "mga72":
+      // The Mishna Berura preset previously differed from Standard only in
+      // misheyakir and tzeis: mincha and plag still came from the GRA day, so
+      // the MGA shaah zmanis it is named for was never applied. Measured in
+      // Brooklyn that put plag 57 minutes and mincha ketana 42 minutes off.
+      return {
+        alos: () => calendar.getAlos72(),
+        sofZmanShma: () => calendar.getSofZmanShmaMGA(),
+        sofZmanTfila: () => calendar.getSofZmanTfilaMGA(),
+        minchaGedola: () => calendar.getMinchaGedola72Minutes(),
+        minchaKetana: () => calendar.getMinchaKetana72Minutes(),
+        plag: () => calendar.getPlagHamincha72Minutes(),
+        tzeis: () => calendar.getTzais72(),
+      };
+    case "rav_moshe":
+      // "Mincha and plag from fixed local chatzos" was in the description and
+      // implemented nowhere — nothing read the preset, so it differed from
+      // mga72 in tzeis alone.
+      return {
+        alos: () => calendar.getAlos72(),
+        sofZmanShma: () => calendar.getSofZmanShmaGRASunriseToFixedLocalChatzos(),
+        sofZmanTfila: () => calendar.getSofZmanTfilaGRASunriseToFixedLocalChatzos(),
+        minchaGedola: () => calendar.getMinchaGedolaGRAFixedLocalChatzos30Minutes(),
+        minchaKetana: () => calendar.getMinchaKetanaGRAFixedLocalChatzosToSunset(),
+        plag: () => calendar.getPlagHaminchaGRAFixedLocalChatzosToSunset(),
+        tzeis: () => calendar.getTzais50(),
+      };
     default:
       return null;
   }

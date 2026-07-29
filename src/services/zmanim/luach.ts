@@ -38,7 +38,13 @@ export interface LuachPreset {
    * than by composing alos/tzeis. Used by shitos that define their own shaah
    * zmanis basis — Baal HaTanya measures from netz amiti to shkiah amiti.
    */
-  dedicated: "baal_hatanya" | "ateret_torah" | "roy" | null;
+  dedicated:
+    | "baal_hatanya"
+    | "ateret_torah"
+    | "roy"
+    | "mga72"
+    | "rav_moshe"
+    | null;
 }
 
 export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
@@ -60,7 +66,7 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: "72min",
     misheyakirDegrees: 11.5,
     useElevation: false,
-    dedicated: null,
+    dedicated: "mga72",
   },
   baal_hatanya: {
     id: "baal_hatanya",
@@ -94,7 +100,7 @@ export const LUACH_PRESETS: Record<LuachId, LuachPreset> = {
     tzeis: "50min",
     misheyakirDegrees: 11.5,
     useElevation: false,
-    dedicated: null,
+    dedicated: "rav_moshe",
   },
   roy: {
     id: "roy",
