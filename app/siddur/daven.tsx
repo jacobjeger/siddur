@@ -13,6 +13,8 @@ import { assemblePrayer } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import type { Tefila, PrayerSection } from "../../src/data/types";
 
+import { useHebrewDate } from "../../src/hooks/useHebrewDate";
+import { isSectionSaid } from "../../src/utils/sectionConditions";
 /** Build a deduplicated TOC from all tefilos' sections */
 function buildTocEntries(tefilos: Tefila[]) {
   const seen = new Set<string>();
@@ -50,13 +52,36 @@ export default function DavenScreen() {
   const sectionYPositions = useRef<Record<string, number>>({});
   const [tocVisible, setTocVisible] = useState(false);
 
-  const context = useMemo(() => getInsertionContext(), []);
+  const hebrew = useHebrewDate();
+  // Was `getInsertionContext()` with no arguments, memoised on [] — so it used
+  // {inIsrael: false} with no tzeis and froze at mount.
+  const context = useMemo(
+    () => getInsertionContext(new Date(), hebrew.options),
+    [hebrew.options]
+  );
 
   const ids = (tefilaIds ?? "").split(",").filter(Boolean);
-  const tefilos: Tefila[] = ids
-    .map((id) => getTefilaById(id))
-    .filter((t): t is Tefila => t != null)
-    .map((t) => assemblePrayer(t, context));
+  // Recomputed on every render before this, with no memo.
+  const tefilos: Tefila[] = useMemo(() => {
+    const conditionContext = {
+      day: hebrew.dayDavening,
+      dayOfWeek: hebrew.dayOfWeek,
+      withMinyan: true,
+    };
+    return ids
+      .map((id) => getTefilaById(id))
+      .filter((t): t is Tefila => t != null)
+      .map((t) => assemblePrayer(t, context))
+      .map((t) => ({
+        ...t,
+        // Drop what is not said today. This is the flow OK opens, so without
+        // it the whole day-rules fix would be invisible where it matters most.
+        sections: t.sections.filter((section) =>
+          isSectionSaid(section, conditionContext)
+        ),
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tefilaIds, context, hebrew.dayDavening, hebrew.dayOfWeek]);
 
   if (tefilos.length === 0) {
     return (

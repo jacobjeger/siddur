@@ -13,6 +13,8 @@ import { assemblePrayer } from "../../src/utils/prayerAssembler";
 import { getInsertionContext } from "../../src/utils/jewishCalendar";
 import type { PrayerSection } from "../../src/data/types";
 
+import { useHebrewDate } from "../../src/hooks/useHebrewDate";
+import { isSectionSaid } from "../../src/utils/sectionConditions";
 /** Build a deduplicated TOC: unique titles mapped to first section with that title */
 function buildTocEntries(sections: PrayerSection[]) {
   const seen = new Set<string>();
@@ -38,11 +40,45 @@ export default function TefilaScreen() {
   const [tocVisible, setTocVisible] = useState(false);
 
   const baseTefila = getTefilaById(tefilaId ?? "");
-  const context = useMemo(() => getInsertionContext(), []);
-  const tefila = useMemo(
+  const hebrew = useHebrewDate();
+  // Was `getInsertionContext()` with NO arguments and memoised on [], so it
+  // silently used {inIsrael: false} with no tzeis and froze at mount. It now
+  // takes the same options as the rest of the app and rebuilds when the day
+  // rolls at nightfall.
+  const context = useMemo(
+    () => getInsertionContext(new Date(), hebrew.options),
+    [hebrew.options]
+  );
+  const assembled = useMemo(
     () => (baseTefila ? assemblePrayer(baseTefila, context) : undefined),
     [baseTefila, context]
   );
+
+  /**
+   * Drop the sections that are not said today.
+   *
+   * Without this the reader ignored the day rules entirely: on Tu B'Av the
+   * Today panel said "Tachanun: Not said" and the reader rendered all three
+   * Tachanun sections anyway.
+   *
+   * `withMinyan` defaults to true because there is no setting for it yet, and
+   * a wrong default that HIDES liturgy is far worse than one that shows a
+   * little extra — the same reason an absent `when` means "say it".
+   */
+  const tefila = useMemo(() => {
+    if (!assembled) return undefined;
+    const conditionContext = {
+      day: hebrew.dayDavening,
+      dayOfWeek: hebrew.dayOfWeek,
+      withMinyan: true,
+    };
+    return {
+      ...assembled,
+      sections: assembled.sections.filter((section) =>
+        isSectionSaid(section, conditionContext)
+      ),
+    };
+  }, [assembled, hebrew.dayDavening, hebrew.dayOfWeek]);
 
   if (!tefila) {
     return (

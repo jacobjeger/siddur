@@ -46,6 +46,10 @@ interface SectionYaml {
   translation?: string | Record<string, string>;
   instruction?: string;
   instructionHe?: string;
+  when?: { rule?: string; weekdays?: number[]; minyan?: boolean };
+  group?: string;
+  status?: string;
+  sourceRef?: string;
 }
 
 interface TefilaYaml {
@@ -229,6 +233,8 @@ function main(): void {
       if (s.instructionHe) so.instructionHe = s.instructionHe;
       so.text = s.text ?? "";
       if (s.translation !== undefined) so.translation = s.translation;
+      if (s.when) so.when = s.when;
+      if (s.group) so.group = s.group;
       return so;
     });
     return obj;
@@ -288,6 +294,15 @@ export function getTefilosByCategory(
  */
 function runContentGuards(tefilos: TefilaYaml[]): void {
   let empty = 0;
+  const badConditions: string[] = [];
+  const KNOWN_RULES = new Set([
+    "tachanun",
+    "tachanunShacharis",
+    "roshChodesh",
+    "avinuMalkeinu",
+    "ldovid",
+    "avHaRachamim",
+  ]);
   const hoistedCues: string[] = [];
   /**
    * Sections where the cue in `instructionHe` genuinely heads the whole
@@ -373,6 +388,14 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
         danglingBrachos.push(`${s.id}: ${text.trim().slice(0, 60)}`);
       }
 
+      const when = (s as { when?: { rule?: string; weekdays?: number[] } }).when;
+      if (when?.rule && !KNOWN_RULES.has(when.rule)) {
+        badConditions.push(`${s.id}: unknown rule '${when.rule}'`);
+      }
+      if (when?.weekdays?.some((d) => d < 1 || d > 7)) {
+        badConditions.push(`${s.id}: weekdays must be 1-7 (1 = Sunday)`);
+      }
+
       // An unclosed '[' means a '[קהל: אמן]' response was torn apart.
       for (const line of text.split("\n")) {
         const opens = (line.match(/\[/g) ?? []).length;
@@ -421,6 +444,13 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
       `${orphanBrackets.length} line(s) have an unbalanced bracket:\n  ${orphanBrackets
         .slice(0, 10)
         .join("\n  ")}`
+    );
+  }
+  // A typo in a rule name would remove a section from the reader for good, so
+  // this fails rather than warns.
+  if (badConditions.length) {
+    throw new Error(
+      `${badConditions.length} section condition(s) are invalid:\n  ${badConditions.join("\n  ")}`
     );
   }
   if (danglingBrachos.length) {

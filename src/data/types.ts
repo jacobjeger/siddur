@@ -17,6 +17,20 @@ export interface PrayerSection {
   sourceRef?: string;
   /** Editorial status: "complete" | "needs-text" | "draft" | etc. — free-form */
   status?: string;
+  /**
+   * When this section is said. Absent means always.
+   *
+   * Replaces conditions that were English prose in `instruction` and therefore
+   * unactionable — see src/utils/sectionConditions.ts.
+   */
+  when?: SectionCondition;
+}
+
+export interface SectionCondition {
+  rule?: string;
+  /** 1 = Sunday … 7 = Shabbos. */
+  weekdays?: number[];
+  minyan?: boolean;
 }
 
 export type NusachVariants = Partial<Record<Nusach, string>>;
