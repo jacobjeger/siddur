@@ -68,3 +68,33 @@ The Torat Emet (Nusach Sefard) text becomes non-compliant immediately. Sections
 sourced from it are tagged in the YAML so they can be found and replaced.
 Ashkenaz (Metsudah CC BY + Daat PD) and Edot HaMizrach (Shaliehsaboo CC0) are
 unaffected — CC BY and CC0 both permit commercial use with attribution.
+
+## Psalm 92 (Shabbos Shir Shel Yom) — added 2026-07-29
+
+- **Source:** Sefaria, `Psalms 92`, version **"Tanach with Nikkud"**
+- **License:** **Public Domain**
+- **Why this version:** a siddur prints the psalm vocalized but *without*
+  ta'amei hamikra, which rules out "Tanach with Ta'amei Hamikra"; and
+  "Miqra according to the Masorah" is CC-BY-SA, which would add a ShareAlike
+  obligation for no benefit when a Public Domain vocalized text exists.
+- **Verification:** the consonantal text was compared against a second,
+  independent Sefaria version ("Tanach with Ta'amei Hamikra") and is identical —
+  460 letters, byte for byte.
+- **Recorded in the YAML** as `sourceRef`, naming the version and its license.
+  This is the first section to record its version; `scripts/fetch-sefaria-refs.ts`
+  still takes `versions[0]` blindly and records neither, which is why the rest of
+  the corpus cannot substantiate its per-source license claims.
+
+Two transformations were applied so the text matches the section it joins, both
+documented in `scripts/add-psalm-92.ts`:
+
+- **Ketiv/qere.** Sefaria writes verse 16 as `וְלֹא־עלתה [עַוְלָתָה] בּוֹ`. A siddur
+  prints only the qere. The first attempt at stripping this **deleted `וְלֹא`**,
+  because the character class included maqaf and so swallowed the maqaf-joined
+  word before the ketiv — inverting the meaning of the verse. Caught by reading
+  the output; the class now excludes U+05BE.
+- **Orthography.** Sof pasuq to colon, the Divine Name to the corpus spelling
+  (verified: the section now has exactly one standalone and one prefixed form),
+  and holam haser on אֱלֺהִים to match the neighbouring psalms. The introductory
+  line was **derived from Friday's by substitution** rather than retyped, so its
+  shva-na markers are identical by construction.

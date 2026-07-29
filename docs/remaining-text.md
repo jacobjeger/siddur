@@ -205,11 +205,6 @@ doc that quietly rewrites its own history is not trustworthy either.
 
 ## Still missing, and not inventable from any source here
 
-- **Psalm 92** (`מִזְמוֹר שִׁיר לְיוֹם הַשַּׁבָּת`). Shir Shel Yom carries six of seven
-  days. The psalm is absent from the current corpus AND from the pre-xlsx
-  archive, so it cannot be restored by remapping — it needs a text source.
-  `src/utils/tefillahRules.ts` correctly reports psalm 92 for Shabbos, so the
-  Calendar tab names a psalm whose text the Siddur tab cannot show.
 - **Av HaRachamim (the Shabbos memorial**, `אב הרחמים שוכן מרומים`). The corpus
   holds only the ark-opening `אב הרחמים הוא ירחם`; the section has been retitled
   to match what it actually contains.
