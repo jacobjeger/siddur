@@ -26,6 +26,18 @@ export interface ThemeColors {
   tabBarBg: string;
   tabBarBorder: string;
   headerBg: string;
+  /**
+   * The d-pad focus ring.
+   *
+   * Cannot be `accent`. `primary` inverts between themes — navy in light, gold
+   * in dark — so a gold ring is invisible on the dark theme's gold primary,
+   * which is exactly the bug that was fixed in light mode by making the CTA
+   * navy. Verified on the device: the dark-mode Start Davening button is gold.
+   *
+   * Each value is chosen to contrast with BOTH that theme's `primary` and its
+   * surfaces.
+   */
+  focusRing: string;
 }
 
 const lightTheme: ThemeColors = {
@@ -45,6 +57,8 @@ const lightTheme: ThemeColors = {
   tabBarBg: "#f5efe4",
   tabBarBorder: "#d4c5a9",
   headerBg: "#1b3a4b",
+  // Gold on navy primary, and on cream surfaces.
+  focusRing: "#b8860b",
 };
 
 const darkTheme: ThemeColors = {
@@ -65,6 +79,9 @@ const darkTheme: ThemeColors = {
   tabBarBg: "#221e1a",
   tabBarBorder: "#3d352e",
   headerBg: "#1a1612",
+  // Blue: reads against the dark theme's gold primary AND its dark surfaces,
+  // where another gold would disappear.
+  focusRing: "#7fa8bd",
 };
 
 export function useTheme() {

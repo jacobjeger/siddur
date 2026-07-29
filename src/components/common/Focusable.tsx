@@ -95,7 +95,7 @@ export const Focusable = forwardRef<View, FocusableProps>(function Focusable(
           // focus does not shift the layout by 2dp — which on a list reads as
           // the whole page twitching.
           borderWidth: 2,
-          borderColor: showRing ? colors.accent : "transparent",
+          borderColor: showRing ? colors.focusRing : "transparent",
           borderRadius: radius.md + 2,
         },
         wrapperStyle,

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +21,7 @@ import { getTefilosByCategory } from "../../src/data/prayers";
 import { describeTachanun } from "../../src/utils/describeTachanun";
 
 import { useKeyHandler } from "../../src/hooks/useKeyHandler";
+import { useReadingStore, getResumable } from "../../src/stores/useReadingStore";
 const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
 export default function SiddurTab() {
@@ -51,6 +52,25 @@ export default function SiddurTab() {
   // "Flip open, press OK, you are in the text." hasTVPreferredFocus is a no-op
   // on plain Android, so the two-second path is the screen default action:
   // OK is only routed here when nothing on screen holds focus.
+  // Where the user was up to, if it is recent enough to be worth offering.
+  const readingPositions = useReadingStore((state) => state.positions);
+  const resumable = useMemo(
+    () => getResumable(readingPositions),
+    [readingPositions]
+  );
+  const resume = useCallback(() => {
+    if (!resumable) return;
+    // The key is a tefila id, or the comma-joined list of a daven flow.
+    if (resumable.key.includes(",")) {
+      router.push({
+        pathname: "/siddur/daven",
+        params: { tefilaIds: resumable.key },
+      });
+    } else {
+      router.push(`/siddur/${resumable.key}`);
+    }
+  }, [resumable, router]);
+
   useKeyHandler({ defaultAction: startDavening });
 
   const mainCategories = TEFILA_CATEGORIES.filter((c) =>
@@ -320,6 +340,31 @@ export default function SiddurTab() {
               >
                 התחל להתפלל
               </HebrewText>
+            </View>
+          </Focusable>
+        )}
+
+        {resumable && (
+          <Focusable
+            onPress={resume}
+            accessibilityRole="button"
+            accessibilityLabel={`Resume at ${resumable.position.sectionTitle}`}
+            style={{
+              alignItems: "center",
+              backgroundColor: colors.surfaceSecondary,
+              borderRadius: radius.sm,
+              marginTop: 8,
+              marginHorizontal: 16,
+              paddingVertical: 10,
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <HebrewText bold style={{ fontSize: 15, color: colors.primary }}>
+                הַמְשֵׁךְ
+              </HebrewText>
+              <Text style={{ fontSize: 12, color: colors.textSecondary }}>
+                Resume · {resumable.position.sectionTitle}
+              </Text>
             </View>
           </Focusable>
         )}

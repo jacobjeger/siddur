@@ -16,6 +16,7 @@ import type { Tefila, PrayerSection } from "../../src/data/types";
 import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
 import { RunningHead } from "../../src/components/common/RunningHead";
+import { useReadingStore } from "../../src/stores/useReadingStore";
 /** Build a deduplicated TOC from all tefilos' sections */
 function buildTocEntries(tefilos: Tefila[]) {
   const seen = new Set<string>();
@@ -55,6 +56,11 @@ export default function DavenScreen() {
   const sectionYPositions = useRef<Record<string, number>>({});
   const [tocVisible, setTocVisible] = useState(false);
   const [scroll, setScroll] = useState({ offset: 0, visible: 0, total: 1 });
+  const savePosition = useReadingStore((state) => state.savePosition);
+  const positions = useReadingStore((state) => state.positions);
+  const readingKey = tefilaIds ?? "";
+  // Restore once, after layout has measured, and only on first mount.
+  const restored = useRef(false);
 
   const hebrew = useHebrewDate();
   // Was `getInsertionContext()` with no arguments, memoised on [] — so it used
@@ -138,6 +144,35 @@ export default function DavenScreen() {
       ? Math.min(1, scroll.offset / (scroll.total - scroll.visible))
       : 0;
 
+  /**
+   * Persist the reading position. Throttled to whole line steps so a scroll
+   * does not write to AsyncStorage on every one of its ~60 frames.
+   */
+  const lastSaved = useRef(0);
+  const rememberPosition = (offset: number) => {
+    if (Math.abs(offset - lastSaved.current) < textSize) return;
+    lastSaved.current = offset;
+    const section = current?.section;
+    if (!section) return;
+    savePosition(readingKey, {
+      offset,
+      sectionId: section.id,
+      sectionTitle: section.title,
+      sectionTitleHe: section.titleHe,
+      savedAt: Date.now(),
+    });
+  };
+
+  // Restore where you were, once, after the content has been laid out.
+  const saved = positions[readingKey];
+  const onContentReady = () => {
+    if (restored.current || !saved) return;
+    restored.current = true;
+    if (saved.offset > 80) {
+      scrollRef.current?.scrollTo({ y: saved.offset, animated: false });
+    }
+  };
+
   const scrollToSection = (sectionId: string) => {
     setTocVisible(false);
     setTimeout(() => {
@@ -170,14 +205,25 @@ export default function DavenScreen() {
         ref={scrollRef}
         style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 60 }}
+        // Snap to the liturgy line grid so a line is never left half-cut.
+        //
+        // Done with snapToInterval rather than by binding the d-pad's up/down
+        // in JS: the native key module deliberately does NOT consume those keys
+        // (Android's focus traversal depends on them), so a JS handler would
+        // scroll on top of the scrolling Android already did.
+        snapToInterval={textSize * 2}
+        decelerationRate="normal"
+        onContentSizeChange={onContentReady}
         scrollEventThrottle={16}
-        onScroll={(e) =>
+        onScroll={(e) => {
+          const offset = e.nativeEvent.contentOffset.y;
           setScroll({
-            offset: e.nativeEvent.contentOffset.y,
+            offset,
             visible: e.nativeEvent.layoutMeasurement.height,
             total: e.nativeEvent.contentSize.height,
-          })
-        }
+          });
+          rememberPosition(offset);
+        }}
       >
         {tefilos.map((tefila, tefilaIndex) => (
           // No wrapper View. Section offsets are captured with onLayout and
