@@ -17,7 +17,7 @@ import { useHebrewDate } from "../../src/hooks/useHebrewDate";
 import { isSectionSaid } from "../../src/utils/sectionConditions";
 import { RunningHead } from "../../src/components/common/RunningHead";
 import { useReadingStore } from "../../src/stores/useReadingStore";
-import { typeScale, radius } from "../../src/theme/tokens";
+import { typeScale, radius, READER } from "../../src/theme/tokens";;
 /** Build a deduplicated TOC from all tefilos' sections */
 function buildTocEntries(tefilos: Tefila[]) {
   const seen = new Set<string>();
@@ -46,7 +46,7 @@ function buildTocEntries(tefilos: Tefila[]) {
 }
 
 export default function DavenScreen() {
-  const { tefilaIds } = useLocalSearchParams<{ tefilaIds: string }>();
+  const { tefilaIds, resume } = useLocalSearchParams<{ tefilaIds: string; resume?: string }>();
   const { nusach, textSize, showEnglish } = useSettingsStore();
   const { colors } = useTheme();
   // Scoped to the davening screens so it matches its label; mounting it at the
@@ -169,6 +169,9 @@ export default function DavenScreen() {
   const onContentReady = () => {
     if (restored.current || !saved) return;
     restored.current = true;
+    // Only when the user chose Resume. Restoring on "Start Davening" would
+    // drop them at the end of yesterday's finished davening.
+    if (resume !== "1") return;
     if (saved.offset > 80) {
       scrollRef.current?.scrollTo({ y: saved.offset, animated: false });
     }
@@ -302,8 +305,8 @@ export default function DavenScreen() {
                     <Text
                       style={{
                         color: colors.textSecondary,
-                        lineHeight: (textSize - 2) * 1.7,
-                        fontSize: textSize - 2,
+                        lineHeight: textSize * READER.gloss * 2.6,
+                        fontSize: Math.max(11, textSize * READER.gloss * 1.5),
                       }}
                     >
                       {getTextForNusach(section.translation, nusach)}
@@ -341,7 +344,7 @@ export default function DavenScreen() {
               style={{
                 color: colors.onPrimary,
                 fontFamily: "NotoSerifHebrew-Regular",
-                fontSize: textSize - 6,
+                fontSize: typeScale.body,
                 fontWeight: "600",
               }}
             >

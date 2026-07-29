@@ -64,10 +64,13 @@ export default function SiddurTab() {
     if (resumable.key.includes(",")) {
       router.push({
         pathname: "/siddur/daven",
-        params: { tefilaIds: resumable.key },
+        params: { tefilaIds: resumable.key, resume: "1" },
       });
     } else {
-      router.push(`/siddur/${resumable.key}`);
+      router.push({
+        pathname: "/siddur/[tefilaId]",
+        params: { tefilaId: resumable.key, resume: "1" },
+      });
     }
   }, [resumable, router]);
 

@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { useTheme } from "../../hooks/useTheme";
 import { toBlocks } from "../../utils/sectionBlocks";
+import { READER } from "../../theme/tokens";
 
 import { typeScale, radius } from "../../theme/tokens";
 /**
@@ -30,8 +31,8 @@ export function SectionBody({
 
   const rubricStyle = {
     fontFamily: "NotoSerifHebrew-Regular",
-    fontSize: textSize * 0.62,
-    lineHeight: textSize * 1.15,
+    fontSize: textSize * READER.rubricHe,
+    lineHeight: textSize * READER.rubricHe * 1.45,
     color: colors.textMuted,
     writingDirection: "rtl" as const,
     textAlign: "right" as const,
@@ -47,8 +48,8 @@ export function SectionBody({
       {instruction ? (
         <Text
           style={{
-            fontSize: textSize * 0.6,
-            lineHeight: textSize * 1.05,
+            fontSize: Math.max(11, textSize * READER.gloss),
+            lineHeight: Math.max(11, textSize * READER.gloss) * 1.35,
             color: colors.textMuted,
             fontStyle: "italic",
             marginBottom: 10,
@@ -76,7 +77,7 @@ export function SectionBody({
               style={{
                 fontFamily: "NotoSerifHebrew-Regular",
                 fontSize: textSize,
-                lineHeight: textSize * 2,
+                lineHeight: textSize * READER.lineHeight,
                 color: colors.text,
                 writingDirection: "rtl",
                 textAlign: "right",

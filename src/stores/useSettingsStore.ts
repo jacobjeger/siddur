@@ -2,6 +2,22 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+/**
+ * The liturgy scale, in dp. Independent of the UI scale in tokens.ts — this is
+ * the only thing the user's text-size control changes.
+ *
+ * Narrowed from 16-32 (default 22). At 22 with the old `lineHeight: textSize *
+ * 2` the reader showed four to six lines on a 502dp screen; the ratios in
+ * SectionBody are what make the new default readable at a smaller number.
+ */
+export const READER_MIN = 15;
+export const READER_MAX = 26;
+export const READER_DEFAULT = 19;
+
+export function clampReader(value: number): number {
+  return Math.min(READER_MAX, Math.max(READER_MIN, Math.round(value)));
+}
+
 export type Nusach = "ashkenaz" | "sefard" | "edot_hamizrach" | "ari";
 
 /**
@@ -85,7 +101,7 @@ export const useSettingsStore = create<SettingsState>()(
       nusach: "ashkenaz",
       minhag: "standard",
       luachId: "standard",
-      textSize: 22,
+      textSize: READER_DEFAULT,
       showEnglish: false,
       darkMode: "off",
       locationMode: "auto",
@@ -120,6 +136,19 @@ export const useSettingsStore = create<SettingsState>()(
     {
       name: "siddur-settings",
       storage: createJSONStorage(() => AsyncStorage),
+      version: 1,
+      /**
+       * The reader scale moved from 16-32 (default 22) to 15-26 (default 19).
+       * Clamp rather than reset: a user who had deliberately chosen 30 should
+       * land on the new maximum, not silently back at the default.
+       */
+      migrate: (persisted, version) => {
+        const state = persisted as { textSize?: number } | undefined;
+        if (state && version < 1 && typeof state.textSize === "number") {
+          state.textSize = clampReader(state.textSize);
+        }
+        return state as never;
+      },
     }
   )
 );

@@ -11,7 +11,6 @@ import { useTheme } from "../../src/hooks/useTheme";
 import { typeScale } from "../../src/theme/tokens";
 export default function BrowseTefilosScreen() {
   const { colors } = useTheme();
-  const textSize = useSettingsStore((s) => s.textSize);
   const router = useRouter();
   const { category } = useLocalSearchParams<{ category?: string }>();
 
@@ -90,14 +89,14 @@ export default function BrowseTefilosScreen() {
                       }}
                     >
                       <Text
-                        style={{ fontSize: textSize - 5, color: colors.text }}
+                        style={{ fontSize: typeScale.title, color: colors.text }}
                         numberOfLines={1}
                       >
                         {tefila.name}
                       </Text>
                       <HebrewText
                         style={{
-                          fontSize: textSize - 5,
+                          fontSize: typeScale.caption,
                           color: colors.textSecondary,
                           flexShrink: 1,
                         }}

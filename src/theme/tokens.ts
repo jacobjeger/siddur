@@ -90,6 +90,28 @@ export const typeScale = {
 } as const;
 
 /**
+ * Reader proportions — every value a RATIO of the user's text size, never
+ * `± constant`.
+ *
+ * The old code mixed the two: liturgy at `textSize`, the section divider at
+ * `textSize - 2`, the jump chip at `textSize - 6` and the screen title at
+ * `textSize + 2`. Across a 16-32 range that made the chip swing 2.6x while the
+ * body swung 2x, so proportions broke at both ends.
+ *
+ * `lineHeight` drops from 2.0 to 1.7. At 22/44 the reader showed four to six
+ * lines on a 502dp screen; at 19/32 it shows appreciably more without the text
+ * getting smaller in proportion to its leading.
+ */
+export const READER = {
+  lineHeight: 1.7,
+  sectionTitle: 1.15,
+  rubricHe: 0.8,
+  /** Floored at 11 by callers; the ratio alone would go under it at small sizes. */
+  gloss: 0.56,
+  paragraphGap: 0.45,
+} as const;
+
+/**
  * Minimum touch target. Several controls were 18–33pt, which is below every
  * platform guideline; anything interactive should reach this.
  */

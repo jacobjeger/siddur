@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from "react-native";
-import { useSettingsStore, type Nusach } from "../../stores/useSettingsStore";
+import { useSettingsStore, type Nusach, clampReader } from "../../stores/useSettingsStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Card, Chip } from "../common/ui";
 import { MIN_TOUCH_TARGET, spacing, typeScale, radius } from "../../theme/tokens";
@@ -63,7 +63,7 @@ export function TextSizeCard() {
 
   const step = (delta: number, label: string) => (
     <Focusable
-      onPress={() => setTextSize(Math.min(32, Math.max(16, textSize + delta)))}
+      onPress={() => setTextSize(clampReader(textSize + delta))}
       accessibilityRole="button"
       accessibilityLabel={delta > 0 ? "Increase text size" : "Decrease text size"}
       style={({ pressed }) => ({
