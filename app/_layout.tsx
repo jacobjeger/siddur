@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../src/hooks/useTheme";
 
+import { setKeyEventSource } from "../src/hooks/useKeyHandler";
+import { subscribeToKeyEvents } from "../modules/keyevent";
 const queryClient = new QueryClient();
 
 function AppStack() {
@@ -47,6 +49,11 @@ function AppStack() {
     </>
   );
 }
+
+// Install the native key-event source once. It is a module-level singleton
+// because the d-pad outlives any individual screen; screens attach to it via
+// useKeyHandler. On a build without the native module this is a no-op.
+setKeyEventSource(subscribeToKeyEvents);
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({

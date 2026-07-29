@@ -53,7 +53,8 @@
         {
           "icon": "./assets/icon.png"
         }
-      ]
+      ],
+      "./plugins/withAsyncStorageLocalRepo"
     ]
   }
 }

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ import { TEFILA_CATEGORIES } from "../../src/data/categories";
 import { getTefilosByCategory } from "../../src/data/prayers";
 import { describeTachanun } from "../../src/utils/describeTachanun";
 
+import { useKeyHandler } from "../../src/hooks/useKeyHandler";
 const MAIN_CATEGORIES = ["shacharis", "mincha", "maariv", "blessings"];
 
 export default function SiddurTab() {
@@ -37,6 +39,19 @@ export default function SiddurTab() {
   const tefilosForTime = getTefilosForTime(slot).filter(
     (t) => t.timeContext === slot && hasContent(t, nusach)
   );
+
+  const startDavening = useCallback(() => {
+    if (tefilosForTime.length === 0) return;
+    router.push({
+      pathname: "/siddur/daven",
+      params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
+    });
+  }, [tefilosForTime]);
+
+  // "Flip open, press OK, you are in the text." hasTVPreferredFocus is a no-op
+  // on plain Android, so the two-second path is the screen default action:
+  // OK is only routed here when nothing on screen holds focus.
+  useKeyHandler({ defaultAction: startDavening });
 
   const mainCategories = TEFILA_CATEGORIES.filter((c) =>
     MAIN_CATEGORIES.includes(c.id)
@@ -283,12 +298,7 @@ export default function SiddurTab() {
             autoFocus
             accessibilityRole="button"
             accessibilityLabel="Start davening"
-            onPress={() => {
-              router.push({
-                pathname: "/siddur/daven",
-                params: { tefilaIds: tefilosForTime.map((t) => t.id).join(",") },
-              });
-            }}
+            onPress={startDavening}
             style={{
               alignItems: "center",
               backgroundColor: colors.primary,
