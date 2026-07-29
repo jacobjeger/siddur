@@ -220,6 +220,26 @@ allowlisted in `runContentGuards` so the build passes; remove the id from
    `בָּרְ֒כִי נַפְשִׁי` → `לְשֵׁם יִחוּד` → the bracha → `מַה־יָּקָר`, so the cue
    probably belongs immediately before the bracha, not at the top.
 
+### Purim Katan and Shushan Purim Katan (14 / 15 Adar I)
+
+Coded as a **nusach difference**: Ashkenaz, Sefard and Ari omit Tachanun;
+Edot HaMizrach say it. The reasoning is that the Mechaber (OC 697) discusses
+only fasting and hespedim, and it is the Rema who adds
+ומ"מ אין נופלים על פניהם — which reads as Ashkenaz adopting an omission the
+Mechaber did not record.
+
+**This needs a qualified ruling before it is presented as authoritative.**
+Practice in Sephardi communities varies, and the inference from the Rema's
+addition is exactly the kind of reasoning that should not be the last word in
+shipped code. Set in `isTachanunDay()` in `src/utils/dayDavening.ts`.
+
+Implementation note worth keeping: `JewishCalendar.isYomTov()` returns **true**
+for Purim Katan in kosher-zmanim, so the nusach test has to run before the
+`isYomTov()` guard. Placed after it, the guard swallowed Purim Katan and every
+nusach silently got the Ashkenaz answer — which is how the first version of
+this rule was wrong.
+
+
 ---
 
 ## How to clear an item

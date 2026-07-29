@@ -94,11 +94,11 @@ export function getDayDaveningInfo(
   }
 
   const { label, labelHe } = getSpecialDayLabel(calendar, context);
-  const sayTachanun = getSayTachanun(calendar);
+  const sayTachanun = getSayTachanun(calendar, nusach);
   // Tzidkascha and Av HaRachamim key off "would Tachanun be said on a weekday",
   // NOT off sayTachanun — which is false every Shabbos, i.e. exactly when they
   // are relevant.
-  const tachanunDay = isTachanunDay(calendar);
+  const tachanunDay = isTachanunDay(calendar, nusach);
   const omerDay = safeNumber(() => calendar.getDayOfOmer());
 
   return {
@@ -214,18 +214,18 @@ export interface Tachanun {
   reason?: string;
 }
 
-function getSayTachanun(calendar: JewishCalendar): Tachanun {
+function getSayTachanun(calendar: JewishCalendar, nusach: Nusach): Tachanun {
   // Shabbos has no Tachanun at any tefillah.
   if (calendar.getDayOfWeek() === 7) {
     return { shacharis: false, mincha: false, reason: "Shabbos" };
   }
 
-  if (!isTachanunDay(calendar)) {
+  if (!isTachanunDay(calendar, nusach)) {
     return { shacharis: false, mincha: false, reason: omissionReason(calendar) };
   }
 
   const tomorrow = nextJewishDay(calendar);
-  if (!isTachanunDay(tomorrow)) {
+  if (!isTachanunDay(tomorrow, nusach)) {
     const coming = omissionReason(tomorrow) ?? "a day with no Tachanun";
     // Erev Rosh Hashana and Erev Yom Kippur already carry "Erev", so prefixing
     // again produced "erev Erev Rosh Hashana".
@@ -300,10 +300,29 @@ function omissionReason(calendar: JewishCalendar): string | undefined {
  * gated on getSayTachanun(), which is false every Shabbos by definition and
  * would suppress both of them permanently.
  */
-export function isTachanunDay(calendar: JewishCalendar): boolean {
+export function isTachanunDay(
+  calendar: JewishCalendar,
+  nusach: Nusach = "ashkenaz"
+): boolean {
   const month = calendar.getJewishMonth();
   const day = calendar.getJewishDayOfMonth();
   const index = calendar.getYomTovIndex();
+
+  // Purim Katan (14 Adar I) and Shushan Purim Katan (15 Adar I) are the one
+  // entry on this list that is a nusach difference rather than a universal.
+  // The Mechaber (OC 697) discusses only fasting and hespedim; it is the Rema
+  // who adds ומ"מ אין נופלים על פניהם, which reads as Ashkenaz adopting an
+  // omission the Mechaber did not. See docs/unverified-rules.md — Sephardi
+  // practice varies and this needs a ruling before it is called authoritative.
+  //
+  // This MUST be tested before isYomTov(), which returns true for Purim Katan
+  // in kosher-zmanim and would otherwise swallow it for every nusach.
+  if (
+    index === JewishCalendar.PURIM_KATAN ||
+    index === JewishCalendar.SHUSHAN_PURIM_KATAN
+  ) {
+    return nusach === "edot_hamizrach";
+  }
 
   if (calendar.isYomTov() || calendar.isCholHamoed()) return false;
   if (calendar.isRoshChodesh() || calendar.isChanukah()) return false;
@@ -311,8 +330,6 @@ export function isTachanunDay(calendar: JewishCalendar): boolean {
   switch (index) {
     case JewishCalendar.PURIM:
     case JewishCalendar.SHUSHAN_PURIM:
-    case JewishCalendar.PURIM_KATAN:
-    case JewishCalendar.SHUSHAN_PURIM_KATAN:
     case JewishCalendar.TU_BESHVAT:
     case JewishCalendar.TU_BEAV:
     case JewishCalendar.PESACH_SHENI:
