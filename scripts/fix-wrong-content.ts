@@ -48,6 +48,13 @@ const FIXES: Fix[] = [
       "Hallel to say. An empty section renders a 'not yet available' placeholder, " +
       "which is strictly safer than a bracha with nothing after it.",
     apply: (node) => {
+      const text = String(node.get("text") ?? "");
+      // Refuse once the section has real Hallel in it. Without this guard a
+      // second run silently deleted restored liturgy: the fix cleared `text`
+      // unconditionally, so it "re-fixed" a section that was already correct.
+      if (text.replace(/[^א-ת]/g, "").length > 130) {
+        throw new Error("section now has substantial text — refusing to clear it");
+      }
       node.set("text", "");
       node.set("status", "needs-text");
     },
@@ -60,6 +67,10 @@ const FIXES: Fix[] = [
       "shacharis-amidah-11-mishpat. An insertion must hold only the words " +
       "inserted, or applying it emits the whole bracha a second time.",
     apply: (node) => {
+      // Only collapse it while it still holds the whole bracha.
+      if (String(node.get("text") ?? "").replace(/[^א-ת]/g, "").length < 60) {
+        throw new Error("already reduced to the inserted words");
+      }
       node.set("text", "הַמֶּֽלֶךְ הַמִּשְׁפָּט:");
       node.delete("instructionHe");
     },

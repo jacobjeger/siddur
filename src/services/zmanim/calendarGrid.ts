@@ -61,9 +61,27 @@ function safe<T>(fn: () => T, fallback: T): T {
   }
 }
 
-/** Midnight local, so day arithmetic never drifts across a DST boundary. */
-function startOfDay(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+/**
+ * Midnight in the LOCATION's zone, so day arithmetic never drifts across a DST
+ * boundary and the grid does not disagree with the Hebrew date when the device
+ * clock is in a different zone from the location.
+ */
+function startOfDay(date: Date, timeZone?: string): Date {
+  if (!timeZone) return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  try {
+    const [year, month, day] = new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+      .format(date)
+      .split("-")
+      .map(Number);
+    return new Date(year, month - 1, day);
+  } catch {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
 }
 
 function sameCivilDay(a: Date, b: Date): boolean {
@@ -90,7 +108,7 @@ export function effectiveToday(
     tzeis && now.getTime() >= tzeis.getTime()
       ? new Date(now.getTime() + DAY_MS)
       : now;
-  return startOfDay(rolled);
+  return startOfDay(rolled, options?.timeZone);
 }
 
 function buildDay(
@@ -99,6 +117,8 @@ function buildDay(
   inMonth: boolean,
   options: HebrewDateOptions
 ): CalendarDay {
+  // `date` is already a local-midnight Date for the cell, so it needs no zone
+  // conversion — but it must be built the same way effectiveToday() builds it.
   const calendar = new JewishCalendar(date);
   calendar.setInIsrael(options.inIsrael);
 

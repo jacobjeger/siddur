@@ -34,6 +34,10 @@ export function useHebrewDate(date?: Date): UseHebrewDateResult {
       // Passing tzeis is what makes the Hebrew date roll at nightfall rather
       // than at civil midnight.
       tzeis: zmanim?.tzeis ?? null,
+      // The Jewish date must be derived in the LOCATION's zone, not the
+      // device's. Without this a phone still on home time gives a Hebrew date
+      // up to a day out from the zmanim shown beside it.
+      timeZone: location?.timezone,
     };
 
     const dateInfo = getHebrewDateInfo(now, options);

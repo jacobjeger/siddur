@@ -282,11 +282,73 @@ function isArbaParshiyos(calendar: JewishCalendar): boolean {
 // Eruv Tavshilin / Bedikas Chometz
 // ---------------------------------------------------------------------------
 
-/** Needed when Yom Tov runs Thursday–Friday straight into Shabbos. */
+/** The days melacha is forbidden — a Yom Tov you cannot cook for Shabbos on. */
+const MELACHA_YOM_TOV = new Set([
+  JewishCalendar.PESACH,
+  JewishCalendar.SHAVUOS,
+  JewishCalendar.ROSH_HASHANA,
+  JewishCalendar.YOM_KIPPUR,
+  JewishCalendar.SUCCOS,
+  JewishCalendar.SHEMINI_ATZERES,
+  JewishCalendar.SIMCHAS_TORAH,
+]);
+
+/** Same calendar advanced `days` days, preserving the Israel setting. */
+function addDays(calendar: JewishCalendar, days: number): JewishCalendar {
+  const next = new JewishCalendar(
+    new Date(
+      calendar.getGregorianYear(),
+      calendar.getGregorianMonth(),
+      calendar.getGregorianDayOfMonth() + days
+    )
+  );
+  next.setInIsrael(calendar.getInIsrael());
+  return next;
+}
+
+/**
+ * An eruv tavshilin is needed when the coming Yom Tov block runs INTO Friday,
+ * so that Shabbos follows immediately and there is no weekday left to cook on.
+ *
+ * The previous rule was `isErevYomTov() && dayOfWeek === Wednesday`. That is
+ * only the Diaspora Thursday–Friday case, and it was wrong three ways:
+ *   - it fired on Erev Yom Kippur falling on Wednesday, where Yom Kippur is
+ *     Thursday, Friday is chol and no eruv exists at all;
+ *   - it missed every Thursday case — one-day Yom Tov on Friday, which is the
+ *     normal Israel shape, and erev Shavuos or 20 Nissan falling on Thursday;
+ *   - being day-of-week only, it produced ZERO divergence between Israel and
+ *     the Diaspora, which cannot be right for a rule about a two-day Yom Tov.
+ *
+ * So walk the block instead: if tomorrow starts a run of melacha-forbidden days
+ * whose last day is Friday, today is when the eruv is made.
+ */
+function safeNumber(fn: () => number, fallback: number): number {
+  try {
+    const value = fn();
+    return Number.isFinite(value) ? value : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export function isEruvTavshilin(calendar: JewishCalendar): boolean {
-  // Erev Yom Tov falling on Wednesday means Yom Tov starts Wednesday night and
-  // runs Thursday–Friday, so cooking for Shabbos needs an eruv.
-  return safeBool(() => calendar.isErevYomTov()) && calendar.getDayOfWeek() === 4;
+  const isYomTovDay = (day: JewishCalendar) =>
+    MELACHA_YOM_TOV.has(safeNumber(() => day.getYomTovIndex(), -1));
+
+  // Today must be a weekday that is not itself Yom Tov or Shabbos.
+  if (calendar.getDayOfWeek() === 7 || isYomTovDay(calendar)) return false;
+  if (!isYomTovDay(addDays(calendar, 1))) return false;
+
+  // Walk the coming block and ask whether it CONTAINS a Friday. Requiring the
+  // block to END on Friday was wrong: when Yom Tov falls on Friday and Shabbos
+  // together, the eruv is exactly what permits cooking on the Friday Yom Tov
+  // for Shabbos, and that case would have been missed.
+  for (let offset = 1; offset <= 3; offset++) {
+    const day = addDays(calendar, offset);
+    if (!isYomTovDay(day)) break;
+    if (day.getDayOfWeek() === 6) return true;
+  }
+  return false;
 }
 
 /**
@@ -398,6 +460,23 @@ export interface BircasHaChodesh {
   molad: Date | null;
 }
 
+
+/**
+ * The month that follows `month`, in kosher-zmanim's numbering where Nissan is
+ * 1, Elul is 6, Tishrei is 7, Adar (or Adar I) is 12 and Adar II is 13.
+ *
+ * The year wraps after ELUL, not after month 12. Two separate wraps are needed:
+ * Adar II (13) is followed by Nissan, and in a COMMON year Adar (12) is too.
+ * Getting this wrong made Shabbos Mevorchim Adar II announce Nissan's molad
+ * ~29 days late, and made Shabbos Mevorchim Nissan call setJewishMonth(14),
+ * which throws, so the announcement carried no molad at all.
+ */
+function nextJewishMonth(month: number, isLeapYear: boolean): number {
+  if (month === 13) return 1;
+  if (month === 12) return isLeapYear ? 13 : 1;
+  return month + 1;
+}
+
 export function getBircasHaChodesh(
   date: Date,
   options: HebrewDateOptions
@@ -410,7 +489,12 @@ export function getBircasHaChodesh(
   try {
     const next = getJewishCalendar(date, options);
     const month = next.getJewishMonth();
-    next.setJewishMonth(month === 12 ? 1 : month + 1);
+    // The year wraps after ELUL (6), not after month 12. Treating 12 as the
+    // last month is only right in a common year; in a leap year 12 is Adar I
+    // and 13 is Adar II, so Shabbos Mevorchim Adar II announced Nissan's molad
+    // (~29 days late) and Shabbos Mevorchim Nissan called setJewishMonth(14),
+    // which throws and left the announcement with no molad at all.
+    next.setJewishMonth(nextJewishMonth(month, next.isJewishLeapYear()));
     return { said: true, molad: next.getMoladAsDate().toJSDate() };
   } catch {
     return { said: true, molad: null };
@@ -460,8 +544,15 @@ export function isAvinuMalkeinu(
   const isFast = safeBool(() => calendar.isTaanis());
   const isYomKippur = calendar.getYomTovIndex() === JewishCalendar.YOM_KIPPUR;
 
+  // Yom Kippur first, and unconditionally. Deferring it to the fast-day
+  // fallthrough meant Edot HaMizrach never got Avinu Malkeinu on Yom Kippur at
+  // all, and when Yom Kippur fell on Shabbos the Shabbos guard suppressed it
+  // for ALL FOUR nuschaos — losing it at Neilah, where it is universally said.
+  // Verified: 2024, 2028 and 2031 were false for every nusach.
+  if (isYomKippur) return true;
+
   if (isShabbos && nusach !== "edot_hamizrach") return false;
-  if (aseresYemeiTeshuva && !isYomKippur) return true;
+  if (aseresYemeiTeshuva) return true;
   // Eastern Ashkenazic rites add it on public fasts.
   return isFast && nusach !== "edot_hamizrach";
 }

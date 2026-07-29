@@ -326,26 +326,50 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
    * its own perfectly well, which is why netilas yadayim is a section of one
    * line and correct.
    */
-  const RECITAL_BRACHA = /לִקְר[ֹאו]|מִקְרָא מְגִלָּה|לַעֲסוֹק בְּדִבְרֵי/;
+  // Match on CONSONANTS, not vocalized forms. The first version demanded exact
+  // nikkud and so missed לִגְמֹר אֶת הַהַלֵּל — the Ashkenaz wording for the very
+  // section (Full Hallel) the guard was written for — and the plene מְגִילָּה.
+  const RECITAL_BRACHA = /(לקרא|לקרוא|לגמר|לגמור|מקרא מגל|מקרא מגיל|לעסוק בדברי)/;
   const entityLeaks: string[] = [];
   const ENTITY = /&(?:[a-zA-Z][a-zA-Z0-9]{1,10}|#\d+|#x[0-9a-fA-F]+);/;
   const nikkud = /[ְ-ׇּׁׂ]/;
 
   for (const t of tefilos) {
     for (const s of t.sections ?? []) {
-      const text = (s as { text?: string }).text ?? "";
+      const rawText = (s as { text?: unknown }).text;
+      // `SectionYaml.text` is declared `string | Record<string,string>` for
+      // future per-nusach variants. Calling .trim() on a map crashed the build
+      // with an unactionable stack trace, so fail with something readable.
+      if (rawText != null && typeof rawText !== "string") {
+        throw new Error(
+          `section '${s.id}' has a map-valued 'text'; per-nusach variants are not supported by the build yet`
+        );
+      }
+      const text = (rawText as string) ?? "";
+
+      // Check the non-text fields BEFORE the empty-text early exit. Skipping
+      // them meant 44 of 174 sections — every empty one — passed every guard.
+      const instructionHe = (s as { instructionHe?: string }).instructionHe ?? "";
+      const instructionEn = (s as { instruction?: string }).instruction ?? "";
+      for (const [field, value] of [
+        ["text", text],
+        ["instructionHe", instructionHe],
+        ["instruction", instructionEn],
+        ["title", (s as { title?: string }).title ?? ""],
+        ["titleHe", (s as { titleHe?: string }).titleHe ?? ""],
+        ["translation", (s as { translation?: string }).translation ?? ""],
+      ] as [string, string][]) {
+        if (ENTITY.test(value)) entityLeaks.push(`${s.id}.${field}: ${ENTITY.exec(value)?.[0]}`);
+      }
+
       if (!text.trim()) {
         empty++;
         continue;
       }
-      // Check every user-visible field, not just `text` — the entity bug that
-      // shipped could equally have landed in an instruction.
-      const instruction = (s as { instructionHe?: string }).instructionHe ?? "";
-      for (const field of [text, instruction, (s as { instruction?: string }).instruction ?? ""]) {
-        if (ENTITY.test(field)) entityLeaks.push(`${s.id}: ${ENTITY.exec(field)?.[0]}`);
-      }
-
-      if (RECITAL_BRACHA.test(text) && text.replace(/[^א-ת]/g, "").length < 130) {
+      if (
+        RECITAL_BRACHA.test(text.replace(/[^א-ת\s]/g, "")) &&
+        text.replace(/[^א-ת]/g, "").length < 130
+      ) {
         danglingBrachos.push(`${s.id}: ${text.trim().slice(0, 60)}`);
       }
 
@@ -359,7 +383,7 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
       // A short label ending in ':' is a CUE — it selects the alternative that
       // follows it, so it is meaningless once separated from that text. Finding
       // one in `instructionHe` means it was hoisted out of position.
-      for (const line of instruction.split("\n")) {
+      for (const line of instructionHe.split("\n")) {
         const trimmed = line.trim();
         // Require the trailing colon: that is what distinguishes a cue ("בחנוכה:")
         // from a heading or gloss ("קדמות השם"), which may legitimately sit here.
@@ -415,13 +439,33 @@ function runContentGuards(tefilos: TefilaYaml[]): void {
   }
 
   // Conditional insertions must resolve, or seasonal text silently never fires.
+  // Duplicate SECTION ids break the premise that a targetSectionId resolves to
+  // exactly one section, and only duplicate TEFILA ids were being checked.
+  const seenIds = new Map<string, string>();
+  const duplicateIds: string[] = [];
+  for (const t of tefilos) {
+    for (const s of t.sections ?? []) {
+      const owner = seenIds.get(s.id);
+      if (owner) duplicateIds.push(`${s.id} (in '${owner}' and '${t.id}')`);
+      else seenIds.set(s.id, t.id);
+    }
+  }
+  if (duplicateIds.length) {
+    throw new Error(
+      `duplicate section id(s):\n  ${duplicateIds.join("\n  ")}`
+    );
+  }
+
   const sectionIds = new Set(
     tefilos.flatMap((t) => (t.sections ?? []).map((s) => s.id))
   );
   const insertionsFile = path.join(ROOT, "src/data/insertions.ts");
   if (fs.existsSync(insertionsFile)) {
     const source = fs.readFileSync(insertionsFile, "utf8");
-    const targets = [...source.matchAll(/targetSectionId:\s*"([^"]+)"/g)].map(
+    // Accept either quote style. Matching only double quotes meant a
+    // single-quoted target bypassed the guard completely, so a dead insertion
+    // would ship silently — the exact failure the guard exists to prevent.
+    const targets = [...source.matchAll(/targetSectionId:\s*["']([^"']+)["']/g)].map(
       (m) => m[1]
     );
     const dead = [...new Set(targets)].filter((id) => !sectionIds.has(id));

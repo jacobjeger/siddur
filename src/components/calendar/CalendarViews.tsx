@@ -95,7 +95,10 @@ export function ViewSwitcher({
             accessibilityLabel={`${view.label} view`}
             style={{
               flex: 1,
-              paddingVertical: 9,
+              // MIN_TOUCH_TARGET, not padding: at paddingVertical 9 these came
+              // out ~35dp, under the 44dp minimum, on the tab's main control.
+              minHeight: MIN_TOUCH_TARGET,
+              justifyContent: "center",
               borderRadius: radius.sm,
               alignItems: "center",
               backgroundColor: active ? colors.primary : "transparent",
@@ -278,10 +281,12 @@ function MonthCell({
             : day.isToday
               ? colors.primaryLight
               : "transparent",
-          // The today ring has to survive selection, or paging away from today
-          // and back loses the only cue to where you are.
-          borderWidth: day.isToday && !selected ? 1.5 : 0,
-          borderColor: colors.primary,
+          // The today ring survives selection. The previous expression said
+          // `day.isToday && !selected`, which removed the ring in exactly the
+          // case the comment said it had to survive; it only looked right
+          // because selection also paints the primary colour.
+          borderWidth: day.isToday ? 1.5 : 0,
+          borderColor: selected ? colors.onPrimary : colors.primary,
           opacity: dim ? 0.32 : 1,
         }}
       >
@@ -327,9 +332,15 @@ export function MonthView({ options }: { options: HebrewDateOptions }) {
     () => getMonthGrid(anchor, options),
     [anchor, options]
   );
+  // Restrict to in-month cells. The 42-cell grid includes the tail of the
+  // previous month and the head of the next, so paging from 31 March to April
+  // resolved the selection to April's leading 31-March PADDING cell — which
+  // renders at opacity 0.32, giving a dimmed "selected" highlight and a detail
+  // strip reading "Tuesday, March 31" under an "April 2026" header.
   const selectedDay =
     days.find(
       (d) =>
+        d.inMonth &&
         d.date.getFullYear() === selected.getFullYear() &&
         d.date.getMonth() === selected.getMonth() &&
         d.date.getDate() === selected.getDate()

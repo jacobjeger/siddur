@@ -19,6 +19,14 @@ export interface HebrewDateOptions {
    * every single evening.
    */
   tzeis?: Date | null;
+  /**
+   * IANA zone of the LOCATION. Without it the Jewish date is derived from the
+   * device clock while the zmanim are derived from the location, so a user
+   * whose phone is in a different zone from where they are gets a Hebrew date
+   * that can be a full day out — and with it Shabbos detection, the parsha,
+   * candle lighting and every day-rule.
+   */
+  timeZone?: string;
 }
 
 export const DEFAULT_HEBREW_DATE_OPTIONS: HebrewDateOptions = {
@@ -69,9 +77,37 @@ export function getJewishCalendar(
       ? new Date(date.getTime() + 24 * 60 * 60 * 1000)
       : date;
 
-  const calendar = new JewishCalendar(effective);
+  const [year, month, day] = civilPartsIn(effective, options.timeZone);
+  const calendar = new JewishCalendar(new Date(year, month, day));
   calendar.setInIsrael(inIsrael);
   return calendar;
+}
+
+/**
+ * Civil year/month/day of `date` as seen in `timeZone`.
+ *
+ * JewishDate in kosher-zmanim 0.9.0 does DateTime.fromJSDate(date), i.e. the
+ * DEVICE zone, with no way to override it — so the conversion has to happen
+ * before the Date is handed over.
+ */
+function civilPartsIn(date: Date, timeZone?: string): [number, number, number] {
+  if (!timeZone) return [date.getFullYear(), date.getMonth(), date.getDate()];
+  try {
+    // en-CA formats as YYYY-MM-DD, which parses without locale ambiguity.
+    const [year, month, day] = new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+      .format(date)
+      .split("-")
+      .map(Number);
+    return [year, month - 1, day];
+  } catch {
+    // An unknown zone must not take down the calendar.
+    return [date.getFullYear(), date.getMonth(), date.getDate()];
+  }
 }
 
 function safe<T>(fn: () => T, fallback: T): T {
@@ -98,9 +134,25 @@ function getUpcomingParshaName(
   date: Date,
   options: HebrewDateOptions
 ): string {
+  // Establish "today" once, with the roll applied, then step forward in whole
+  // civil days with NO tzeis. Passing today's tzeis into every probe made each
+  // future day roll forward as well — the probe for tomorrow landed on the day
+  // after, so the coming Shabbos was skipped and the parsha came back a week
+  // late on 55 of 57 Fridays.
+  const start = getJewishCalendar(date, options);
+  const base = new Date(
+    start.getGregorianYear(),
+    start.getGregorianMonth(),
+    start.getGregorianDayOfMonth()
+  );
+
   for (let offset = 0; offset < 14; offset++) {
-    const day = new Date(date.getTime() + offset * 24 * 60 * 60 * 1000);
-    const calendar = getJewishCalendar(day, options);
+    const day = new Date(
+      base.getFullYear(),
+      base.getMonth(),
+      base.getDate() + offset
+    );
+    const calendar = getJewishCalendar(day, { inIsrael: options.inIsrael });
     if (calendar.getDayOfWeek() !== 7) continue;
 
     const name = safe(() => englishFormatter.formatParsha(calendar), "");

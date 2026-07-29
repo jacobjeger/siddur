@@ -16,7 +16,20 @@ const NIKKUD = /[ְ-ׇּֿׁׂ]/;
 /** An unvocalized run of <=35 chars ending in a colon, followed by vocalized text. */
 const LEADING_CUE = /^([^:]{1,35}:)\s+(\S.*)$/;
 
-const bag = (s: string) => s.replace(/[^א-ת]/g, "").split("").sort().join("");
+/**
+ * A sorted multiset cannot detect reordering, so also compare the ORDERED
+ * consonants of the liturgy lines. Splitting a cue off the front of a line must
+ * leave the liturgy sequence byte-identical.
+ */
+const skeleton = (s: string) => (s ?? "").replace(/[^א-ת]/g, "");
+const bag = (s: string) => skeleton(s).split("").sort().join("");
+const liturgyOrder = (s: string) =>
+  skeleton(
+    (s ?? "")
+      .split("\n")
+      .filter((line) => NIKKUD.test(line))
+      .join("\n")
+  );
 
 let changed = 0;
 for (const file of fs.readdirSync("content/prayers")) {
@@ -47,8 +60,8 @@ for (const file of fs.readdirSync("content/prayers")) {
 
     if (!splits) continue;
     const next = out.join("\n");
-    if (bag(next) !== bag(text)) {
-      console.log(`  SKIP  ${node.get("id")} — split altered the Hebrew`);
+    if (bag(next) !== bag(text) || liturgyOrder(next) !== liturgyOrder(text)) {
+      console.log(`  SKIP  ${node.get("id")} — split altered or reordered the Hebrew`);
       continue;
     }
     node.set("text", next);

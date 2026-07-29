@@ -126,21 +126,38 @@ function saysTalUMatar(
 
   // Diaspora: the start is keyed to the civil date — the evening of 4 December,
   // or 5 December in the civil year preceding a Gregorian leap year.
-  const civilYear = date.getFullYear();
-  const civilMonth = date.getMonth();
+  //
+  // Read the civil date off the ROLLED calendar, not off `date`. Taking it from
+  // the raw timestamp made the Diaspora branch flip at civil midnight while the
+  // Israel branch above flips at nightfall, so on 4 December Shacharis and
+  // Mincha wrongly included Tal U'Matar — it begins at Maariv that evening.
+  const civilYear = calendar.getGregorianYear();
+  const civilMonth = calendar.getGregorianMonth();
+  const civilDay = calendar.getGregorianDayOfMonth();
 
   // Jan–Apr is the tail of a season that began the previous December, so by
   // this point the start has certainly passed.
   if (civilMonth <= 3) return true;
 
   if (civilMonth === 11) {
-    const startDay = (civilYear + 1) % 4 === 0 ? 5 : 4;
-    return date.getDate() >= startDay;
+    // The shift to 5 December happens in the civil year BEFORE a Gregorian leap
+    // year. `% 4` alone is not the Gregorian rule: 2100 is not a leap year, so
+    // 2099 would wrongly start on the 5th.
+    const startDay = isGregorianLeapYear(civilYear + 1) ? 5 : 4;
+    // STRICTLY greater. The season begins at Maariv on the night of the 4th,
+    // and `calendar` has already rolled forward at nightfall — so that first
+    // Maariv reads as the 5th, while the 4th in daylight (Shacharis, Mincha)
+    // must still be false.
+    return civilDay > startDay;
   }
 
   // Cheshvan/Kislev before December — the Israel start has passed but the
   // Diaspora one has not.
   return false;
+}
+
+function isGregorianLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
 /**

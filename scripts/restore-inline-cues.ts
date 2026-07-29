@@ -98,11 +98,32 @@ const KADDISH = [
 
 const skeleton = (s: string) => s.replace(/[^א-ת]/g, "");
 /**
- * Order-independent fingerprint. The gate must allow a cue to MOVE between
- * `instructionHe` and `text` while still catching any letter added or lost, so
- * compare the sorted multiset of consonants rather than the sequence.
+ * What the gate can and cannot prove.
+ *
+ * These scripts MOVE a cue between `instructionHe` and `text`, so neither field
+ * is invariant on its own and an ordered whole-text compare would reject every
+ * legitimate repair. Two checks together are what is actually provable:
+ *
+ *  1. the multiset of Hebrew consonants across both fields is unchanged, which
+ *     catches any letter added, lost or altered; and
+ *  2. the ORDERED consonants of the liturgy lines alone are unchanged, which
+ *     catches liturgy being reordered or scrambled.
+ *
+ * The earlier gate had only (1) — a sorted multiset — and was therefore
+ * mathematically incapable of noticing liturgy lines being swapped. It still
+ * cannot prove a cue landed on the RIGHT line; that is a semantic question,
+ * and it is why the anchors are an explicit reviewable table rather than a
+ * heuristic.
  */
-const charBag = (s: string) => skeleton(s).split("").sort().join("");
+const multiset = (s: string) => skeleton(s).split("").sort().join("");
+const liturgyOrder = (s: string) =>
+  skeleton(
+    (s ?? "")
+      .split("\n")
+      .filter((line) => /[\u05B0-\u05BC\u05BF\u05C1\u05C2\u05C7]/.test(line))
+      .join("\n")
+  );
+
 const lines = (s: string) =>
   (s ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
 
@@ -201,10 +222,12 @@ for (const file of fs.readdirSync("content/prayers")) {
 
     // Absolute gate: this pass may only relocate rubrics. If a single Hebrew
     // consonant of the combined text changed, something is wrong — bail.
-    const before = charBag(text + instr);
-    const after = charBag(repair.text + repair.instructionHe);
-    if (before !== after) {
-      console.log(`  FAIL  ${id} — text changed (${before.length} -> ${after.length})`);
+    if (multiset(text + instr) !== multiset(repair.text + repair.instructionHe)) {
+      console.log(`  FAIL  ${id} — a Hebrew letter was added or lost`);
+      continue;
+    }
+    if (liturgyOrder(text) !== liturgyOrder(repair.text)) {
+      console.log(`  FAIL  ${id} — liturgy lines were reordered or altered`);
       continue;
     }
 
